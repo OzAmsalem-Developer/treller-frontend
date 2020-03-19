@@ -8,3 +8,8 @@ Vue.filter('capitalize', (str)=>{
 Vue.filter('dateAgo', (timestamp)=>{
     return moment(new Date(timestamp)).fromNow()
 })
+
+Vue.filter('minimalDate', (ts)=>{
+    console.log(ts);
+    return moment(new Date(ts)).fromNow();
+})
