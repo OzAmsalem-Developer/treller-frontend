@@ -56,25 +56,8 @@
 
 <script>
 export default {
-  data() {
-    return {
-      task: null
-    };
-  },
-  methods: {
-    async loadTask() {
-      const taskId = this.$route.params.id;
-      if (taskId) {
-        const task = await this.$store.dispatch({
-          type: "loadTask",
-          taskId
-        });
-        this.task = task;
-      }
-    }
-  },
-  created() {
-    // this.loadTask();
+  props: {
+    task: Object
   }
 };
 </script>
