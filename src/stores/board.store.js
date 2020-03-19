@@ -6,6 +6,11 @@ export const boardStore = ({
         currBoard: null,
         filterBy: null
     },
+    getters: {
+        taskLists(state) {
+            return state.currBoard.taskLists
+        }
+    },
     mutations: {
         setBoards(state, { boards }) {
             state.boards = boards
