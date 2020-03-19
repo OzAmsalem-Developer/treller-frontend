@@ -2,17 +2,20 @@
   <main class="board-app" v-if="board">
     <board-header></board-header>
     <task-list v-for="list in taskLists" :taskList="list" :key="list.id"></task-list>
+    <task-details v-if="task" :task="task"></task-details>
   </main>
 </template>
 
 <script>
 import boardHeader from "@/cmps/board-cmps/board-header";
 import taskList from "@/cmps/task-cmps/task-list";
+import taskDetails from "@/cmps/task-cmps/task-details";
 
 export default {
   data() {
     return {
-      board: null
+      board: null,
+      task: null
     };
   },
   methods: {
@@ -35,10 +38,14 @@ export default {
   created() {
     const boardId = this.$route.params.boardId;
     this.getBoard(boardId)
+    // Render the task details when taskId is passed as param
+    const taskId = this.$route.params.taskId;
+    if (taskId) this.task = this.$store.commit({type: 'getTask', taskId})
   },
   components: {
     boardHeader,
-    taskList
+    taskList,
+    taskDetails
   }
 };
 </script>
