@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import homePage from '../views/home-page.vue'
 import aboutPage from '../views/about-page.vue'
 import dashboardPage from '../views/dashboard-page.vue'
-import taskDetails from '../views/task-details.vue'
+import taskDetails from '../cmps/task-cmps/task-details.vue'
 
 
 Vue.use(VueRouter)
