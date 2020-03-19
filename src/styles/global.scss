@@ -14,10 +14,11 @@
 @import 'views/board-app';
 @import 'views/dashboard-page';
 
-// COMPONENTS
+// CMPS
 @import 'cmps/main-cmps/main-header';
 @import 'cmps/main-cmps/main-footer';
 
+// TASK CMPS
 @import 'cmps/task-cmps/task-list';
 @import 'cmps/task-cmps/task-preview';
 @import 'cmps/task-cmps//task-details';
