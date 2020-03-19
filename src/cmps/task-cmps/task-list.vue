@@ -1,7 +1,7 @@
 <template>
-  <section class="task-list">
+  <section v-if="tasks" class="task-list">
     <h1>Task-List</h1>
-    <task-preview></task-preview>
+    <task-preview v-for="task in tasks" :task="task" :key="task._id"></task-preview>
   </section>
 </template>
 
