@@ -4,7 +4,8 @@ export const boardStore = ({
     state: {
         boards: [],
         currBoard: null,
-        filterBy: null
+        filterBy: null,
+        currTask: null
     },
     getters: {
         taskLists(state) {
@@ -17,6 +18,14 @@ export const boardStore = ({
         },
         setCurrBoard(state, { board }) {
             state.currBoard = board
+        },
+        getTask(state, {taskId}) {
+            var task
+            state.currBoard.taskLists.forEach(taskList => {
+                task = taskList.tasks.find(task => task.id === taskId)
+            })
+            if (task) state.currTask = task
+            return task
         }
     },
     actions: {
