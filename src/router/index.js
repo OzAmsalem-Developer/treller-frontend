@@ -20,9 +20,19 @@ const routes = [
     component: aboutPage
   },
   {
-    path: '/dashboard',
+    path: '/user/:userId?',
+    // children: [{
+    //   path: '/usedId/profile',
+    //   name: 'Profile',
+    //   component: profilePage
+    // }],
     name: 'Dashboard',
     component: dashboardPage
+  },
+  {
+    path: '/board/:boardId/task?/:taskId?',
+    name: 'TaskDetails',
+    component: taskDetails
   }
 ]
 
