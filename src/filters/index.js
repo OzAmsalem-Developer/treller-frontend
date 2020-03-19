@@ -6,10 +6,5 @@ Vue.filter('capitalize', (str)=>{
 })
 
 Vue.filter('dateAgo', (timestamp)=>{
-    return moment(new Date(timestamp)).fromNow();
+    return moment(new Date(timestamp)).fromNow()
 })
-
-Vue.filter('dueDate', (timestamp)=>{
-    return moment(new Date(timestamp)).format('MMM D');
-})
-
