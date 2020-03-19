@@ -20,8 +20,9 @@ function query(filterBy) {
     return Promise.resolve(boards)
 }
 
-function loadOne(boardId) {
+async function loadOne(boardId) {
     const boards = storageService.load(KEY)
+    if (!boards) await query()
     const foundBoard = boards.find(board => board._id === boardId)
     if (!foundBoard) return Promise.reject()
     return foundBoard
@@ -44,7 +45,7 @@ function save(board) {
 function _getSampleBoards() {
     return [
         {
-            _id: utilService.makeId(15),
+            _id: 'board7272',
             name: 'Final sprint board',
             theme: 'dark',
             labels: [
