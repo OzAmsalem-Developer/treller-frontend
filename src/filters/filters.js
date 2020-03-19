@@ -12,3 +12,8 @@ Vue.filter('price', (num)=>{
 Vue.filter('date', (timestamp)=>{
     return moment(new Date(timestamp)).fromNow();
 })
+
+Vue.filter('dueDate', (timestamp)=>{
+    return moment(new Date(timestamp)).format('MMM D');
+})
+
