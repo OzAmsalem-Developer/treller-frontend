@@ -1,7 +1,18 @@
 .main-header {
-    align-self: center;
-    .logo {
-        max-width: 270px;
-        margin-bottom: rem(20px);
-    }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #065471;
+  padding: 0 10px;
+}
+
+.main-logo {
+  color: $clr4;
+}
+
+.nav-links > * {
+  display: inline-block;
+  color: $clr2;
+  text-decoration: none;
+  min-width: 100px;
 }
