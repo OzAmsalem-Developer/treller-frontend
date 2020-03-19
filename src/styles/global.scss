@@ -13,7 +13,6 @@
 @import 'views/home-page';
 @import 'views/board-app';
 @import 'views/dashboard-page';
-@import 'views/task-details';
 
 // COMPONENTS
 @import 'cmps/main-cmps/main-header';
@@ -21,3 +20,4 @@
 
 @import 'cmps/task-cmps/task-list';
 @import 'cmps/task-cmps/task-preview';
+@import 'cmps/task-cmps//task-details';
