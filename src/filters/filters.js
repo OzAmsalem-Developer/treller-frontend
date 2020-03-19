@@ -12,4 +12,3 @@ Vue.filter('dateAgo', (timestamp)=>{
 Vue.filter('dueDate', (timestamp)=>{
     return moment(new Date(timestamp)).format('MMM D');
 })
-

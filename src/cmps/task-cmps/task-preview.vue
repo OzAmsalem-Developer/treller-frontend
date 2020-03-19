@@ -11,7 +11,7 @@
       <section class="task-indications">
         <div v-if="task.dueDate">
           <span class="task-due-date">
-            {{task.dueDate | date}}
+            {{task.dueDate | dueDate}}
           </span>
         </div>
       </section>
