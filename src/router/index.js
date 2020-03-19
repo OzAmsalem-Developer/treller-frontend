@@ -3,8 +3,7 @@ import VueRouter from 'vue-router'
 import homePage from '../views/home-page.vue'
 import aboutPage from '../views/about-page.vue'
 import dashboardPage from '../views/dashboard-page.vue'
-import taskDetails from '../cmps/task-cmps/task-details.vue'
-
+import boardApp from '../views/board-views/board-app.vue'
 
 Vue.use(VueRouter)
 
@@ -30,9 +29,9 @@ const routes = [
     // }],
   },
   {
-    path: '/board/:boardId/task?/:taskId?',
-    name: 'TaskDetails',
-    component: taskDetails
+    path: '/board/:boardId/',
+    name: 'BoardApp',
+    component: boardApp
   }
 ]
 
