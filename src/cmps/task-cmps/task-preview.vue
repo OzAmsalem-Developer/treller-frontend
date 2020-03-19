@@ -1,8 +1,8 @@
 <template>
   <section class="task-preview">
-    <section v-if="task.labels.length" class="task-label">
+    <section v-if="task.labels.length" class="preview-labels">
       <div
-        class="task-label"
+        class="preview-label"
         v-for="label in task.labels"
         :key="label.id"
         :style="{backgroundColor: label.color}"
@@ -10,12 +10,28 @@
         <span>{{label.txt}}</span>
       </div>
     </section>
-    <h2 class="task-title">{{task.name}}</h2>
-    <section class="task-indications">
-      <div v-if="task.dueDate">
-        <span class="task-due-date">{{task.dueDate | minimalDate}}</span>
+    <h2 class="preview-title">{{task.name}}</h2>
+    <section class="preview-indications">
+      <div class="preview-due-date" v-if="task.dueDate">
+        {{task.dueDate | minimalDate}}
+      </div>
+      <div class="preview-desc" v-if="task.desc">
+        Desk
+      </div>
+      <div class="preview-comments" v-if="task.comments.length">
+        Message({{task.comments.length}})
+      </div>
+      <div class="preview-check-list" v-if="task.checklist">
+        {{checklistStatus}}
+      </div>
+      <div class="preview-members" v-if="task.members.length">
+        <div class="preview-member"
+        v-for="member in task.members" :key="member.id"> 
+          {{member.fullName}}
+        </div>
       </div>
     </section>
+
   </section>
 </template>
 
@@ -24,8 +40,14 @@ export default {
   props: {
     task: Object
   },
-  created() {
-    console.log(this.task.dueDate);
+  computed: {
+    checklistStatus() {
+      const todos = this.task.checklist.todos
+      const doneTodos = todos.filter(todo => todo.isDone).length
+
+      const allTodos = todos.length
+      return doneTodos + '/' + allTodos
+    }
   }
 };
 </script>
