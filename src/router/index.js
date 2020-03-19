@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import homePage from '../views/homePage.vue'
-import aboutPage from '../views/aboutPage.vue'
+import homePage from '../views/home-page.vue'
+import aboutPage from '../views/about-page.vue'
+import dashboardPage from '../views/dashboard-page.vue'
+// import taskDetails from '../views/taskDetails.vue'
+
 
 Vue.use(VueRouter)
 
@@ -15,6 +18,11 @@ const routes = [
     path: '/about',
     name: 'About',
     component: aboutPage
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: dashboardPage
   }
 ]
 
