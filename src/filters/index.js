@@ -11,5 +11,5 @@ Vue.filter('dateAgo', (timestamp)=>{
 
 Vue.filter('minimalDate', (ts)=>{
     console.log(ts);
-    return moment(new Date(ts)).fromNow();
+    return moment(new Date(ts)).format('MMM D');
 })
