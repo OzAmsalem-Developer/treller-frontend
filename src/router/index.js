@@ -20,14 +20,14 @@ const routes = [
     component: aboutPage
   },
   {
-    path: '/user/:userId?',
+    path: '/user/dashboard/:userId?',
+    name: 'Dashboard',
+    component: dashboardPage
     // children: [{
     //   path: '/usedId/profile',
     //   name: 'Profile',
     //   component: profilePage
     // }],
-    name: 'Dashboard',
-    component: dashboardPage
   },
   {
     path: '/board/:boardId/task?/:taskId?',
