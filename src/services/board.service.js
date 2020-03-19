@@ -96,13 +96,7 @@ function _getSampleBoards() {
                                     imgUrl: null
                                 }
                             ],
-                            labels: [
-                                {
-                                    id: 'lb101',
-                                    color: 'pink',
-                                    txt: 'Togther'
-                                }
-                            ],
+                            labels: ['lb101'],
                             dueDate: null,
                             desc: 'Build a nice data to show',
                             attachments: [],
@@ -139,13 +133,7 @@ function _getSampleBoards() {
                                     imgUrl: null
                                 }
                             ],
-                            labels: [
-                                {
-                                    id: 'lb102',
-                                    color: 'red',
-                                    txt: 'Error'
-                                }
-                            ],
+                            labels: ['lb102'],
                             dueDate: (Date.now() + 1000 * 60 * 60 * 48),
                             desc: 'Start a new project',
                             attachments: [],
@@ -193,18 +181,7 @@ function _getSampleBoards() {
                                     imgUrl: null
                                 }
                             ],
-                            labels: [
-                                {
-                                    id: 'lb104',
-                                    color: 'yellow',
-                                    txt: 'ITP'
-                                },
-                                {
-                                    id: 'lb103',
-                                    color: 'blue',
-                                    txt: 'New Feature'
-                                }
-                            ],
+                            labels: ['lb104', 'lb105'],
                             dueDate: null,
                             desc: null,
                             attachments: [],
