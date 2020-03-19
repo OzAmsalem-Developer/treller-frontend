@@ -10,6 +10,9 @@ export const boardStore = ({
     getters: {
         taskLists(state) {
             return state.currBoard.taskLists
+        },
+        currTask(state) {
+            return state.currTask
         }
     },
     mutations: {
@@ -19,13 +22,19 @@ export const boardStore = ({
         setCurrBoard(state, { board }) {
             state.currBoard = board
         },
-        getTask(state, {taskId}) {
-            var task
+        setCurrTask(state, {taskId}) {
+            var foundTask = null          
             state.currBoard.taskLists.forEach(taskList => {
-                task = taskList.tasks.find(task => task.id === taskId)
+                let currTask = taskList.tasks.find(task =>{ 
+                    console.log( task.id, taskId);
+                   return task.id === taskId
+                })
+                if (currTask) {
+                    console.log('WIN', currTask);
+                    state.currTask = currTask
+                }
             })
-            if (task) state.currTask = task
-            return task
+            console.log( state.currTask);
         }
     },
     actions: {
@@ -41,8 +50,10 @@ export const boardStore = ({
             }
         },
         async loadById(context, { boardId }) {
+            console.log(boardId);
             const board = await boardService.loadOne(boardId)
             try {
+                
                 context.commit({ type: 'setCurrBoard', board })
                 return board
             } catch {
