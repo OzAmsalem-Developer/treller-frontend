@@ -1,5 +1,5 @@
 <template>
-  <section v-if="task" class="task-details">
+  <section class="task-details">
     <h1>{{task.name}}</h1>
 
     <section v-if="task.labels" class="task-labels">
@@ -23,7 +23,7 @@
     <section class="task-due-date">
       <button>[]</button>
       <span>Calender:</span>
-      <span v-if="task.dueDate">{{task.dueDate}}:</span>
+      <span v-if="task.dueDate">{{task.dueDate | minimalDate}}:</span>
     </section>
 
     <section v-if="task.description" class="task-description">
