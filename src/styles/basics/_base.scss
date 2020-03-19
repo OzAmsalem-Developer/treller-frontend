@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 img {
@@ -7,7 +9,7 @@ img {
 }
 
 html {
-    font-family: Montserrat, sans-serif;
+    font-family: OpenSans-Regular, sans-serif;
     color: $clr2;
     text-align: center;
     line-height: 1.9;
@@ -17,15 +19,15 @@ body {
     margin: 0;
 }
 
-h1 {
-    font-family: GreatVibes, serif;
-    font-size: rem(70px);
-    margin: 0 0 rem(20px);
-    font-weight: normal;
-    line-height: 1;
-}
+// h1 {
+//     font-family: OpenSans-Regular, sans-serif;
+//     font-size: rem(70px);
+//     margin: 0 0 rem(20px);
+//     font-weight: normal;
+//     line-height: 1;
+// }
 
-p {
-    margin: 0 auto 1em;
-    max-width: 48ch;
-}
+// p {
+//     margin: 0 auto 1em;
+//     max-width: 48ch;
+// }
