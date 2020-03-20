@@ -5,6 +5,7 @@ export const utilService = {
     createWord,
     getFormattedDate,
     getFormattedHour,
+    getHoursDifference,
     getRandomColor,
     getFormattedNowDate
 }
@@ -65,6 +66,13 @@ function getFormattedDate(timestamp) {
     const time = new Date(timestamp)
     // Replacing '.' with '/'
     return time.toLocaleString().split(',')[0].replace(/\./g, '/');
+}
+
+function getHoursDifference(timestamp) {
+    const currTime = Date.now();
+    const seconds = (timestamp - currTime) / 1000;
+    var hours = Math.floor(seconds / 3600);
+    return hours
 }
 
 function createWord(length) {
