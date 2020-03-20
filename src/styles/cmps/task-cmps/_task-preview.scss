@@ -1,4 +1,8 @@
 .task-preview {
-    border: solid 1px $clr1;
+    padding: 10px;
     border-radius: 3px;
+    margin-bottom: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 0 rgba(9,30,66,.25);
+    cursor: pointer;
 }

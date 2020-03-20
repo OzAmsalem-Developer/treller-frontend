@@ -1,7 +1,12 @@
 <template>
   <section v-if="taskList" class="task-list">
-    <h1>Task-List</h1>
-    <task-preview v-for="task in tasks" :task="task" :key="task.id"></task-preview>
+    <header>
+      <h4 class="list-name">{{taskList.name}}</h4>
+      <button class="menu-btn">...</button>
+    </header>
+    <main class="tasks">
+      <task-preview v-for="task in tasks" :task="task" :key="task.id"></task-preview>
+    </main>
   </section>
 </template>
 
@@ -14,7 +19,7 @@ export default {
   },
   computed: {
     tasks() {
-      return this.taskList.tasks
+      return this.taskList.tasks;
     }
   },
   props: {

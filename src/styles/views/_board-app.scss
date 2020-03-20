@@ -1,3 +1,38 @@
-.temp-class {
-    color: #000000;
+.board-app {
+    width: 30em;
+    overflow-x: auto;
+    // white-space: nowrap;
+    .lists-container {
+    display: flex;
+    justify-content: flex-start;
+    user-select: none;
+    padding: 0 10px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    position: absolute;
+
+    > *  {
+        margin-right: 9px;
+        border-radius: 3px;
+    }
+  }
+
 }
+
+
+//Scroll bar
+// .board-app::-webkit-scrollbar{
+//     height: 14px;
+//     width: 4px;
+//     background: gray;
+// }
+// .board-app::-webkit-scrollbar-thumb:horizontal{
+//     background: #000;
+//     border-radius: 10px;
+// }
+
+// .board-app::-scrollbar-button {
+//     display: block;
+//     height: 4px;
+//     width: 4px;
+// }

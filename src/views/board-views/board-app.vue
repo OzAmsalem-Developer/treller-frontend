@@ -1,7 +1,9 @@
 <template>
   <main class="board-app" v-if="board">
     <board-header></board-header>
-    <task-list v-for="list in taskLists" :taskList="list" :key="list.id"></task-list>
+    <div class="lists-container">
+      <task-list v-for="list in taskLists" :taskList="list" :key="list.id"></task-list>
+    </div>
     <task-details v-if="task" :task="task"></task-details>
   </main>
 </template>
@@ -26,7 +28,7 @@ export default {
         const taskId = this.$route.params.taskId;
 
         this.$store.commit({ type: "setCurrTask", taskId });
-        this.task = JSON.parse(JSON.stringify(this.currTask))
+        this.task = JSON.parse(JSON.stringify(this.currTask));
       } catch {
         console.log("Err msg to user here");
         this.$router.push("/user/dashboard");

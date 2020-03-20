@@ -1,4 +1,50 @@
 .task-list {
-    width: 280px;
-    display: inline-block;
+  width: 280px;
+  display: inline-block;
+  background-color: #ebecf0;
+  padding: 7px 10px 10px 10px;
+  height: 500px;
+  .tasks {
+    overflow-x: auto;
+    max-height: 95%;
+    padding-right: 7px;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .menu-btn {
+      font-size: rem(22px);
+    }
+
+    .list-name {
+      padding-bottom: 7px;
+      font-family: OpenSans-Bold;
+      font-size: 14px;
+      color: $clr1;
+    }
+  }
+}
+
+//Scroll bar
+.tasks::-webkit-scrollbar {
+  background-color: rgba(255, 255, 255, 0);
+  width: 10.5px;
+}
+
+.tasks::-webkit-scrollbar-track {
+  border-radius: 10px;
+  // border: 16px solid rgba(17, 59, 175, 0.904);
+}
+.tasks::-webkit-scrollbar-thumb {
+  border: 16px solid #bfc4ce;
+  border-radius: 10px;
+}
+
+.tasks::-webkit-scrollbar-track {
+  background-color: #dadbe2;
+}
+
+.tasks::-webkit-scrollbar-thumb {
+  background-color: #212121;
 }
