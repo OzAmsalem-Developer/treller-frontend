@@ -44,9 +44,17 @@
   }
 }
 
-// .details-feature-title {
-//   font-family: OpenSans-Bold;
-// }
+.details-task-name {
+  resize: none;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  font-family: $font-regular;
+}
+
+.details-task-name:focus {
+  background-color: red;
+}
 
 .details-labels {
   background-color: $clr5;
@@ -102,5 +110,5 @@
 }
 
 .clean-items {
-list-style: none;
+  list-style: none;
 }

@@ -8,6 +8,9 @@ export const boardStore = ({
         currTask: null
     },
     getters: {
+        currBoardId(state) {
+            return state.currBoard._id
+        },
         taskLists(state) {
             return state.currBoard.taskLists
         },

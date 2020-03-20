@@ -6,6 +6,11 @@
     box-shadow: 0 1px 0 rgba(9,30,66,.25);
     cursor: pointer;
 
+    .preview-title {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+
     .preview-indications {
         display: flex;
         justify-content: space-between;
