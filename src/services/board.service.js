@@ -324,3 +324,27 @@ function _getSampleBoards() {
         }
     ]
 }
+
+
+const labels = {
+    label1: {
+        id: 'lb101',
+        color: 'pink',
+        txt: 'Together'
+    },
+    label2: {
+        id: 'lb102',
+        color: 'red',
+        txt: 'Error'
+    },
+    label3: {
+        id: 'lb103',
+        color: 'blue',
+        txt: 'New Feature'
+    },
+    label4: {
+        id: 'lb104',
+        color: 'yellow',
+        txt: 'ITP'
+    }
+}
