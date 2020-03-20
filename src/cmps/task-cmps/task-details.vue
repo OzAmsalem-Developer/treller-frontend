@@ -6,7 +6,7 @@
       class="details-task-name"
       cols="20"
       rows="1"
-      @change="updateTaskName"
+      @change="updateTask"
     />
     <div class="details-container">
       <div class="details-info">
@@ -103,7 +103,9 @@ export default {
   },
   methods: {
     async updateTask() {
-      await this.$store.dispatch({ type: "updateToy", editedTask });
+      const taskCopy = JSON.parse(JSON.stringify(this.editedTask));
+      console.log("The task that will be saved:", taskCopy);
+      await this.$store.dispatch({ type: "updateTask", taskCopy });
       try {
       } catch (preTask) {
         this.editedTask = preTask;
