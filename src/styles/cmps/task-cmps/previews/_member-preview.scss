@@ -1,0 +1,20 @@
+.member-preview {
+  display: flex;
+}
+
+.member-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px $clr1;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin-inline-end: 0.2em;
+  cursor: pointer;
+  user-select: none;
+}
+
+// .member-card-name {
+
+// }

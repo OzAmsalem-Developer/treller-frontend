@@ -13,6 +13,9 @@ export const boardStore = ({
         },
         currTask(state) {
             return state.currTask
+        },
+        labels(state) {
+            return state.currBoard.labels
         }
     },
     mutations: {

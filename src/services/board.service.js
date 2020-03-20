@@ -52,34 +52,36 @@ function getEmptyList() {
     }
 }
 
+    
+
 function _getSampleBoards() {
     return [
         {
             _id: 'board7272',
             name: 'Final sprint board',
             theme: 'dark',
-            labels: [
-                {
+            labels: {
+                label1: {
                     id: 'lb101',
                     color: 'pink',
                     txt: 'Together'
                 },
-                {
+                label2: {
                     id: 'lb102',
                     color: 'red',
                     txt: 'Error'
                 },
-                {
+                label3: {
                     id: 'lb103',
                     color: 'blue',
                     txt: 'New Feature'
                 },
-                {
+                label4: {
                     id: 'lb104',
                     color: 'yellow',
                     txt: 'ITP'
                 }
-            ],
+            },
             taskLists: [
                 {
                     id: utilService.makeId(),
@@ -106,7 +108,7 @@ function _getSampleBoards() {
                                     imgUrl: null
                                 }
                             ],
-                            labels: ['lb101'],
+                            labels: ['label1'],
                             dueDate: null,
                             desc: 'Build a nice data to show',
                             attachments: [],
@@ -143,7 +145,7 @@ function _getSampleBoards() {
                                     imgUrl: null
                                 }
                             ],
-                            labels: ['lb102'],
+                            labels: ['label2'],
                             dueDate: (Date.now() + 1000 * 60 * 60 * 48),
                             desc: 'Start a new project',
                             attachments: [],
@@ -185,7 +187,7 @@ function _getSampleBoards() {
                                     imgUrl: null
                                 }
                             ],
-                            labels: ['lb104', 'lb105'],
+                            labels: ['label4', 'label3'],
                             dueDate: null,
                             desc: null,
                             attachments: [],
@@ -325,3 +327,5 @@ function _getSampleBoards() {
         }
     ]
 }
+
+

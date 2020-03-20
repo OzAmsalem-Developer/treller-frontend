@@ -25,6 +25,10 @@
 .details-info {
   display: flex;
   flex-direction: column;
+
+  > * {
+    margin-bottom: 20px;
+  }
 }
 
 .details-actions {
@@ -40,9 +44,9 @@
   }
 }
 
-.details-feature-title {
-  font-family: OpenSans-Bold;
-}
+// .details-feature-title {
+//   font-family: OpenSans-Bold;
+// }
 
 .details-labels {
   background-color: $clr5;
@@ -64,14 +68,14 @@
 .details-members {
   background-color: $clr5;
 
-  img,
-  button {
-    // border-radius: 50%;
-    border-radius: 3px;
-    border: solid 1px $clr6;
-    cursor: pointer;
-    min-width: 20px;
-  }
+  // img,
+  // button {
+  //   // border-radius: 50%;
+  //   border-radius: 3px;
+  //   border: solid 1px $clr6;
+  //   cursor: pointer;
+  //   min-width: 20px;
+  // }
 }
 
 .details-due-date {
@@ -95,4 +99,8 @@
   font-size: 12px;
   cursor: pointer;
   margin-inline-start: 8px;
+}
+
+.clean-items {
+list-style: none;
 }
