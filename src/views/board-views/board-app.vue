@@ -16,8 +16,7 @@ import taskDetails from "@/cmps/task-cmps/task-details";
 export default {
   data() {
     return {
-      board: null,
-      task: null
+      board: null
     };
   },
   methods: {

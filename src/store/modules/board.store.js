@@ -45,7 +45,6 @@ export const boardStore = ({
             console.log(boardId);
             const board = await boardService.loadOne(boardId)
             try {
-
                 context.commit({ type: 'setCurrBoard', board })
                 return board
             } catch {
