@@ -145,7 +145,7 @@ export default {
   },
   computed: {
     task() {
-      return this.$store.getters.currTask || false;
+      return this.$store.getters.currTask;
     }
   },
   created() {
