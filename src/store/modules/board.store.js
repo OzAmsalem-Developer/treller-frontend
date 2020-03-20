@@ -67,7 +67,7 @@ export const boardStore = ({
             } catch {
                 context.commit({type: 'setCurrBoard', prevBoard})
                 console.log('Err: Board saving failed')
-                throw new Error()
+                return Promise.reject(prevBoard)
             }
         }
     }

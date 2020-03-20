@@ -8,7 +8,8 @@ export const boardService = {
     loadOne,
     query,
     save,
-    getEmptyList
+    getEmptyList,
+    getEmptyTask
 }
 
 function query(filterBy) {
@@ -52,7 +53,22 @@ function getEmptyList() {
     }
 }
 
-    
+function getEmptyTask() {
+    return {
+        id: utilService.makeId(15),
+        name: '',
+        style: { bgColor: 'default', color: 'default'},
+        members: [],
+        labels: [],
+        dueDate: null,
+        desc: '',
+        attachments: [],
+        checklist: null,
+        comments: []
+    }
+}
+
+
 
 function _getSampleBoards() {
     return [
