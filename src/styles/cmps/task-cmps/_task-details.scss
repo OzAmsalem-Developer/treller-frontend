@@ -1,35 +1,47 @@
 .task-details {
-    // position: fixed;
-    background-color: $clr5;
-    width: 768px;
-    margin: 50px auto 0;
-    border: $clr6 solid 1px;
-    border-radius: 3px;
-    min-height: 300px;
-
-
+  // position: fixed;
+  background-color: $clr5;
+  width: 768px;
+  margin: 50px auto 0;
+  border: $clr1 solid 1px;
+  border-radius: 3px;
+  min-height: 300px;
 }
 
 .details-labels {
-background-color: $clr3;
+  background-color: $clr3;
 }
 
 .details-members {
-    background-color: $clr3;
+  background-color: $clr3;
+
+  img,
+  button {
+    border-radius: 50%;
+    border: solid 1px $clr6;
+    cursor: pointer;
+  }
 }
 
 .details-due-date {
-    background-color: $clr3;
+  background-color: $clr3;
 }
 
 .details-description {
-    background-color: $clr3;
+  background-color: $clr3;
 }
 
 .details-checklist {
-    background-color: $clr3;
+  background-color: $clr3;
 }
 
 .details-discussion {
-    background-color: $clr3;
+  background-color: $clr3;
+}
+
+.details-actions {
+  button {
+      background-color: $clr5;
+      border-radius: 3px;
+  }
 }

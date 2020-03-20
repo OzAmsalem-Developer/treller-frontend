@@ -76,7 +76,7 @@ function _getSampleBoards() {
                     name: 'Planning',
                     tasks: [
                         {
-                            id: utilService.makeId(),
+                            id: 'task382034',
                             name: 'Create navbar',
                             style: { bgColor: 'blue' },
                             members: [

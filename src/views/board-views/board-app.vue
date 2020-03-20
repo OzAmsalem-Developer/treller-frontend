@@ -19,11 +19,14 @@ export default {
     };
   },
   methods: {
-    async getBoard(boardId) {
+    async loadBoardAndTask(boardId) {
       const board = await this.$store.dispatch({ type: "loadById", boardId });
-      console.log(board);
       try {
         this.board = JSON.parse(JSON.stringify(board));
+        const taskId = this.$route.params.taskId;
+
+        this.$store.commit({ type: "setCurrTask", taskId });
+        this.task = JSON.parse(JSON.stringify(this.currTask))
       } catch {
         console.log("Err msg to user here");
         this.$router.push("/user/dashboard");
@@ -33,14 +36,22 @@ export default {
   computed: {
     taskLists() {
       return this.$store.getters.taskLists;
+    },
+    currTask() {
+      return this.$store.getters.currTask;
+    }
+  },
+  watchers: {
+    $route() {
+      const boardId = this.$route.params.boardId;
+      this.loadBoardAndTask(boardId);
     }
   },
   created() {
     const boardId = this.$route.params.boardId;
-    this.getBoard(boardId)
+    this.loadBoardAndTask(boardId);
     // Render the task details when taskId is passed as param
-    const taskId = this.$route.params.taskId;
-    if (taskId) this.task = this.$store.commit({type: 'getTask', taskId})
+    console.log(this.$route.params);
   },
   components: {
     boardHeader,

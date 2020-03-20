@@ -21,6 +21,8 @@
     </section>
 
     <section class="details-due-date">
+      <span>Due Date:</span>
+      <span>Update</span>
       <button>[]</button>
       <span>Calender:</span>
       <span v-if="task.dueDate">{{task.dueDate | minimalDate}}:</span>
@@ -34,6 +36,7 @@
 
     <section v-if="task.checklist" class="details-checklist">
       <span>{{task.checklist}}</span>
+      <span>remove</span>
       <ul class="details-checklist-items">
         <li v-for="item in task.checklist" :key="item.id"></li>
       </ul>
@@ -42,6 +45,7 @@
 
     <section class="details-discussion">
       <span>Discussion:</span>
+      <span>hide activity feed</span>
       <input class="discussion-add-item" type="text" placeholder="Write a comment" />
       <ul v-if="task.comments.length" class="discussion-cmts">
         <li v-for="cmt in comments" :key="cmt.id">
@@ -52,26 +56,55 @@
       </ul>
     </section>
     <section class="details-actions">
-      <button>Move</button>
-      <button>Copy</button>
-      <button>Labels</button>
-      <button>Members</button>
-      <button>Due Date</button>
-      <button>Description</button>
-      <button>Checklist</button>
-      <button>Attachments</button>
-      <button>Comments</button>
+      <button @click="moveTask">Move</button>
+      <button @click="copyTask">Copy</button>
+      <button @click="setLabels">Labels</button>
+      <button @click="setMembers">Members</button>
+      <button @click="setDueDate">Due Date</button>
+      <button @click="updateDescription">Description</button>
+      <button @click="updateChecklist">Checklist</button>
+      <button @click="sendAttachment">Attachments</button>
+      <button @click="sendComment">Comments</button>
     </section>
   </section>
 </template>
 
 <script>
 export default {
-  props: {
-    task: Object
+  methods: {
+    moveTask() {
+      console.log("Please move the Task!");
+    },
+    copyTask() {
+      console.log("Please copy the Task!");
+    },
+    setLabels() {
+      console.log("Please set the Labels!");
+    },
+    setMembers() {
+      console.log("Please set the Members!");
+    },
+    setDueDate() {
+      console.log("Please set the Members!");
+    },
+    updateDescription() {
+      console.log("Please update the Description!");
+    },
+    updateChecklist() {
+      console.log("Please update the Checklist!");
+    },
+    sendAttachment() {
+      console.log("Please send this Attachments!");
+    },
+    sendComment() {
+      console.log("Please send this Comment!");
+    }
   },
   created() {
-    console.log('Details page loaded successfully')
+    console.log("Details page loaded successfully");
+  },
+  props: {
+    task: Object
   }
 };
 </script>

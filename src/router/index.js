@@ -29,7 +29,12 @@ const routes = [
     // }],
   },
   {
-    path: '/board/:boardId/',
+    path: '/board/:boardId',
+    name: 'BoardApp',
+    component: boardApp
+  },
+  {
+    path: '/board/:boardId/task/:taskId',
     name: 'BoardApp',
     component: boardApp
   }
