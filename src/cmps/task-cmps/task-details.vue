@@ -2,7 +2,8 @@
   <section v-if="task" class="task-details">
     <h1 class="details-task-name">{{task.name}}</h1>
 
-    <!-- <pre>{{task}}</pre> -->
+    <textarea  name="details-task-name" id="" cols="20" rows="2" />
+
     <div class="details-container">
       <div class="details-info">
         <section v-if="task.labels.length" class="details-labels">
@@ -102,6 +103,9 @@ export default {
     },
     copyTask() {
       console.log("Please copy the Task!");
+    },
+    updateTaskName() {
+
     },
     setLabels() {
       console.log("Please set the Labels!");
