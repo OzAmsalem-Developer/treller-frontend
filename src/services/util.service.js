@@ -3,10 +3,9 @@ export const utilService = {
     makeLorem,
     makeId,
     createWord,
-    getFormattedDate,
-    getFormattedHour,
     getRandomColor,
-    getFormattedNowDate
+    getFormattedNowDate,
+    scrollTo
 }
 
 
@@ -47,24 +46,6 @@ function getRandomColor() {
         color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-}
-
-function getFormattedHour(timestamp) {
-    const time = new Date(timestamp)
-    let hours = time.getHours();
-    let minutes = time.getMinutes();
-    const ampm = (hours >= 12) ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    const timeStr = hours + ':' + minutes + ' ' + ampm;
-    return timeStr
-}
-
-function getFormattedDate(timestamp) {
-    const time = new Date(timestamp)
-    // Replacing '.' with '/'
-    return time.toLocaleString().split(',')[0].replace(/\./g, '/');
 }
 
 function createWord(length) {
@@ -123,4 +104,40 @@ function _populateWords() {
     words[26] = "cryptogram"
     words[27] = "torchlight"
     words[28] = "bankruptcy"
+}
+
+function scrollTo(element, scrollPixels, duration) {
+    const scrollPos = element.scrollLeft;
+    // Condition to check if scrolling is required
+    if (
+        !(
+            (scrollPos === 0 || scrollPixels > 0) &&
+            (element.clientWidth + scrollPos === element.scrollWidth ||
+                scrollPixels < 0)
+        )
+    ) {
+        // Get the start timestamp
+        const startTime =
+            "now" in window.performance
+                ? performance.now()
+                : new Date().getTime();
+
+        function scroll(timestamp) {
+            //Calculate the timeelapsed
+            const timeElapsed = timestamp - startTime;
+            //Calculate progress
+            const progress = Math.min(timeElapsed / duration, 1);
+            //Set the scrolleft
+            element.scrollLeft = scrollPos + scrollPixels * progress;
+            //Check if elapsed time is less then duration then call the requestAnimation, otherwise exit
+            if (timeElapsed < duration) {
+                //Request for animation
+                window.requestAnimationFrame(scroll);
+            } else {
+                return;
+            }
+        }
+        //Call requestAnimationFrame on scroll function first time
+        window.requestAnimationFrame(scroll);
+    }
 }
