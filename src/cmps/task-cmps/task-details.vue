@@ -17,7 +17,7 @@
       <span>Members:</span>
       <span>Invite</span>
       <div class="details-members-list">
-        <div v-for="member in task.members" :key="member.id">{{member.fullName}}</div>
+        <div v-for="member in task.members" :key="member._id">{{member.fullName}}</div>
         <button>+</button>
       </div>
     </section>
@@ -51,7 +51,7 @@
       <input class="discussion-add-item" type="text" placeholder="Write a comment" />
       <ul v-if="task.comments.length" class="discussion-cmts">
         <li v-for="cmt in task.comments" :key="cmt.id">
-          <span>{{cmt.from.minimalUser.fullName}}</span>
+          <span>{{cmt.from.fullName}}</span>
           <span>{{cmt.txt}}</span>
           <span>{{cmt.createdAt}}</span>
         </li>
