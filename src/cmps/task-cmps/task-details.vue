@@ -6,6 +6,7 @@
     <div class="details-container">
       <div class="details-info">
         <section v-if="task.labels.length" class="details-labels">
+          <!-- <span>💡</span> -->
           <span class="details-feature-title">Labels:</span>
           <span class="action-link">Update</span>
           <div class="details-labels-list">
@@ -25,6 +26,7 @@
         </section>
 
         <section class="details-due-date">
+          <!-- <span>🕖</span> -->
           <span class="details-feature-title">Due Date:</span>
           <span class="action-link">Update</span>
           <div class="details-due-list">
@@ -35,6 +37,7 @@
         </section>
 
         <section v-if="task.desc" class="details-description">
+          <!-- <span>📄</span> -->
           <span class="details-feature-title">Description:</span>
           <span class="action-link">Edit</span>
           <p>{{task.desc}}:</p>
@@ -51,15 +54,16 @@
 
         <section class="details-discussion">
           <div>
+            <!-- <span>💬</span> -->
             <span class="details-feature-title">Discussion:</span>
             <span class="action-link">hide activity feed</span>
           </div>
           <input class="discussion-add-item" type="text" placeholder="Write a comment" />
           <ul v-if="task.comments.length" class="discussion-cmts">
             <li v-for="cmt in task.comments" :key="cmt.id">
-              <span>{{cmt.from.fullName}}: </span>
+              <span>{{cmt.from}}: </span>
               <span>{{cmt.txt}}</span>
-              <span>{{cmt.createdAt}}</span>
+              <span>{{cmt.createdAt | minimalDate}}</span>
             </li>
           </ul>
         </section>
