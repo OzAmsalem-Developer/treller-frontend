@@ -18,7 +18,8 @@
         </section>
 
         <section v-if="task.members" class="details-members">
-          <span></span>
+          <member-preview :members="task.members"></member-preview>
+
           <span class="font-bold">Members:</span>
           <span class="action-link">Invite</span>
           <div class="details-members-list">
@@ -26,6 +27,7 @@
             <button>+</button>
           </div>
         </section>
+        
 
         <section class="details-due-date">
           <!-- <span>🕖</span> -->
@@ -87,6 +89,8 @@
 </template>
 
 <script>
+import memberPreview from '@/cmps/task-cmps/previews/member-preview.vue'
+
 export default {
   data() {
     return {
@@ -135,6 +139,10 @@ export default {
     console.log("Details page loaded successfully");
     this.editedTask = JSON.parse(JSON.stringify(this.task))
     console.log('editedTask', this.editedTask)
+    console.log('Task members:', this.task.members)
+  },
+  components: {
+    memberPreview
   }
 };
 </script>
