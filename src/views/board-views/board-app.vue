@@ -82,8 +82,10 @@ export default {
       return this.$store.getters.currTask;
     }
   },
-  watchers: {
+  watch: {
     '$route'() {
+      console.log('route changed');
+       this.$store.commit({ type: "setCurrTask", taskId: null });
       const boardId = this.$route.params.boardId;
       this.loadBoardAndTask(boardId);
     }
