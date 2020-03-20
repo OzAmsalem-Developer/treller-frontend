@@ -11,7 +11,7 @@
         </form>
       </section>
     </div>
-    <task-details />
+    <task-details v-if="!isTaskLoad" />
   </main>
 </template>
 
@@ -26,7 +26,8 @@ export default {
   data() {
     return {
       board: null,
-      newTaskList: null
+      newTaskList: null,
+      isTaskLoad: false
     };
   },
   methods: {
@@ -36,8 +37,9 @@ export default {
         this.board = JSON.parse(JSON.stringify(board));
         const taskId = this.$route.params.taskId;
 
-        this.$store.commit({ type: "setCurrTask", taskId });
+        this.$store.commit({ type: "setTaskById", taskId });
         this.task = JSON.parse(JSON.stringify(this.currTask));
+        this.isTaskLoad = false;
       } catch {
         console.log("Err msg to user here");
         this.$router.push("/user/dashboard");
@@ -47,7 +49,7 @@ export default {
       await this.$store.dispatch({ type: "saveBoard", board: this.board });
       try {
         console.log("CMP: Board Saved Succesfully");
-      } catch(prevBoard) {
+      } catch (prevBoard) {
         this.board = JSON.parse(JSON.stringify(board));
         console.log("Err, board didnt saved");
       }
@@ -61,9 +63,9 @@ export default {
         utilService.scrollTo(document.querySelector("html"), 1500, 700);
       }, 0);
     },
-    addTask({newTask, listId}) {
-      const taskList = this.board.taskLists.find(tl => tl.id === listId)
-      if (taskList) taskList.tasks.push(newTask)
+    addTask({ newTask, listId }) {
+      const taskList = this.board.taskLists.find(tl => tl.id === listId);
+      if (taskList) taskList.tasks.push(newTask);
       this.saveBoard();
     },
     getEmptyList() {
@@ -82,8 +84,9 @@ export default {
       return this.$store.getters.currTask;
     }
   },
-  watchers: {
-    '$route'() {
+  watch: {
+    $route() {
+      this.isTaskLoad = true;
       const boardId = this.$route.params.boardId;
       this.loadBoardAndTask(boardId);
     }
