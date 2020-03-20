@@ -1,5 +1,5 @@
 <template>
-  <section class="task-details">
+  <section v-if="task" class="task-details">
     <h1 class="details-task-name">{{task.name}}</h1>
 
     <!-- <pre>{{task}}</pre> -->
@@ -87,6 +87,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      editedTask: null
+    }
+  },
   methods: {
     moveTask() {
       console.log("Please move the Task!");
@@ -120,14 +125,16 @@ export default {
       console.log("Please send this Comment!");
     }
   },
+  computed: {
+    task() {
+      return this.$store.getters.currTask
+    }
+  },
   created() {
     console.log("Details page loaded successfully");
     console.log("Tast details, Prop: Task:");
-    console.dir(this.task);
+    this.editedTask = JSON.parse(JSON.stringify(this.task))
     // Get task and deepcopy it
-  },
-  props: {
-    task: Object
   }
 };
 </script>

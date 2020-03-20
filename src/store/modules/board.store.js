@@ -42,10 +42,8 @@ export const boardStore = ({
             }
         },
         async loadById(context, { boardId }) {
-            console.log(boardId);
             const board = await boardService.loadOne(boardId)
             try {
-
                 context.commit({ type: 'setCurrBoard', board })
                 return board
             } catch {
@@ -54,11 +52,14 @@ export const boardStore = ({
             }
         },
         async saveBoard(context, { board }) {
+            const prevBoard = context.state.currBoard
+            context.commit({type: 'setCurrBoard', board})
             const savedBoard = await boardService.save(board)
             try {
                 console.log('Board Saved!')
                 return savedBoard
             } catch {
+                context.commit({type: 'setCurrBoard', prevBoard})
                 console.log('Err: Board saving failed')
                 throw new Error()
             }
