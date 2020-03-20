@@ -103,12 +103,11 @@ export default {
   },
   methods: {
     async updateTask() {
-      const taskCopy = JSON.parse(JSON.stringify(this.editedTask));
-      console.log("The task that will be saved:", taskCopy);
-      await this.$store.dispatch({ type: "updateTask", taskCopy });
+      await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
       try {
-      } catch (preTask) {
-        this.editedTask = preTask;
+        console.log('Saved');
+      } catch (prevTask) {
+        this.editedTask = prevTask;
         console.log("Err, failed to save task");
       }
     },

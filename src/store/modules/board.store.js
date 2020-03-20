@@ -12,6 +12,7 @@ export const boardStore = ({
             return state.currBoard._id
         },
         taskLists(state) {
+            console.log(state.currBoard)
             return state.currBoard.taskLists
         },
         currTask(state) {
@@ -28,7 +29,10 @@ export const boardStore = ({
         setCurrBoard(state, { board }) {
             state.currBoard = board
         },
-        setCurrTask(state, { taskId }) {
+        setCurrTask(state, {task}) {
+            state.currTask = task
+        },
+        setTaskById(state, { taskId }) {
             if (!taskId) {
                 state.currTask = null
                 return
@@ -65,13 +69,13 @@ export const boardStore = ({
             const prevTask = JSON.parse(JSON.stringify(context.state.currTask))
             context.commit({ type: 'setCurrTask', task })
             const boardCopy = JSON.parse(JSON.stringify(context.state.currBoard))
-
-            context.state.boardCopy.taskLists.forEach(taskList => {
+            console.log(boardCopy)
+            boardCopy.taskLists.forEach(taskList => {
                 let idx = taskList.tasks.findIndex(currTask => currTask.id === task.id)
                 if (idx !== -1) {
                     taskList.tasks.splice(idx, 1, task)
                     try {
-                        context.dispatch({ type: 'saveBoard', boardCopy })
+                        context.dispatch({ type: 'saveBoard', board: boardCopy })
                     } catch {
                         console.log('Err: Task saving failed')
                         context.commit({ type: 'setCurrTask', prevTask })

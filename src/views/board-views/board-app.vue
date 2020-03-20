@@ -37,7 +37,7 @@ export default {
         this.board = JSON.parse(JSON.stringify(board));
         const taskId = this.$route.params.taskId;
 
-        this.$store.commit({ type: "setCurrTask", taskId });
+        this.$store.commit({ type: "setTaskById", taskId });
         this.task = JSON.parse(JSON.stringify(this.currTask));
         this.isTaskLoad = false;
       } catch {
