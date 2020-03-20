@@ -22,7 +22,7 @@
       >Attachments({{task.attachments.length}})</div>
     </section>
     <div class="preview-members" v-if="task.members.length">
-      <memberPreview :members="task.members" />
+      <member-preview :members="task.members" />
       <!-- <div
         class="preview-member"
         v-for="member in task.members"

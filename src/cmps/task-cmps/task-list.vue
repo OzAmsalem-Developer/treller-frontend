@@ -18,6 +18,7 @@
         placeholder="Task name"
       ></textarea>
       <button>Add</button>
+      <button @click.prevent="newTask = null">X</button>
     </form>
   </section>
 </template>
@@ -29,12 +30,15 @@ import { boardService } from "@/services/board.service";
 export default {
   data() {
     return {
-      newTask: null
+      newTask: null,
     };
   },
   methods: {
     getEmptyTask() {
-      this.newTask = this.newTask ? null : boardService.getEmptyTask();
+      this.newTask = boardService.getEmptyTask();
+      setTimeout(() => {
+         this.$refs.taskInput.focus();
+      }, 2);
     },
     addTask() {
       this.$emit("task-added", {
@@ -46,7 +50,7 @@ export default {
       setTimeout(() => {
         this.$refs.tasks.scrollTo(0, this.$refs.tasks.scrollHeight);
         this.$refs.tasks.scrollIntoView({ block: "start" });
-      }, 222);
+      }, 2);
       this.$refs.taskInput.focus();
     }
   },

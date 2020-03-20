@@ -83,7 +83,7 @@ export default {
     }
   },
   watchers: {
-    $route() {
+    '$route'() {
       const boardId = this.$route.params.boardId;
       this.loadBoardAndTask(boardId);
     }
