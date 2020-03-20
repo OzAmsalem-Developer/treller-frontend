@@ -1,7 +1,13 @@
 <template>
   <section v-if="task" class="task-details">
     <!-- <h1>{{task.name}}</h1> -->
-    <textarea v-model="editedTask.name" class="details-task-name" cols="20" rows="1" @change="updateTaskName"/>
+    <textarea
+      v-model="editedTask.name"
+      class="details-task-name"
+      cols="20"
+      rows="1"
+      @change="updateTaskName"
+    />
     <div class="details-container">
       <div class="details-info">
         <section v-if="task.labels.length" class="details-labels">
@@ -96,6 +102,23 @@ export default {
     };
   },
   methods: {
+    async saveBoard() {
+      await this.$store.dispatch({ type: "saveBoard", board: this.board });
+      try {
+        console.log("CMP: Board Saved Succesfully");
+      } catch (prevBoard) {
+        this.board = JSON.parse(JSON.stringify(board));
+        console.log("Err, board didnt saved");
+      }
+    },
+    async updateTask() {
+      await this.$store.dispatch({ type: "updateToy", editedTask });
+      try {
+      } catch (preTask) {
+        this.editedTask = preTask;
+        console.log("Err, failed to save task");
+      }
+    },
     moveTask() {
       console.log("Please move the Task!");
     },
@@ -103,15 +126,10 @@ export default {
       console.log("Please copy the Task!");
     },
     updateTaskName() {
-    console.log('I will updated th task name!')
-
+      console.log("I will updated th task name!");
     },
     setLabels() {
       console.log("Please set the Labels!");
-      // Change the currTask
-      //1. Update the store - currTask
-      //2. dispatch to update the server
-      //3. catch {
     },
     setMembers() {
       console.log("Please set the Members!");
