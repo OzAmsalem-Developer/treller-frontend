@@ -1,5 +1,5 @@
 .task-details {
-  // position: fixed;
+  position: fixed;
   background-color: $clr5;
   width: 768px;
   margin: 50px auto 0;
@@ -8,51 +8,91 @@
   min-height: 300px;
   display: flex;
   flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0 10px;
 }
 
 .task-details > * {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.details-container {
+  display: flex;
+  justify-content: space-between;
+}
+.details-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.details-actions {
+  display: flex;
+  flex-direction: column;
+  // justify-content: space-between;
+  // align-items: center;
+  button {
+    background-color: $clr2;
+    border-radius: 3px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+  }
+}
+
+.details-feature-title {
+  font-family: OpenSans-Bold;
 }
 
 .details-labels {
-  background-color: $clr3;
+  background-color: $clr5;
+
+  button {
+    border: solid 1px $clr6;
+    border-radius: 3px;
+    cursor: pointer;
+    min-width: 20px;
+  }
+}
+
+.details-members-list,
+.details-labels-list,
+.details-due-list {
+  display: flex;
 }
 
 .details-members {
-  background-color: $clr3;
+  background-color: $clr5;
 
   img,
   button {
-    border-radius: 50%;
+    // border-radius: 50%;
+    border-radius: 3px;
     border: solid 1px $clr6;
     cursor: pointer;
-    min-width: 50px;
+    min-width: 20px;
   }
 }
 
 .details-due-date {
-  background-color: $clr3;
+  background-color: $clr5;
 }
 
 .details-description {
-  background-color: $clr3;
+  background-color: $clr5;
 }
 
 .details-checklist {
-  background-color: $clr3;
+  background-color: $clr5;
 }
 
 .details-discussion {
-  background-color: $clr3;
+  background-color: $clr5;
 }
 
-.details-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  button {
-    background-color: $clr3;
-    border-radius: 3px;
-    padding: 5px 10px;
-  }
+.action-link {
+  color: $clr2;
+  font-size: 12px;
+  cursor: pointer;
+  margin-inline-start: 8px;
 }

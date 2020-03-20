@@ -157,13 +157,7 @@ function _getSampleBoards() {
                             comments: [
                                 {
                                     id: utilService.makeId(),
-                                    from: {
-                                        minimalUser: {
-                                            _id: 'u101',
-                                            fullName: 'Guy Amsalem',
-                                            imgUrl: null
-                                        }
-                                    },
+                                    from: 'user2',
                                     txt: 'Im here for help, feel free to call',
                                     createdAt: 32938219823782,
                                     imgUrl: null
@@ -205,13 +199,7 @@ function _getSampleBoards() {
                             comments: [
                                 {
                                     id: utilService.makeId(),
-                                    from: {
-                                        minimalUser: {
-                                            _id: 'u101',
-                                            fullName: 'Guy Amsalem',
-                                            imgUrl: null
-                                        }
-                                    },
+                                    from: 'Guy Amsalem',
                                     txt: 'Im here for help, feel free to call',
                                     createdAt: 32938219823782,
                                     imgUrl: null
@@ -259,13 +247,7 @@ function _getSampleBoards() {
                             comments: [
                                 {
                                     id: utilService.makeId(),
-                                    from: {
-                                        minimalUser: {
-                                            _id: 'u102',
-                                            fullName: 'Oz Amsalem',
-                                            imgUrl: null
-                                        }
-                                    },
+                                    from: 'Oz Amsalem',
                                     txt: 'Good luck with that',
                                     createdAt: 32938219823782,
                                     imgUrl: null
@@ -320,13 +302,7 @@ function _getSampleBoards() {
                             comments: [
                                 {
                                     id: utilService.makeId(),
-                                    from: {
-                                        minimalUser: {
-                                            _id: 'u103',
-                                            fullName: 'Rami Davidov',
-                                            imgUrl: null
-                                        }
-                                    },
+                                    from: 'Rami Davidov',
                                     txt: 'Best team EVER!!!',
                                     createdAt: 32938219823782,
                                     imgUrl: null
