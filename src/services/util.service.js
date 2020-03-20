@@ -3,8 +3,8 @@ export const utilService = {
     makeLorem,
     makeId,
     createWord,
+    getHoursDifference,
     getRandomColor,
-    getFormattedNowDate,
     scrollTo
 }
 
@@ -48,6 +48,14 @@ function getRandomColor() {
     return color;
 }
 
+
+function getHoursDifference(timestamp) {
+    const currTime = Date.now();
+    const seconds = (timestamp - currTime) / 1000;
+    var hours = Math.floor(seconds / 3600);
+    return hours
+}
+
 function createWord(length) {
     var word = '';
     while (word.length < length) {
@@ -55,16 +63,6 @@ function createWord(length) {
         word += randChar;
     }
     return word;
-}
-
-function getFormattedNowDate() {
-    const date = new Date();
-    const year = date.getFullYear().toString()
-    let month = (date.getMonth() + 1).toString()
-    let day = date.getDate().toString()
-    if (month < 10) month = '0' + month
-    if (day < 10) day = '0' + day
-    return year + '-' + month + '-' + day
 }
 
 //Private

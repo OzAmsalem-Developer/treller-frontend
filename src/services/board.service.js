@@ -125,7 +125,7 @@ function _getSampleBoards() {
                                 }
                             ],
                             labels: ['label1'],
-                            dueDate: null,
+                            dueDate: (Date.now() + 1000 * 60 * 60 * 5),
                             desc: 'Build a nice data to show',
                             attachments: [],
                             checklist:
@@ -162,7 +162,7 @@ function _getSampleBoards() {
                                 }
                             ],
                             labels: ['label2'],
-                            dueDate: (Date.now() + 1000 * 60 * 60 * 48),
+                            dueDate: (Date.now() + 1000 * 60 * 60 * 100),
                             desc: 'Start a new project',
                             attachments: [],
                             checklist:
@@ -252,7 +252,7 @@ function _getSampleBoards() {
                                 }
                             ],
                             labels: [],
-                            dueDate: (Date.now() + 1000 * 60 * 60 * 24),
+                            dueDate: (Date.now() + 1000 * 60 * 60 * 5),
                             desc: 'Buliding taskList componnent',
                             attachments: [],
                             checklist:
@@ -322,8 +322,8 @@ function _getSampleBoards() {
                                     imgUrl: null
                                 }
                             ],
-                            labels: [],
-                            dueDate: null,
+                            labels: ['label1'],
+                            dueDate: Date.now(),
                             desc: null,
                             attachments: [],
                             checklist: null,
