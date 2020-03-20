@@ -18,10 +18,6 @@ export default {
   methods: {},
   props: {
     labels: Array
-  },
-  created() {
-      console.log(this.labels);
-      
   }
 };
 </script>
