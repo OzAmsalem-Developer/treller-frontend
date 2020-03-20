@@ -102,15 +102,6 @@ export default {
     };
   },
   methods: {
-    async saveBoard() {
-      await this.$store.dispatch({ type: "saveBoard", board: this.board });
-      try {
-        console.log("CMP: Board Saved Succesfully");
-      } catch (prevBoard) {
-        this.board = JSON.parse(JSON.stringify(board));
-        console.log("Err, board didnt saved");
-      }
-    },
     async updateTask() {
       await this.$store.dispatch({ type: "updateToy", editedTask });
       try {
