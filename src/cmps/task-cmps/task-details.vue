@@ -5,7 +5,6 @@
     <!-- <pre>{{task}}</pre> -->
     <div class="details-container">
       <div class="details-info">
-
         <section v-if="task.labels.length" class="details-labels">
           <!-- <span>💡</span> -->
           <span class="font-bold">Labels:</span>
@@ -18,16 +17,14 @@
         </section>
 
         <section v-if="task.members" class="details-members">
-          <member-preview :members="task.members"></member-preview>
-
           <span class="font-bold">Members:</span>
-          <span class="action-link">Invite</span>
+          <span class="action-link" @click="setMembers">Invite</span>
           <div class="details-members-list">
-            <div v-for="member in task.members" :key="member._id">{{member.fullName}}</div>
-            <button>+</button>
+            <!-- <div v-for="member in task.members" :key="member._id">{{member.fullName}}</div> -->
+            <member-preview :members="task.members"></member-preview>
+            <button class="member-card" @click="setMembers">+</button>
           </div>
         </section>
-        
 
         <section class="details-due-date">
           <!-- <span>🕖</span> -->
@@ -65,7 +62,7 @@
           <input class="discussion-add-item" type="text" placeholder="Write a comment" />
           <ul v-if="task.comments.length" class="discussion-cmts clean-items">
             <li v-for="cmt in task.comments" :key="cmt.id">
-              <span class="font-bold">{{cmt.from}}: </span>
+              <span class="font-bold">{{cmt.from}}:</span>
               <span>{{cmt.txt}}</span>
               <span>{{cmt.createdAt | minimalDate}}</span>
             </li>
@@ -89,13 +86,13 @@
 </template>
 
 <script>
-import memberPreview from '@/cmps/task-cmps/previews/member-preview.vue'
+import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
 
 export default {
   data() {
     return {
       editedTask: null
-    }
+    };
   },
   methods: {
     moveTask() {
@@ -132,14 +129,14 @@ export default {
   },
   computed: {
     task() {
-      return this.$store.getters.currTask
+      return this.$store.getters.currTask;
     }
   },
   created() {
     console.log("Details page loaded successfully");
-    this.editedTask = JSON.parse(JSON.stringify(this.task))
-    console.log('editedTask', this.editedTask)
-    console.log('Task members:', this.task.members)
+    this.editedTask = JSON.parse(JSON.stringify(this.task));
+    console.log("editedTask", this.editedTask);
+    console.log("Task members:", this.task.members);
   },
   components: {
     memberPreview
