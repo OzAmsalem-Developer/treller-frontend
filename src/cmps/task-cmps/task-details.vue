@@ -5,6 +5,7 @@
     <!-- <pre>{{task}}</pre> -->
     <div class="details-container">
       <div class="details-info">
+
         <section v-if="task.labels.length" class="details-labels">
           <!-- <span>💡</span> -->
           <span class="font-bold">Labels:</span>
@@ -132,9 +133,8 @@ export default {
   },
   created() {
     console.log("Details page loaded successfully");
-    console.log("Tast details, Prop: Task:");
     this.editedTask = JSON.parse(JSON.stringify(this.task))
-    // Get task and deepcopy it
+    console.log('editedTask', this.editedTask)
   }
 };
 </script>
