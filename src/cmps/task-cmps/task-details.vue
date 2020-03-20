@@ -1,9 +1,7 @@
 <template>
   <section v-if="task" class="task-details">
-    <h1 class="details-task-name">{{task.name}}</h1>
-
-    <textarea  name="details-task-name" id="" cols="20" rows="2" />
-
+    <!-- <h1>{{task.name}}</h1> -->
+    <textarea v-model="editedTask.name" class="details-task-name" cols="20" rows="1" />
     <div class="details-container">
       <div class="details-info">
         <section v-if="task.labels.length" class="details-labels">
@@ -13,7 +11,7 @@
           <div class="details-labels-list">
             <!-- <div v-for="label in task.labels" :key="label.id">{{label.txt}}</div> -->
             <!-- <div>{{task.labels.length}}</div> -->
-            <labelPreview :labels="task.labels"/>
+            <labelPreview :labels="task.labels" />
             <button>+</button>
           </div>
         </section>
@@ -105,6 +103,7 @@ export default {
       console.log("Please copy the Task!");
     },
     updateTaskName() {
+
 
     },
     setLabels() {
