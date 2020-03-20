@@ -29,7 +29,8 @@ async function loadOne(boardId) {
     return foundBoard
 }
 
-function save(board) {
+async function save(board) {
+    if (!gBoards) await query()
     if (board._id) {
         const boardIdx = gBoards.findIndex(currBoard => currBoard._id === board._id)
         if (boardIdx === -1) throw new Error('Board not found')

@@ -3,7 +3,7 @@
   display: inline-block;
   background-color: #ebecf0;
   padding: 7px 10px 10px 10px;
-  height: 500px;
+  max-height: 500px;
   .tasks {
     overflow-x: auto;
     max-height: 95%;
