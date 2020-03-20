@@ -10,6 +10,11 @@
     align-items: center;
 }
 
+// Font
+.font-bold {
+    font-family: $font-bold;
+}
+
 // Aspect ratios
 
 .ratio-16-9 { @include aspect-ratio(100, 56); }

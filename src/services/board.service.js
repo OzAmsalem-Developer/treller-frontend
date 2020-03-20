@@ -1,5 +1,5 @@
-import {storageService} from './storage.service'
-import {utilService} from './util.service'
+import { storageService } from './storage.service'
+import { utilService } from './util.service'
 
 const KEY = 'boards'
 var gBoards
@@ -7,7 +7,8 @@ var gBoards
 export const boardService = {
     loadOne,
     query,
-    save
+    save,
+    getEmptyList
 }
 
 function query(filterBy) {
@@ -33,13 +34,21 @@ function save(board) {
         const boardIdx = gBoards.findIndex(currBoard => currBoard._id === board._id)
         if (boardIdx === -1) throw new Error('Board not found')
         gBoards.splice(boardIdx, 1, board)
-      
+
     } else {
         board._id = utilService.makeId(15)
         gBoards.unshift(board)
     }
     storageService.store(KEY, gBoards)
     return Promise.resolve(board)
+}
+
+function getEmptyList() {
+    return {
+        id: utilService.makeId(),
+        name: '',
+        tasks: []
+    }
 }
 
 function _getSampleBoards() {
@@ -70,7 +79,7 @@ function _getSampleBoards() {
                     txt: 'ITP'
                 }
             ],
-            taskLists : [
+            taskLists: [
                 {
                     id: utilService.makeId(),
                     name: 'Planning',
