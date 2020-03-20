@@ -2,11 +2,13 @@
   <section class="task-details">
     <h1>{{task.name}}</h1>
 
-    <section v-if="task.labels" class="details-labels">
+    <pre>{{task}}</pre>
+    <section v-if="task.labels.length" class="details-labels">
       <span>Labels:</span>
       <span>Update</span>
       <div class="details-labels-list">
-        <div v-for="label in labels" :key="label.id">{{label.txt}}</div>
+        <!-- <div v-for="label in task.labels" :key="label.id">{{label.txt}}</div> -->
+        <div>{{task.labels.length}}</div>
         <button>+</button>
       </div>
     </section>
@@ -28,17 +30,17 @@
       <span v-if="task.dueDate">{{task.dueDate | minimalDate}}:</span>
     </section>
 
-    <section v-if="task.description" class="details-description">
+    <section v-if="task.desc" class="details-description">
       <span>Description:</span>
       <span>Edit</span>
-      <p>{{task.description}}:</p>
+      <p>{{task.desc}}:</p>
     </section>
 
     <section v-if="task.checklist" class="details-checklist">
-      <span>{{task.checklist}}</span>
+      <span>{{task.checklist.title}}</span>
       <span>remove</span>
       <ul class="details-checklist-items">
-        <li v-for="item in task.checklist" :key="item.id"></li>
+        <li v-for="item in task.checklist.todos" :item="item" :key="item.id">{{item.txt}}</li>
       </ul>
       <input class="checklist-add-item" type="text" placeholder="add an item" />
     </section>
@@ -48,13 +50,14 @@
       <span>hide activity feed</span>
       <input class="discussion-add-item" type="text" placeholder="Write a comment" />
       <ul v-if="task.comments.length" class="discussion-cmts">
-        <li v-for="cmt in comments" :key="cmt.id">
-          <span>{{cmt.from}}</span>
+        <li v-for="cmt in task.comments" :key="cmt.id">
+          <span>{{cmt.from.minimalUser.fullName}}</span>
           <span>{{cmt.txt}}</span>
           <span>{{cmt.createdAt}}</span>
         </li>
       </ul>
     </section>
+
     <section class="details-actions">
       <button @click="moveTask">Move</button>
       <button @click="copyTask">Copy</button>
