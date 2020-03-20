@@ -11,7 +11,8 @@
           <span class="action-link">Update</span>
           <div class="details-labels-list">
             <!-- <div v-for="label in task.labels" :key="label.id">{{label.txt}}</div> -->
-            <div>{{task.labels.length}}</div>
+            <!-- <div>{{task.labels.length}}</div> -->
+            <labelPreview :labels="task.labels"/>
             <button>+</button>
           </div>
         </section>
@@ -87,6 +88,7 @@
 
 <script>
 import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
+import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 
 export default {
   data() {
@@ -136,10 +138,11 @@ export default {
     console.log("Details page loaded successfully");
     this.editedTask = JSON.parse(JSON.stringify(this.task));
     console.log("editedTask", this.editedTask);
-    console.log("Task members:", this.task.members);
+    // console.log("Task members:", this.task.members);
   },
   components: {
-    memberPreview
+    memberPreview,
+    labelPreview
   }
 };
 </script>
