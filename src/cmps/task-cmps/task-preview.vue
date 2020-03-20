@@ -18,17 +18,21 @@
       >Attachments({{task.attachments.length}})</div>
     </section>
     <div class="preview-members" v-if="task.members.length">
-      <div
+      <memberPreview :members="task.members"/>
+       <!-- <div
         class="preview-member"
         v-for="member in task.members"
         :key="member.id"
-      >{{member.fullName}}</div>
+      >{{member.fullName}}</div> -->
     </div>
+  
   </section>
 </template>
 
 <script>
 import labelPreview from './previews/label-preview.vue'
+import memberPreview from './previews/member-preview.vue'
+
 export default {
   props: {
     task: Object
@@ -42,7 +46,8 @@ export default {
     }
   },
   components: {
-    labelPreview
+    labelPreview,
+    memberPreview
   }
 };
 </script>
