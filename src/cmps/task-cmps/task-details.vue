@@ -7,7 +7,7 @@
       <div class="details-info">
         <section v-if="task.labels.length" class="details-labels">
           <!-- <span>💡</span> -->
-          <span class="details-feature-title">Labels:</span>
+          <span class="font-bold">Labels:</span>
           <span class="action-link">Update</span>
           <div class="details-labels-list">
             <!-- <div v-for="label in task.labels" :key="label.id">{{label.txt}}</div> -->
@@ -17,7 +17,8 @@
         </section>
 
         <section v-if="task.members" class="details-members">
-          <span class="details-feature-title">Members:</span>
+          <span></span>
+          <span class="font-bold">Members:</span>
           <span class="action-link">Invite</span>
           <div class="details-members-list">
             <div v-for="member in task.members" :key="member._id">{{member.fullName}}</div>
@@ -27,7 +28,7 @@
 
         <section class="details-due-date">
           <!-- <span>🕖</span> -->
-          <span class="details-feature-title">Due Date:</span>
+          <span class="font-bold">Due Date:</span>
           <span class="action-link">Update</span>
           <div class="details-due-list">
             <input type="checkbox" name id />
@@ -38,15 +39,15 @@
 
         <section v-if="task.desc" class="details-description">
           <!-- <span>📄</span> -->
-          <span class="details-feature-title">Description:</span>
+          <span class="font-bold">Description:</span>
           <span class="action-link">Edit</span>
           <p>{{task.desc}}:</p>
         </section>
 
         <section v-if="task.checklist" class="details-checklist">
-          <span class="details-feature-title">{{task.checklist.title}}</span>
+          <span class="font-bold">{{task.checklist.title}}</span>
           <span class="action-link">remove</span>
-          <ul class="details-checklist-items">
+          <ul class="details-checklist-items clean-items">
             <li v-for="item in task.checklist.todos" :item="item" :key="item.id">{{item.txt}}</li>
           </ul>
           <input class="checklist-add-item" type="text" placeholder="add an item" />
@@ -55,13 +56,13 @@
         <section class="details-discussion">
           <div>
             <!-- <span>💬</span> -->
-            <span class="details-feature-title">Discussion:</span>
+            <span class="font-bold">Discussion:</span>
             <span class="action-link">hide activity feed</span>
           </div>
           <input class="discussion-add-item" type="text" placeholder="Write a comment" />
-          <ul v-if="task.comments.length" class="discussion-cmts">
+          <ul v-if="task.comments.length" class="discussion-cmts clean-items">
             <li v-for="cmt in task.comments" :key="cmt.id">
-              <span>{{cmt.from}}: </span>
+              <span class="font-bold">{{cmt.from}}: </span>
               <span>{{cmt.txt}}</span>
               <span>{{cmt.createdAt | minimalDate}}</span>
             </li>

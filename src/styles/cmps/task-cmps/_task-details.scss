@@ -25,6 +25,10 @@
 .details-info {
   display: flex;
   flex-direction: column;
+
+  > * {
+    margin-bottom: 20px;
+  }
 }
 
 .details-actions {
@@ -40,9 +44,9 @@
   }
 }
 
-.details-feature-title {
-  font-family: OpenSans-Bold;
-}
+// .details-feature-title {
+//   font-family: OpenSans-Bold;
+// }
 
 .details-labels {
   background-color: $clr5;
@@ -95,4 +99,8 @@
   font-size: 12px;
   cursor: pointer;
   margin-inline-start: 8px;
+}
+
+.clean-items {
+list-style: none;
 }
