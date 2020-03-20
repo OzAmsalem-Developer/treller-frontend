@@ -1,10 +1,11 @@
 <template>
   <section class="task-preview">
-    <section v-if="task.labels.length" class="preview-labels">
+    <!-- <section v-if="task.labels.length" class="preview-labels">
       <div class="preview-label" v-for="label in task.labels" :key="label.id">
         <span>{{label}}</span>
       </div>
-    </section>
+    </section> -->
+    <label-preview :labels="task.labels"/>
     <h2 class="preview-title">{{task.name}}</h2>
     <section class="preview-indications">
       <div class="preview-due-date" v-if="task.dueDate">🕖{{task.dueDate | minimalDate}}</div>
@@ -27,6 +28,7 @@
 </template>
 
 <script>
+import labelPreview from './previews/label-preview.vue'
 export default {
   props: {
     task: Object
@@ -38,6 +40,9 @@ export default {
       const allTodos = todos.length;
       return doneTodos + "/" + allTodos;
     }
+  },
+  components: {
+    labelPreview
   }
 };
 </script>
