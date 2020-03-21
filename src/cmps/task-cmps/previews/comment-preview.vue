@@ -9,12 +9,20 @@
         <div class="comment-time">{{comment.createdAt | minimalDate}}</div>
       </div>
       <div class="comment-txt">{{comment.txt}}</div>
+      <div class="comment-controls">
+        <span class="action-link" @click="removeComment(comment.id)">delete</span>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
 export default {
+  methods: {
+    removeComment(id) {
+      this.$emit('removeComment', id)
+    }
+  },
   props: {
     comments: Array
   }

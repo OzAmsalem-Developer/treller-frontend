@@ -22,7 +22,7 @@
 
 <script>
 import boardHeader from "@/cmps/board-cmps/board-header";
-import taskList from "@/cmps/task-cmps/task-list";
+import taskList from "@/cmps/list-cmps/task-list";
 import taskDetails from "@/cmps/task-cmps/task-details";
 import { boardService } from "@/services/board.service";
 import { utilService } from "@/services/util.service";

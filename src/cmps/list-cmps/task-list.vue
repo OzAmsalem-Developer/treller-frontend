@@ -12,6 +12,7 @@
       <button @click="isMenuOpen = !isMenuOpen" class="menu-btn">...</button>
       <list-menu
         @add-task="getEmptyTask(); isMenuOpen = false"
+        @list-moved="moveList"
         :listId="taskList.id"
         v-if="isMenuOpen"
       />
@@ -43,7 +44,7 @@
 </template>
 
 <script>
-import taskPreview from "./task-preview.vue";
+import taskPreview from "@/cmps/task-cmps/task-preview.vue";
 import { boardService } from "@/services/board.service";
 import listMenu from "@/cmps/list-cmps/list-menu";
 
@@ -102,6 +103,9 @@ export default {
         this.$emit(eventName, value);
         this.$nextTick(resolve);
       });
+    },
+    moveList(toIdx) {
+      this.$emit('list-moved', {listId: this.taskList.id, toIdx})
     },
     saveListName(ev) {
       this.saveList();

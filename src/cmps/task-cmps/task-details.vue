@@ -1,5 +1,5 @@
 <template>
-  <div class="window-overlay" ref="window" @click.stop="closeDetailsOverlay">
+  <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
     <section v-if="task" class="task-details">
       <div class="task-details-header">
         <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
@@ -26,13 +26,13 @@
             </div>
           </section>
 
-          <section class="details-due-date">
+          <section v-if="task.dueDate.isCompleted !== null" class="details-due-date">
             <!-- <span>🕖</span> -->
             <span class="font-bold">Due Date:</span>
             <span class="action-link">Update</span>
             <div class="details-due-list">
               <input type="checkbox" v-model="editedTask.dueDate.isCompleted" @change="updateTask" />
-              <input v-model="currDueDate" @change="setDueDate" type="date" />
+              <input v-model="currDueDate" @change="updateDueDate" type="date" ref="calendar" />
               <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
             </div>
           </section>
@@ -47,6 +47,7 @@
               v-model="editedTask.desc"
               @change="updateTask"
               class="details-text-area details-desc-input"
+              ref="description"
             />
           </section>
 
@@ -57,6 +58,7 @@
                 v-model="editedTask.checklist.title"
                 type="text"
                 @change="updateTask"
+                ref="checklist"
               />
               <!-- <span class="action-link">remove</span> -->
             </div>
@@ -77,7 +79,7 @@
             <div>
               <!-- <span>💬</span> -->
               <span class="font-bold">Discussion:</span>
-              <span class="action-link">hide activity feed</span>
+              <!-- <span class="action-link">hide activity feed</span> -->
             </div>
             <input
               class="details-clean-input discussion-add-item"
@@ -85,8 +87,9 @@
               v-model="currComment.txt"
               @change="addComment"
               placeholder="Write a comment"
+              ref="comment"
             />
-            <comment-preview :comments="editedTask.comments" />
+            <comment-preview :comments="editedTask.comments" @removeComment="removeComment" />
           </section>
         </div>
 
@@ -98,7 +101,6 @@
           <button @click="setDueDate">Due Date</button>
           <button @click="updateDescription">Description</button>
           <button @click="updateChecklist">Checklist</button>
-          <!-- <button @click="sendAttachment">Attachments</button> -->
           <button @click="sendComment">Comments</button>
         </section>
       </div>
@@ -119,9 +121,7 @@ export default {
       editedTask: null,
       currDueDate: null,
       currTodo: {
-        id: "",
-        txt: "",
-        isDone: false
+        txt: ""
       },
       currComment: {
         txt: ""
@@ -149,11 +149,21 @@ export default {
         console.log("Failed to save todo + task");
       }
     },
+    async removeTodo(todoId) {
+      const idx = this.editedTask.checklist.todos.findIndex(
+        todo => todo.id === todoId
+      );
+      if (idx !== -1) {
+        this.editedTask.checklist.todos.splice(idx, 1);
+      }
+      await this.updateTask().catch(() => {
+        console.log("Failed to save todo + task");
+      });
+    },
     async addComment() {
       let emptyComment = utilService.getEmptyComment();
       emptyComment.txt = this.currComment.txt;
       emptyComment.from = "Guest";
-      console.log("emptyComment", emptyComment);
       this.editedTask.comments.unshift(emptyComment);
       await this.updateTask();
       try {
@@ -162,12 +172,12 @@ export default {
         console.log("Failed to save comment + task");
       }
     },
-    async removeTodo(todoId) {
-      const idx = this.editedTask.checklist.todos.findIndex(
-        todo => todo.id === todoId
+    async removeComment(commentId) {
+      const idx = this.editedTask.comments.findIndex(
+        comment => comment.id === commentId
       );
       if (idx !== -1) {
-        this.editedTask.checklist.todos.splice(idx, 1);
+        this.editedTask.comments.splice(idx, 1);
       }
       await this.updateTask().catch(() => {
         console.log("Failed to save todo + task");
@@ -188,9 +198,6 @@ export default {
     copyTask() {
       console.log("Please copy the Task!");
     },
-    updateTaskName() {
-      console.log("I will updated th task name!");
-    },
     setLabels() {
       console.log("Please set the Labels!");
     },
@@ -198,18 +205,39 @@ export default {
       console.log("Please set the Members!");
     },
     updateDescription() {
-      console.log("Please update the Description!");
+      this.$refs.description.focus();
     },
-    updateChecklist() {
-      console.log("Please update the Checklist!");
-    },
-    sendAttachment() {
-      console.log("Please send this Attachments!");
+    async updateChecklist() {
+      if (this.editedTask.checklist) {
+        this.$refs.checklist.focus();
+      } else {
+        let emptyChecklist = utilService.getEmptyChecklist();
+        this.editedTask.checklist = emptyChecklist;
+        await this.updateTask();
+        try {
+          this.$refs.checklist.focus();
+        } catch {
+          console.log("failed to save checklist");
+        }
+      }
     },
     sendComment() {
-      console.log("Please send this Comment!");
+      this.$refs.comment.focus();
     },
-    setDueDate() {
+    async setDueDate() {
+      if (this.editedTask.dueDate.isCompleted === null) {
+        this.editedTask.dueDate.isCompleted = false;
+        await this.updateTask();
+        try {
+          this.$refs.calendar.focus();
+        } catch {
+          console.log("failed to save setDueDate");
+        }
+      } else {
+        this.$refs.calendar.focus();
+      }
+    },
+    updateDueDate() {
       // Turn currDueDate to Timestamp!
       this.editedTask.dueDate.time = new Date(this.currDueDate).getTime();
       this.updateTask();
@@ -237,6 +265,7 @@ export default {
   },
   created() {
     this.editedTask = JSON.parse(JSON.stringify(this.task));
+    console.log("// Details Task:", this.editedTask);
     if (this.editedTask) {
       this.getCurrDueDate();
     }
