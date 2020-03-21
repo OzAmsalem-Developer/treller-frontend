@@ -1,17 +1,14 @@
 .board-app {
-    width: 30em;
-    overflow-x: auto;
-    // white-space: nowrap;
     .lists-container {
+    min-width: 200px;
+    overflow-x: auto;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     user-select: none;
-    padding: 0 10px;
+    margin: 0 8px;
     margin-bottom: 8px;
-    padding-bottom: 8px;
-    position: absolute;
-
+    padding-bottom: 10px;
     > *  {
         margin-right: 9px;
         border-radius: 3px;
@@ -22,18 +19,37 @@
 
 
 //Scroll bar
-// .board-app::-webkit-scrollbar{
-//     height: 14px;
-//     width: 4px;
-//     background: gray;
-// }
-// .board-app::-webkit-scrollbar-thumb:horizontal{
-//     background: #000;
-//     border-radius: 10px;
+.lists-container::-webkit-scrollbar {
+  width: 12px;
+  height: 11px;
+}
+
+.lists-container::-webkit-scrollbar-track {
+  border-radius: 10px;
+  // border: 16px solid rgba(17, 59, 175, 0.904);
+}
+.lists-container::-webkit-scrollbar-thumb {
+  border: 9px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.lists-container::-webkit-scrollbar-track {
+  background-color: rgba(158, 158, 158, 0.38);
+}
+
+.lists-container::-webkit-scrollbar-thumb {
+}
+
+
+
+// .lists-container::-webkit-scrollbar-track-piece {
+//   background: rgba(0,0,0,.15);
 // }
 
-// .board-app::-scrollbar-button {
-//     display: block;
-//     height: 4px;
-//     width: 4px;
+// .lists-container::-webkit-scrollbar-track-piece {
+//   background: rgba(9,30,66,.08);
+// }
+
+// .lists-container::-webkit-scrollbar-track-piece {
+//   background: rgba(0,0,0,.15);
 // }

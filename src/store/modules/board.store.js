@@ -20,6 +20,9 @@ export const boardStore = ({
         },
         labels(state) {
             return state.currBoard.labels
+        },
+        currBoard(state) {
+            return state.currBoard
         }
     },
     mutations: {
@@ -33,8 +36,8 @@ export const boardStore = ({
             state.currTask = task
         },
         setTaskById(state, { taskId }) {
-            if (!taskId) {
-                state.currTask = null
+            if (!taskId) { //Option to set null
+                state.currTask = null 
                 return
             }
             state.currBoard.taskLists.forEach(taskList => {

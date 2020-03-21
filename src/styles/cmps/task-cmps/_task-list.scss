@@ -2,29 +2,52 @@
   width: 280px;
   display: inline-block;
   background-color: #ebecf0;
-  padding: 7px 10px 10px 10px;
   max-height: 500px;
+  position: relative;
   .tasks {
+    padding: 0 5px;
+    margin: 0 5px;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: 95%;
-    padding-right: 7px;
-    max-height: 400px;
+    max-height: 380px;
   }
   header {
+    width: 272px;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     .menu-btn {
       font-size: rem(22px);
     }
 
     .list-name {
+      border: 0;
+      outline: 0;
+      cursor: pointer;
+      background-color: transparent;
+      flex-grow: 1;
+      margin-right: 5px;
       padding-bottom: 7px;
-      font-family: OpenSans-Bold;
       font-size: 14px;
-      color: $clr1;
+      color: $clr3;
+      padding: rem(4px) rem(2px);
+      border-radius: 5px;
+      font-family: $font-bold;
+      box-shadow: inset 0 0 0 2px transparent;
+      transition: all 0.3s;
     }
+
+    .list-name:focus {
+      box-shadow: inset 0 0 0 2px $clr3;
+      background-color: rgb(252, 252, 252);
+      padding-left: rem(10px);
+    }
+  }
+
+  .add-task-btn {
+    height: 40px;
   }
 }
 

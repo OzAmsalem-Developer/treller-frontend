@@ -25,6 +25,12 @@
 @import 'cmps/task-cmps/task-details';
 @import 'cmps/task-cmps/task-menu';
 
+// BOARD CMPS
+@import 'cmps/board-cmps/board-header';
+
+// TASKLIST CMPS
+@import 'cmps/task-cmps/list-cmps/list-menu';
+
 //TASK CMPS => PREVIEWS
 @import 'cmps/task-cmps/previews/label-preview';
 @import 'cmps/task-cmps/previews/member-preview';

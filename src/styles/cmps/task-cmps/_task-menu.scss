@@ -5,7 +5,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     min-width: 120px;
-    box-shadow: 0 2px 6px 0 rgba(0,0,0,.2);
+    box-shadow: $shadow;
     top: 10px;
     right: 20px;
     z-index: 1;
