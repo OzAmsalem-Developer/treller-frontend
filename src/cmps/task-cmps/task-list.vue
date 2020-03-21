@@ -20,7 +20,7 @@
       <task-preview
         v-for="task in tasks"
         :task="task"
-        :taskList="taskList"
+        :listId="taskList.id"
         :key="task.id"
         @remove-task="removeTask"
       />

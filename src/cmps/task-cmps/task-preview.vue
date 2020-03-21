@@ -4,7 +4,7 @@
     <task-menu
      v-if="isMenuOpen" 
      :task="task" 
-     :listId="taskList.id" 
+     :listId="listId" 
      @click.native="toggleMenu" 
      @remove-task="$emit('remove-task', task.id)"
      />
@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       isMenuOpen: false,
+      taskCopy: null
     };
   },
   computed: {
@@ -62,6 +63,9 @@ export default {
       this.$router.push(this.taskDetails);
     }
   },
+  created() {
+    this.taskCopy = JSON.parse(JSON.stringify(this.task))
+  },
   components: {
     labelPreview,
     memberPreview,
@@ -70,7 +74,7 @@ export default {
   },
   props: {
     task: Object,
-    taskList: Object
+    listId: String
   }
 };
 </script>
