@@ -26,6 +26,10 @@
 
 .comment-info > *:first-child {
   margin-inline-end: 10px;
+  font-family: $font-bold;
+}
+.comment-info > *:last-child {
+  font-family: $font-light;
 }
 .comment-txt {
   grid-column: 2 / -1;

@@ -81,6 +81,7 @@
           <input
             class="details-clean-input discussion-add-item"
             type="text"
+            v-model="emptyComment.txt"
             placeholder="Write a comment"
           />
           <comment-preview :comments="editedTask.comments" />
@@ -103,11 +104,11 @@
 </template>
 
 <script>
+import { utilService } from "@/services/util.service.js";
 import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
 import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
 import commentPreview from "@/cmps/task-cmps/previews/comment-preview.vue";
-import { utilService } from "@/services/util.service.js";
 
 export default {
   data() {
@@ -118,6 +119,9 @@ export default {
         id: "",
         txt: "",
         isDone: false
+      },
+      emptyComment: {
+        txt: ''
       }
     };
   },
@@ -145,6 +149,11 @@ export default {
       } catch {
         console.log("Failed to save todo + task");
       }
+    },
+    async addComment() {
+    // emptyComment = this.$store.commit({type: "getEmptyComment" task: ""})
+    emptyComment = utilService.getEmptyComment()
+    // unshift
     },
     async removeTodo(todoId) {
       const idx = this.editedTask.checklist.todos.findIndex(
