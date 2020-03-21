@@ -1,5 +1,5 @@
 <template>
-  <div class="window-overlay" ref="window" @click.stop="closeDetailsOverlay">
+  <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
     <section v-if="task" class="task-details">
       <div class="task-details-header">
         <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
@@ -26,13 +26,13 @@
             </div>
           </section>
 
-          <section class="details-due-date">
+          <section v-if="task.dueDate.isCompleted !== null" class="details-due-date">
             <!-- <span>🕖</span> -->
             <span class="font-bold">Due Date:</span>
             <span class="action-link">Update</span>
             <div class="details-due-list">
               <input type="checkbox" v-model="editedTask.dueDate.isCompleted" @change="updateTask" />
-              <input v-model="currDueDate" @change="setDueDate" type="date" />
+              <input v-model="currDueDate" @change="updateDueDate" type="date" ref="calendar" />
               <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
             </div>
           </section>
@@ -47,6 +47,7 @@
               v-model="editedTask.desc"
               @change="updateTask"
               class="details-text-area details-desc-input"
+              ref="description"
             />
           </section>
 
@@ -57,6 +58,7 @@
                 v-model="editedTask.checklist.title"
                 type="text"
                 @change="updateTask"
+                ref="checklist"
               />
               <!-- <span class="action-link">remove</span> -->
             </div>
@@ -85,6 +87,7 @@
               v-model="currComment.txt"
               @change="addComment"
               placeholder="Write a comment"
+              ref="comment"
             />
             <comment-preview :comments="editedTask.comments" @removeComment="removeComment" />
           </section>
@@ -98,7 +101,6 @@
           <button @click="setDueDate">Due Date</button>
           <button @click="updateDescription">Description</button>
           <button @click="updateChecklist">Checklist</button>
-          <!-- <button @click="sendAttachment">Attachments</button> -->
           <button @click="sendComment">Comments</button>
         </section>
       </div>
@@ -197,9 +199,6 @@ export default {
     copyTask() {
       console.log("Please copy the Task!");
     },
-    updateTaskName() {
-      console.log("I will updated th task name!");
-    },
     setLabels() {
       console.log("Please set the Labels!");
     },
@@ -207,10 +206,12 @@ export default {
       console.log("Please set the Members!");
     },
     updateDescription() {
+      this.$refs.description.focus();
       console.log("Please update the Description!");
     },
     async updateChecklist() {
       if (this.editedTask.checklist) {
+        this.$refs.checklist.focus();
         console.log(
           "You already have a checklist:",
           this.editedTask.checklist.title
@@ -219,18 +220,32 @@ export default {
         let emptyChecklist = utilService.getEmptyChecklist();
         console.log("emptyChecklist", emptyChecklist);
         this.editedTask.checklist = emptyChecklist;
-        await this.updateTask().catch(() => {
+        await this.updateTask();
+        try {
+          this.$refs.checklist.focus();
+        } catch {
           console.log("failed to save checklist");
-        });
+        }
       }
     },
-    sendAttachment() {
-      console.log("Please send this Attachments!");
-    },
     sendComment() {
+      this.$refs.comment.focus();
       console.log("Please send this Comment!");
     },
-    setDueDate() {
+    async setDueDate() {
+      if (this.editedTask.dueDate.isCompleted === null) {
+        this.editedTask.dueDate.isCompleted = false;
+        await this.updateTask();
+        try {
+          this.$refs.calendar.focus();
+        } catch {
+          console.log("failed to save setDueDate");
+        }
+      } else {
+        this.$refs.calendar.focus();
+      }
+    },
+    updateDueDate() {
       // Turn currDueDate to Timestamp!
       this.editedTask.dueDate.time = new Date(this.currDueDate).getTime();
       this.updateTask();

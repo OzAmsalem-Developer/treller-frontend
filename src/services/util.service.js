@@ -32,6 +32,14 @@ function makeId(length = 5) {
     return text;
 }
 
+// function getEmptyDueDate() {
+//     return {
+//         id: makeId(),
+//         title: "Checklist",
+//         todos: []
+//     }
+// }
+
 function getEmptyChecklist() {
     return {
         id: makeId(),
