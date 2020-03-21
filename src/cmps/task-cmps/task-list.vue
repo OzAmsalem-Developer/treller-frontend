@@ -60,9 +60,9 @@ export default {
         this.$refs.taskInput.focus();
       }, 2);
     },
-    addTask(e) {
+    addTask(ev) {
       // allow break line on shift+enter
-      if (e.shiftKey) {
+      if (ev.shiftKey) {
         this.newTask.name += '\n'
         return
         } 
@@ -82,6 +82,7 @@ export default {
     },
     saveList() {
       this.$emit("save-list", this.listCopy);
+      this.listCopy = JSON.parse(JSON.stringify(this.taskList));
     },
     saveListName(ev) {
       this.saveList()
