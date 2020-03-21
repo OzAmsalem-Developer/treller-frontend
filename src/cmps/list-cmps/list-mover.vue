@@ -1,5 +1,5 @@
 <template>
-  <section class="move-list">
+  <section class="list-mover">
     <form @submit.prevent="moveList">
       <select v-model="moveTo">
         <option v-for="listIdx in options" :key="listIdx" :value="listIdx"

@@ -9,7 +9,7 @@
 
 <script>
 import {eventBus} from '@/services/eventBus.service'
-import listMover from '@/cmps/list-cmps/move-list'
+import listMover from '@/cmps/list-cmps/list-mover'
 
 export default {
     data() {
