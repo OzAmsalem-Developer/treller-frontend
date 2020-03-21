@@ -57,6 +57,7 @@ export default {
       }
     },
     async addList() {
+      if (!this.newTaskList.name.length) return
       this.board.taskLists.push(this.newTaskList);
       this.saveBoard();
       this.newTaskList = null;

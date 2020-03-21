@@ -3,7 +3,7 @@
       <button class="preview-menu-btn" @click="toggleMenu">🖊️</button>
       <task-menu v-if="isMenuOpen" @click.native="toggleMenu"/>
       <label-preview :labels="task.labels" />
-      <p class="preview-title">{{task.name}}</p>
+      <p class="preview-title"><pre>{{task.name}}</pre></p>
       <section class="preview-indications">
         <div
           class="preview-due-date"

@@ -19,11 +19,11 @@
     <main class="tasks" ref="tasks">
       <task-preview v-for="task in tasks" :task="task" :key="task.id"></task-preview>
     </main>
-    <button v-if="!newTask" @click="getEmptyTask" class="add-task">+ Add Task</button>
-    <form class="add-task" @submit.prevent="addTask" v-else>
+    <button v-if="!newTask" @click="getEmptyTask" class="add-task-btn">+ Add Task</button>
+    <form class="add-task" @submit.prevent="addTask" @keydown.enter.prevent="" v-else>
       <textarea
         ref="taskInput"
-        @keyup.enter="addTask"
+        @keyup.enter.prevent="addTask"
         v-model="newTask.name"
         cols="30"
         rows="2"
@@ -56,7 +56,17 @@ export default {
         this.$refs.taskInput.focus();
       }, 2);
     },
-    addTask() {
+    addTask(e) {
+      // allow break line on shift+enter
+      if (e.shiftKey) {
+        this.newTask.name += '\n'
+        return
+        } 
+      
+      if (!this.newTask.name.length) {
+        this.newTask = null // (Close add-task)
+        return
+      }
       this.listCopy.tasks.push(this.newTask);
       this.saveList()
       this.newTask = null;

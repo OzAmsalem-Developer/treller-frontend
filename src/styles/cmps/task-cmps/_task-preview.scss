@@ -15,9 +15,10 @@
         right: 0;
         display: none;
     }
-    .preview-title {
+    .preview-title pre {
         font-size: 1rem;
         margin-bottom: 5px;
+        font-family: $font-regular;
     }
 
     .preview-indications {
