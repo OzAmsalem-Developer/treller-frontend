@@ -1,5 +1,5 @@
 <template>
-  <div class="window-overlay" @click="closeDetails">
+  <div class="window-overlay" ref="window" @click.stop="closeDetailsOverlay">
     <section v-if="task" class="task-details">
       <div class="task-details-header">
         <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
@@ -174,6 +174,11 @@ export default {
       });
     },
     closeDetails() {
+      const boardId = this.$store.getters.currBoardId;
+      this.$router.push(`/board/${boardId}`);
+    },
+    closeDetailsOverlay(ev) {
+      if (ev.target !== this.$refs.window) return;
       const boardId = this.$store.getters.currBoardId;
       this.$router.push(`/board/${boardId}`);
     },
