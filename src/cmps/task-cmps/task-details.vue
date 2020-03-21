@@ -38,7 +38,8 @@
           <div class="details-due-list">
             <input type="checkbox" />
             <input v-model="currDueDate" @change="setDueDate" type="date" />
-            <span v-if="task.dueDate">{{task.dueDate.time | minimalDate}}:</span>
+            <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate"/>
+            <!-- <span v-if="task.dueDate">{{task.dueDate.time | minimalDate}}:</span> -->
           </div>
         </section>
 
@@ -116,6 +117,7 @@
 <script>
 import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
 import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
+import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
 import { utilService } from "@/services/util.service.js";
 
 export default {
@@ -225,7 +227,8 @@ export default {
   },
   components: {
     memberPreview,
-    labelPreview
+    labelPreview,
+    dueDatePreview
   }
 };
 </script>
