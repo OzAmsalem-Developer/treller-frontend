@@ -1,5 +1,4 @@
 // COLOR PALETTE
-
 $clr1: #0c2233;
 $clr2: #0a91ab;
 $clr3: #065471;
@@ -8,13 +7,15 @@ $clr5: #eeeeee;
 $clr6: #303841; 
 
 // LAYOUT BREAKPOINTS
-
 $break-narrow: 460px;
 $break-normal: 740px;
 $break-wide: 960px;
 
 // FONT
-
 $font-regular: OpenSans-Regular;
 $font-light: OpenSans-Light;
 $font-bold: OpenSans-Bold;
+
+// OTHER
+
+$shadow: 0 1px 0 rgba(9,30,66,.25);
