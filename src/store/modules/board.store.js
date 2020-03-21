@@ -12,7 +12,6 @@ export const boardStore = ({
             return state.currBoard._id
         },
         taskLists(state) {
-            console.log(state.currBoard)
             return state.currBoard.taskLists
         },
         currTask(state) {
