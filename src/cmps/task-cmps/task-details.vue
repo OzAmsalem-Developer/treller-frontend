@@ -81,7 +81,8 @@
           <input
             class="details-clean-input discussion-add-item"
             type="text"
-            v-model="emptyComment.txt"
+            v-model="currComment.txt"
+            @change="addComment"
             placeholder="Write a comment"
           />
           <comment-preview :comments="editedTask.comments" />
@@ -120,8 +121,8 @@ export default {
         txt: "",
         isDone: false
       },
-      emptyComment: {
-        txt: ''
+      currComment: {
+        txt: ""
       }
     };
   },
@@ -151,9 +152,19 @@ export default {
       }
     },
     async addComment() {
-    // emptyComment = this.$store.commit({type: "getEmptyComment" task: ""})
-    emptyComment = utilService.getEmptyComment()
-    // unshift
+      let emptyComment = utilService.getEmptyComment();
+      emptyComment.txt = this.currComment.txt;
+      emptyComment.from = "Guest";
+      console.log('emptyComment', emptyComment)
+      this.editedTask.comments.unshift(emptyComment);
+      await this.updateTask();
+      try {
+        this.currComment.txt = "";
+      } catch {
+        console.log("Failed to save todo + task");
+      }
+
+      // unshift
     },
     async removeTodo(todoId) {
       const idx = this.editedTask.checklist.todos.findIndex(
