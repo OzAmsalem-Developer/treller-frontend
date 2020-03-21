@@ -16,7 +16,7 @@
         </form>
       </section>
     </div>
-    <task-details v-if="!isTaskLoad" />
+    <task-details v-if="!isTaskLoad && currTask" @task-updated="saveTask"/>
   </main>
 </template>
 

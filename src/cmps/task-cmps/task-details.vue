@@ -1,13 +1,7 @@
 <template>
   <section v-if="task" class="task-details">
     <div class="task-details-header">
-      <textarea
-        v-model="editedTask.name"
-        class="details-title details-text-area"
-        cols="20"
-        rows="1"
-        @change="updateTask"
-      />
+      <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
       <button class="close-details-btn" @click="closeDetails">✖️</button>
     </div>
     <div class="details-container">
@@ -36,9 +30,9 @@
           <span class="font-bold">Due Date:</span>
           <span class="action-link">Update</span>
           <div class="details-due-list">
-            <input type="checkbox" />
+            <input type="checkbox" v-model="editedTask.dueDate.isCompleted" @change="updateTask" />
             <input v-model="currDueDate" @change="setDueDate" type="date" />
-            <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate"/>
+            <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
             <!-- <span v-if="task.dueDate">{{task.dueDate.time | minimalDate}}:</span> -->
           </div>
         </section>
@@ -59,20 +53,17 @@
         <section v-if="task.checklist" class="details-checklist">
           <div>
             <input
-              class="font-bold"
+              class="check-list-title"
               v-model="editedTask.checklist.title"
               type="text"
               @change="updateTask"
             />
-            <span class="action-link">remove</span>
+            <!-- <span class="action-link">remove</span> -->
           </div>
-          <input
-            class="details-clean-input"
-            v-for="item in task.checklist.todos"
-            v-model="item.txt"
-            :key="item.id"
-            @change="updateTask"
-          />
+          <div v-for="item in task.checklist.todos" :key="item.id">
+            <input class="details-clean-input" v-model="item.txt" @change="updateTask" />
+            <button class="todo-remove-btn" @click="removeTodo(item.id)">X</button>
+          </div>
           <input
             class="details-clean-input checklist-add-item"
             v-model="newTodo.txt"
@@ -144,6 +135,7 @@ export default {
     },
     async addTodo() {
       this.newTodo.id = utilService.makeId();
+      // you cab get empty from the serviced
       this.editedTask.checklist.todos.push(this.newTodo);
       await this.updateTask();
       try {
@@ -155,6 +147,20 @@ export default {
         };
         this.newTodo = newTodo;
         console.log("this.newTodo", this.newTodo);
+      } catch {
+        console.log("Failed to save todo + task");
+      }
+    },
+    async removeTodo(todoId) {
+      const idx = this.editedTask.checklist.todos.findIndex(
+        todo => todo.id === todoId
+      );
+      if (idx !== -1) {
+        this.editedTask.checklist.todos.splice(idx, 1);
+      }
+      await this.updateTask();
+      try {
+        console.log("Todo removed, task saved");
       } catch {
         console.log("Failed to save todo + task");
       }
@@ -206,6 +212,9 @@ export default {
         month = "0" + month;
       }
       this.currDueDate = `${year}-${month}-${day}`;
+    },
+    closeDetailsOnEsc(ev) {
+      if (ev.key === "Escape") this.closeDetails();
     }
   },
   computed: {
@@ -220,10 +229,12 @@ export default {
     if (this.editedTask) {
       this.getCurrDueDate();
     }
+    document.addEventListener("keyup", this.closeDetailsOnEsc);
     console.log("EDITED TASK:", this.editedTask);
   },
   destroyed() {
     console.log("// DETAILS PAGE DESTROED!");
+    document.removeEventListener("keyup", this.closeDetailsOnEsc);
   },
   components: {
     memberPreview,
