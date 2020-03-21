@@ -164,7 +164,6 @@ export default {
       let emptyComment = utilService.getEmptyComment();
       emptyComment.txt = this.currComment.txt;
       emptyComment.from = "Guest";
-      console.log("emptyComment", emptyComment);
       this.editedTask.comments.unshift(emptyComment);
       await this.updateTask();
       try {
@@ -207,18 +206,12 @@ export default {
     },
     updateDescription() {
       this.$refs.description.focus();
-      console.log("Please update the Description!");
     },
     async updateChecklist() {
       if (this.editedTask.checklist) {
         this.$refs.checklist.focus();
-        console.log(
-          "You already have a checklist:",
-          this.editedTask.checklist.title
-        );
       } else {
         let emptyChecklist = utilService.getEmptyChecklist();
-        console.log("emptyChecklist", emptyChecklist);
         this.editedTask.checklist = emptyChecklist;
         await this.updateTask();
         try {
@@ -230,7 +223,6 @@ export default {
     },
     sendComment() {
       this.$refs.comment.focus();
-      console.log("Please send this Comment!");
     },
     async setDueDate() {
       if (this.editedTask.dueDate.isCompleted === null) {
