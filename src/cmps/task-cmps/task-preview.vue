@@ -2,17 +2,17 @@
   <section class="task-preview" @click="taskDetailsPage">
     <button class="preview-menu-btn" @click="toggleMenu">🖊️</button>
     <task-menu
-     v-if="isMenuOpen" 
-     :task="task" 
-     :listId="listId" 
-     @click.native="toggleMenu" 
-     @remove-task="$emit('remove-task', task.id)"
-     @set-labels="setTaskLabels"
-     />
-    <label-preview :labels="task.labels" />
+      v-if="isMenuOpen"
+      :task="task"
+      :listId="listId"
+      @click.native="toggleMenu"
+      @remove-task="$emit('remove-task', task.id)"
+      @set-labels="setTaskLabels"
+    />
+    <label-preview :labels="taskCopy.labels" />
     <p class="preview-title">{{task.name}}</p>
     <section class="preview-indications">
-      <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate"/>    
+      <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
       <div class="preview-desc" v-if="task.desc">📄</div>
       <div class="preview-comments" v-if="task.comments.length">💬{{task.comments.length}}</div>
       <div class="preview-check-list" v-if="task.checklist">🗹{{checklistStatus}}</div>
@@ -34,7 +34,6 @@ import memberPreview from "./previews/member-preview.vue";
 import dueDatePreview from "./previews/due-date-preview.vue";
 import taskMenu from "./task-menu.vue";
 
-
 export default {
   data() {
     return {
@@ -44,7 +43,7 @@ export default {
   },
   computed: {
     checklistStatus() {
-      const todos = this.task.checklist.todos;
+      const todos = this.taskCopy.checklist.todos;
       const doneTodos = todos.filter(todo => todo.isDone).length;
       const allTodos = todos.length;
       return doneTodos + "/" + allTodos;
@@ -63,13 +62,27 @@ export default {
     taskDetailsPage() {
       this.$router.push(this.taskDetails);
     },
-    setTaskLabels(taskLabels) {
-      this.taskCopy = taskLabels
+    async setTaskLabels(taskLabels) {
+      console.log('saved changed');
+      this.taskCopy.labels = taskLabels;
       // emit to list
+      await this.emit("update-task", this.taskCopy);
+      try {
+        this.taskCopy = JSON.parse(JSON.stringify(this.task));
+      } catch {
+        console.log("Task saving failed");
+        this.taskCopy = JSON.parse(JSON.stringify(this.task));
+      }
+    },
+    emit(eventName, value) {
+      return new Promise((resolve, reject) => {
+        this.$emit(eventName, value);
+        this.$nextTick(resolve);
+      });
     }
   },
   created() {
-    this.taskCopy = JSON.parse(JSON.stringify(this.task))
+    this.taskCopy = JSON.parse(JSON.stringify(this.task));
   },
   components: {
     labelPreview,

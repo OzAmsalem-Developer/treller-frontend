@@ -30,7 +30,6 @@ import labelPicker from "./pickers/label-picker.vue";
 import {
   eventBus,
   EV_moveTask,
-  EV_editTaskLabel
 } from "@/services/eventBus.service";
 
 export default {

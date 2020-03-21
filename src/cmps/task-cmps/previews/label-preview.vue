@@ -1,7 +1,7 @@
 <template>
   <section class="label-preview">
     <div class="label-card" 
-    v-for="label in labels" :key="label"
+    v-for="label in labels" 
     :style="{'background-color': boardLabelsMap[label].color}">
         {{boardLabelsMap[label].txt}}
     </div>
@@ -12,7 +12,7 @@
 export default {
   data() {
     return {
-      boardLabelsMap: this.$store.getters.labels
+      boardLabelsMap: this.$store.getters.labels,
     };
   },
   methods: {},

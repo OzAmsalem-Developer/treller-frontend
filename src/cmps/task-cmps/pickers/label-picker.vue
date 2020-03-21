@@ -2,37 +2,53 @@
   <section class="label-picker">
     <div
       class="label"
-      v-for="label in boardLabels"
+      v-for="(label, idx) in boardLabels"
       :key="label.id"
       :style="{'background-color': label.color}"
-      @click.stop="editLabels(label)"
+      @click.stop="editLabels(idx)"
     >{{label.txt}}</div>
   </section>
 </template>
 
 <script>
 export default {
-data() {
+  data() {
     return {
-       editedLabels : this.taskLabels 
+      editedLabels: null
+    };
+  },
+  methods: {
+    async editLabels(boardLabelKey) {
+      const labelIdx = this.taskLabels.findIndex(
+        label => label === boardLabelKey
+      );
+      if (labelIdx !== -1) {
+        this.editedLabels.splice(labelIdx, 1);
+      } else {
+        this.editedLabels.push(boardLabelKey);
+      }
+      await this.emit("set-labels", this.editedLabels);
+      try {
+        this.editedLabels = JSON.parse(JSON.stringify(this.taskLabels));
+      } catch {
+        this.editedLabels = JSON.parse(JSON.stringify(this.taskLabels));
+      }
+    },
+    emit(eventName, value) {
+      return new Promise((resolve, reject) => {
+        this.$emit(eventName, value);
+        this.$nextTick(resolve);
+      });
     }
-},
-methods: {
-    editLabels(clickedLabel) {
-        const labelIdx = this.taskLabels.findIndex(label => label.id === clickedLabel.id)
-        if (labelIdx !== -1) {
-            this.editedLabels.splice(labelIdx, 1)
-        }else {
-            this.editedLabels.push(clickedLabel)
-        }
-        this.$emit('set-labels', this.editedLabels)
-    }
-},
-props: {
+  },
+  created() {
+    this.editedLabels = JSON.parse(JSON.stringify(this.taskLabels));
+  },
+  props: {
     boardLabels: Object,
     taskLabels: Array
-}
-}
+  }
+};
 </script>
 
 <style>
