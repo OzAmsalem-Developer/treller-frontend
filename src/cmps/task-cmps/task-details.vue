@@ -1,13 +1,15 @@
 <template>
   <section v-if="task" class="task-details">
-    <!-- <h1>{{task.name}}</h1> -->
-    <textarea
-      v-model="editedTask.name"
-      class="details-task-name"
-      cols="20"
-      rows="1"
-      @change="updateTask"
-    />
+    <div class="task-details-header">
+      <textarea
+        v-model="editedTask.name"
+        class="details-title details-text-area"
+        cols="20"
+        rows="1"
+        @change="updateTask"
+      />
+      <button class="close-details-btn">✖️</button>
+    </div>
     <div class="details-container">
       <div class="details-info">
         <section v-if="task.labels.length" class="details-labels">
@@ -15,8 +17,6 @@
           <span class="font-bold">Labels:</span>
           <span class="action-link">Update</span>
           <div class="details-labels-list">
-            <!-- <div v-for="label in task.labels" :key="label.id">{{label.txt}}</div> -->
-            <!-- <div>{{task.labels.length}}</div> -->
             <labelPreview :labels="task.labels" />
             <button>+</button>
           </div>
@@ -26,7 +26,6 @@
           <span class="font-bold">Members:</span>
           <span class="action-link" @click="setMembers">Invite</span>
           <div class="details-members-list">
-            <!-- <div v-for="member in task.members" :key="member._id">{{member.fullName}}</div> -->
             <member-preview :members="task.members"></member-preview>
             <button class="member-card" @click="setMembers">+</button>
           </div>
@@ -37,17 +36,23 @@
           <span class="font-bold">Due Date:</span>
           <span class="action-link">Update</span>
           <div class="details-due-list">
-            <input type="checkbox" name id />
-            <span>Calender:</span>
+            <input type="checkbox" />
+            <input v-model="currDueDate" @change="setDueDate" type="date" />
             <span v-if="task.dueDate">{{task.dueDate | minimalDate}}:</span>
           </div>
         </section>
 
         <section v-if="task.desc" class="details-description">
           <!-- <span>📄</span> -->
-          <span class="font-bold">Description:</span>
-          <span class="action-link">Edit</span>
-          <p>{{task.desc}}:</p>
+          <div>
+            <span class="font-bold">Description:</span>
+            <span class="action-link">Edit</span>
+          </div>
+          <textarea
+            v-model="editedTask.desc"
+            @change="updateTask"
+            class="details-text-area details-desc-input"
+          />
         </section>
 
         <section v-if="task.checklist" class="details-checklist">
@@ -98,14 +103,15 @@ import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 export default {
   data() {
     return {
-      editedTask: null
+      editedTask: null,
+      currDueDate: null
     };
   },
   methods: {
     async updateTask() {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
       try {
-        console.log('Saved');
+        console.log("Saved");
       } catch (prevTask) {
         this.editedTask = prevTask;
         console.log("Err, failed to save task");
@@ -127,7 +133,8 @@ export default {
       console.log("Please set the Members!");
     },
     setDueDate() {
-      console.log("Please set the Members!");
+      this.editedTask.dueDate = JSON.parse(JSON.stringify(this.currDueDate));
+      this.updateTask();
     },
     updateDescription() {
       console.log("Please update the Description!");
@@ -140,6 +147,18 @@ export default {
     },
     sendComment() {
       console.log("Please send this Comment!");
+    },
+    getCurrDueDate() {
+      var day = new Date(this.editedTask.dueDate).getDate();
+      var month = new Date(this.editedTask.dueDate).getMonth() + 1;
+      var year = new Date(this.editedTask.dueDate).getFullYear();
+      if (day < 10) {
+        day = "0" + day;
+      }
+      if (month < 10) {
+        month = "0" + month;
+      }
+      this.currDueDate = `${year}-${month}-${day}`;
     }
   },
   computed: {
@@ -148,10 +167,10 @@ export default {
     }
   },
   created() {
-    console.log("Details page loaded successfully");
     this.editedTask = JSON.parse(JSON.stringify(this.task));
-    console.log("editedTask", this.editedTask);
-    // console.log("Task members:", this.task.members);
+    if (this.editedTask) {
+      this.getCurrDueDate();
+    }
   },
   components: {
     memberPreview,
@@ -159,4 +178,3 @@ export default {
   }
 };
 </script>
-
