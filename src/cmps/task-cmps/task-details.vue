@@ -8,7 +8,7 @@
         rows="1"
         @change="updateTask"
       />
-      <button class="close-details-btn">✖️</button>
+      <button class="close-details-btn" @click="closeDetails">✖️</button>
     </div>
     <div class="details-container">
       <div class="details-info">
@@ -38,7 +38,8 @@
           <div class="details-due-list">
             <input type="checkbox" />
             <input v-model="currDueDate" @change="setDueDate" type="date" />
-            <span v-if="task.dueDate">{{task.dueDate | minimalDate}}:</span>
+            <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate"/>
+            <!-- <span v-if="task.dueDate">{{task.dueDate.time | minimalDate}}:</span> -->
           </div>
         </section>
 
@@ -56,12 +57,29 @@
         </section>
 
         <section v-if="task.checklist" class="details-checklist">
-          <span class="font-bold">{{task.checklist.title}}</span>
-          <span class="action-link">remove</span>
-          <ul class="details-checklist-items clean-items">
-            <li v-for="item in task.checklist.todos" :item="item" :key="item.id">{{item.txt}}</li>
-          </ul>
-          <input class="checklist-add-item" type="text" placeholder="add an item" />
+          <div>
+            <input
+              class="font-bold"
+              v-model="editedTask.checklist.title"
+              type="text"
+              @change="updateTask"
+            />
+            <span class="action-link">remove</span>
+          </div>
+          <input
+            class="details-clean-input"
+            v-for="item in task.checklist.todos"
+            v-model="item.txt"
+            :key="item.id"
+            @change="updateTask"
+          />
+          <input
+            class="details-clean-input checklist-add-item"
+            v-model="newTodo.txt"
+            type="text"
+            placeholder="add an item"
+            @change="addTodo"
+          />
         </section>
 
         <section class="details-discussion">
@@ -99,12 +117,19 @@
 <script>
 import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
 import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
+import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
+import { utilService } from "@/services/util.service.js";
 
 export default {
   data() {
     return {
       editedTask: null,
-      currDueDate: null
+      currDueDate: null,
+      newTodo: {
+        id: "",
+        txt: "",
+        isDone: false
+      }
     };
   },
   methods: {
@@ -116,6 +141,27 @@ export default {
         this.editedTask = prevTask;
         console.log("Err, failed to save task");
       }
+    },
+    async addTodo() {
+      this.newTodo.id = utilService.makeId();
+      this.editedTask.checklist.todos.push(this.newTodo);
+      await this.updateTask();
+      try {
+        console.log("Todo + task saved");
+        const newTodo = {
+          id: "",
+          txt: "",
+          isDone: false
+        };
+        this.newTodo = newTodo;
+        console.log("this.newTodo", this.newTodo);
+      } catch {
+        console.log("Failed to save todo + task");
+      }
+    },
+    closeDetails() {
+      const boardId = this.$store.getters.currBoardId;
+      this.$router.push(`/board/${boardId}`);
     },
     moveTask() {
       console.log("Please move the Task!");
@@ -132,10 +178,6 @@ export default {
     setMembers() {
       console.log("Please set the Members!");
     },
-    setDueDate() {
-      this.editedTask.dueDate = JSON.parse(JSON.stringify(this.currDueDate));
-      this.updateTask();
-    },
     updateDescription() {
       console.log("Please update the Description!");
     },
@@ -148,10 +190,15 @@ export default {
     sendComment() {
       console.log("Please send this Comment!");
     },
+    setDueDate() {
+      // Turn currDueDate to Timestamp!
+      this.editedTask.dueDate.time = new Date(this.currDueDate).getTime();
+      this.updateTask();
+    },
     getCurrDueDate() {
-      var day = new Date(this.editedTask.dueDate).getDate();
-      var month = new Date(this.editedTask.dueDate).getMonth() + 1;
-      var year = new Date(this.editedTask.dueDate).getFullYear();
+      var day = new Date(this.editedTask.dueDate.time).getDate();
+      var month = new Date(this.editedTask.dueDate.time).getMonth() + 1;
+      var year = new Date(this.editedTask.dueDate.time).getFullYear();
       if (day < 10) {
         day = "0" + day;
       }
@@ -167,14 +214,21 @@ export default {
     }
   },
   created() {
+    console.log("// DETAILS PAGE CREATED!");
+    console.log("// This should only appear if task details is displayed!");
     this.editedTask = JSON.parse(JSON.stringify(this.task));
     if (this.editedTask) {
       this.getCurrDueDate();
     }
+    console.log("EDITED TASK:", this.editedTask);
+  },
+  destroyed() {
+    console.log("// DETAILS PAGE DESTROED!");
   },
   components: {
     memberPreview,
-    labelPreview
+    labelPreview,
+    dueDatePreview
   }
 };
 </script>
