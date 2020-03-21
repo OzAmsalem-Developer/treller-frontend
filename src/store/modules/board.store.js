@@ -20,6 +20,9 @@ export const boardStore = ({
         },
         labels(state) {
             return state.currBoard.labels
+        },
+        currBoard(state) {
+            return state.currBoard
         }
     },
     mutations: {

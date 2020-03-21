@@ -1,7 +1,7 @@
 <template>
   <main class="board-app" v-if="board">
     <board-header></board-header>
-    <div class="lists-container">
+    <div ref="lists" class="lists-container">
       <task-list v-for="list in taskLists" :taskList="list" :key="list.id" @save-list="saveTaskList" />
       <section class="add-list">
         <button class="add-btn" @click="getEmptyList">+Add List</button>
@@ -62,7 +62,7 @@ export default {
       this.newTaskList = null;
       this.getEmptyList();
       setTimeout(() => {
-        utilService.scrollTo(document.querySelector("html"), 1500, 700);
+        utilService.scrollTo(this.$refs.lists, 1500, 700);
       }, 0);
     },
     removeList(listId) {
