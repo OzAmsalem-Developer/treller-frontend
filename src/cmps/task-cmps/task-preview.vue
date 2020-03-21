@@ -1,6 +1,7 @@
 <template>
   <section class="task-preview" @click="taskDetailsPage">
-      <!-- <button class="preview-menu-btn">🖊️</button> -->
+      <button class="preview-menu-btn" @click="toggleMenu">🖊️</button>
+      <task-menu v-if="isMenuOpen" @click.native="toggleMenu"/>
       <label-preview :labels="task.labels" />
       <p class="preview-title">{{task.name}}</p>
       <section class="preview-indications">
@@ -18,7 +19,7 @@
         >Attachments({{task.attachments.length}})</div>
       </section>
       <div class="preview-members" v-if="task.members.length">
-        <memberPreview :members="task.members" />
+        <member-preview :members="task.members" />
       </div>
   </section>
 </template>
@@ -27,10 +28,13 @@
 import { utilService } from "../../services/util.service.js";
 import labelPreview from "./previews/label-preview.vue";
 import memberPreview from "./previews/member-preview.vue";
+import taskMenu from "./task-menu.vue"
 
 export default {
-  props: {
-    task: Object
+  data() {
+    return {
+      isMenuOpen: false
+    }
   },
   computed: {
     checklistStatus() {
@@ -59,13 +63,21 @@ export default {
     }
   },
   methods: {
+    toggleMenu(ev) {
+      ev.stopPropagation()
+      this.isMenuOpen = !this.isMenuOpen 
+    },
     taskDetailsPage() {
       this.$router.push(this.taskDetails)
     }
   },
   components: {
     labelPreview,
-    memberPreview
+    memberPreview,
+    taskMenu
+  },
+  props: {
+    task: Object
   }
 };
 </script>

@@ -1,4 +1,5 @@
 .task-preview {
+    position: relative;
     padding: 10px;
     border-radius: 3px;
     margin-bottom: 8px;
@@ -6,6 +7,13 @@
     box-shadow: 0 1px 0 rgba(9,30,66,.25);
     cursor: pointer;
 
+    .preview-menu-btn{
+        position: absolute;
+        padding: 5px;
+        top: 0;
+        right: 0;
+        display: none;
+    }
     .preview-title {
         font-size: 1rem;
         margin-bottom: 5px;
@@ -25,5 +33,11 @@
     .preview-members {
         display: flex;
         justify-content: flex-end;
+    }
+}
+
+.task-preview:hover {
+    .preview-menu-btn {
+        display: block;
     }
 }

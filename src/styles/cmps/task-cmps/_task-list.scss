@@ -5,7 +5,8 @@
   padding: 7px 10px 10px 10px;
   max-height: 500px;
   .tasks {
-    overflow-x: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     max-height: 95%;
     padding-right: 7px;
     max-height: 400px;
