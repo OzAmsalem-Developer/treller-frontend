@@ -1,5 +1,5 @@
 .task-details {
-  position: fixed;
+  // position: fixed;
   background-color: $clr5;
   width: 768px;
   border: $clr1 solid 1px;
@@ -9,29 +9,48 @@
   flex-direction: column;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  // transform: translate(-50%, -50%);
   padding: 0 10px 0 30px;
-}
+  margin: 0 auto;
 
-.task-details > * {
-  margin-bottom: 10px;
-}
 
-.details-container {
-  display: flex;
-  justify-content: space-between;
-}
+  > * {
+    margin-bottom: 10px;
+  }
 
-.details-actions {
-  display: flex;
-  flex-direction: column;
-  button {
-    background-color: $clr2;
-    border-radius: 3px;
-    padding: 5px 10px;
-    margin-bottom: 5px;
+  .details-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .details-actions {
+    display: flex;
+    flex-direction: column;
+    button {
+      background-color: $clr2;
+      border-radius: 3px;
+      padding: 5px 10px;
+      margin-bottom: 5px;
+    }
   }
 }
+
+
+.window-overlay {
+  padding: 50px 0;
+  align-items: flex-start;
+  background-color: rgba(0,0,0,.64);
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  // z-index: 20;
+}
+
+
 
 .details-info {
   display: flex;

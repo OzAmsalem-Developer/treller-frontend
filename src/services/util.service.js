@@ -5,7 +5,9 @@ export const utilService = {
     createWord,
     getHoursDifference,
     getRandomColor,
-    scrollTo
+    scrollTo,
+    getEmptyTodo,
+    getEmptyComment
 }
 
 
@@ -28,6 +30,23 @@ function makeId(length = 5) {
 
     return text;
 }
+function getEmptyComment() {
+    return {
+        id: makeId(),
+        from: null,
+        txt: '',
+        createdAt: Date.now(),
+        imgUrl: null
+    }
+}
+function getEmptyTodo() {
+    return {
+        id: makeId(),
+        txt: "",
+        isDone: false
+    }
+}
+
 // Returns a lorem with 'length' chars.
 function makeLorem(length) {
     var randStr = '';
