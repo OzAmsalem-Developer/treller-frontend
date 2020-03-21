@@ -79,14 +79,12 @@
             <span class="font-bold">Discussion:</span>
             <span class="action-link">hide activity feed</span>
           </div>
-          <input class="discussion-add-item" type="text" placeholder="Write a comment" />
-          <ul v-if="task.comments.length" class="discussion-cmts clean-items">
-            <li v-for="cmt in task.comments" :key="cmt.id">
-              <span class="font-bold">{{cmt.from}}:</span>
-              <span>{{cmt.txt}}</span>
-              <span>{{cmt.createdAt | minimalDate}}</span>
-            </li>
-          </ul>
+          <input
+            class="details-clean-input discussion-add-item"
+            type="text"
+            placeholder="Write a comment"
+          />
+          <comment-preview :comments="editedTask.comments" />
         </section>
       </div>
 
@@ -109,6 +107,7 @@
 import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
 import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
+import commentPreview from "@/cmps/task-cmps/previews/comment-preview.vue";
 import { utilService } from "@/services/util.service.js";
 
 export default {
@@ -125,13 +124,12 @@ export default {
   },
   methods: {
     async updateTask() {
-      await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
-      try {
-        console.log("Saved");
-      } catch (prevTask) {
-        this.editedTask = prevTask;
-        console.log("Err, failed to save task");
-      }
+      await this.$store
+        .dispatch({ type: "updateTask", task: this.editedTask })
+        .catch(prevTask => {
+          this.editedTask = prevTask;
+          console.log("Err, failed to save task");
+        });
     },
     async addTodo() {
       this.newTodo.id = utilService.makeId();
@@ -139,14 +137,12 @@ export default {
       this.editedTask.checklist.todos.push(this.newTodo);
       await this.updateTask();
       try {
-        console.log("Todo + task saved");
         const newTodo = {
           id: "",
           txt: "",
           isDone: false
         };
         this.newTodo = newTodo;
-        console.log("this.newTodo", this.newTodo);
       } catch {
         console.log("Failed to save todo + task");
       }
@@ -158,12 +154,9 @@ export default {
       if (idx !== -1) {
         this.editedTask.checklist.todos.splice(idx, 1);
       }
-      await this.updateTask();
-      try {
-        console.log("Todo removed, task saved");
-      } catch {
+      await this.updateTask().catch(() => {
         console.log("Failed to save todo + task");
-      }
+      });
     },
     closeDetails() {
       const boardId = this.$store.getters.currBoardId;
@@ -239,7 +232,8 @@ export default {
   components: {
     memberPreview,
     labelPreview,
-    dueDatePreview
+    dueDatePreview,
+    commentPreview
   }
 };
 </script>
