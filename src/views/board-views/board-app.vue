@@ -2,7 +2,7 @@
   <main class="board-app" v-if="board">
     <board-header></board-header>
     <div class="lists-container">
-      <task-list v-for="list in taskLists" :taskList="list" :key="list.id" @task-added="addTask" />
+      <task-list v-for="list in taskLists" :taskList="list" :key="list.id" @save-list="saveTaskList" />
       <section class="add-list">
         <button class="add-btn" @click="getEmptyList">+Add List</button>
         <form class="add-list" @submit.prevent="addList" v-if="newTaskList">
@@ -21,6 +21,7 @@ import taskList from "@/cmps/task-cmps/task-list";
 import taskDetails from "@/cmps/task-cmps/task-details";
 import { boardService } from "@/services/board.service";
 import { utilService } from "@/services/util.service";
+import { eventBus, EV_removeList, EV_saveFailed } from "@/services/eventBus.service";
 
 export default {
   data() {
@@ -52,6 +53,7 @@ export default {
       } catch (prevBoard) {
         this.board = JSON.parse(JSON.stringify(board));
         console.log("Err, board didnt saved");
+        throw new Error('Saving failed')
       }
     },
     async addList() {
@@ -63,10 +65,19 @@ export default {
         utilService.scrollTo(document.querySelector("html"), 1500, 700);
       }, 0);
     },
-    addTask({ newTask, listId }) {
-      const taskList = this.board.taskLists.find(tl => tl.id === listId);
-      if (taskList) taskList.tasks.push(newTask);
+    removeList(listId) {
+      const idx = this.board.taskLists.findIndex(list => list.id === listId)
+      this.board.taskLists.splice(idx, 1)
       this.saveBoard();
+    },
+    saveTaskList(taskList) {
+      const idx = this.board.taskLists.findIndex(tl => tl.id === taskList.id);
+      if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList)
+      try {
+        this.saveBoard();
+      } catch {
+        eventBus.$emit(EV_saveFailed)
+      }
     },
     getEmptyList() {
       this.newTaskList = this.newTaskList ? null : boardService.getEmptyList();
@@ -94,6 +105,9 @@ export default {
   created() {
     const boardId = this.$route.params.boardId;
     this.loadBoardAndTask(boardId); // Render the task details when taskId is passed as param
+
+    //Event Bus
+    eventBus.$on(EV_removeList, this.removeList)
   },
   components: {
     boardHeader,
