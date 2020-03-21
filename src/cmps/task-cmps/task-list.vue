@@ -17,7 +17,7 @@
       />
     </header>
     <main class="tasks" ref="tasks">
-      <task-preview v-for="task in tasks" :task="task" :key="task.id"></task-preview>
+      <task-preview v-for="task in tasks" :task="task" :listId="taskList.id" :key="task.id"></task-preview>
     </main>
     <button v-if="!newTask" @click="getEmptyTask" class="add-task-btn">+ Add Task</button>
     <form class="add-task" @submit.prevent="addTask" @keydown.enter.prevent="" v-else>
