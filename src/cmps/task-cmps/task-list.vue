@@ -17,7 +17,11 @@
       />
     </header>
     <main class="tasks" ref="tasks">
-      <task-preview v-for="task in tasks" :task="task" :listId="taskList.id" :key="task.id"></task-preview>
+      <task-preview 
+      v-for="task in tasks" :task="task" 
+      :taskList="taskList" :key="task.id" 
+      @remove-task="removeTask"
+      />
     </main>
     <button v-if="!newTask" @click="getEmptyTask" class="add-task-btn">+ Add Task</button>
     <form class="add-task" @submit.prevent="addTask" @keydown.enter.prevent="" v-else>
@@ -85,6 +89,11 @@ export default {
     },
     focus(ev) {
       ev.target.focus()
+    },
+    removeTask(taskId) {
+      const idx = this.listCopy.tasks.findIndex(t => t.id === taskId)
+      if (idx !== -1) this.listCopy.tasks.splice(idx, 1)
+      this.saveList()
     }
   },
   created() {

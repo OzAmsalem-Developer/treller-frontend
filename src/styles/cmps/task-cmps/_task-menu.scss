@@ -8,12 +8,11 @@
     box-shadow: $shadow;
     top: 10px;
     right: 20px;
-    z-index: 1;
     background-color: white;
     border-radius: 2px;
 
     .move-picker {
         position: absolute;
-        
+
     }
 }
