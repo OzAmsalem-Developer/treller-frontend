@@ -1,13 +1,7 @@
 <template>
   <section v-if="task" class="task-details">
     <div class="task-details-header">
-      <textarea
-        v-model="editedTask.name"
-        class="details-title details-text-area"
-        cols="20"
-        rows="1"
-        @change="updateTask"
-      />
+      <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
       <button class="close-details-btn" @click="closeDetails">✖️</button>
     </div>
     <div class="details-container">
@@ -36,10 +30,9 @@
           <span class="font-bold">Due Date:</span>
           <span class="action-link">Update</span>
           <div class="details-due-list">
-            <input type="checkbox" />
+            <input type="checkbox" v-model="editedTask.dueDate.isCompleted" @change="updateTask" />
             <input v-model="currDueDate" @change="setDueDate" type="date" />
-            <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate"/>
-            <!-- <span v-if="task.dueDate">{{task.dueDate.time | minimalDate}}:</span> -->
+            <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
           </div>
         </section>
 
@@ -59,20 +52,17 @@
         <section v-if="task.checklist" class="details-checklist">
           <div>
             <input
-              class="font-bold"
+              class="check-list-title"
               v-model="editedTask.checklist.title"
               type="text"
               @change="updateTask"
             />
-            <span class="action-link">remove</span>
+            <!-- <span class="action-link">remove</span> -->
           </div>
-          <input
-            class="details-clean-input"
-            v-for="item in task.checklist.todos"
-            v-model="item.txt"
-            :key="item.id"
-            @change="updateTask"
-          />
+          <div v-for="item in task.checklist.todos" :key="item.id">
+            <input class="details-clean-input" v-model="item.txt" @change="updateTask" />
+            <button class="todo-remove-btn" @click="removeTodo(item.id)">X</button>
+          </div>
           <input
             class="details-clean-input checklist-add-item"
             v-model="newTodo.txt"
@@ -88,14 +78,12 @@
             <span class="font-bold">Discussion:</span>
             <span class="action-link">hide activity feed</span>
           </div>
-          <input class="discussion-add-item" type="text" placeholder="Write a comment" />
-          <ul v-if="task.comments.length" class="discussion-cmts clean-items">
-            <li v-for="cmt in task.comments" :key="cmt.id">
-              <span class="font-bold">{{cmt.from}}:</span>
-              <span>{{cmt.txt}}</span>
-              <span>{{cmt.createdAt | minimalDate}}</span>
-            </li>
-          </ul>
+          <input
+            class="details-clean-input discussion-add-item"
+            type="text"
+            placeholder="Write a comment"
+          />
+          <comment-preview :comments="editedTask.comments" />
         </section>
       </div>
 
@@ -118,6 +106,7 @@
 import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
 import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
+import commentPreview from "@/cmps/task-cmps/previews/comment-preview.vue";
 import { utilService } from "@/services/util.service.js";
 
 export default {
@@ -134,30 +123,39 @@ export default {
   },
   methods: {
     async updateTask() {
-      await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
-      try {
-        console.log("Saved");
-      } catch (prevTask) {
-        this.editedTask = prevTask;
-        console.log("Err, failed to save task");
-      }
+      await this.$store
+        .dispatch({ type: "updateTask", task: this.editedTask })
+        .catch(prevTask => {
+          this.editedTask = prevTask;
+          console.log("Err, failed to save task");
+        });
     },
     async addTodo() {
       this.newTodo.id = utilService.makeId();
+      // you can get empty from the serviced
       this.editedTask.checklist.todos.push(this.newTodo);
       await this.updateTask();
       try {
-        console.log("Todo + task saved");
         const newTodo = {
           id: "",
           txt: "",
           isDone: false
         };
         this.newTodo = newTodo;
-        console.log("this.newTodo", this.newTodo);
       } catch {
         console.log("Failed to save todo + task");
       }
+    },
+    async removeTodo(todoId) {
+      const idx = this.editedTask.checklist.todos.findIndex(
+        todo => todo.id === todoId
+      );
+      if (idx !== -1) {
+        this.editedTask.checklist.todos.splice(idx, 1);
+      }
+      await this.updateTask().catch(() => {
+        console.log("Failed to save todo + task");
+      });
     },
     closeDetails() {
       const boardId = this.$store.getters.currBoardId;
@@ -206,6 +204,9 @@ export default {
         month = "0" + month;
       }
       this.currDueDate = `${year}-${month}-${day}`;
+    },
+    closeDetailsOnEsc(ev) {
+      if (ev.key === "Escape") this.closeDetails();
     }
   },
   computed: {
@@ -220,15 +221,18 @@ export default {
     if (this.editedTask) {
       this.getCurrDueDate();
     }
+    document.addEventListener("keyup", this.closeDetailsOnEsc);
     console.log("EDITED TASK:", this.editedTask);
   },
   destroyed() {
     console.log("// DETAILS PAGE DESTROED!");
+    document.removeEventListener("keyup", this.closeDetailsOnEsc);
   },
   components: {
     memberPreview,
     labelPreview,
-    dueDatePreview
+    dueDatePreview,
+    commentPreview
   }
 };
 </script>

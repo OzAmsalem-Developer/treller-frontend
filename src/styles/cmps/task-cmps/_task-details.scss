@@ -52,6 +52,11 @@
 
 .details-title {
   font-size: 24px;
+  @include input-blur;
+}
+
+.details-title:focus {
+  @include input-focus;
 }
 
 .close-details-btn {
@@ -60,8 +65,13 @@
 }
 
 .details-desc-input {
+  font-size: 16px;
   resize: none;
-  width: 90%;
+  @include input-blur;
+}
+
+.details-desc-input:focus {
+  @include input-focus;
 }
 
 .details-checklist {
@@ -98,32 +108,34 @@
   background-color: $clr5;
 }
 
-// Helpers:
-.details-text-area {
-  resize: none;
-  background-color: transparent;
-  border: none;
-  width: 90%;
-  font-family: $font-regular;
-  transition: all 0.3s;
+.check-list-title {
+  @include input-blur;
+  font-size: 16px;
+  color: $clr1;
+  font-family: $font-bold;
 }
 
-.details-text-area:focus {
-  background-color: rgb(252, 252, 252);
-  padding-left: 10px;
+.check-list-title:focus {
+  @include input-focus;
 }
+
+.todo-remove-btn {
+  font-family: $font-bold;
+  font-size: 14px;
+  min-width: 10px;
+  min-height: 10px;
+  transition: all .3s;
+  margin-inline-start: 10px;
+}
+
+// Helpers:
 
 .details-clean-input {
-  background-color: transparent;
-  border: none;
-  width: 90%;
-  font-family: $font-regular;
-  transition: all 0.3s;
+  @include input-blur;
 }
 
 .details-clean-input:focus {
-  background-color: rgb(252, 252, 252);
-  padding-left: 10px;
+  @include input-focus;
 }
 
 .action-link {

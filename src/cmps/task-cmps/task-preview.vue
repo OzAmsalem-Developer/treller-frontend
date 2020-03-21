@@ -1,7 +1,13 @@
 <template>
   <section class="task-preview" @click="taskDetailsPage">
     <button class="preview-menu-btn" @click="toggleMenu">🖊️</button>
-    <task-menu v-if="isMenuOpen" :taskId="task.id" :listId="listId" @click.native="toggleMenu" />
+    <task-menu
+     v-if="isMenuOpen" 
+     :taskId="task.id" 
+     :listId="taskList.id" 
+     @click.native="toggleMenu" 
+     @remove-task="$emit('remove-task', task.id)"
+     />
     <label-preview :labels="task.labels" />
     <p class="preview-title">{{task.name}}</p>
     <section class="preview-indications">
@@ -32,7 +38,6 @@ export default {
   data() {
     return {
       isMenuOpen: false,
-      taskListsCopy: null
     };
   },
   computed: {
@@ -55,10 +60,15 @@ export default {
     },
     taskDetailsPage() {
       this.$router.push(this.taskDetails);
+    },
+    removeTask() {
+      const idx = this.listCopy.tasks.findIndex(t => t.id === this.task.id)
+      if (idx !== -1) this.listCopy.tasks.splice(idx, 1)
+      this.saveTask()
+    },
+    saveTask() {
+      this.$emit('task-changed', this.listCopy)
     }
-  },
-  created() {
-    this.taskListsCopy = JSON.parse(JSON.stringify(this.$store.getters.taskLists))
   },
   components: {
     labelPreview,
@@ -68,7 +78,7 @@ export default {
   },
   props: {
     task: Object,
-    listId: String
+    taskList: Object
   }
 };
 </script>
