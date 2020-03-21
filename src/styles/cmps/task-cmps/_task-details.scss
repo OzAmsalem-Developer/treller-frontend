@@ -52,6 +52,11 @@
 
 .details-title {
   font-size: 24px;
+  @include input-blur
+}
+
+.details-title:focus {
+  @include input-focus;
 }
 
 .close-details-btn {
@@ -60,8 +65,13 @@
 }
 
 .details-desc-input {
+  font-size: 16px;
   resize: none;
-  width: 90%;
+  @include input-blur;
+}
+
+.details-desc-input:focus {
+  @include input-focus
 }
 
 .details-checklist {
@@ -98,15 +108,21 @@
   background-color: $clr5;
 }
 
-// Helpers:
-.details-text-area {
-  resize: none;
+.check-list-title {
+  font-family: $font-bold;
+  font-size: 16px;
+  color: $clr1;
   background-color: transparent;
   border: none;
-  width: 90%;
-  font-family: $font-regular;
   transition: all 0.3s;
+  width: 90%;
 }
+
+.check-list-title:focus {
+  @include input-focus;
+}
+
+// Helpers:
 
 .details-text-area:focus {
   background-color: rgb(252, 252, 252);

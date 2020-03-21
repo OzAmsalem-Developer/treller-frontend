@@ -18,37 +18,50 @@
   }
 }
 
-
 /* Media  Mixins */
 
 //aspect ratio mixin
 @mixin aspect-ratio($width, $height) {
-    position: relative;
-    overflow: hidden;
-    &:before {
-      content: "";
-      display: block;
-      width: 100%;
-      padding-top: ($height / $width) * 100%;
-    }
-    > * {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }  
-    > img {
-      height: 100%;
-      object-fit: cover;
+  position: relative;
+  overflow: hidden;
+  &:before {
+    content: "";
+    display: block;
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  > img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Mixin for input text transition
+@mixin input-blur {
+  border: none;
+  font-family: $font-regular;
+  background-color: transparent;
+  width: 90%;
+  transition: all 0.3s;
+}
+
+@mixin input-focus {
+  background-color: rgb(252, 252, 252);
+  padding-left: 10px;
+}
+
+// Mixin for removing hover efects on iphone screen
+@mixin hover-supported {
+  @media not all and (pointer: coarse) {
+    &:hover {
+      @content;
     }
   }
-  
-  // Mixin for removing hover efects on iphone screen
-  @mixin hover-supported {    
-    @media not all and (pointer: coarse) {
-        &:hover {
-            @content;
-        }
-    }
-  }
+}

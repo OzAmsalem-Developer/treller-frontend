@@ -1,11 +1,10 @@
 <template>
   <section v-if="task" class="task-details">
     <div class="task-details-header">
-      <textarea
+      <input
         v-model="editedTask.name"
-        class="details-title details-text-area"
-        cols="20"
-        rows="1"
+        class="details-title"
+        type="text"
         @change="updateTask"
       />
       <button class="close-details-btn" @click="closeDetails">✖️</button>
@@ -59,12 +58,12 @@
         <section v-if="task.checklist" class="details-checklist">
           <div>
             <input
-              class="font-bold"
+              class="check-list-title"
               v-model="editedTask.checklist.title"
               type="text"
               @change="updateTask"
             />
-            <span class="action-link">remove</span>
+            <!-- <span class="action-link">remove</span> -->
           </div>
           <input
             class="details-clean-input"
@@ -144,6 +143,7 @@ export default {
     },
     async addTodo() {
       this.newTodo.id = utilService.makeId();
+      // you cab get empty from the serviced
       this.editedTask.checklist.todos.push(this.newTodo);
       await this.updateTask();
       try {
