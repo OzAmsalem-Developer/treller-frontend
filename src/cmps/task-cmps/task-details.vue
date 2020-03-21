@@ -33,7 +33,6 @@
             <input type="checkbox" v-model="editedTask.dueDate.isCompleted" @change="updateTask" />
             <input v-model="currDueDate" @change="setDueDate" type="date" />
             <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
-            <!-- <span v-if="task.dueDate">{{task.dueDate.time | minimalDate}}:</span> -->
           </div>
         </section>
 
@@ -133,7 +132,7 @@ export default {
     },
     async addTodo() {
       this.newTodo.id = utilService.makeId();
-      // you cab get empty from the serviced
+      // you can get empty from the serviced
       this.editedTask.checklist.todos.push(this.newTodo);
       await this.updateTask();
       try {
