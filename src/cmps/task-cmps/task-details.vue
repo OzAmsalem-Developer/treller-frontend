@@ -1,5 +1,5 @@
 <template>
-  <div class="window-overlay">
+  <div class="window-overlay" @click="closeDetails">
     <section v-if="task" class="task-details">
       <div class="task-details-header">
         <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
