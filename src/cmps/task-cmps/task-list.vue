@@ -2,7 +2,7 @@
   <section v-if="taskList" class="task-list">
     <header>
       <input
-        @mousedown.prevent=""
+        @mousedown.prevent
         @mouseup="focus"
         @change="saveListName"
         class="list-name"
@@ -17,14 +17,16 @@
       />
     </header>
     <main class="tasks" ref="tasks">
-      <task-preview 
-      v-for="task in tasks" :task="task" 
-      :taskList="taskList" :key="task.id" 
-      @remove-task="removeTask"
+      <task-preview
+        v-for="task in tasks"
+        :task="task"
+        :taskList="taskList"
+        :key="task.id"
+        @remove-task="removeTask"
       />
     </main>
     <button v-if="!newTask" @click="getEmptyTask" class="add-task-btn">+ Add Task</button>
-    <form class="add-task" @submit.prevent="addTask" @keydown.enter.prevent="" v-else>
+    <form class="add-task" @submit.prevent="addTask" @keydown.enter.prevent v-else>
       <textarea
         ref="taskInput"
         @keyup.enter.prevent="addTask"
@@ -43,7 +45,6 @@
 import taskPreview from "./task-preview.vue";
 import { boardService } from "@/services/board.service";
 import listMenu from "@/cmps/list-cmps/list-menu";
-import { eventBus, EV_saveFailed } from "@/services/eventBus.service";
 
 export default {
   data() {
@@ -63,16 +64,16 @@ export default {
     addTask(ev) {
       // allow break line on shift+enter
       if (ev.shiftKey) {
-        this.newTask.name += '\n'
-        return
-        } 
-      
+        this.newTask.name += "\n";
+        return;
+      }
+
       if (!this.newTask.name.length) {
-        this.newTask = null // (Close add-task)
-        return
+        this.newTask = null; // (Close add-task)
+        return;
       }
       this.listCopy.tasks.push(this.newTask);
-      this.saveList()
+      this.saveList();
       this.newTask = null;
       this.getEmptyTask();
       setTimeout(() => {
@@ -80,30 +81,36 @@ export default {
       }, 2);
       this.$refs.taskInput.focus();
     },
-    saveList() {
-      this.$emit("save-list", this.listCopy);
-      this.listCopy = JSON.parse(JSON.stringify(this.taskList));
+    async saveList() {
+      await this.emit("save-list", this.listCopy);
+      try {
+        this.listCopy = JSON.parse(JSON.stringify(this.taskList));
+      console.log("DONEEE");
+      } catch {
+        this.listCopy = JSON.parse(JSON.stringify(this.taskList));
+      }
+    },
+    emit(eventName, value) {
+      return new Promise((resolve, reject) => {
+        this.$emit(eventName, value);
+        this.$nextTick(resolve);
+      });
     },
     saveListName(ev) {
-      this.saveList()
-      ev.target.blur()
+      this.saveList();
+      ev.target.blur();
     },
     focus(ev) {
-      ev.target.focus()
+      ev.target.focus();
     },
     removeTask(taskId) {
-      const idx = this.listCopy.tasks.findIndex(t => t.id === taskId)
-      if (idx !== -1) this.listCopy.tasks.splice(idx, 1)
-      this.saveList()
+      const idx = this.listCopy.tasks.findIndex(t => t.id === taskId);
+      if (idx !== -1) this.listCopy.tasks.splice(idx, 1);
+      this.saveList();
     }
   },
   created() {
     this.listCopy = JSON.parse(JSON.stringify(this.taskList));
-    eventBus.$on(EV_saveFailed, () => {
-      // When save changes is failed, update the copy to the right one
-      // (which is my prop that coming from the store)
-      this.listCopy = JSON.parse(JSON.stringify(this.taskList));
-    });
   },
   computed: {
     tasks() {
@@ -113,9 +120,9 @@ export default {
   props: {
     taskList: Object
   },
-    components: {
+  components: {
     taskPreview,
     listMenu
   }
-}
+};
 </script>

@@ -16,7 +16,7 @@
         </form>
       </section>
     </div>
-    <task-details v-if="!isTaskLoad && currTask"/>
+    <task-details v-if="!isTaskLoad && currTask" />
   </main>
 </template>
 
@@ -59,7 +59,7 @@ export default {
     async saveBoard() {
       await this.$store.dispatch({ type: "saveBoard", board: this.board });
       try {
-        this.board = JSON.parse(JSON.stringify(this.storeBoard))
+        this.board = JSON.parse(JSON.stringify(this.storeBoard));
         console.log("CMP: Board Saved Succesfully");
       } catch (prevBoard) {
         this.board = JSON.parse(JSON.stringify(board));
@@ -85,10 +85,7 @@ export default {
     saveTaskList(taskList) {
       const idx = this.board.taskLists.findIndex(tl => tl.id === taskList.id);
       if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList);
-      this.saveBoard().catch(() => {
-        console.log('Adding failed');
-        eventBus.$emit(EV_saveFailed);
-      });
+      this.saveBoard()
     },
     moveTask({ from, to, taskId }) {
       const fromTaskList = this.board.taskLists.find(tl => tl.id === from);
@@ -121,7 +118,7 @@ export default {
       return this.$store.getters.currTask;
     },
     storeBoard() {
-      return this.$store.getters.currBoard
+      return this.$store.getters.currBoard;
     }
   },
   watch: {
