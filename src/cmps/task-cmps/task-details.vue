@@ -42,7 +42,7 @@
           </div>
         </section>
 
-        <section v-if="task.desc" class="details-description">
+        <section class="details-description">
           <!-- <span>📄</span> -->
           <div>
             <span class="font-bold">Description:</span>
