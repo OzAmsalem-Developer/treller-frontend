@@ -38,7 +38,7 @@
           <div class="details-due-list">
             <input type="checkbox" />
             <input v-model="currDueDate" @change="setDueDate" type="date" />
-            <span v-if="task.dueDate">{{task.dueDate | minimalDate}}:</span>
+            <span v-if="task.dueDate">{{task.dueDate.time | minimalDate}}:</span>
           </div>
         </section>
 
@@ -56,8 +56,6 @@
         </section>
 
         <section v-if="task.checklist" class="details-checklist">
-          <!-- <span class="font-bold">{{task.checklist.title}}</span> -->
-          <!-- <ul class="details-checklist-items clean-items"></ul> -->
           <div>
             <input
               class="font-bold"
@@ -161,9 +159,7 @@ export default {
     },
     closeDetails() {
       const boardId = this.$store.getters.currBoardId;
-      this.$router.push(`/board/${boardId}`)
-      
-      console.log("boardId", boardId);
+      this.$router.push(`/board/${boardId}`);
     },
     moveTask() {
       console.log("Please move the Task!");
@@ -180,10 +176,6 @@ export default {
     setMembers() {
       console.log("Please set the Members!");
     },
-    setDueDate() {
-      this.editedTask.dueDate = JSON.parse(JSON.stringify(this.currDueDate));
-      this.updateTask();
-    },
     updateDescription() {
       console.log("Please update the Description!");
     },
@@ -196,10 +188,15 @@ export default {
     sendComment() {
       console.log("Please send this Comment!");
     },
+    setDueDate() {
+      // Turn currDueDate to Timestamp!
+      this.editedTask.dueDate.time = new Date(this.currDueDate).getTime();
+      this.updateTask();
+    },
     getCurrDueDate() {
-      var day = new Date(this.editedTask.dueDate).getDate();
-      var month = new Date(this.editedTask.dueDate).getMonth() + 1;
-      var year = new Date(this.editedTask.dueDate).getFullYear();
+      var day = new Date(this.editedTask.dueDate.time).getDate();
+      var month = new Date(this.editedTask.dueDate.time).getMonth() + 1;
+      var year = new Date(this.editedTask.dueDate.time).getFullYear();
       if (day < 10) {
         day = "0" + day;
       }
@@ -215,17 +212,16 @@ export default {
     }
   },
   created() {
-    console.log('// DETAILS PAGE CREATED!')
-    console.log('This should only appear if task details is displayed!')
+    console.log("// DETAILS PAGE CREATED!");
+    console.log("// This should only appear if task details is displayed!");
     this.editedTask = JSON.parse(JSON.stringify(this.task));
     if (this.editedTask) {
       this.getCurrDueDate();
     }
     console.log("EDITED TASK:", this.editedTask);
-
   },
   destroyed() {
-  console.log('// DETAILS PAGE DESTROED!')
+    console.log("// DETAILS PAGE DESTROED!");
   },
   components: {
     memberPreview,
