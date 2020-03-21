@@ -24,8 +24,6 @@ export default {
           : hourfLeft < 48
           ? "yellow"
           : "transparent";
-          console.log(color);
-          
       return color;
     }
   },

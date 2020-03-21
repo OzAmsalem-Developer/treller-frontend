@@ -2,7 +2,12 @@
   <main class="board-app" v-if="board">
     <board-header></board-header>
     <div ref="lists" class="lists-container">
-      <task-list v-for="list in taskLists" :taskList="list" :key="list.id" @save-list="saveTaskList" />
+      <task-list
+        v-for="list in taskLists"
+        :taskList="list"
+        :key="list.id"
+        @save-list="saveTaskList"
+      />
       <section class="add-list">
         <button class="add-btn" @click="getEmptyList">+Add List</button>
         <form class="add-list" @submit.prevent="addList" v-if="newTaskList">
@@ -11,7 +16,7 @@
         </form>
       </section>
     </div>
-    <task-details v-if="!isTaskLoad" @task-updated="saveTask"/>
+    <task-details v-if="!isTaskLoad" />
   </main>
 </template>
 
@@ -21,7 +26,12 @@ import taskList from "@/cmps/task-cmps/task-list";
 import taskDetails from "@/cmps/task-cmps/task-details";
 import { boardService } from "@/services/board.service";
 import { utilService } from "@/services/util.service";
-import { eventBus, EV_removeList, EV_saveFailed } from "@/services/eventBus.service";
+import {
+  eventBus,
+  EV_removeList,
+  EV_saveFailed,
+  EV_moveTask
+} from "@/services/eventBus.service";
 
 export default {
   data() {
@@ -53,11 +63,11 @@ export default {
       } catch (prevBoard) {
         this.board = JSON.parse(JSON.stringify(board));
         console.log("Err, board didnt saved");
-        throw new Error('Saving failed')
+        throw new Error("Saving failed");
       }
     },
-    async addList() {
-      if (!this.newTaskList.name.length) return
+    addList() {
+      if (!this.newTaskList.name.length) return;
       this.board.taskLists.push(this.newTaskList);
       this.saveBoard();
       this.newTaskList = null;
@@ -67,22 +77,31 @@ export default {
       }, 0);
     },
     removeList(listId) {
-      const idx = this.board.taskLists.findIndex(list => list.id === listId)
-      this.board.taskLists.splice(idx, 1)
+      const idx = this.board.taskLists.findIndex(list => list.id === listId);
+      this.board.taskLists.splice(idx, 1);
       this.saveBoard();
     },
     saveTaskList(taskList) {
       const idx = this.board.taskLists.findIndex(tl => tl.id === taskList.id);
-      if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList)
-        this.saveBoard()
-        .catch(() => {eventBus.$emit(EV_saveFailed)})
+      if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList);
+      this.saveBoard().catch(() => {
+        eventBus.$emit(EV_saveFailed);
+      });
     },
-    saveTask(task) {
-      //CHECK if we need it
-      const taskList = JSON.parse(JSON.stringify(this.board.taskLists(list => list.id === task.listId))) 
-      const idx = taskList.tasks.findIndex(t => t.id === task.id)
-      taskList.splice(idx, 1, task)
-      saveTaskList(taskList)
+    moveTask({ from, to, taskId }) {
+      const fromTaskList = this.board.taskLists.find(tl => tl.id === from);
+      let taskIdx;
+      const task = fromTaskList.tasks.find((t, idx) => {
+        if (t.id === taskId) {
+          taskIdx = idx;
+          return true;
+        }
+      });
+      fromTaskList.tasks.splice(taskIdx, 1);
+
+      const toTaskList = this.board.taskLists.find(tl => tl.id === to);
+      toTaskList.tasks.push(task);
+      this.saveBoard();
     },
     getEmptyList() {
       this.newTaskList = this.newTaskList ? null : boardService.getEmptyList();
@@ -112,7 +131,8 @@ export default {
     this.loadBoardAndTask(boardId); // Render the task details when taskId is passed as param
 
     //Event Bus
-    eventBus.$on(EV_removeList, this.removeList)
+    eventBus.$on(EV_removeList, this.removeList);
+    eventBus.$on(EV_moveTask, this.moveTask);
   },
   components: {
     boardHeader,
