@@ -35,7 +35,7 @@ const routes = [
   },
   {
     path: '/board/:boardId/task/:taskId',
-    name: 'BoardApp',
+    name: 'TaskDetails',
     component: boardApp
   }
 ]
