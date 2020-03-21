@@ -17,7 +17,7 @@
         :boardLabels="boardLabels"
         :taskLabels="this.task.labels"
         @click.native.stop
-        @set-labels="setTaskLabels"
+        @set-labels="setLabels"
       />
       <button class="remove-btn" @click.stop="$emit('remove-task')">Remove</button>
     </menu>
@@ -51,8 +51,8 @@ export default {
         taskId: this.task.id
       });
     },
-    setTaskLabels(taskLabels) {
-       eventBus.$emit(EV_editTaskLabel, taskLabels);
+    setLabels(taskLabels) {
+      this.$emit('set-labels', taskLabels);
     }
   },
   computed: {

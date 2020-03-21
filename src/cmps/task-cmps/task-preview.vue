@@ -7,6 +7,7 @@
      :listId="listId" 
      @click.native="toggleMenu" 
      @remove-task="$emit('remove-task', task.id)"
+     @set-labels="setTaskLabels"
      />
     <label-preview :labels="task.labels" />
     <p class="preview-title">{{task.name}}</p>
@@ -61,6 +62,10 @@ export default {
     },
     taskDetailsPage() {
       this.$router.push(this.taskDetails);
+    },
+    setTaskLabels(taskLabels) {
+      this.taskCopy = taskLabels
+      // emit to list
     }
   },
   created() {
