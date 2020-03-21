@@ -3,7 +3,7 @@
     <button class="preview-menu-btn" @click="toggleMenu">🖊️</button>
     <task-menu
      v-if="isMenuOpen" 
-     :taskId="task.id" 
+     :task="task" 
      :listId="taskList.id" 
      @click.native="toggleMenu" 
      @remove-task="$emit('remove-task', task.id)"
@@ -60,14 +60,6 @@ export default {
     },
     taskDetailsPage() {
       this.$router.push(this.taskDetails);
-    },
-    removeTask() {
-      const idx = this.listCopy.tasks.findIndex(t => t.id === this.task.id)
-      if (idx !== -1) this.listCopy.tasks.splice(idx, 1)
-      this.saveTask()
-    },
-    saveTask() {
-      this.$emit('task-changed', this.listCopy)
     }
   },
   components: {
