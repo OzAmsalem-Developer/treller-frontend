@@ -1,107 +1,109 @@
 <template>
-  <section v-if="task" class="task-details">
-    <div class="task-details-header">
-      <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
-      <button class="close-details-btn" @click="closeDetails">✖️</button>
-    </div>
-    <div class="details-container">
-      <div class="details-info">
-        <section v-if="task.labels.length" class="details-labels">
-          <!-- <span>💡</span> -->
-          <span class="font-bold">Labels:</span>
-          <span class="action-link">Update</span>
-          <div class="details-labels-list">
-            <labelPreview :labels="task.labels" />
-            <button>+</button>
-          </div>
-        </section>
+  <div class="window-overlay">
+    <section v-if="task" class="task-details">
+      <div class="task-details-header">
+        <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
+        <button class="close-details-btn" @click="closeDetails">✖️</button>
+      </div>
+      <div class="details-container">
+        <div class="details-info">
+          <section v-if="task.labels.length" class="details-labels">
+            <!-- <span>💡</span> -->
+            <span class="font-bold">Labels:</span>
+            <span class="action-link">Update</span>
+            <div class="details-labels-list">
+              <labelPreview :labels="task.labels" />
+              <button>+</button>
+            </div>
+          </section>
 
-        <section v-if="task.members" class="details-members">
-          <span class="font-bold">Members:</span>
-          <span class="action-link" @click="setMembers">Invite</span>
-          <div class="details-members-list">
-            <member-preview :members="task.members"></member-preview>
-            <button class="member-card" @click="setMembers">+</button>
-          </div>
-        </section>
+          <section v-if="task.members" class="details-members">
+            <span class="font-bold">Members:</span>
+            <span class="action-link" @click="setMembers">Invite</span>
+            <div class="details-members-list">
+              <member-preview :members="task.members"></member-preview>
+              <button class="member-card" @click="setMembers">+</button>
+            </div>
+          </section>
 
-        <section class="details-due-date">
-          <!-- <span>🕖</span> -->
-          <span class="font-bold">Due Date:</span>
-          <span class="action-link">Update</span>
-          <div class="details-due-list">
-            <input type="checkbox" v-model="editedTask.dueDate.isCompleted" @change="updateTask" />
-            <input v-model="currDueDate" @change="setDueDate" type="date" />
-            <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
-          </div>
-        </section>
+          <section class="details-due-date">
+            <!-- <span>🕖</span> -->
+            <span class="font-bold">Due Date:</span>
+            <span class="action-link">Update</span>
+            <div class="details-due-list">
+              <input type="checkbox" v-model="editedTask.dueDate.isCompleted" @change="updateTask" />
+              <input v-model="currDueDate" @change="setDueDate" type="date" />
+              <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
+            </div>
+          </section>
 
-        <section class="details-description">
-          <!-- <span>📄</span> -->
-          <div>
-            <span class="font-bold">Description:</span>
-            <span class="action-link">Edit</span>
-          </div>
-          <textarea
-            v-model="editedTask.desc"
-            @change="updateTask"
-            class="details-text-area details-desc-input"
-          />
-        </section>
-
-        <section v-if="task.checklist" class="details-checklist">
-          <div>
-            <input
-              class="check-list-title"
-              v-model="editedTask.checklist.title"
-              type="text"
+          <section class="details-description">
+            <!-- <span>📄</span> -->
+            <div>
+              <span class="font-bold">Description:</span>
+              <span class="action-link">Edit</span>
+            </div>
+            <textarea
+              v-model="editedTask.desc"
               @change="updateTask"
+              class="details-text-area details-desc-input"
             />
-            <!-- <span class="action-link">remove</span> -->
-          </div>
-          <div v-for="item in task.checklist.todos" :key="item.id">
-            <input class="details-clean-input" v-model="item.txt" @change="updateTask" />
-            <button class="todo-remove-btn" @click="removeTodo(item.id)">X</button>
-          </div>
-          <input
-            class="details-clean-input checklist-add-item"
-            v-model="newTodo.txt"
-            type="text"
-            placeholder="add an item"
-            @change="addTodo"
-          />
-        </section>
+          </section>
 
-        <section class="details-discussion">
-          <div>
-            <!-- <span>💬</span> -->
-            <span class="font-bold">Discussion:</span>
-            <span class="action-link">hide activity feed</span>
-          </div>
-          <input
-            class="details-clean-input discussion-add-item"
-            type="text"
-            v-model="currComment.txt"
-            @change="addComment"
-            placeholder="Write a comment"
-          />
-          <comment-preview :comments="editedTask.comments" />
+          <section v-if="task.checklist" class="details-checklist">
+            <div>
+              <input
+                class="check-list-title"
+                v-model="editedTask.checklist.title"
+                type="text"
+                @change="updateTask"
+              />
+              <!-- <span class="action-link">remove</span> -->
+            </div>
+            <div v-for="item in task.checklist.todos" :key="item.id">
+              <input class="details-clean-input" v-model="item.txt" @change="updateTask" />
+              <button class="todo-remove-btn" @click="removeTodo(item.id)">X</button>
+            </div>
+            <input
+              class="details-clean-input checklist-add-item"
+              v-model="currTodo.txt"
+              type="text"
+              placeholder="add an item"
+              @change="addTodo"
+            />
+          </section>
+
+          <section class="details-discussion">
+            <div>
+              <!-- <span>💬</span> -->
+              <span class="font-bold">Discussion:</span>
+              <span class="action-link">hide activity feed</span>
+            </div>
+            <input
+              class="details-clean-input discussion-add-item"
+              type="text"
+              v-model="currComment.txt"
+              @change="addComment"
+              placeholder="Write a comment"
+            />
+            <comment-preview :comments="editedTask.comments" />
+          </section>
+        </div>
+
+        <section class="details-actions">
+          <button @click="moveTask">Move</button>
+          <button @click="copyTask">Copy</button>
+          <button @click="setLabels">Labels</button>
+          <button @click="setMembers">Members</button>
+          <button @click="setDueDate">Due Date</button>
+          <button @click="updateDescription">Description</button>
+          <button @click="updateChecklist">Checklist</button>
+          <!-- <button @click="sendAttachment">Attachments</button> -->
+          <button @click="sendComment">Comments</button>
         </section>
       </div>
-
-      <section class="details-actions">
-        <button @click="moveTask">Move</button>
-        <button @click="copyTask">Copy</button>
-        <button @click="setLabels">Labels</button>
-        <button @click="setMembers">Members</button>
-        <button @click="setDueDate">Due Date</button>
-        <button @click="updateDescription">Description</button>
-        <button @click="updateChecklist">Checklist</button>
-        <button @click="sendAttachment">Attachments</button>
-        <button @click="sendComment">Comments</button>
-      </section>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -116,7 +118,7 @@ export default {
     return {
       editedTask: null,
       currDueDate: null,
-      newTodo: {
+      currTodo: {
         id: "",
         txt: "",
         isDone: false
@@ -128,25 +130,21 @@ export default {
   },
   methods: {
     async updateTask() {
-      await this.$store
-        .dispatch({ type: "updateTask", task: this.editedTask })
-        .catch(prevTask => {
-          this.editedTask = prevTask;
-          console.log("Err, failed to save task");
-        });
+      await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
+      try {
+        this.editedTask = JSON.parse(JSON.stringify(this.task));
+      } catch (prevTask) {
+        this.editedTask = JSON.parse(JSON.stringify(prevTask));
+        console.log("Err, failed to save task");
+      }
     },
     async addTodo() {
-      this.newTodo.id = utilService.makeId();
-      // you can get empty from the serviced
-      this.editedTask.checklist.todos.push(this.newTodo);
+      let emptyTodo = utilService.getEmptyTodo();
+      emptyTodo.txt = this.currTodo.txt;
+      this.editedTask.checklist.todos.push(emptyTodo);
       await this.updateTask();
       try {
-        const newTodo = {
-          id: "",
-          txt: "",
-          isDone: false
-        };
-        this.newTodo = newTodo;
+        this.currTodo.txt = "";
       } catch {
         console.log("Failed to save todo + task");
       }
@@ -155,16 +153,14 @@ export default {
       let emptyComment = utilService.getEmptyComment();
       emptyComment.txt = this.currComment.txt;
       emptyComment.from = "Guest";
-      console.log('emptyComment', emptyComment)
+      console.log("emptyComment", emptyComment);
       this.editedTask.comments.unshift(emptyComment);
       await this.updateTask();
       try {
         this.currComment.txt = "";
       } catch {
-        console.log("Failed to save todo + task");
+        console.log("Failed to save comment + task");
       }
-
-      // unshift
     },
     async removeTodo(todoId) {
       const idx = this.editedTask.checklist.todos.findIndex(
@@ -235,17 +231,13 @@ export default {
     }
   },
   created() {
-    console.log("// DETAILS PAGE CREATED!");
-    console.log("// This should only appear if task details is displayed!");
     this.editedTask = JSON.parse(JSON.stringify(this.task));
     if (this.editedTask) {
       this.getCurrDueDate();
     }
     document.addEventListener("keyup", this.closeDetailsOnEsc);
-    console.log("EDITED TASK:", this.editedTask);
   },
   destroyed() {
-    console.log("// DETAILS PAGE DESTROED!");
     document.removeEventListener("keyup", this.closeDetailsOnEsc);
   },
   components: {
