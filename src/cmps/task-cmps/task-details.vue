@@ -30,7 +30,7 @@
           <span class="font-bold">Due Date:</span>
           <span class="action-link">Update</span>
           <div class="details-due-list">
-            <input type="checkbox" />
+            <input type="checkbox" v-model="editedTask.dueDate.isCompleted" @change="updateTask" />
             <input v-model="currDueDate" @change="setDueDate" type="date" />
             <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
             <!-- <span v-if="task.dueDate">{{task.dueDate.time | minimalDate}}:</span> -->
@@ -60,13 +60,10 @@
             />
             <!-- <span class="action-link">remove</span> -->
           </div>
-          <input
-            class="details-clean-input"
-            v-for="item in task.checklist.todos"
-            v-model="item.txt"
-            :key="item.id"
-            @change="updateTask"
-          />
+          <div v-for="item in task.checklist.todos" :key="item.id">
+            <input class="details-clean-input" v-model="item.txt" @change="updateTask" />
+            <button class="todo-remove-btn" @click="removeTodo(item.id)">X</button>
+          </div>
           <input
             class="details-clean-input checklist-add-item"
             v-model="newTodo.txt"
@@ -150,6 +147,20 @@ export default {
         };
         this.newTodo = newTodo;
         console.log("this.newTodo", this.newTodo);
+      } catch {
+        console.log("Failed to save todo + task");
+      }
+    },
+    async removeTodo(todoId) {
+      const idx = this.editedTask.checklist.todos.findIndex(
+        todo => todo.id === todoId
+      );
+      if (idx !== -1) {
+        this.editedTask.checklist.todos.splice(idx, 1);
+      }
+      await this.updateTask();
+      try {
+        console.log("Todo removed, task saved");
       } catch {
         console.log("Failed to save todo + task");
       }

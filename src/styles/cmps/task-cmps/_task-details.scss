@@ -52,7 +52,7 @@
 
 .details-title {
   font-size: 24px;
-  @include input-blur
+  @include input-blur;
 }
 
 .details-title:focus {
@@ -71,7 +71,7 @@
 }
 
 .details-desc-input:focus {
-  @include input-focus
+  @include input-focus;
 }
 
 .details-checklist {
@@ -109,37 +109,32 @@
 }
 
 .check-list-title {
-  font-family: $font-bold;
+  @include input-blur;
   font-size: 16px;
   color: $clr1;
-  background-color: transparent;
-  border: none;
-  transition: all 0.3s;
-  width: 90%;
+  font-family: $font-bold;
 }
 
 .check-list-title:focus {
   @include input-focus;
 }
 
-// Helpers:
-
-.details-text-area:focus {
-  background-color: rgb(252, 252, 252);
-  padding-left: 10px;
+.todo-remove-btn {
+  font-family: $font-bold;
+  font-size: 14px;
+  min-width: 10px;
+  min-height: 10px;
+  transition: all .3s;
 }
 
+// Helpers:
+
 .details-clean-input {
-  background-color: transparent;
-  border: none;
-  width: 90%;
-  font-family: $font-regular;
-  transition: all 0.3s;
+  @include input-blur;
 }
 
 .details-clean-input:focus {
-  background-color: rgb(252, 252, 252);
-  padding-left: 10px;
+  @include input-focus;
 }
 
 .action-link {
