@@ -6,6 +6,7 @@ export const utilService = {
     getHoursDifference,
     getRandomColor,
     scrollTo,
+    getEmptyChecklist,
     getEmptyTodo,
     getEmptyComment
 }
@@ -30,6 +31,31 @@ function makeId(length = 5) {
 
     return text;
 }
+
+// function getEmptyDueDate() {
+//     return {
+//         id: makeId(),
+//         title: "Checklist",
+//         todos: []
+//     }
+// }
+
+function getEmptyChecklist() {
+    return {
+        id: makeId(),
+        title: "Checklist",
+        todos: []
+    }
+}
+
+function getEmptyTodo() {
+    return {
+        id: makeId(),
+        txt: "",
+        isDone: false
+    }
+}
+
 function getEmptyComment() {
     return {
         id: makeId(),
@@ -37,13 +63,6 @@ function getEmptyComment() {
         txt: '',
         createdAt: Date.now(),
         imgUrl: null
-    }
-}
-function getEmptyTodo() {
-    return {
-        id: makeId(),
-        txt: "",
-        isDone: false
     }
 }
 
