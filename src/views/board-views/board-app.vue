@@ -11,7 +11,7 @@
         </form>
       </section>
     </div>
-    <task-details v-if="!isTaskLoad" />
+    <task-details v-if="!isTaskLoad" @task-updated="saveTask"/>
   </main>
 </template>
 
@@ -73,11 +73,15 @@ export default {
     saveTaskList(taskList) {
       const idx = this.board.taskLists.findIndex(tl => tl.id === taskList.id);
       if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList)
-      try {
-        this.saveBoard();
-      } catch {
-        eventBus.$emit(EV_saveFailed)
-      }
+        this.saveBoard()
+        .catch(() => {eventBus.$emit(EV_saveFailed)})
+    },
+    saveTask(task) {
+      //CHECK if we need it
+      const taskList = JSON.parse(JSON.stringify(this.board.taskLists(list => list.id === task.listId))) 
+      const idx = taskList.tasks.findIndex(t => t.id === task.id)
+      taskList.splice(idx, 1, task)
+      saveTaskList(taskList)
     },
     getEmptyList() {
       this.newTaskList = this.newTaskList ? null : boardService.getEmptyList();

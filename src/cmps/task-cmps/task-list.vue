@@ -1,7 +1,14 @@
 <template>
   <section v-if="taskList" class="task-list">
     <header>
-      <input @change="saveListName" class="list-name" type="text" v-model="listCopy.name" />
+      <input
+        @mousedown.prevent=""
+        @mouseup="focus"
+        @change="saveListName"
+        class="list-name"
+        type="text"
+        v-model="listCopy.name"
+      />
       <button @click="isMenuOpen = !isMenuOpen" class="menu-btn">...</button>
       <list-menu
         @add-task="getEmptyTask(); isMenuOpen = false"
@@ -56,7 +63,6 @@ export default {
       this.getEmptyTask();
       setTimeout(() => {
         this.$refs.tasks.scrollTo(0, this.$refs.tasks.scrollHeight);
-        this.$refs.tasks.scrollIntoView({ block: "start" });
       }, 2);
       this.$refs.taskInput.focus();
     },
@@ -66,6 +72,9 @@ export default {
     saveListName(ev) {
       this.saveList()
       ev.target.blur()
+    },
+    focus(ev) {
+      ev.target.focus()
     }
   },
   created() {
@@ -76,10 +85,6 @@ export default {
       this.listCopy = JSON.parse(JSON.stringify(this.taskList));
     });
   },
-  components: {
-    taskPreview,
-    listMenu
-  },
   computed: {
     tasks() {
       return this.taskList.tasks;
@@ -87,6 +92,10 @@ export default {
   },
   props: {
     taskList: Object
+  },
+    components: {
+    taskPreview,
+    listMenu
   }
-};
+}
 </script>
