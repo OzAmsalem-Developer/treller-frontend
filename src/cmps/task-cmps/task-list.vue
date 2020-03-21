@@ -20,9 +20,10 @@
       <task-preview
         v-for="task in tasks"
         :task="task"
-        :taskList="taskList"
+        :listId="taskList.id"
         :key="task.id"
         @remove-task="removeTask"
+        @update-task="saveTask"
       />
     </main>
     <button v-if="!newTask" @click="getEmptyTask" class="add-task-btn">+ Add Task</button>
@@ -85,10 +86,16 @@ export default {
       await this.emit("save-list", this.listCopy);
       try {
         this.listCopy = JSON.parse(JSON.stringify(this.taskList));
-      console.log("DONEEE");
       } catch {
         this.listCopy = JSON.parse(JSON.stringify(this.taskList));
       }
+    },
+    async saveTask(task) {
+     const idx = this.listCopy.tasks.findIndex(t => t.id === task.id)
+     if (idx !== -1) {
+       this.listCopy.tasks.splice(idx, 1, task)
+       this.saveList()
+     }
     },
     emit(eventName, value) {
       return new Promise((resolve, reject) => {

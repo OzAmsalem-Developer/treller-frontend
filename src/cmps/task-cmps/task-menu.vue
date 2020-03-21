@@ -7,8 +7,17 @@
         v-if="isMenuOpen.move"
         :optionalLists="optionalLists"
         v-model="moveToList"
-        @click.native.stop=""
+        @click.native.stop
         @input="moveTask"
+      />
+      <button class="label-btn" @click.stop="isMenuOpen.label = !isMenuOpen.label">Labels</button>
+      <labelPicker
+        class="label-picker"
+        v-if="isMenuOpen.label"
+        :boardLabels="boardLabels"
+        :taskLabels="this.task.labels"
+        @click.native.stop
+        @set-labels="setTaskLabels"
       />
       <button class="remove-btn" @click.stop="$emit('remove-task')">Remove</button>
     </menu>
@@ -17,7 +26,12 @@
 
 <script>
 import movePicker from "./pickers/move-picker.vue";
-import {eventBus, EV_moveTask} from '@/services/eventBus.service'
+import labelPicker from "./pickers/label-picker.vue";
+import {
+  eventBus,
+  EV_moveTask,
+  EV_editTaskLabel
+} from "@/services/eventBus.service";
 
 export default {
   data() {
@@ -26,29 +40,36 @@ export default {
         move: false,
         label: false
       },
-      moveToList: null
+      moveToList: null,
     };
-  },
-  components: {
-    movePicker
   },
   methods: {
     moveTask() {
       eventBus.$emit(EV_moveTask, {
         from: this.listId,
         to: this.moveToList,
-        taskId: this.taskId
-      })
+        taskId: this.task.id
+      });
+    },
+    setTaskLabels(taskLabels) {
+       eventBus.$emit(EV_editTaskLabel, taskLabels);
     }
   },
   computed: {
     optionalLists() {
       const taskLists = this.$store.getters.taskLists;
       return taskLists.filter(tl => tl.id !== this.listId);
+    },
+    boardLabels() {
+      return this.$store.getters.labels;
     }
   },
+  components: {
+    movePicker,
+    labelPicker
+  },
   props: {
-    taskId: String,
+    task: Object,
     listId: String
   }
 };
