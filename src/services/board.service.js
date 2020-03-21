@@ -62,7 +62,10 @@ function getEmptyTask() {
         style: { bgColor: 'default', color: 'default'},
         members: [],
         labels: [],
-        dueDate: null,
+        dueDate:{
+            time:null,
+            isCompleted: null
+        }, 
         desc: '',
         attachments: [],
         checklist: null,
@@ -127,7 +130,10 @@ function _getSampleBoards() {
                                 }
                             ],
                             labels: ['label1'],
-                            dueDate: (Date.now() + 1000 * 60 * 60 * 5),
+                            dueDate:{
+                                time:(Date.now() + 1000 * 60 * 60 * 5),
+                                isCompleted: false
+                            }, 
                             desc: 'Build a nice data to show',
                             attachments: [],
                             checklist:
@@ -164,7 +170,10 @@ function _getSampleBoards() {
                                 }
                             ],
                             labels: ['label2'],
-                            dueDate: (Date.now() + 1000 * 60 * 60 * 100),
+                            dueDate:{
+                                time:(Date.now() + 1000 * 60 * 60 * 100),
+                                isCompleted: false
+                            }, 
                             desc: 'Start a new project',
                             attachments: [],
                             checklist:
@@ -206,7 +215,10 @@ function _getSampleBoards() {
                                 }
                             ],
                             labels: ['label4', 'label3'],
-                            dueDate: null,
+                            dueDate:{
+                                time:null,
+                                isCompleted: false
+                            }, 
                             desc: null,
                             attachments: [],
                             checklist:
@@ -254,7 +266,10 @@ function _getSampleBoards() {
                                 }
                             ],
                             labels: [],
-                            dueDate: (Date.now() + 1000 * 60 * 60 * 5),
+                            dueDate:{
+                                time:(Date.now() + 1000 * 60 * 60 * 5),
+                                isCompleted: false
+                            }, 
                             desc: 'Buliding taskList componnent',
                             attachments: [],
                             checklist:
@@ -296,7 +311,10 @@ function _getSampleBoards() {
                                 }
                             ],
                             labels: [],
-                            dueDate: (Date.now() + 1000 * 60 * 60 * 48),
+                            dueDate:{
+                                time:(Date.now() + 1000 * 60 * 60 * 48),
+                                isCompleted: false
+                            }, 
                             desc: null,
                             attachments: [],
                             checklist: null,
@@ -325,7 +343,10 @@ function _getSampleBoards() {
                                 }
                             ],
                             labels: ['label1'],
-                            dueDate: Date.now(),
+                            dueDate:{
+                                time:Date.now(),
+                                isCompleted: true
+                            }, 
                             desc: null,
                             attachments: [],
                             checklist: null,
