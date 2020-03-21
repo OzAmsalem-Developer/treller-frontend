@@ -20,19 +20,13 @@ export default {
   },
   methods: {
     moveTask() {
-      console.log(this.pickedListId);
-      
+      if (!this.pickedListId) return
       this.$emit('input', this.pickedListId)
     }
   },
-  computed: {
-    optionalLists() {
-      const taskLists = this.$store.getters.taskLists;
-      return taskLists.filter(tl => tl.id !== this.listId)
-    }
-  },
   props: {
-    value: String
+    value: String,
+    optionalLists: Array
   }
 };
 </script>

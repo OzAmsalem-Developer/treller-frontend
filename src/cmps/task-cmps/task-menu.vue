@@ -5,6 +5,7 @@
       <move-picker
         class="move-picker"
         v-if="isMenuOpen.move"
+        :optionalLists="optionalLists"
         v-model="moveToList"
         @click.native.stop=""
         @input="moveTask"
