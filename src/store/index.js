@@ -4,8 +4,9 @@ import {boardStore} from '@/store/modules/board.store.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  strict: true,
   state: {
-    isMenuOpen: false // Handle with screen
+    isScreenOpen: false // Handle with screen
   },
   mutations: {
   },
