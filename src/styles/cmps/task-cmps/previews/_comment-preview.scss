@@ -8,6 +8,7 @@
   grid-template-rows: 1fr 1fr;
   row-gap: 5px;
   padding: 5px;
+  margin-bottom: 5px;
 }
 
 .comment-img-container {
@@ -33,9 +34,13 @@
 }
 .comment-txt {
   grid-column: 2 / -1;
-  grid-row: 2 / -1;
+  grid-row: 2 / 3;
   box-shadow: $shadow;
   background-color: rgb(252, 252, 252);
   padding: 5px 5px;
   border-radius: 3px;
+}
+
+.comment-controls {
+  grid-column: 2 / -1;
 }

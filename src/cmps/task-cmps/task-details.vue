@@ -77,7 +77,7 @@
             <div>
               <!-- <span>💬</span> -->
               <span class="font-bold">Discussion:</span>
-              <span class="action-link">hide activity feed</span>
+              <!-- <span class="action-link">hide activity feed</span> -->
             </div>
             <input
               class="details-clean-input discussion-add-item"
@@ -86,7 +86,7 @@
               @change="addComment"
               placeholder="Write a comment"
             />
-            <comment-preview :comments="editedTask.comments" />
+            <comment-preview :comments="editedTask.comments" @removeComment="removeComment" />
           </section>
         </div>
 
@@ -119,9 +119,7 @@ export default {
       editedTask: null,
       currDueDate: null,
       currTodo: {
-        id: "",
-        txt: "",
-        isDone: false
+        txt: ""
       },
       currComment: {
         txt: ""
@@ -149,6 +147,17 @@ export default {
         console.log("Failed to save todo + task");
       }
     },
+    async removeTodo(todoId) {
+      const idx = this.editedTask.checklist.todos.findIndex(
+        todo => todo.id === todoId
+      );
+      if (idx !== -1) {
+        this.editedTask.checklist.todos.splice(idx, 1);
+      }
+      await this.updateTask().catch(() => {
+        console.log("Failed to save todo + task");
+      });
+    },
     async addComment() {
       let emptyComment = utilService.getEmptyComment();
       emptyComment.txt = this.currComment.txt;
@@ -162,12 +171,12 @@ export default {
         console.log("Failed to save comment + task");
       }
     },
-    async removeTodo(todoId) {
-      const idx = this.editedTask.checklist.todos.findIndex(
-        todo => todo.id === todoId
+    async removeComment(commentId) {
+      const idx = this.editedTask.comments.findIndex(
+        comment => comment.id === commentId
       );
       if (idx !== -1) {
-        this.editedTask.checklist.todos.splice(idx, 1);
+        this.editedTask.comments.splice(idx, 1);
       }
       await this.updateTask().catch(() => {
         console.log("Failed to save todo + task");
@@ -200,8 +209,20 @@ export default {
     updateDescription() {
       console.log("Please update the Description!");
     },
-    updateChecklist() {
-      console.log("Please update the Checklist!");
+    async updateChecklist() {
+      if (this.editedTask.checklist) {
+        console.log(
+          "You already have a checklist:",
+          this.editedTask.checklist.title
+        );
+      } else {
+        let emptyChecklist = utilService.getEmptyChecklist();
+        console.log("emptyChecklist", emptyChecklist);
+        this.editedTask.checklist = emptyChecklist;
+        await this.updateTask().catch(() => {
+          console.log("failed to save checklist");
+        });
+      }
     },
     sendAttachment() {
       console.log("Please send this Attachments!");
@@ -237,6 +258,7 @@ export default {
   },
   created() {
     this.editedTask = JSON.parse(JSON.stringify(this.task));
+    console.log("// Details Task:", this.editedTask);
     if (this.editedTask) {
       this.getCurrDueDate();
     }
