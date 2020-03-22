@@ -10,11 +10,32 @@
     align-items: center;
 }
 
+// Drug & Drop helpers
+
 .list-drop-preview {
     border-radius: 3px;
     margin-right: 10px;
-    background-color: $clr3;
-    opacity: 0.08;
+    background-color: transparent;
+}
+
+.list-dragging {
+    transition: transform 0.3s ease;
+    transform: rotateZ(8deg);
+}
+
+.list-dropping {
+    transition: transform 0.3s ease-in-out;
+    transform: rotateZ(0deg)
+}
+
+.task-dragging {
+    transition: transform 0.3s ease;
+    transform: rotateZ(3deg);
+}
+
+.task-dropping {
+    transition: transform 0.3s ease-in-out;
+    transform: rotateZ(0deg)
 }
 
 // Font

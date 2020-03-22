@@ -21,7 +21,13 @@
       />
     </header>
     <main class="tasks" ref="tasks">
-      <Container @drop="onDrop" group-name="tasks" :get-child-payload="getTaskPayload(taskList.id)">
+      <Container
+        @drop="onDrop"
+        group-name="tasks"
+        :get-child-payload="getTaskPayload(taskList.id)"
+        drag-class="task-dragging"
+        drop-class="task-dropping"
+      >
         <Draggable v-for="task in tasks" :key="task.id">
           <task-preview
             :task="task"
@@ -98,7 +104,7 @@ export default {
       this.$refs.taskInput.focus();
     },
     async saveList() {
-       this.listCopy = JSON.parse(JSON.stringify(this.listCopy));
+      this.listCopy = JSON.parse(JSON.stringify(this.listCopy));
       await this.emit("save-list", this.listCopy);
       try {
         this.listCopy = JSON.parse(JSON.stringify(this.taskList));
@@ -113,9 +119,9 @@ export default {
         this.saveList();
       }
     },
-   onDrop(dropResult) {
+    onDrop(dropResult) {
       const res = utilService.applyDrag(this.taskList.tasks, dropResult);
-      this.listCopy.tasks = res
+      this.listCopy.tasks = res;
       this.saveList();
     },
     getTaskPayload(listId) {
