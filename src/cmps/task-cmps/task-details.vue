@@ -2,7 +2,8 @@
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
     <section v-if="task" class="task-details">
       <div class="task-details-header">
-        <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
+        <input v-model="editedTask.name" class="details-title" type="text" @keyup.enter="updateTask"/>
+        <!-- @change="updateTask"  -->
         <button class="close-details-btn" @click="closeDetails">✖️</button>
       </div>
       <div class="details-container">

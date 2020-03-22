@@ -46,10 +46,11 @@
 // Mixin for input text transition
 @mixin input-blur {
   border: none;
-  border-radius: 3px;
+  border-radius: rem(3px);
   outline: 0;
-  padding: 5px 0;
-  font-family: $font-regular;
+  padding: rem(5px) 0;
+  font-family: $font-semi;
+  color: $clr1;
   background-color: transparent;
   width: 100%;
   transition: all 0.3s;
