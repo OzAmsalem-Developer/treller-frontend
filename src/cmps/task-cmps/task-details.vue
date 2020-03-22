@@ -13,7 +13,7 @@
             <span class="action-link">Update</span>
             <div class="details-labels-list">
               <labelPreview :labels="task.labels" />
-              <button>+</button>
+              <button>➕</button>
             </div>
           </section>
 
@@ -22,7 +22,7 @@
             <span class="action-link" @click="setMembers">Invite</span>
             <div class="details-members-list">
               <member-preview :members="task.members"></member-preview>
-              <button class="member-card" @click="setMembers">+</button>
+              <button class="member-add-btn member-card" @click="setMembers">➕</button>
             </div>
           </section>
 
@@ -31,7 +31,7 @@
             <span class="font-bold">Due Date:</span>
             <span class="action-link">Update</span>
             <div class="details-due-list">
-              <input type="checkbox" v-model="editedTask.dueDate.isCompleted" @change="updateTask" />
+              <input class="details-due-check" type="checkbox" v-model="editedTask.dueDate.isCompleted" @change="updateTask" />
               <input v-model="currDueDate" @change="updateDueDate" type="date" ref="calendar" />
               <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
             </div>

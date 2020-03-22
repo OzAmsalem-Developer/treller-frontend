@@ -45,11 +45,10 @@
       font-family: $font-regular;
       color: $clr3;
       background-color: #e0e0e0;
-      transition: all .3s;
+      transition: all 0.3s;
     }
     button:hover {
       background-color: #c5dbee;
-      border-inline-start: solid -3px black
     }
   }
 }
@@ -105,12 +104,40 @@
   background-color: $clr5;
 }
 
-// to refactor:
-.details-members-list,
-.details-labels-list,
+.details-members-list {
+  display: flex;
+  align-items: center;
+
+  button {
+    background-color: #e0e0e0;
+    transition: all 0.3s;
+  }
+  button:hover {
+    background-color: #c5dbee;
+  }
+}
+
+.details-labels-list {
+  display: flex;
+  button {
+    background-color: #e0e0e0;
+    border: solid 1px $clr1;
+    border-radius: 3px;
+    cursor: pointer;
+    min-width: 50px;
+    height: 23px;
+    transition: all 0.3s;
+  }
+  button:hover {
+    background-color: #c5dbee;
+  }
+}
+
 .details-due-list {
   display: flex;
-  // Places the button to the right of this element
+}
+.details-due-list > * {
+  margin-inline-end: 5px;
 }
 
 .details-members {
@@ -180,5 +207,4 @@
 //   border-radius: 3px;
 //   cursor: pointer;
 //   min-width: 20px;
-// }
 // }
