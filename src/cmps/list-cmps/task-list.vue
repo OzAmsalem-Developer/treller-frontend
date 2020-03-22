@@ -37,20 +37,22 @@
           />
         </Draggable>
       </Container>
+      <form class="add-task" @submit.prevent="addTask" @keydown.enter.prevent v-if="newTask">
+        <textarea
+          class="new-task-box"
+          ref="taskInput"
+          @keyup.enter.prevent="addTask"
+          v-model="newTask.name"
+          cols="30"
+          rows="3"
+          placeholder="Task name"
+        ></textarea>
+        <button class="add-new-task">Add</button>
+        <button @click.prevent="newTask = null">X</button>
+      </form>
     </main>
-    <button v-if="!newTask" @click="getEmptyTask" class="add-task-btn">+ Add Task</button>
-    <form class="add-task" @submit.prevent="addTask" @keydown.enter.prevent v-else>
-      <textarea
-        ref="taskInput"
-        @keyup.enter.prevent="addTask"
-        v-model="newTask.name"
-        cols="30"
-        rows="2"
-        placeholder="Task name"
-      ></textarea>
-      <button>Add</button>
-      <button @click.prevent="newTask = null">X</button>
-    </form>
+    <footer v-if="!newTask"></footer>
+      <button v-if="!newTask" @click="getEmptyTask" class="add-task-btn">+ Add Task</button>
   </section>
 </template>
 
@@ -74,6 +76,7 @@ export default {
     getEmptyTask() {
       this.newTask = boardService.getEmptyTask();
       setTimeout(() => {
+        this.$refs.tasks.scrollTo(0, this.$refs.tasks.scrollHeight);
         this.$refs.taskInput.focus();
       }, 2);
     },

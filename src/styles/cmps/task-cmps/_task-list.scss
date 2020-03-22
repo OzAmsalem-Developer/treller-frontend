@@ -1,5 +1,5 @@
 .task-list {
-  width: 280px;
+  width: 275px;
   display: inline-block;
   background-color: #ebecf0;
   max-height: 500px;
@@ -56,8 +56,46 @@
   }
 
   .add-task-btn {
-    height: 40px;
-    background-color: #ebecf0;
+    height: 34px;
+    margin: 10px;
+    padding: 0 10px;
+    background-color: $clr4;
+    border-radius: 3px;
+    font-family: $font-regular;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .add-task-btn:hover {
+    background-color: #ffc045bf;
+  }
+
+  .new-task-box {
+    width: 255px;
+    box-shadow: $shadow;
+    resize: none;
+    padding: 5px 8px;
+    display: block;
+    border: 0;
+    outline: 0;
+    background-color: #ffffff;
+    border-radius: 3px;
+    font-family: $font-regular;
+  }
+
+  .add-new-task {
+    margin: 7px 0px;
+    margin-right: 15px;
+    height: 34px;
+    margin: 10px;
+    padding: 0 10px;
+    background-color: $clr4;
+    border-radius: 3px;
+    font-family: $font-regular;
+  }
+
+  footer {
+    height: 50px;
   }
 }
 

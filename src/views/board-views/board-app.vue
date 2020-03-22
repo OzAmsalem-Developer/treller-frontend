@@ -20,15 +20,17 @@
         </Draggable>
 
         <section class="add-list">
-          <button class="add-btn" @click="getEmptyList">+Add List</button>
-          <form class="add-list" @submit.prevent="addList" v-if="newTaskList">
+          <button class="add-btn"  v-if="!newTaskList" @click="getEmptyList">+ Add List</button>
+          <form class="add-list" @submit.prevent="addList" v-else>
             <input
               ref="listInput"
               type="text"
+              class="add-list-input"
               placeholder="List title.."
               v-model="newTaskList.name"
             />
-            <button>Add</button>
+            <button class="new-list-btn">Add</button>
+            <button @click="newTaskList = null" class="close-btn">X</button>
           </form>
         </section>
       </Container>

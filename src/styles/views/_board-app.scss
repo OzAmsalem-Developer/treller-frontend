@@ -15,7 +15,40 @@
         border-radius: 3px;
     }
   }
+  .add-btn {
+    background: rgba(54, 50, 50, 0.192);
+    width: 270px;
+    padding: 10px 8px;
+    border-radius: 3px ;
+    font-family: $font-bold;
+    color: $clr3;
+  }
 
+  .add-list-input {
+    width: 270px;
+    padding: 10px 8px;
+    border: 0;
+    outline: 0;
+    font-family: $font-bold;
+    color: $clr3;
+    border-radius: 3px;
+    background: #ebecf0;
+  }
+  .new-list-btn {
+    font-family: $font-regular;
+    padding: 7px 18px;
+    margin-top: 5px;
+    background-color: $clr4;
+    border-radius: 3px;
+    margin-right: 15px;
+  }
+
+  .new-list-btn:hover {
+    background-color: #ffc045bf;
+  }
+  .add-btn:hover {
+    background: #ebecf0;
+  } 
 }
 
 
