@@ -99,6 +99,22 @@
   flex-direction: column;
   background-color: $clr5;
 }
+.checklist-todo-container {
+  display: flex;
+  align-items: center;
+}
+.checklist-todo-container > :first-child {
+  margin-inline-end: 5px;
+  cursor: pointer;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+.details-due-check {
+  cursor: pointer;
+  min-width: 20px;
+  min-height: 20px;
+}
 
 .details-discussion {
   background-color: $clr5;
@@ -137,6 +153,7 @@
 
 .details-due-list {
   display: flex;
+  align-items: center;
 }
 .details-due-list > * {
   margin-inline-end: 5px;
