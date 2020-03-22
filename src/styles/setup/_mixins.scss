@@ -46,16 +46,20 @@
 // Mixin for input text transition
 @mixin input-blur {
   border: none;
+  border-radius: 3px;
+  outline: 0;
   padding: 5px 0;
   font-family: $font-regular;
   background-color: transparent;
   width: 90%;
   transition: all 0.3s;
+  box-shadow: inset 0 0 0 2px transparent;
 }
 
 @mixin input-focus {
   background-color: rgb(252, 252, 252);
   padding-left: 10px;
+  box-shadow: inset 0 0 0 2px $clr3;
 }
 
 // Mixin for removing hover efects on iphone screen

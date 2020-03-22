@@ -2,23 +2,30 @@
   <main class="board-app" v-if="board">
     <board-header></board-header>
     <div ref="lists" class="lists-container">
-      <task-list
-        v-for="(list,idx) in taskLists"
-        :taskList="list"
-        :key="list.id"
-        :listIdx="idx"
-        @save-list="saveTaskList"
-        @list-moved="moveList"
-        @listdrag-start="onListDragStart"
-        @list-dropped="onListDropped"
-      />
-      <section class="add-list">
-        <button class="add-btn" @click="getEmptyList">+Add List</button>
-        <form class="add-list" @submit.prevent="addList" v-if="newTaskList">
-          <input ref="listInput" type="text" placeholder="List title.." v-model="newTaskList.name" />
-          <button>Add</button>
-        </form>
-      </section>
+      <Container @drop="onDrop" orientation="horizontal">
+        <Draggable v-for="(list,idx) in taskLists" :key="list.id">
+          <task-list
+            :taskList="list"
+            :key="list.id"
+            :listIdx="idx"
+            @save-list="saveTaskList"
+            @list-moved="moveList"
+          />
+        </Draggable>
+
+        <section class="add-list">
+          <button class="add-btn" @click="getEmptyList">+Add List</button>
+          <form class="add-list" @submit.prevent="addList" v-if="newTaskList">
+            <input
+              ref="listInput"
+              type="text"
+              placeholder="List title.."
+              v-model="newTaskList.name"
+            />
+            <button>Add</button>
+          </form>
+        </section>
+      </Container>
     </div>
     <task-details v-if="!isTaskLoad && currTask" />
   </main>
@@ -30,6 +37,7 @@ import taskList from "@/cmps/list-cmps/task-list";
 import taskDetails from "@/cmps/task-cmps/task-details";
 import { boardService } from "@/services/board.service";
 import { utilService } from "@/services/util.service";
+import { Container, Draggable } from "vue-smooth-dnd";
 import {
   eventBus,
   EV_removeList,
@@ -83,21 +91,19 @@ export default {
       }, 0);
     },
     moveList({ listIdx, toIdx }) {
-      const taskList = JSON.parse(JSON.stringify(this.board.taskLists[listIdx]))
+      const taskList = JSON.parse(
+        JSON.stringify(this.board.taskLists[listIdx])
+      );
       this.board.taskLists.splice(listIdx, 1);
       this.board.taskLists.splice(toIdx, 0, taskList);
       this.saveBoard();
     },
-    onListDragStart(idx) {
-      this.draggingListIdx = idx
-    },
-    onListDropped(idx) {
-      if (idx === this.draggingListIdx) return
-      this.moveList({
-        listIdx: this.draggingListIdx,
-        toIdx: idx
-      })
-       this.draggingListIdx = null
+    onDrop(dropResult) {
+      this.board.taskLists = utilService.applyDrag(
+        this.board.taskLists,
+        dropResult
+      );
+      this.saveBoard();
     },
     removeList(listId) {
       const idx = this.board.taskLists.findIndex(list => list.id === listId);
@@ -161,7 +167,9 @@ export default {
   components: {
     boardHeader,
     taskList,
-    taskDetails
+    taskDetails,
+    Container,
+    Draggable
   }
 };
 </script>

@@ -8,7 +8,8 @@ export const utilService = {
     scrollTo,
     getEmptyChecklist,
     getEmptyTodo,
-    getEmptyComment
+    getEmptyComment,
+    applyDrag
 }
 
 
@@ -32,13 +33,19 @@ function makeId(length = 5) {
     return text;
 }
 
-// function getEmptyDueDate() {
-//     return {
-//         id: makeId(),
-//         title: "Checklist",
-//         todos: []
-//     }
-// }
+function applyDrag(arr, dragResult) {
+    const { removedIndex, addedIndex, payload } = dragResult
+    if (removedIndex === null && addedIndex === null) return arr
+    const result = [...arr]
+    let itemToAdd = payload
+    if (removedIndex !== null) {
+        itemToAdd = result.splice(removedIndex, 1)[0]
+    }
+    if (addedIndex !== null) {
+        result.splice(addedIndex, 0, itemToAdd)
+    }
+    return result
+}
 
 function getEmptyChecklist() {
     return {

@@ -2,13 +2,9 @@
   <section
     v-if="taskList"
     class="task-list"
-    @dragover.prevent="onDragOver"
-    @drop="$emit('list-dropped', listIdx)"
   >
     <header
       ref="listHeader"
-      :draggable="!isEditName"
-      @dragstart="startDrag"
     >
       <input
         v-if="isEditName"
