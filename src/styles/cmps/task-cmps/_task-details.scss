@@ -110,6 +110,7 @@
 
   button {
     background-color: #e0e0e0;
+    color: $clr3;
     transition: all 0.3s;
   }
   button:hover {
@@ -121,7 +122,8 @@
   display: flex;
   button {
     background-color: #e0e0e0;
-    border: solid 1px $clr1;
+    color: $clr3;
+    border: solid 1px $clr3;
     border-radius: 3px;
     cursor: pointer;
     min-width: 50px;
@@ -202,9 +204,6 @@
   list-style: none;
 }
 
-// button {
-//   border: solid 1px $clr6;
-//   border-radius: 3px;
-//   cursor: pointer;
-//   min-width: 20px;
-// }
+.todo-done {
+  text-decoration: line-through;
+}
