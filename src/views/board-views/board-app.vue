@@ -15,6 +15,7 @@
             :key="list.id"
             :listIdx="idx"
             @save-list="saveTaskList"
+            @save-lists-order="saveListsOrder"
             @list-moved="moveList"
           />
         </Draggable>
@@ -124,10 +125,14 @@ export default {
       this.saveBoard();
     },
     saveTaskList(taskList) {
-      this.board = JSON.parse(JSON.stringify(this.board));
       const idx = this.board.taskLists.findIndex(tl => tl.id === taskList.id);
       if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList);
       this.saveBoard();
+    },
+    saveListsOrder(taskList) {
+      const idx = this.board.taskLists.findIndex(tl => tl.id === taskList.id);
+      if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList);
+      if (idx === this.board.taskLists.length - 1) this.saveBoard();
     },
     moveTask({ from, to, taskId }) {
       const fromTaskList = this.board.taskLists.find(tl => tl.id === from);
