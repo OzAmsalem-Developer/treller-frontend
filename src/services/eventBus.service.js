@@ -6,4 +6,4 @@ export const eventBus = new Vue()
 export const EV_removeList = 'remove-list'
 export const EV_saveFailed = 'list-saving-failed'
 export const EV_moveTask = 'move-task-event'
-export const EV_editTaskLabel = 'edit-task-label'
+export const EV_setTaskLabel = 'set-task-label'
