@@ -63,7 +63,6 @@ export default {
       this.$router.push(this.taskDetails);
     },
     async setTaskLabels(taskLabels) {
-      console.log('saved changed');
       this.taskCopy.labels = taskLabels;
       // emit to list
       await this.emit("update-task", this.taskCopy);
