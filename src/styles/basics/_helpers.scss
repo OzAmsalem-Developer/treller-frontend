@@ -10,6 +10,13 @@
     align-items: center;
 }
 
+.list-drop-preview {
+    border-radius: 3px;
+    margin-right: 10px;
+    background-color: grey;
+    opacity: 0.08;
+}
+
 // Font
 .font-bold {
     font-family: $font-bold;

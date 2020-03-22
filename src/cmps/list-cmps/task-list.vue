@@ -1,11 +1,6 @@
 <template>
-  <section
-    v-if="taskList"
-    class="task-list"
-  >
-    <header
-      ref="listHeader"
-    >
+  <section v-if="taskList" class="task-list">
+    <header ref="listHeader">
       <input
         v-if="isEditName"
         @mouseup="focus"
@@ -16,7 +11,7 @@
         v-model="listCopy.name"
         ref="listNameInput"
       />
-      <h5 class="list-name" v-else @click="editListName">{{taskList.name}}</h5>
+      <h3 class="list-name" v-else @click="editListName">{{taskList.name}}</h3>
       <button @click="isMenuOpen = !isMenuOpen" class="menu-btn">...</button>
       <list-menu
         @add-task="getEmptyTask(); isMenuOpen = false"
@@ -26,14 +21,16 @@
       />
     </header>
     <main class="tasks" ref="tasks">
-      <task-preview
-        v-for="task in tasks"
-        :task="task"
-        :listId="taskList.id"
-        :key="task.id"
-        @remove-task="removeTask"
-        @update-task="saveTask"
-      />
+      <Container @drop="onDrop" group-name="tasks" :get-child-payload="getTaskPayload(taskList.id)">
+        <Draggable v-for="task in tasks" :key="task.id">
+          <task-preview
+            :task="task"
+            :listId="taskList.id"
+            @remove-task="removeTask"
+            @update-task="saveTask"
+          />
+        </Draggable>
+      </Container>
     </main>
     <button v-if="!newTask" @click="getEmptyTask" class="add-task-btn">+ Add Task</button>
     <form class="add-task" @submit.prevent="addTask" @keydown.enter.prevent v-else>
@@ -54,7 +51,9 @@
 <script>
 import taskPreview from "@/cmps/task-cmps/task-preview.vue";
 import { boardService } from "@/services/board.service";
+import { utilService } from "@/services/util.service";
 import listMenu from "@/cmps/list-cmps/list-menu";
+import { Container, Draggable } from "vue-smooth-dnd";
 
 export default {
   data() {
@@ -62,7 +61,7 @@ export default {
       newTask: null,
       isMenuOpen: false,
       listCopy: null,
-      isEditName: false,
+      isEditName: false
     };
   },
   methods: {
@@ -99,6 +98,7 @@ export default {
       this.$refs.taskInput.focus();
     },
     async saveList() {
+       this.listCopy = JSON.parse(JSON.stringify(this.listCopy));
       await this.emit("save-list", this.listCopy);
       try {
         this.listCopy = JSON.parse(JSON.stringify(this.taskList));
@@ -112,6 +112,17 @@ export default {
         this.listCopy.tasks.splice(idx, 1, task);
         this.saveList();
       }
+    },
+   onDrop(dropResult) {
+      const res = utilService.applyDrag(this.taskList.tasks, dropResult);
+      this.listCopy.tasks = res
+      this.saveList();
+    },
+    getTaskPayload(listId) {
+      return index => {
+        return this.$store.getters.taskLists.filter(tl => tl.id === listId)[0]
+          .tasks[index];
+      };
     },
     emit(eventName, value) {
       return new Promise((resolve, reject) => {
@@ -127,10 +138,6 @@ export default {
       this.saveList();
       ev.target.blur();
     },
-    startDrag(ev) {
-      this.$emit("listdrag-start", this.listIdx);
-    },
-    onDragOver(ev) {},
     focus(ev) {
       ev.target.focus();
     },
@@ -154,7 +161,9 @@ export default {
   },
   components: {
     taskPreview,
-    listMenu
+    listMenu,
+    Container,
+    Draggable
   }
 };
 </script>

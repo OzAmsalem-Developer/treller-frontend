@@ -2,7 +2,7 @@
   <main class="board-app" v-if="board">
     <board-header></board-header>
     <div ref="lists" class="lists-container">
-      <Container @drop="onDrop" orientation="horizontal">
+      <Container @drop="onDrop" orientation="horizontal"  :drop-placeholder="placeholderOpts">
         <Draggable v-for="(list,idx) in taskLists" :key="list.id">
           <task-list
             :taskList="list"
@@ -51,7 +51,11 @@ export default {
       board: null,
       newTaskList: null,
       isTaskLoad: false,
-      draggingListIdx: null
+      draggingListIdx: null,
+      placeholderOpts: {
+        className: 'list-drop-preview',
+        showOnTop: false
+      }
     };
   },
   methods: {
@@ -70,6 +74,7 @@ export default {
       }
     },
     async saveBoard() {
+      
       await this.$store.dispatch({ type: "saveBoard", board: this.board });
       try {
         this.board = JSON.parse(JSON.stringify(this.storeBoard));
@@ -111,6 +116,7 @@ export default {
       this.saveBoard();
     },
     saveTaskList(taskList) {
+       this.board = JSON.parse(JSON.stringify(this.board));
       const idx = this.board.taskLists.findIndex(tl => tl.id === taskList.id);
       if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList);
       this.saveBoard();
