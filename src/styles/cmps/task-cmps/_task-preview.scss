@@ -27,6 +27,13 @@
     min-height: 20px;
     padding: 2px;
     font-size: rem(12px);
+    color: #5e6c84;
+
+    .preview-check-list{
+      .check-list-txt {
+        padding: 0 4px 0 2px;
+      }
+    }
   }
 
   .preview-indications > * {
