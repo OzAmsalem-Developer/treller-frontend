@@ -5,11 +5,11 @@
   >
     <div class="due-date-preview center-flex">
       <span v-if="dueDate.isCompleted">
-        🕖
+        <i class="far fa-clock"></i>
         <span class="due-date-txt">Done</span>
       </span>
       <span v-else>
-        🕖
+        <i class="far fa-clock"></i>
         <span class="due-date-txt">{{this.dueDate.time | minimalDate}}</span>
       </span>
     </div>

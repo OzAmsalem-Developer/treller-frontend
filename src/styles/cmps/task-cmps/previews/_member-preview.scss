@@ -6,10 +6,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: $font-semi;
+  color: #5e6c84;
   border: solid 1px $clr1;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  border-color: #5e6c84;
+  width: 27px;
+  height: 27px;
   margin-inline-end: 0.2em;
   cursor: pointer;
   user-select: none;
