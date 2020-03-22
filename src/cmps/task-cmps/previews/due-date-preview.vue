@@ -15,16 +15,16 @@ import {utilService} from "../../../services/util.service.js"
 export default {
   computed: {
     bgColor() {
-      if (this.dueDate.isCompleted) return '#00e600'  
+      if (this.dueDate.isCompleted) return '#61bd4f'  
       const dueDateTime = this.dueDate.time;
       const hourfLeft = utilService.getHoursDifference(dueDateTime);
       const color =
         hourfLeft < 0
-          ? "#ff3333"
+          ? "#eb5a46"
           : hourfLeft < 5
-          ? "#e65c00"
+          ? "#ff9f1a"
           : hourfLeft < 48
-          ? "#ffd11a"
+          ? "#f2d600"
           : "transparent";
       return color;
     }
@@ -37,8 +37,8 @@ export default {
 
 <style>
 </style>
-// #00e600 - green
-// #ff3333 - red
-// #e65c00 - orange
-// #ffd11a - yellow
+// #61bd4f - green
+// #eb5a46 - red
+// #ff9f1a - orange
+// #f2d600 - yellow
 
