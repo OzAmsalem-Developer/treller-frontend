@@ -2,14 +2,18 @@
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
     <section v-if="task" class="task-details">
       <div class="task-details-header">
-        <input v-model="editedTask.name" class="details-title" type="text" @keyup.enter="updateTask"/>
-        <!-- @change="updateTask"  -->
+        <span><i class="fas fa-layer-group"></i></span>
+        <input
+          v-model="editedTask.name"
+          class="details-title"
+          type="text"
+          @change="updateTask" 
+        />
         <button class="close-details-btn" @click="closeDetails">✖️</button>
       </div>
       <div class="details-container">
         <div class="details-info">
           <section v-if="task.labels.length" class="details-labels">
-            <!-- <span>💡</span> -->
             <span class="font-bold">Labels:</span>
             <span class="action-link">Update</span>
             <div class="details-labels-list">
@@ -69,7 +73,11 @@
               <span>{{checklistProgress}}%</span>
               <!-- <span class="action-link">remove</span> -->
             </div>
-            <div class="checklist-todo-container" v-for="item in editedTask.checklist.todos" :key="item.id">
+            <div
+              class="checklist-todo-container"
+              v-for="item in editedTask.checklist.todos"
+              :key="item.id"
+            >
               <input type="checkbox" v-model="item.isDone" @change="updateTask" />
               <input
                 type="text"
