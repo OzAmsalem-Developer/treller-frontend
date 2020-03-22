@@ -54,6 +54,7 @@ export default {
       draggingListIdx: null,
       placeholderOpts: {
         className: 'list-drop-preview',
+        animationDuration: '150',
         showOnTop: false
       }
     };
