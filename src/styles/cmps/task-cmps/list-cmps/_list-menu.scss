@@ -4,7 +4,15 @@
     position: absolute;
     top: 35px;
     right: 10px;
-    padding: 5px;
     z-index: 2;
     box-shadow: $shadow;
+    font-size: rem(13px);
+    border: 0.5px solid #ebecf0;
+    > * {
+        padding: 5px 6px;
+    }
+
+    .item:hover {
+        background-color: #ebecf0;
+    }
 }
