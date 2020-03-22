@@ -4,6 +4,7 @@
     <div ref="lists" class="lists-container">
       <Container
         @drop="onDrop"
+        drag-handle-selector=".list-header"
         orientation="horizontal"
         :drop-placeholder="placeholderOpts"
         drag-class="list-dragging"

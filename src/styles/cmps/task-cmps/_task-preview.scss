@@ -35,6 +35,10 @@
   }
 }
 
+.preview-wrapper {
+    position: relative;
+}
+
 .task-preview:hover {
   .preview-menu-btn {
     display: block;

@@ -68,7 +68,7 @@
               <span>{{checklistProgress}}%</span>
               <!-- <span class="action-link">remove</span> -->
             </div>
-            <div v-for="item in editedTask.checklist.todos" :key="item.id">
+            <div class="checklist-todo-container" v-for="item in editedTask.checklist.todos" :key="item.id">
               <input type="checkbox" v-model="item.isDone" @change="updateTask" />
               <input
                 type="text"
@@ -108,7 +108,7 @@
 
         <section class="details-actions">
           <button @click="moveTask">Move</button>
-          <button @click="copyTask">Copy</button>
+          <!-- <button @click="copyTask">Copy</button> -->
           <button @click="setLabels">Labels</button>
           <button @click="setMembers">Members</button>
           <button @click="setDueDate">Due Date</button>
