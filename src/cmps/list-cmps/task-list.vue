@@ -1,8 +1,7 @@
 <template>
   <section v-if="taskList" class="task-list">
-    <header ref="listHeader">
+    <section class="edit-list-name"  v-if="isEditName">
       <input
-        v-if="isEditName"
         @mouseup="focus"
         @change="saveListName"
         @blur="isEditName = false"
@@ -10,8 +9,19 @@
         type="text"
         v-model="listCopy.name"
         ref="listNameInput"
+        draggable="false"
       />
-      <h3 class="list-name" v-else @click="editListName">{{taskList.name}}</h3>
+      <button @click="isMenuOpen = !isMenuOpen" class="menu-btn">...</button>
+      <list-menu
+        @add-task="getEmptyTask(); isMenuOpen = false"
+        @list-moved="moveList"
+        :listId="taskList.id"
+        v-if="isMenuOpen"
+      />
+    </section>
+
+    <header class="list-header" v-else>
+      <h3 class="list-name" v-if="!isEditName" @click="editListName">{{taskList.name}}</h3>
       <button @click="isMenuOpen = !isMenuOpen" class="menu-btn">...</button>
       <list-menu
         @add-task="getEmptyTask(); isMenuOpen = false"
@@ -28,7 +38,7 @@
         drag-class="task-dragging"
         drop-class="task-dropping"
       >
-        <Draggable v-for="task in tasks" :key="task.id">
+        <Draggable class="preview-wrapper" v-for="task in tasks" :key="task.id">
           <task-preview
             :task="task"
             :listId="taskList.id"
