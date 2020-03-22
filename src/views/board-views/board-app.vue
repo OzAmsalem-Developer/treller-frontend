@@ -3,10 +3,14 @@
     <board-header></board-header>
     <div ref="lists" class="lists-container">
       <task-list
-        v-for="list in taskLists"
+        v-for="(list,idx) in taskLists"
         :taskList="list"
         :key="list.id"
+        :listIdx="idx"
         @save-list="saveTaskList"
+        @list-moved="moveList"
+        @listdrag-start="onListDragStart"
+        @list-dropped="onListDropped"
       />
       <section class="add-list">
         <button class="add-btn" @click="getEmptyList">+Add List</button>
@@ -38,7 +42,8 @@ export default {
     return {
       board: null,
       newTaskList: null,
-      isTaskLoad: false
+      isTaskLoad: false,
+      draggingListIdx: null
     };
   },
   methods: {
@@ -77,6 +82,23 @@ export default {
         utilService.scrollTo(this.$refs.lists, 1500, 700);
       }, 0);
     },
+    moveList({ listIdx, toIdx }) {
+      const taskList = JSON.parse(JSON.stringify(this.board.taskLists[listIdx]))
+      this.board.taskLists.splice(listIdx, 1);
+      this.board.taskLists.splice(toIdx, 0, taskList);
+      this.saveBoard();
+    },
+    onListDragStart(idx) {
+      this.draggingListIdx = idx
+    },
+    onListDropped(idx) {
+      if (idx === this.draggingListIdx) return
+      this.moveList({
+        listIdx: this.draggingListIdx,
+        toIdx: idx
+      })
+       this.draggingListIdx = null
+    },
     removeList(listId) {
       const idx = this.board.taskLists.findIndex(list => list.id === listId);
       this.board.taskLists.splice(idx, 1);
@@ -85,7 +107,7 @@ export default {
     saveTaskList(taskList) {
       const idx = this.board.taskLists.findIndex(tl => tl.id === taskList.id);
       if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList);
-      this.saveBoard()
+      this.saveBoard();
     },
     moveTask({ from, to, taskId }) {
       const fromTaskList = this.board.taskLists.find(tl => tl.id === from);

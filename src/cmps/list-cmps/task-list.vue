@@ -1,14 +1,26 @@
 <template>
-  <section v-if="taskList" class="task-list">
-    <header>
+  <section
+    v-if="taskList"
+    class="task-list"
+    @dragover.prevent="onDragOver"
+    @drop="$emit('list-dropped', listIdx)"
+  >
+    <header
+      ref="listHeader"
+      :draggable="!isEditName"
+      @dragstart="startDrag"
+    >
       <input
-        @mousedown.prevent
+        v-if="isEditName"
         @mouseup="focus"
         @change="saveListName"
-        class="list-name"
+        @blur="isEditName = false"
+        class="list-input"
         type="text"
         v-model="listCopy.name"
+        ref="listNameInput"
       />
+      <h5 class="list-name" v-else @click="editListName">{{taskList.name}}</h5>
       <button @click="isMenuOpen = !isMenuOpen" class="menu-btn">...</button>
       <list-menu
         @add-task="getEmptyTask(); isMenuOpen = false"
@@ -53,7 +65,8 @@ export default {
     return {
       newTask: null,
       isMenuOpen: false,
-      listCopy: null
+      listCopy: null,
+      isEditName: false,
     };
   },
   methods: {
@@ -62,6 +75,12 @@ export default {
       setTimeout(() => {
         this.$refs.taskInput.focus();
       }, 2);
+    },
+    editListName() {
+      this.isEditName = true;
+      setTimeout(() => {
+        this.$refs.listNameInput.focus();
+      }, 0);
     },
     addTask(ev) {
       // allow break line on shift+enter
@@ -92,11 +111,11 @@ export default {
       }
     },
     async saveTask(task) {
-     const idx = this.listCopy.tasks.findIndex(t => t.id === task.id)
-     if (idx !== -1) {
-       this.listCopy.tasks.splice(idx, 1, task)
-       this.saveList()
-     }
+      const idx = this.listCopy.tasks.findIndex(t => t.id === task.id);
+      if (idx !== -1) {
+        this.listCopy.tasks.splice(idx, 1, task);
+        this.saveList();
+      }
     },
     emit(eventName, value) {
       return new Promise((resolve, reject) => {
@@ -105,12 +124,17 @@ export default {
       });
     },
     moveList(toIdx) {
-      this.$emit('list-moved', {listId: this.taskList.id, toIdx})
+      this.$emit("list-moved", { listIdx: this.listIdx, toIdx: toIdx - 1 });
+      this.isMenuOpen = false;
     },
     saveListName(ev) {
       this.saveList();
       ev.target.blur();
     },
+    startDrag(ev) {
+      this.$emit("listdrag-start", this.listIdx);
+    },
+    onDragOver(ev) {},
     focus(ev) {
       ev.target.focus();
     },
@@ -129,7 +153,8 @@ export default {
     }
   },
   props: {
-    taskList: Object
+    taskList: Object,
+    listIdx: Number
   },
   components: {
     taskPreview,

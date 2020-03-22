@@ -29,7 +29,7 @@ export default {
     computed: {
         listIdxs() {
          return this.$store.getters.taskLists.reduce((acc, tl,idx) => {
-                if (tl.id !== this.listId) acc.push(idx + 1)
+                if (tl && tl.id !== this.listId) acc.push(idx + 1)
                 return acc
             },[])
         }
