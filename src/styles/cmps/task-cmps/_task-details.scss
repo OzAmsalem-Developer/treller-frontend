@@ -57,6 +57,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-inline-end: 10px;
 
   > * {
     margin-bottom: 20px;
@@ -100,9 +101,20 @@
   background-color: $clr5;
 }
 .checklist-todo-container {
+  padding-inline-start: 10px;
   display: flex;
   align-items: center;
+  transition: all .3s;
 }
+.checklist-todo-container:hover {
+  background-color: darken($clr5, 3);
+  border-radius: 3px;
+}
+
+.checklist-todo-container:hover > :last-child {
+  opacity: 1;
+}
+
 .checklist-todo-container > :first-child {
   margin-inline-end: 5px;
   cursor: pointer;
@@ -188,12 +200,20 @@
 }
 
 .todo-remove-btn {
+  opacity: 0;
   font-family: $font-bold;
   font-size: 14px;
-  min-width: 10px;
-  min-height: 10px;
-  transition: all 0.3s;
+
   margin-inline-start: 10px;
+  transition: all .3s;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.todo-remove-btn:hover {
+  color: $clr3;
+  border-radius: 3px;
+  background-color: #ff7b64;
 }
 
 .discussion-add-item {
