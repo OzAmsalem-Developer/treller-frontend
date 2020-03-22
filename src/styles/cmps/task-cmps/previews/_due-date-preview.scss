@@ -1,9 +1,10 @@
 
 .due-date-preview-container {
     border-radius: 3px;
-    
-    .due-date-preview{
-        padding: 1.5px 3px;
-        font-size: rem(13px);
+    color: #fff;
+    font-family: $font-semi;
+
+    .due-date-txt{
+        padding: 0 4px 0 2px;
     }
 }

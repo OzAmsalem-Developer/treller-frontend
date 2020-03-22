@@ -1,9 +1,9 @@
 <template>
   <div class="due-date-preview-container" :style="{'background-color': this.bgColor}">
     <div class="due-date-preview center-flex">
-     <span v-if="dueDate.isCompleted">🕖Done</span>
+     <span v-if="dueDate.isCompleted">🕖<span class="due-date-txt">Done</span></span>
      <span v-else>
-      🕖{{this.dueDate.time | minimalDate}}
+      🕖<span class="due-date-txt">{{this.dueDate.time | minimalDate}}</span>
      </span>
     </div>
   </div>

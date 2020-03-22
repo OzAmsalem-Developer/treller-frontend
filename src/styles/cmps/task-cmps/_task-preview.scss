@@ -1,6 +1,6 @@
 .task-preview {
   position: relative;
-  padding: 2px 8px;
+  padding: 6px 8px 2px;
   border-radius: 3px;
   margin-bottom: 8px;
   background-color: #ffffff;
@@ -16,18 +16,23 @@
     display: none;
   }
   .preview-title {
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     font-family: $font-regular;
   }
 
   .preview-indications {
     display: flex;
     justify-content: flex-start;
-    font-size: rem(14px);
+    margin: 0 4px 4px 0;
+    min-height: 20px;
+    padding: 2px;
+    font-size: rem(12px);
   }
 
   .preview-indications > * {
-      margin-right: 10px;
+    margin: 0 4px 4px 0;
+    padding: 2px;
+
   }
   .preview-members {
     display: flex;

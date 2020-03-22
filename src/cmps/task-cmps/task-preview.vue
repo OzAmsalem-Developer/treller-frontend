@@ -12,7 +12,7 @@
     <label-preview :labels="taskCopy.labels" />
     <p class="preview-title">{{task.name}}</p>
     <section class="preview-indications">
-      <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
+      <due-date-preview class="preview-due-date" v-if="task.dueDate.time" :dueDate="task.dueDate" />
       <div class="preview-desc" v-if="task.desc">📄</div>
       <div class="preview-comments" v-if="task.comments.length">💬{{task.comments.length}}</div>
       <div class="preview-check-list" v-if="task.checklist">🗹{{checklistStatus}}</div>
