@@ -278,7 +278,7 @@ function _getSampleBoards() {
                                     {
                                         id: utilService.makeId(),
                                         txt: 'Connect to parents/ router',
-                                        isDone: false
+                                        isDone: true
                                     },
                                     {
                                         id: utilService.makeId(),
