@@ -22,7 +22,7 @@
             <span class="action-link" @click="setMembers">Invite</span>
             <div class="details-members-list">
               <member-preview :members="task.members"></member-preview>
-              <button class="member-card" @click="setMembers">+</button>
+              <button class="member-add-btn member-card" @click="setMembers">+</button>
             </div>
           </section>
 
@@ -31,7 +31,12 @@
             <span class="font-bold">Due Date:</span>
             <span class="action-link">Update</span>
             <div class="details-due-list">
-              <input type="checkbox" v-model="editedTask.dueDate.isCompleted" @change="updateTask" />
+              <input
+                class="details-due-check"
+                type="checkbox"
+                v-model="editedTask.dueDate.isCompleted"
+                @change="updateTask"
+              />
               <input v-model="currDueDate" @change="updateDueDate" type="date" ref="calendar" />
               <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
             </div>
@@ -60,11 +65,19 @@
                 @change="updateTask"
                 ref="checklist"
               />
+              <span>{{checklistProgress}}%</span>
               <!-- <span class="action-link">remove</span> -->
             </div>
-            <div v-for="item in task.checklist.todos" :key="item.id">
-              <input class="details-clean-input" v-model="item.txt" @change="updateTask" />
-              <button class="todo-remove-btn" @click="removeTodo(item.id)">X</button>
+            <div class="checklist-todo-container" v-for="item in editedTask.checklist.todos" :key="item.id">
+              <input type="checkbox" v-model="item.isDone" @change="updateTask" />
+              <input
+                type="text"
+                :class="item.isDone? 'todo-done' : ''"
+                class="details-clean-input"
+                v-model="item.txt"
+                @change="updateTask"
+              />
+              <button class="todo-remove-btn" @click="removeTodo(item.id)">x</button>
             </div>
             <input
               class="details-clean-input checklist-add-item"
@@ -95,7 +108,7 @@
 
         <section class="details-actions">
           <button @click="moveTask">Move</button>
-          <button @click="copyTask">Copy</button>
+          <!-- <button @click="copyTask">Copy</button> -->
           <button @click="setLabels">Labels</button>
           <button @click="setMembers">Members</button>
           <button @click="setDueDate">Due Date</button>
@@ -261,6 +274,18 @@ export default {
   computed: {
     task() {
       return this.$store.getters.currTask;
+    },
+    checklistProgress() {
+      if (!this.editedTask.checklist.todos.length) return "0";
+
+      let isDoneCount = this.editedTask.checklist.todos.filter(
+        todo => todo.isDone === true
+      ).length;
+      const progress =
+        (isDoneCount / this.editedTask.checklist.todos.length) * 100;
+      return parseInt(progress);
+
+      return;
     }
   },
   created() {

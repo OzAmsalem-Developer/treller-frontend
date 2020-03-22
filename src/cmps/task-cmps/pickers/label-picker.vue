@@ -2,11 +2,14 @@
   <section class="label-picker">
     <div
       class="label"
-      v-for="(label, idx) in boardLabels"
+      v-for="(label, key) in boardLabels"
       :key="label.id"
       :style="{'background-color': label.color}"
-      @click.stop="editLabels(idx)"
-    >{{label.txt}}</div>
+      @click.stop="editLabels(key)"
+    >
+      <span>{{label.txt}}</span>
+      <span v-if="checkLabel(key)">✔️</span>
+    </div>
   </section>
 </template>
 
@@ -39,6 +42,14 @@ export default {
         this.$emit(eventName, value);
         this.$nextTick(resolve);
       });
+    },
+    checkLabel(boardLabelKey) {
+      const labelIdx = this.taskLabels.findIndex(
+        label => label === boardLabelKey
+      );
+      console.log((labelIdx !== -1));
+      
+      return (labelIdx !== -1)? true : false 
     }
   },
   created() {
