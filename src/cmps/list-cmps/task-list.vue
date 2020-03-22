@@ -52,7 +52,7 @@
       </form>
     </main>
     <footer v-if="!newTask"></footer>
-      <button v-if="!newTask" @click="getEmptyTask" class="add-task-btn">+ Add Task</button>
+    <button v-if="!newTask" @click="getEmptyTask" class="add-task-btn">+ Add Task</button>
   </section>
 </template>
 
@@ -98,7 +98,7 @@ export default {
         return;
       }
       this.listCopy.tasks.push(this.newTask);
-      this.saveList();
+      this.saveList('save-list');
       this.newTask = null;
       this.getEmptyTask();
       setTimeout(() => {
@@ -106,9 +106,9 @@ export default {
       }, 2);
       this.$refs.taskInput.focus();
     },
-    async saveList() {
+    async saveList(evName) {
       this.listCopy = JSON.parse(JSON.stringify(this.listCopy));
-      await this.emit("save-list", this.listCopy);
+      await this.emit(evName, this.listCopy);
       try {
         this.listCopy = JSON.parse(JSON.stringify(this.taskList));
       } catch {
@@ -119,13 +119,15 @@ export default {
       const idx = this.listCopy.tasks.findIndex(t => t.id === task.id);
       if (idx !== -1) {
         this.listCopy.tasks.splice(idx, 1, task);
-        this.saveList();
+        this.saveList('save-list');
       }
     },
     onDrop(dropResult) {
-      const res = utilService.applyDrag(this.taskList.tasks, dropResult);
-      this.listCopy.tasks = res;
-      this.saveList();
+      this.listCopy.tasks = utilService.applyDrag(
+        this.taskList.tasks,
+        dropResult
+      );
+      this.saveList('save-lists-order');
     },
     getTaskPayload(listId) {
       return index => {
@@ -144,7 +146,7 @@ export default {
       this.isMenuOpen = false;
     },
     saveListName(ev) {
-      this.saveList();
+      this.saveList('save-list');
       ev.target.blur();
     },
     focus(ev) {
@@ -153,7 +155,7 @@ export default {
     removeTask(taskId) {
       const idx = this.listCopy.tasks.findIndex(t => t.id === taskId);
       if (idx !== -1) this.listCopy.tasks.splice(idx, 1);
-      this.saveList();
+      this.saveList('save-list');
     }
   },
   created() {
