@@ -57,7 +57,7 @@
           </section>
 
           <section v-if="task.checklist" class="details-checklist">
-            <div>
+            <div class="details-checklist-info">
               <input
                 class="check-list-title"
                 v-model="editedTask.checklist.title"

@@ -99,6 +99,10 @@
   display: flex;
   flex-direction: column;
   background-color: $clr5;
+
+  .details-checklist-info {
+    display: flex;
+  }
 }
 .checklist-todo-container {
   padding-inline-start: 10px;
