@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     checklistStatus() {
-      const todos = this.taskCopy.checklist.todos;
+      const todos = this.task.checklist.todos;
       const doneTodos = todos.filter(todo => todo.isDone).length;
       const allTodos = todos.length;
       return doneTodos + "/" + allTodos;
