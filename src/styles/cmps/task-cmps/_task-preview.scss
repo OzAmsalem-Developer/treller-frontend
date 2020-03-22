@@ -1,5 +1,5 @@
 .task-preview {
-    position: relative;
+    // position: relative;
     padding: 10px;
     border-radius: 3px;
     margin-bottom: 8px;
@@ -30,6 +30,10 @@
         display: flex;
         justify-content: flex-end;
     }
+}
+
+.preview-wrapper {
+    position: relative;
 }
 
 .task-preview:hover {
