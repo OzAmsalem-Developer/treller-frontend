@@ -2,22 +2,18 @@
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
     <section v-if="task" class="task-details">
       <div class="task-details-header">
+        <span><i class="fas fa-layer-group"></i></span>
         <input
           v-model="editedTask.name"
           class="details-title"
           type="text"
-          @keyup.enter="updateTask"
+          @change="updateTask" 
         />
-        <!-- @change="updateTask"  -->
         <button class="close-details-btn" @click="closeDetails">✖️</button>
       </div>
       <div class="details-container">
         <div class="details-info">
           <section v-if="task.labels.length" class="details-labels">
-            <span>
-              <i class="fas fa-tag"></i>
-            </span>
-            <!-- <span>💡</span> -->
             <span class="font-bold">Labels:</span>
             <span class="action-link">Update</span>
             <div class="details-labels-list">
