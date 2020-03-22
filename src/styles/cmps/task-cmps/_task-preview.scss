@@ -1,39 +1,42 @@
 .task-preview {
-    position: relative;
-    padding: 10px;
-    border-radius: 3px;
-    margin-bottom: 8px;
-    background-color: #ffffff;
-    box-shadow: $shadow;
-    cursor: pointer;
+  position: relative;
+  padding: 10px;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  background-color: #ffffff;
+  box-shadow: $shadow;
+  cursor: pointer;
 
-    .preview-menu-btn{
-        position: absolute;
-        padding: 5px;
-        top: 0;
-        right: 0;
-        display: none;
-    }
-    .preview-title pre {
-        font-size: 1rem;
-        margin-bottom: 5px;
-        font-family: $font-regular;
-    }
+  .preview-menu-btn {
+    position: absolute;
+    padding: 5px;
+    top: 0;
+    right: 0;
+    display: none;
+  }
+  .preview-title {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    font-family: $font-regular;
+  }
 
-    .preview-indications {
-        display: flex;
-        justify-content: space-between;
-        font-size: rem(14px);
-    }
+  .preview-indications {
+    display: flex;
+    justify-content: flex-start;
+    font-size: rem(14px);
+  }
 
-    .preview-members {
-        display: flex;
-        justify-content: flex-end;
-    }
+  .preview-indications > * {
+      margin-right: 10px;
+  }
+  .preview-members {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
 .task-preview:hover {
-    .preview-menu-btn {
-        display: block;
-    }
+  .preview-menu-btn {
+    display: block;
+  }
 }
