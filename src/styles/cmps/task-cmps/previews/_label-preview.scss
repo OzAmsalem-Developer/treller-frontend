@@ -1,12 +1,14 @@
 
 .label-preview {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 5px;
     font-size: rem(14px);
-    
+
     .label-card {
         border-radius: 3px;
         padding: 2px 5px;
         margin-inline-end:5px ;
+        margin-bottom: 3px;
     }
 }

@@ -1,9 +1,11 @@
 <template>
-  <div class="due-date-preview" :style="{'background-color': this.bgColor}">
+  <div class="due-date-preview-container" :style="{'background-color': this.bgColor}">
+    <div class="due-date-preview center-flex">
      <span v-if="dueDate.isCompleted">🕖Done</span>
      <span v-else>
       🕖{{this.dueDate.time | minimalDate}}
      </span>
+    </div>
   </div>
 </template>
 
@@ -13,16 +15,16 @@ import {utilService} from "../../../services/util.service.js"
 export default {
   computed: {
     bgColor() {
-      if (this.dueDate.isCompleted) return 'green'  
+      if (this.dueDate.isCompleted) return '#00e600'  
       const dueDateTime = this.dueDate.time;
       const hourfLeft = utilService.getHoursDifference(dueDateTime);
       const color =
         hourfLeft < 0
-          ? "red"
+          ? "#ff3333"
           : hourfLeft < 5
-          ? "orange"
+          ? "#e65c00"
           : hourfLeft < 48
-          ? "yellow"
+          ? "#ffd11a"
           : "transparent";
       return color;
     }
@@ -35,3 +37,8 @@ export default {
 
 <style>
 </style>
+// #00e600 - green
+// #ff3333 - red
+// #e65c00 - orange
+// #ffd11a - yellow
+
