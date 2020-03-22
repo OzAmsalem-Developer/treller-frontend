@@ -46,9 +46,7 @@ export default {
     checkLabel(boardLabelKey) {
       const labelIdx = this.taskLabels.findIndex(
         label => label === boardLabelKey
-      );
-      console.log((labelIdx !== -1));
-      
+      );      
       return (labelIdx !== -1)? true : false 
     }
   },

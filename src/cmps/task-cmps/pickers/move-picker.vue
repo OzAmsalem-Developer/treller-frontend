@@ -6,6 +6,7 @@
         <option v-for="list in optionalLists" :key="list.id" :value="list.id"
         >{{list.name}}</option>
       </select>
+      <br/>
       <button>Save</button>
     </form>
   </section>
