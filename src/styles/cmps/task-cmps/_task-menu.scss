@@ -1,18 +1,27 @@
 
 .task-menu {
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    min-width: 120px;
+    // display: flex;
+    // flex-direction: column;
+    // flex-wrap: wrap;
+    min-width: 80px;
     box-shadow: $shadow;
     top: 10px;
     right: 20px;
     background-color: white;
     border-radius: 2px;
     z-index: 2;
+    font-family: $font-regular !important;
+    font-size: rem(13px);
+    border: 0.5px solid #ebecf0;
     > * {
-        padding: 5px 3px;
+        padding: 5px 6px;
+        display: block;
+        width: 100%;
+        text-align: left;
+        font-family: $font-regular !important;
+        user-select: none;
+        outline: 0;
     }
 
     button:hover {
