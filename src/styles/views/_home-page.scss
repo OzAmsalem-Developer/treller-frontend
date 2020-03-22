@@ -1,3 +1,21 @@
-.temp-class {
-    color: #000000;
+.home-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.cta-board-btn {
+    min-width: 100px;
+    color: $clr4;
+    background-color: $clr2;
+    border: none;
+    border-radius: 1px;
+    box-shadow: $shadow;
+    font-family: $font-bold;
+    font-size: 30px;
+    padding: 10px 10px;
+    text-decoration: none;
+    margin: auto;
 }
