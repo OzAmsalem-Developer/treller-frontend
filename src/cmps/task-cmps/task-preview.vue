@@ -1,52 +1,27 @@
 <template>
   <section class="task-preview" @click="taskDetailsPage">
-    <button class="preview-menu-btn" @click="toggleMenu">🖊️</button>
+    <button class="preview-menu-btn" @click="toggleMenu">
+      <i class="fas fa-pencil-alt"></i>
+    </button>
     <task-menu
       v-if="isMenuOpen"
       :task="task"
       :listId="listId"
-      @click.native="toggleMenu"
+      @click.native.stop=""
+      @toggle-menu="toggleMenu"
       @remove-task="$emit('remove-task', task.id)"
-      @set-labels="setTaskLabels"
+      @set-labels="updateTask"
+      @set-name="updateTask"
     />
     <label-preview :labels="taskCopy.labels" />
     <p class="preview-title">{{task.name}}</p>
-    <div class="preview-data">
-      <section class="preview-indications">
-        <due-date-preview
-          class="preview-due-date"
-          v-if="task.dueDate.time"
-          :dueDate="task.dueDate"
-        />
-        <div class="preview-desc" v-if="task.desc">
-          <i class="fas fa-align-left"></i>
-        </div>
-        <div class="preview-comments" v-if="task.comments.length">
-          <i class="far fa-comment"></i>
-          {{task.comments.length}}
-        </div>
-        <div class="preview-check-list" v-if="task.checklist">
-          <i class="far fa-check-square"></i>
-          <span class="check-list-txt">{{checklistStatus}}</span>
-        </div>
-        <div
-          class="preview-attachments"
-          v-if="task.attachments.length"
-        >Attachments({{task.attachments.length}})</div>
-      </section>
-
-      <section class="preview-members" v-if="task.members.length">
-        <member-preview :members="task.members" />
-      </section>
-    </div>
+    <dataIndicationPreview :task="task"/>
   </section>
 </template>
 
 <script>
-import { utilService } from "../../services/util.service.js";
 import labelPreview from "./previews/label-preview.vue";
-import memberPreview from "./previews/member-preview.vue";
-import dueDatePreview from "./previews/due-date-preview.vue";
+import dataIndicationPreview from "./previews/data-indication-preview.vue"
 import taskMenu from "./task-menu.vue";
 
 export default {
@@ -67,6 +42,17 @@ export default {
       const boardId = this.$store.getters.currBoardId;
       const taskId = this.task.id;
       return `/board/${boardId}/task/${taskId}`;
+    },
+    isDataIndication() {
+      const task = this.task;
+      return (
+        task.dueDate.time ||
+        task.desc ||
+        task.comments.length ||
+        task.attachments.length ||
+        task.checklist ||
+        task.members.length
+      )
     }
   },
   methods: {
@@ -77,8 +63,8 @@ export default {
     taskDetailsPage() {
       this.$router.push(this.taskDetails);
     },
-    async setTaskLabels(taskLabels) {
-      this.taskCopy.labels = taskLabels;
+    async updateTask(task) {
+      this.taskCopy = task;
       // emit to list
       await this.emit("update-task", this.taskCopy);
       try {
@@ -99,10 +85,9 @@ export default {
     this.taskCopy = JSON.parse(JSON.stringify(this.task));
   },
   components: {
+    taskMenu,
     labelPreview,
-    memberPreview,
-    dueDatePreview,
-    taskMenu
+    dataIndicationPreview
   },
   props: {
     task: Object,

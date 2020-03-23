@@ -1,16 +1,28 @@
 
 .task-menu {
+    display: grid;
+    grid-template-rows: repeat(4fr 3fr) ;
     position: absolute;
-    // display: flex;
-    // flex-direction: column;
-    // flex-wrap: wrap;
-    min-width: 80px;
-    box-shadow: $shadow;
     top: 10px;
     right: 20px;
-    background-color: white;
-    border-radius: 2px;
+    background-color: darken($color: #ffffff, $amount: 20%);
     z-index: 2;
+}
+
+.card-details {
+    .name-btn {
+        border-radius: 3px;
+        color: #fff;
+        font-family: $font-semi;
+        padding: 5px;
+        background-color: $pGreen; 
+        font-size: rem(14px);   
+    }
+}
+.editor-buttons {
+    min-width: 80px;
+    box-shadow: $shadow;
+    border-radius: 2px;
     font-family: $font-regular !important;
     font-size: rem(13px);
     border: 0.5px solid #ebecf0;

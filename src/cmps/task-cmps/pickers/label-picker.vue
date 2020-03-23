@@ -8,7 +8,7 @@
       @click.stop="editLabels(key)"
     >
       <span>{{label.txt}}</span>
-      <span v-if="checkLabel(key)">✔️</span>
+      <span v-if="checkLabel(key)"><i class="fas fa-check"></i></span>
     </div>
   </section>
 </template>
