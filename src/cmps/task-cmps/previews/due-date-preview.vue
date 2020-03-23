@@ -1,10 +1,17 @@
 <template>
-  <div class="due-date-preview-container" :style="{'background-color': this.bgColor}">
+  <div
+    class="due-date-preview-container"
+    :style="{'background-color': this.bgColor, 'color': this.color}"
+  >
     <div class="due-date-preview center-flex">
-     <span v-if="dueDate.isCompleted">🕖Done</span>
-     <span v-else>
-      🕖{{this.dueDate.time | minimalDate}}
-     </span>
+      <span v-if="dueDate.isCompleted">
+        <i class="far fa-clock"></i>
+        <span class="due-date-txt">Done</span>
+      </span>
+      <span v-else>
+        <i class="far fa-clock"></i>
+        <span class="due-date-txt">{{this.dueDate.time | minimalDate}}</span>
+      </span>
     </div>
   </div>
 </template>
@@ -13,21 +20,32 @@
 import {utilService} from "../../../services/util.service.js"
 
 export default {
+  data() {
+    return {
+      hourfLeft: null
+    }
+  },
   computed: {
     bgColor() {
-      if (this.dueDate.isCompleted) return '#00e600'  
-      const dueDateTime = this.dueDate.time;
-      const hourfLeft = utilService.getHoursDifference(dueDateTime);
-      const color =
-        hourfLeft < 0
-          ? "#ff3333"
-          : hourfLeft < 5
-          ? "#e65c00"
-          : hourfLeft < 48
-          ? "#ffd11a"
+      if (this.dueDate.isCompleted) return '#61bd4f'
+      const time = this.hourfLeft 
+      const bgColor =
+        time < 0
+          ? "#eb5a46"
+          : time < 5
+          ? "#ff9f1a"
+          : time < 48
+          ? "#f2d600"
           : "transparent";
-      return color;
+      return bgColor;
+    },
+    color() {
+      return (this.hourfLeft > 48)? 'inherit' : '#fff'
+      
     }
+  },
+  created() {
+    this.hourfLeft = utilService.getHoursDifference(this.dueDate.time);
   },
   props: {
     dueDate: Object
@@ -37,8 +55,8 @@ export default {
 
 <style>
 </style>
-// #00e600 - green
-// #ff3333 - red
-// #e65c00 - orange
-// #ffd11a - yellow
+// #61bd4f - green
+// #eb5a46 - red
+// #ff9f1a - orange
+// #f2d600 - yellow
 

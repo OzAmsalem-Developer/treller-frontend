@@ -82,22 +82,22 @@ function _getSampleBoards() {
             labels: {
                 label1: {
                     id: 'lb101',
-                    color: 'pink',
+                    color: '#ff78cb',
                     txt: 'Together'
                 },
                 label2: {
                     id: 'lb102',
-                    color: 'red',
+                    color: '#eb5a46',
                     txt: 'Error'
                 },
                 label3: {
                     id: 'lb103',
-                    color: 'blue',
+                    color: '#00c2e0',
                     txt: 'New Feature'
                 },
                 label4: {
                     id: 'lb104',
-                    color: 'yellow',
+                    color: '#f2d600',
                     txt: 'ITP'
                 }
             },

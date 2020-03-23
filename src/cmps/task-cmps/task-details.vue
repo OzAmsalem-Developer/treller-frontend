@@ -1,36 +1,54 @@
 <template>
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
-    <section v-if="task" class="task-details">
-      <div class="task-details-header">
-        <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
-        <button class="close-details-btn" @click="closeDetails">✖️</button>
+    <section v-if="task" class="task-details" ref="task">
+      <div class="task-details-header details-grid-title">
+        <span class="details-icons">
+          <i class="fas fa-layer-group"></i>
+        </span>
+        <!-- <form @submit.prevent="updateTask"> -->
+          <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
+        <!-- </form> -->
+        <button class="close-details-btn" @click="closeDetails">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
+
       <div class="details-container">
         <div class="details-info">
-          <section v-if="task.labels.length" class="details-labels">
-            <!-- <span>💡</span> -->
-            <span class="font-bold">Labels:</span>
-            <span class="action-link">Update</span>
-            <div class="details-labels-list">
-              <labelPreview :labels="task.labels" />
-              <button>+</button>
+          <section v-if="task.labels.length" class="details-grid-title">
+            <div class="details-grid-last">
+              <div class="details-labels-header">
+                <span class="details-titles">Labels:</span>
+                <span class="action-link">Update</span>
+              </div>
+              <div class="details-labels-list">
+                <label-preview :labels="task.labels" />
+              </div>
             </div>
           </section>
 
-          <section v-if="task.members" class="details-members">
-            <span class="font-bold">Members:</span>
-            <span class="action-link" @click="setMembers">Invite</span>
-            <div class="details-members-list">
-              <member-preview :members="task.members"></member-preview>
-              <button class="member-add-btn member-card" @click="setMembers">+</button>
+          <section v-if="task.members" class="details-members details-grid-title">
+            <div class="details-grid-last">
+              <div class="details-members-header">
+                <span class="details-titles">Members:</span>
+                <span class="action-link" @click="setMembers">Invite</span>
+              </div>
+              <div class="details-members-list">
+                <member-preview :members="task.members"></member-preview>
+                <button class="member-add-btn member-card" @click="setMembers">+</button>
+              </div>
             </div>
           </section>
 
-          <section v-if="task.dueDate.isCompleted !== null" class="details-due-date">
-            <!-- <span>🕖</span> -->
-            <span class="font-bold">Due Date:</span>
-            <span class="action-link">Update</span>
-            <div class="details-due-list">
+          <section v-if="task.dueDate.isCompleted !== null" class="details-due-date details-grid">
+            <div class="details-icons">
+              <i class="far fa-clock"></i>
+            </div>
+            <div class="details-due-header">
+              <span class="details-titles">Due Date:</span>
+              <span class="action-link">Update</span>
+            </div>
+            <div class="details-due-list details-grid-last">
               <input
                 class="details-due-check"
                 type="checkbox"
@@ -42,68 +60,84 @@
             </div>
           </section>
 
-          <section class="details-description">
-            <!-- <span>📄</span> -->
+          <section class="details-description details-grid">
+            <div class="details-icons">
+              <i class="fas fa-align-left"></i>
+            </div>
             <div>
-              <span class="font-bold">Description:</span>
+              <span class="details-titles">Description:</span>
               <span class="action-link">Edit</span>
             </div>
             <textarea
               v-model="editedTask.desc"
               @change="updateTask"
-              class="details-text-area details-desc-input"
+              class="details-text-area details-desc-input details-grid-last"
               ref="description"
             />
           </section>
 
-          <section v-if="task.checklist" class="details-checklist">
-            <div class="details-checklist-info">
+          <section v-if="task.checklist" class="details-checklist details-grid">
+            <div class="details-icons">
+              <i class="far fa-check-square"></i>
+            </div>
+
+            <div class="details-checklist-header">
               <input
-                class="check-list-title"
+                class="checklist-title"
                 v-model="editedTask.checklist.title"
                 type="text"
                 @change="updateTask"
                 ref="checklist"
               />
-              <span>{{checklistProgress}}%</span>
-              <!-- <span class="action-link">remove</span> -->
+              <span class="details-progress">{{checklistProgress}}%</span>
             </div>
-            <div class="checklist-todo-container" v-for="item in editedTask.checklist.todos" :key="item.id">
-              <input type="checkbox" v-model="item.isDone" @change="updateTask" />
+
+            <div class="details-grid-last">
+              <div
+                class="checklist-todo-container"
+                v-for="item in editedTask.checklist.todos"
+                :key="item.id"
+              >
+                <input type="checkbox" v-model="item.isDone" @change="updateTask" />
+                <input
+                  type="text"
+                  :class="item.isDone? 'todo-done' : ''"
+                  class="details-clean-input checklist-todo"
+                  v-model="item.txt"
+                  @change="updateTask"
+                />
+                <button class="todo-remove-btn" @click="removeTodo(item.id)">
+                  <i class="far fa-trash-alt"></i>
+                </button>
+              </div>
               <input
+                class="details-clean-input checklist-add-item"
+                v-model="currTodo.txt"
                 type="text"
-                :class="item.isDone? 'todo-done' : ''"
-                class="details-clean-input"
-                v-model="item.txt"
-                @change="updateTask"
+                placeholder="add an item"
+                @change="addTodo"
               />
-              <button class="todo-remove-btn" @click="removeTodo(item.id)">x</button>
             </div>
-            <input
-              class="details-clean-input checklist-add-item"
-              v-model="currTodo.txt"
-              type="text"
-              placeholder="add an item"
-              @change="addTodo"
-            />
           </section>
 
-          <section class="details-discussion">
-            <div>
-              <!-- <span>💬</span> -->
-              <span class="font-bold">Discussion:</span>
+          <section class="details-discussion details-grid">
+            <span class="details-icons">
+              <i class="fas fa-stream"></i>
+            </span>
+            <div class="details-disc-header">
+              <span class="details-titles">Discussion:</span>
               <!-- <span class="action-link">hide activity feed</span> -->
             </div>
             <input
-              class="details-clean-input discussion-add-item"
+              class="details-clean-input discussion-add-item details-grid-last"
               type="text"
               v-model="currComment.txt"
               @change="addComment"
               placeholder="Write a comment"
               ref="comment"
             />
-            <comment-preview :comments="editedTask.comments" @removeComment="removeComment" />
           </section>
+          <comment-preview :comments="editedTask.comments" @removeComment="removeComment" />
         </div>
 
         <section class="details-actions">
@@ -146,6 +180,7 @@ export default {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
       try {
         this.editedTask = JSON.parse(JSON.stringify(this.task));
+        // this.$refs.task.focus()
       } catch (prevTask) {
         this.editedTask = JSON.parse(JSON.stringify(prevTask));
         console.log("Err, failed to save task");

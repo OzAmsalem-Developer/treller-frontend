@@ -65,7 +65,9 @@
         <button @click="$refs.addTaskBtn.click()" ref="sendTaskForm" class="add-task-btn">Add</button>
         <button @click.prevent="newTask = null" class="close-btn">X</button>
       </section>
-      <button v-else @click="getEmptyTask" class="add-task-btn">+ Add Task</button>
+      <button v-else @click="getEmptyTask" class="add-task-btn">
+        <i class="fas fa-plus"></i> Add Task
+        </button>
     </footer>
   </section>
 </template>

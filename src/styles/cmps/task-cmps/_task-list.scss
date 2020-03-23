@@ -69,16 +69,19 @@
   .add-task-btn {
     height: 34px;
     margin: 10px;
-    padding: 0 10px;
-    background-color: $clr4;
+    padding: 4px 8px;
     border-radius: 3px;
-    font-family: $font-regular;
+    font-family: $font-semi;
+    color: #5e6c84;
+    width: 93%;
+    text-align: left;
     position: absolute;
     bottom: 0;
   }
 
   .add-task-btn:hover {
-    background-color: #ffc045bf;
+    color: #172b4d;
+    background-color: rgba(9,30,66,.08);
   }
 
   .new-task-box {

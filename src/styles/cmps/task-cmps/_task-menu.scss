@@ -1,13 +1,28 @@
 
 .task-menu {
+    display: flex;
     position: absolute;
+    top: 10px;
+    right: -16px;
+    background-color: darken($color: #ffffff, $amount: 20%);
+    z-index: 2;
+    
+}
+
+.card-details {
+    .name-btn {
+        border-radius: 3px;
+        color: #fff;
+        font-family: $font-semi;
+        padding: 5px;
+        background-color: $pGreen; 
+        font-size: rem(14px);   
+    }
+}
+.editor-buttons {
     min-width: 80px;
     box-shadow: $shadow;
-    top: 10px;
-    right: 20px;
-    background-color: white;
     border-radius: 2px;
-    z-index: 2;
     font-family: $font-regular !important;
     font-size: rem(13px);
     border: 0.5px solid #ebecf0;

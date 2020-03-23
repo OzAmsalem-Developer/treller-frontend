@@ -15,7 +15,6 @@ export default {
       boardLabelsMap: this.$store.getters.labels,
     };
   },
-  methods: {},
   props: {
     labels: Array
   }

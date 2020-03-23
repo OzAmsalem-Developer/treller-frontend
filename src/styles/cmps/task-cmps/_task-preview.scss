@@ -1,6 +1,6 @@
 .task-preview {
   position: relative;
-  padding: 10px;
+  padding: 6px 8px 2px;
   border-radius: 3px;
   margin-bottom: 8px;
   background-color: #ffffff;
@@ -9,34 +9,59 @@
   cursor: pointer;
 
   .preview-menu-btn {
-    position: absolute;
-    padding: 5px;
-    top: 0;
-    right: 0;
     display: none;
+    position: absolute;
+    padding: 7px;
+    top: 4px;
+    right: 6px;
+    color: #5e6c84;
+  }
+  .preview-menu-btn:hover{
+    color: darken($color: #5e6c84, $amount: 25%);
+    background-color: darken($color: #ffffff, $amount: 10%);
   }
   .preview-title {
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     font-family: $font-regular;
+    overflow-wrap: break-word;
   }
 
+  .preview-data {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
   .preview-indications {
     display: flex;
     justify-content: flex-start;
-    font-size: rem(14px);
+    margin: 0 4px 4px 0;
+    padding: 2px;
+    font-size: rem(12px);
+    color: #5e6c84;
+
+    .preview-check-list {
+      .check-list-txt {
+        padding: 0 4px 0 2px;
+      }
+    }
   }
 
   .preview-indications > * {
-      margin-right: 10px;
+    margin: 0 4px 4px;
+    padding: 2px;
+  }
+
+  .preview-indications :first-child {
+    margin-left: 0;
   }
   .preview-members {
-    display: flex;
-    justify-content: flex-end;
+    margin-bottom: 4px;
+    margin-left: auto;
   }
 }
 
 .preview-wrapper {
-position: relative;
+  position: relative;
 }
 
 .task-preview:hover {

@@ -11,45 +11,98 @@
   width: 100%;
 }
 
+.details-grid {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  grid-template-rows: 20px 1fr;
+  gap: rem(5px);
+}
+
+.details-grid-title {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  grid-template-rows: 1fr;
+  column-gap: rem(5px);
+}
+
+.details-grid-last {
+  grid-column: -2/-1;
+  grid-row: -2 / -1;
+}
+
+.details-icons {
+  font-size: 1rem;
+  color: $clr7;
+  align-self: center;
+}
+
+.details-titles {
+  font-family: $font-semi;
+  font-size: rem(16px);
+  color: $clr7;
+}
+
 .task-details {
+  position: relative;
   background-color: $clr5;
   width: 768px;
   border-radius: 3px;
   min-height: 300px;
   display: flex;
   flex-direction: column;
-  padding: 0 30px 0 30px;
+  padding: 15px 30px 15px 30px;
   margin: 0 auto;
   z-index: 1;
 
-  > * {
-    margin-bottom: 10px;
+  .task-details-header {
+    .details-title {
+      font-size: rem(20px);
+      @include input-blur;
+      width: 95%;
+    }
+
+    .details-title:focus {
+      @include input-focus;
+    }
+  }
+
+  .close-details-btn {
+    color: $clr7;
+    font-size: rem(16px);
+    position: absolute;
+    right: rem(10px);
+    top: rem(10px);
+    min-width: 30px;
+    min-height: 30px;
+    padding: 2px;
   }
 
   .details-container {
     display: flex;
     justify-content: space-between;
   }
+}
 
-  .details-actions {
-    display: flex;
-    flex-direction: column;
-    button {
-      background-color: $clr2;
-      border-radius: 3px;
-      padding: 5px 20px;
-      margin-bottom: 5px;
-    }
-    button {
-      font-size: 16px;
-      font-family: $font-regular;
-      color: $clr3;
-      background-color: #e0e0e0;
-      transition: all 0.3s;
-    }
-    button:hover {
-      background-color: #c5dbee;
-    }
+
+
+.details-actions {
+  display: flex;
+  flex-direction: column;
+  button {
+    background-color: $clr2;
+    border-radius: 3px;
+    padding: 5px 20px;
+    margin-bottom: 5px;
+  }
+  button {
+    font-size: 16px;
+    font-family: $font-regular;
+    color: $clr3;
+    background-color: #e0e0e0;
+    transition: all 0.3s;
+  }
+  button:hover {
+    background-color: #c5dbee;
   }
 }
 
@@ -57,36 +110,66 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-inline-end: 10px;
 
   > * {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 }
 
-.task-details-header {
+.details-labels-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding-top: 0.8em;
+  margin-bottom: rem(5px);
 }
 
-.details-title {
-  font-size: 24px;
-  @include input-blur;
+.details-members-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: rem(5px);
 }
 
-.details-title:focus {
-  @include input-focus;
+.details-members-list {
+  display: flex;
+  align-items: center;
+
+  button {
+    background-color: #e0e0e0;
+    color: $clr3;
+    transition: all 0.3s;
+  }
+  button:hover {
+    background-color: #c5dbee;
+  }
 }
 
-.close-details-btn {
-  min-width: 30px;
-  min-height: 30px;
+.details-due-check {
+  cursor: pointer;
+  min-width: 20px;
+  min-height: 20px;
 }
+
+.details-due-list {
+  display: flex;
+  align-items: center;
+}
+.details-due-list > * {
+  margin-inline-end: 5px;
+}
+
+.details-desc-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: rem(5px);
+}
+
+.details-description {
+  margin-bottom: 0;
+}
+
 
 .details-desc-input {
-  font-size: 16px;
+  font-size: rem(14px);
+  font-family: $font-regular;
   resize: none;
   @include input-blur;
 }
@@ -96,19 +179,21 @@
 }
 
 .details-checklist {
-  display: flex;
-  flex-direction: column;
   background-color: $clr5;
 
-  .details-checklist-info {
+  .details-checklist-header {
     display: flex;
+    align-items: center;
+  }
+  .details-progress {
+    padding-inline-start: rem(10px);
   }
 }
+
 .checklist-todo-container {
-  padding-inline-start: 10px;
   display: flex;
   align-items: center;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 .checklist-todo-container:hover {
   background-color: darken($clr5, 3);
@@ -126,81 +211,25 @@
   min-height: 16px;
 }
 
-.details-due-check {
-  cursor: pointer;
-  min-width: 20px;
-  min-height: 20px;
-}
-
-.details-discussion {
-  background-color: $clr5;
-}
-
-.details-members-list {
-  display: flex;
-  align-items: center;
-
-  button {
-    background-color: #e0e0e0;
-    color: $clr3;
-    transition: all 0.3s;
-  }
-  button:hover {
-    background-color: #c5dbee;
-  }
-}
-
-.details-labels-list {
-  display: flex;
-  button {
-    background-color: #e0e0e0;
-    color: $clr3;
-    border: solid 1px $clr3;
-    border-radius: 3px;
-    cursor: pointer;
-    min-width: 50px;
-    height: 23px;
-    transition: all 0.3s;
-  }
-  button:hover {
-    background-color: #c5dbee;
-  }
-}
-
-.details-due-list {
-  display: flex;
-  align-items: center;
-}
-.details-due-list > * {
-  margin-inline-end: 5px;
-}
-
-.details-members {
-  background-color: $clr5;
-}
-
-.details-labels {
-  background-color: $clr5;
-}
-
-.details-due-date {
-  background-color: $clr5;
-}
-
-.details-description {
-  background-color: $clr5;
-  margin-bottom: 0;
-}
-
-.check-list-title {
+.checklist-title {
   @include input-blur;
   font-size: 16px;
-  color: $clr1;
-  font-family: $font-bold;
+  color: $clr7;
+  font-family: $font-semi;
 }
 
-.check-list-title:focus {
+.checklist-title:focus {
   @include input-focus;
+}
+
+.checklist-todo {
+  @include input-blur;
+  font-family: $font-regular;
+}
+
+.checklist-todo:focus {
+  @include input-focus;
+  font-family: $font-regular;
 }
 
 .todo-remove-btn {
@@ -209,7 +238,7 @@
   font-size: 14px;
 
   margin-inline-start: 10px;
-  transition: all .3s;
+  transition: all 0.3s;
   padding: 5px 10px;
   text-align: center;
 }
@@ -218,6 +247,11 @@
   color: $clr3;
   border-radius: 3px;
   background-color: #ff7b64;
+}
+
+.details-disc-header {
+  display: flex;
+  align-items: center;
 }
 
 .discussion-add-item {
@@ -239,10 +273,6 @@
   font-size: 12px;
   cursor: pointer;
   margin-inline-start: 8px;
-}
-
-.clean-items {
-  list-style: none;
 }
 
 .todo-done {
