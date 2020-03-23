@@ -278,3 +278,11 @@
 .todo-done {
   text-decoration: line-through;
 }
+
+.date-picker-cell {
+  background-color: red;
+}
+
+.el-date-editor .el-input__inner {
+  background-color: rgb(222, 190, 255);
+}

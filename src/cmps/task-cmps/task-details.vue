@@ -53,7 +53,19 @@
                 v-model="editedTask.dueDate.isCompleted"
                 @change="updateTask"
               />
-              <input v-model="currDueDate" @change="updateDueDate" type="date" ref="calendar" />
+              <div class="block">
+                <el-date-picker
+                  @change="updateDueDate"
+                  v-model="editedTask.dueDate.time"
+                  type="datetime"
+                  format="MMM dd hh:mm A"
+                  value-format="timestamp"
+                  placeholder="Select date and time"
+                  class="el-date-picker"
+                  size="small"
+                  ref="calendar"
+                ></el-date-picker>
+              </div>
               <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
             </div>
           </section>
@@ -177,6 +189,26 @@ export default {
     };
   },
   methods: {
+    updateDueDate() {
+      console.log(
+        "this.editedTask.dueDate.time:",
+        this.editedTask.dueDate.time
+      );
+      this.updateTask();
+    },
+    async setDueDate() {
+      if (this.editedTask.dueDate.isCompleted === null) {
+        this.editedTask.dueDate.isCompleted = false;
+        await this.updateTask();
+        try {
+          this.$refs.calendar.focus();
+        } catch {
+          console.log("failed to save setDueDate");
+        }
+      } else {
+        this.$refs.calendar.focus();
+      }
+    },
     async updateTask() {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
       try {
@@ -250,18 +282,6 @@ export default {
       const boardId = this.$store.getters.currBoardId;
       this.$router.push(`/board/${boardId}`);
     },
-    moveTask() {
-      console.log("Please move the Task!");
-    },
-    copyTask() {
-      console.log("Please copy the Task!");
-    },
-    setLabels() {
-      console.log("Please set the Labels!");
-    },
-    setMembers() {
-      console.log("Please set the Members!");
-    },
     updateDescription() {
       this.$refs.description.focus();
     },
@@ -282,38 +302,20 @@ export default {
     sendComment() {
       this.$refs.comment.focus();
     },
-    async setDueDate() {
-      if (this.editedTask.dueDate.isCompleted === null) {
-        this.editedTask.dueDate.isCompleted = false;
-        await this.updateTask();
-        try {
-          this.$refs.calendar.focus();
-        } catch {
-          console.log("failed to save setDueDate");
-        }
-      } else {
-        this.$refs.calendar.focus();
-      }
-    },
-    updateDueDate() {
-      // Turn currDueDate to Timestamp!
-      this.editedTask.dueDate.time = new Date(this.currDueDate).getTime();
-      this.updateTask();
-    },
-    getCurrDueDate() {
-      var day = new Date(this.editedTask.dueDate.time).getDate();
-      var month = new Date(this.editedTask.dueDate.time).getMonth() + 1;
-      var year = new Date(this.editedTask.dueDate.time).getFullYear();
-      if (day < 10) {
-        day = "0" + day;
-      }
-      if (month < 10) {
-        month = "0" + month;
-      }
-      this.currDueDate = `${year}-${month}-${day}`;
-    },
     closeDetailsOnEsc(ev) {
       if (ev.key === "Escape") this.closeDetails();
+    },
+    moveTask() {
+      console.log("Please move the Task!");
+    },
+    copyTask() {
+      console.log("Please copy the Task!");
+    },
+    setLabels() {
+      console.log("Please set the Labels!");
+    },
+    setMembers() {
+      console.log("Please set the Members!");
     }
   },
   computed: {
@@ -331,15 +333,12 @@ export default {
       return parseInt(progress);
     },
     currBoard() {
-      return this.$store.getters.currBoard
+      return this.$store.getters.currBoard;
     }
   },
   created() {
     this.editedTask = JSON.parse(JSON.stringify(this.task));
     console.log("// Details Task:", this.editedTask);
-    if (this.editedTask) {
-      this.getCurrDueDate();
-    }
     document.addEventListener("keyup", this.closeDetailsOnEsc);
   },
   destroyed() {
