@@ -1,12 +1,12 @@
 
 .task-menu {
-    display: grid;
-    grid-template-rows: repeat(4fr 3fr) ;
+    display: flex;
     position: absolute;
     top: 10px;
-    right: 20px;
+    right: -16px;
     background-color: darken($color: #ffffff, $amount: 20%);
     z-index: 2;
+    
 }
 
 .card-details {
