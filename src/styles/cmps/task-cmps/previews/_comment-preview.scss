@@ -26,15 +26,18 @@
 }
 
 .comment-info > *:first-child {
+  font-size: rem(14px);
   margin-inline-end: 10px;
   font-family: $font-bold;
 }
 .comment-info > *:last-child {
+  font-size: rem(14px);
   font-family: $font-light;
 }
 .comment-txt {
   grid-column: 2 / -1;
   grid-row: 2 / 3;
+  font-size: rem(14px);
   box-shadow: $shadow;
   background-color: rgb(252, 252, 252);
   padding: 5px 5px;
