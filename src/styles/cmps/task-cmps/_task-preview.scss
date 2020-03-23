@@ -20,6 +20,11 @@
     font-family: $font-regular;
   }
 
+  .preview-data {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
   .preview-indications {
     display: flex;
     justify-content: flex-start;
@@ -27,21 +32,31 @@
     min-height: 20px;
     padding: 2px;
     font-size: rem(12px);
+    color: #5e6c84;
+
+    .preview-check-list {
+      .check-list-txt {
+        padding: 0 4px 0 2px;
+      }
+    }
   }
 
   .preview-indications > * {
-    margin: 0 4px 4px 0;
+    margin: 0 4px 4px;
     padding: 2px;
+  }
 
+  .preview-indications :first-child {
+    margin-left: 0;
   }
   .preview-members {
-    display: flex;
-    justify-content: flex-end;
+    margin-bottom: 4px;
+    margin-left: auto;
   }
 }
 
 .preview-wrapper {
-position: relative;
+  position: relative;
 }
 
 .task-preview:hover {

@@ -11,18 +11,33 @@
     />
     <label-preview :labels="taskCopy.labels" />
     <p class="preview-title">{{task.name}}</p>
-    <section class="preview-indications">
-      <due-date-preview class="preview-due-date" v-if="task.dueDate.time" :dueDate="task.dueDate" />
-      <div class="preview-desc" v-if="task.desc">📄</div>
-      <div class="preview-comments" v-if="task.comments.length">💬{{task.comments.length}}</div>
-      <div class="preview-check-list" v-if="task.checklist">🗹{{checklistStatus}}</div>
-      <div
-        class="preview-attachments"
-        v-if="task.attachments.length"
-      >Attachments({{task.attachments.length}})</div>
-    </section>
-    <div class="preview-members" v-if="task.members.length">
-      <member-preview :members="task.members" />
+    <div class="preview-data">
+      <section class="preview-indications">
+        <due-date-preview
+          class="preview-due-date"
+          v-if="task.dueDate.time"
+          :dueDate="task.dueDate"
+        />
+        <div class="preview-desc" v-if="task.desc">
+          <i class="fas fa-align-left"></i>
+        </div>
+        <div class="preview-comments" v-if="task.comments.length">
+          <i class="far fa-comment"></i>
+          {{task.comments.length}}
+        </div>
+        <div class="preview-check-list" v-if="task.checklist">
+          <i class="far fa-check-square"></i>
+          <span class="check-list-txt">{{checklistStatus}}</span>
+        </div>
+        <div
+          class="preview-attachments"
+          v-if="task.attachments.length"
+        >Attachments({{task.attachments.length}})</div>
+      </section>
+
+      <section class="preview-members" v-if="task.members.length">
+        <member-preview :members="task.members" />
+      </section>
     </div>
   </section>
 </template>
