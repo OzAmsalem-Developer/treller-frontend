@@ -1,20 +1,26 @@
 <template>
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
-    <section v-if="task" class="task-details">
+    <section v-if="task" class="task-details" ref="task">
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
         </span>
-        <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
-        <button class="close-details-btn" @click="closeDetails">✖️</button>
+        <!-- <form @submit.prevent="updateTask"> -->
+          <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
+        <!-- </form> -->
+        <button class="close-details-btn" @click="closeDetails">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
 
       <div class="details-container">
         <div class="details-info">
           <section v-if="task.labels.length" class="details-grid-title">
             <div class="details-grid-last">
-              <span class="details-titles">Labels:</span>
-              <span class="action-link">Update</span>
+              <div class="details-labels-header">
+                <span class="details-titles">Labels:</span>
+                <span class="action-link">Update</span>
+              </div>
               <div class="details-labels-list">
                 <label-preview :labels="task.labels" />
               </div>
@@ -77,7 +83,7 @@
 
             <div class="details-checklist-header">
               <input
-                class="check-list-title"
+                class="checklist-title"
                 v-model="editedTask.checklist.title"
                 type="text"
                 @change="updateTask"
@@ -96,11 +102,13 @@
                 <input
                   type="text"
                   :class="item.isDone? 'todo-done' : ''"
-                  class="details-clean-input"
+                  class="details-clean-input checklist-todo"
                   v-model="item.txt"
                   @change="updateTask"
                 />
-                <button class="todo-remove-btn" @click="removeTodo(item.id)">x</button>
+                <button class="todo-remove-btn" @click="removeTodo(item.id)">
+                  <i class="far fa-trash-alt"></i>
+                </button>
               </div>
               <input
                 class="details-clean-input checklist-add-item"
@@ -172,6 +180,7 @@ export default {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
       try {
         this.editedTask = JSON.parse(JSON.stringify(this.task));
+        // this.$refs.task.focus()
       } catch (prevTask) {
         this.editedTask = JSON.parse(JSON.stringify(prevTask));
         console.log("Err, failed to save task");
