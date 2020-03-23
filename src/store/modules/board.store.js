@@ -47,8 +47,8 @@ export const boardStore = ({
     },
     actions: {
         async loadBoards(context) {
-            const filterBy = context.state.filterBy
-            const boards = await boardService.query(filterBy)
+            // const userId = context.state.getters.loggedinUser._id
+            const boards = await boardService.query()
             try {
                 context.commit({ type: 'setBoards', boards })
                 return boards
@@ -58,7 +58,7 @@ export const boardStore = ({
             }
         },
         async loadById(context, { boardId }) {
-            const board = await boardService.loadOne(boardId)
+            const board = await boardService.getById(boardId)
             try {
                 context.commit({ type: 'setCurrBoard', board })
                 return board
@@ -71,7 +71,8 @@ export const boardStore = ({
             const prevTask = JSON.parse(JSON.stringify(context.state.currTask))
             context.commit({ type: 'setCurrTask', task })
             const boardCopy = JSON.parse(JSON.stringify(context.state.currBoard))
-            console.log(boardCopy)
+
+            // save the list id on the task its easier here
             boardCopy.taskLists.forEach(taskList => {
                 let idx = taskList.tasks.findIndex(currTask => currTask.id === task.id)
                 if (idx !== -1) {
