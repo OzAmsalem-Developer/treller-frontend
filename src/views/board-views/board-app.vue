@@ -22,7 +22,7 @@
         </Draggable>
 
         <section class="add-list">
-          <button class="add-btn"  v-if="!newTaskList" @click="getEmptyList">+ Add List</button>
+          <button class="add-btn" v-if="!newTaskList" @click="getEmptyList">+ Add List</button>
           <form class="add-list" @submit.prevent="addList" v-else>
             <input
               ref="listInput"
@@ -48,10 +48,10 @@ import taskDetails from "@/cmps/task-cmps/task-details";
 import { boardService } from "@/services/board.service";
 import { utilService } from "@/services/util.service";
 import { Container, Draggable } from "vue-smooth-dnd";
+import { socketService } from "@/services/socket.service.js";
 import {
   eventBus,
   EV_removeList,
-  EV_saveFailed,
   EV_moveTask
 } from "@/services/eventBus.service";
 
@@ -94,9 +94,13 @@ export default {
         console.log("Err, board didnt saved");
         throw new Error("Saving failed");
       }
+      socketService.emit("board boardChanged", this.board);
     },
     addList() {
-      if (!this.newTaskList.name.length) return;
+      if (!this.newTaskList.name.length) {
+        this.newTaskList = null;
+        return;
+      }
       this.board.taskLists.push(this.newTaskList);
       this.saveBoard();
       this.newTaskList = null;
@@ -150,6 +154,10 @@ export default {
       toTaskList.tasks.push(task);
       this.saveBoard();
     },
+    updateBoard(board) {
+      this.$store.commit({ type: "setCurrBoard", board });
+      this.board = JSON.parse(JSON.stringify(this.storeBoard));
+    },
     getEmptyList() {
       this.newTaskList = this.newTaskList ? null : boardService.getEmptyList();
       setTimeout(() => {
@@ -178,11 +186,22 @@ export default {
   },
   created() {
     const boardId = this.$route.params.boardId;
-    this.loadBoardAndTask(boardId); // Render the task details when taskId is passed as param
+
+    (async () => {
+      await this.loadBoardAndTask(boardId); // Render the task details when taskId is passed as param
+      // Socket updates
+      socketService.setup();
+      socketService.emit("board topic", this.board._id);
+      socketService.on("board boardChanged", this.updateBoard);
+    })();
 
     //Event Bus
     eventBus.$on(EV_removeList, this.removeList);
     eventBus.$on(EV_moveTask, this.moveTask);
+  },
+  destroyed() {
+    eventBus.$off(EV_removeList, this.removeList);
+    eventBus.$off(EV_moveTask, this.moveTask);
   },
   components: {
     boardHeader,

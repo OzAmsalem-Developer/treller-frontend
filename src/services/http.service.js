@@ -1,15 +1,11 @@
-import router from '@/router'
-import store from '@/store'
-
-const BASE_URL = process.env.NODE_ENV === 'production'
-    ? '/api/'
-    : '//localhost:3000/api/'
-
-
 import Axios from 'axios';
 var axios = Axios.create({
     withCredentials: true
 });
+
+const BASE_URL = process.env.NODE_ENV === 'production'
+    ? '/api/'
+    : '//localhost:3000/api/'
 
 export const httpService = {
     get(endpoint, data){
@@ -26,7 +22,6 @@ export const httpService = {
     }
 }
 
-
 async function ajax(endpoint, method='get', data=null) {
     try {
         var config = {
@@ -40,7 +35,7 @@ async function ajax(endpoint, method='get', data=null) {
         return res.data;
     } catch (err) {
         if (err.response.status === 401) {
-            router.push('/login');
+            console.log('Unautonticated');
             throw new Error('Unautonticated')
         }
     }

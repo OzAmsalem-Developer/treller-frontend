@@ -1,20 +1,24 @@
 <template>
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
-    <section v-if="task" class="task-details">
+    <section v-if="task" class="task-details" ref="task">
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
         </span>
         <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
-        <button class="close-details-btn" @click="closeDetails">✖️</button>
+        <button class="close-details-btn" @click="closeDetails">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
 
       <div class="details-container">
         <div class="details-info">
           <section v-if="task.labels.length" class="details-grid-title">
             <div class="details-grid-last">
-              <span class="details-titles">Labels:</span>
-              <span class="action-link">Update</span>
+              <div class="details-labels-header">
+                <span class="details-titles">Labels:</span>
+                <span class="action-link">Update</span>
+              </div>
               <div class="details-labels-list">
                 <label-preview :labels="task.labels" />
               </div>
@@ -49,7 +53,19 @@
                 v-model="editedTask.dueDate.isCompleted"
                 @change="updateTask"
               />
-              <input v-model="currDueDate" @change="updateDueDate" type="date" ref="calendar" />
+              <div class="block">
+                <el-date-picker
+                  @change="updateDueDate"
+                  v-model="editedTask.dueDate.time"
+                  type="datetime"
+                  format="MMM dd hh:mm A"
+                  value-format="timestamp"
+                  placeholder="Select date and time"
+                  class="el-date-picker"
+                  size="small"
+                  ref="calendar"
+                ></el-date-picker>
+              </div>
               <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
             </div>
           </section>
@@ -64,9 +80,11 @@
             </div>
             <textarea
               v-model="editedTask.desc"
+              @input="expandTextArea"
               @change="updateTask"
-              class="details-text-area details-desc-input details-grid-last"
+              class="details-desc-input details-grid-last"
               ref="description"
+              rows="1"
             />
           </section>
 
@@ -77,7 +95,7 @@
 
             <div class="details-checklist-header">
               <input
-                class="check-list-title"
+                class="checklist-title"
                 v-model="editedTask.checklist.title"
                 type="text"
                 @change="updateTask"
@@ -96,11 +114,13 @@
                 <input
                   type="text"
                   :class="item.isDone? 'todo-done' : ''"
-                  class="details-clean-input"
+                  class="details-clean-input checklist-todo"
                   v-model="item.txt"
                   @change="updateTask"
                 />
-                <button class="todo-remove-btn" @click="removeTodo(item.id)">x</button>
+                <button class="todo-remove-btn" @click="removeTodo(item.id)">
+                  <i class="far fa-trash-alt"></i>
+                </button>
               </div>
               <input
                 class="details-clean-input checklist-add-item"
@@ -149,6 +169,7 @@
 
 <script>
 import { utilService } from "@/services/util.service.js";
+import { socketService } from "@/services/socket.service.js";
 import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
 import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
@@ -168,14 +189,44 @@ export default {
     };
   },
   methods: {
+    updateDueDate() {
+      console.log(
+        "this.editedTask.dueDate.time:",
+        this.editedTask.dueDate.time
+      );
+      this.updateTask();
+    },
+    async setDueDate() {
+      if (this.editedTask.dueDate.isCompleted === null) {
+        this.editedTask.dueDate.isCompleted = false;
+        await this.updateTask();
+        try {
+          this.$refs.calendar.focus();
+        } catch {
+          console.log("failed to save setDueDate");
+        }
+      } else {
+        this.$refs.calendar.focus();
+      }
+    },
     async updateTask() {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
       try {
         this.editedTask = JSON.parse(JSON.stringify(this.task));
+        // this.$refs.task.focus()
       } catch (prevTask) {
         this.editedTask = JSON.parse(JSON.stringify(prevTask));
         console.log("Err, failed to save task");
       }
+      socketService.emit("board boardChanged", this.currBoard);
+    },
+    expandTextArea() {
+      console.log("Hello!");
+      const textarea = this.$refs.description;
+      var heightLimit = 200;
+      textarea.style.height = "";
+      textarea.style.height =
+        Math.min(textarea.scrollHeight, heightLimit) + "px";
     },
     async addTodo() {
       let emptyTodo = utilService.getEmptyTodo();
@@ -231,18 +282,6 @@ export default {
       const boardId = this.$store.getters.currBoardId;
       this.$router.push(`/board/${boardId}`);
     },
-    moveTask() {
-      console.log("Please move the Task!");
-    },
-    copyTask() {
-      console.log("Please copy the Task!");
-    },
-    setLabels() {
-      console.log("Please set the Labels!");
-    },
-    setMembers() {
-      console.log("Please set the Members!");
-    },
     updateDescription() {
       this.$refs.description.focus();
     },
@@ -263,38 +302,20 @@ export default {
     sendComment() {
       this.$refs.comment.focus();
     },
-    async setDueDate() {
-      if (this.editedTask.dueDate.isCompleted === null) {
-        this.editedTask.dueDate.isCompleted = false;
-        await this.updateTask();
-        try {
-          this.$refs.calendar.focus();
-        } catch {
-          console.log("failed to save setDueDate");
-        }
-      } else {
-        this.$refs.calendar.focus();
-      }
-    },
-    updateDueDate() {
-      // Turn currDueDate to Timestamp!
-      this.editedTask.dueDate.time = new Date(this.currDueDate).getTime();
-      this.updateTask();
-    },
-    getCurrDueDate() {
-      var day = new Date(this.editedTask.dueDate.time).getDate();
-      var month = new Date(this.editedTask.dueDate.time).getMonth() + 1;
-      var year = new Date(this.editedTask.dueDate.time).getFullYear();
-      if (day < 10) {
-        day = "0" + day;
-      }
-      if (month < 10) {
-        month = "0" + month;
-      }
-      this.currDueDate = `${year}-${month}-${day}`;
-    },
     closeDetailsOnEsc(ev) {
       if (ev.key === "Escape") this.closeDetails();
+    },
+    moveTask() {
+      console.log("Please move the Task!");
+    },
+    copyTask() {
+      console.log("Please copy the Task!");
+    },
+    setLabels() {
+      console.log("Please set the Labels!");
+    },
+    setMembers() {
+      console.log("Please set the Members!");
     }
   },
   computed: {
@@ -310,16 +331,14 @@ export default {
       const progress =
         (isDoneCount / this.editedTask.checklist.todos.length) * 100;
       return parseInt(progress);
-
-      return;
+    },
+    currBoard() {
+      return this.$store.getters.currBoard;
     }
   },
   created() {
     this.editedTask = JSON.parse(JSON.stringify(this.task));
     console.log("// Details Task:", this.editedTask);
-    if (this.editedTask) {
-      this.getCurrDueDate();
-    }
     document.addEventListener("keyup", this.closeDetailsOnEsc);
   },
   destroyed() {
