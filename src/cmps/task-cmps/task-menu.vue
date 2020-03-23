@@ -2,11 +2,11 @@
   <section class="task-menu">
     <div class="card-details">
       <label-preview :labels="taskCopy.labels"/>
-      <textarea rows="4" type="text" v-model="taskCopy.name"></textarea>
+      <textarea class="task-name" type="text" v-model="taskCopy.name"></textarea>
       <data-indication-preview :task="task"/>
       <button class="name-btn" @click.stop="setName">Save</button>
     </div>
-    <menu class="editor-buttons" @click="toggleMenu">
+    <!-- <menu class="editor-buttons" @click="toggleMenu">
       <button class="move-btn" @click.stop="isMenuOpen.move = !isMenuOpen.move">Move</button>
       <move-picker
         class="move-picker"
@@ -26,7 +26,7 @@
         @set-labels="setLabels"
       />
       <button class="remove-btn" @click.stop="$emit('remove-task')">Remove</button>
-    </menu>
+    </menu> -->
   </section>
 </template>
 

@@ -3,7 +3,7 @@
     <button class="preview-menu-btn" @click="toggleMenu">
       <i class="fas fa-pencil-alt"></i>
     </button>
-    <task-menu
+      <task-menu
       v-if="isMenuOpen"
       :task="task"
       :listId="listId"
@@ -13,6 +13,7 @@
       @set-labels="updateTask"
       @set-name="updateTask"
     />
+    
     <label-preview :labels="taskCopy.labels" />
     <p class="preview-title">{{task.name}}</p>
     <dataIndicationPreview :task="task"/>
