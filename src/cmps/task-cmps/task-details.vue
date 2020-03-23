@@ -157,6 +157,7 @@
 
 <script>
 import { utilService } from "@/services/util.service.js";
+import { socketService } from "@/services/socket.service.js";
 import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
 import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
@@ -185,6 +186,7 @@ export default {
         this.editedTask = JSON.parse(JSON.stringify(prevTask));
         console.log("Err, failed to save task");
       }
+      socketService.emit("board boardChanged", this.currBoard);
     },
     expandTextArea() {
       console.log("Hello!");
@@ -327,8 +329,9 @@ export default {
       const progress =
         (isDoneCount / this.editedTask.checklist.todos.length) * 100;
       return parseInt(progress);
-
-      return;
+    },
+    currBoard() {
+      return this.$store.getters.currBoard
     }
   },
   created() {
