@@ -96,7 +96,10 @@ export default {
       }
     },
     addList() {
-      if (!this.newTaskList.name.length) return;
+      if (!this.newTaskList.name.length) {
+        this.newTaskList = null
+        return;
+        }
       this.board.taskLists.push(this.newTaskList);
       this.saveBoard();
       this.newTaskList = null;
