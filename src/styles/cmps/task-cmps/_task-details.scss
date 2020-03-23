@@ -11,6 +11,32 @@
   width: 100%;
 }
 
+.details-icons {
+  font-size: 1rem;
+  align-self: center;
+}
+
+.details-titles {
+  font-family: $font-semi;
+  font-size: rem(16px);
+  color: $clr7;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  grid-template-rows: 20px 1fr;
+  gap: 4px;
+}
+
+.details-grid-title {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  grid-template-rows: 1fr;
+  gap: 4px;
+
+}
+
 .task-details {
   position: relative;
   background-color: $clr5;
@@ -23,21 +49,14 @@
   margin: 0 auto;
   z-index: 1;
 
-  > * {
-    margin-bottom: 10px;
-  }
-
   .task-details-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
 
     .details-title {
-      font-size: rem(22px);
+      font-size: rem(20px);
       @include input-blur;
-      width: 95%
+      width: 95%;
     }
-    
+
     .details-title:focus {
       @include input-focus;
     }
@@ -50,7 +69,7 @@
     top: rem(10px);
     min-width: 30px;
     min-height: 30px;
-    padding: 2px
+    padding: 2px;
   }
 
   .details-container {
@@ -87,8 +106,14 @@
   padding-inline-end: 10px;
 
   > * {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
+}
+
+.details-desc-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: rem(5px);
 }
 
 .details-desc-input {
@@ -102,19 +127,23 @@
 }
 
 .details-checklist {
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   background-color: $clr5;
 
-  .details-checklist-info {
+  .details-checklist-header {
     display: flex;
+    align-items: center;
+  }
+  .details-progress {
+    padding-inline-start: rem(10px);
   }
 }
+
 .checklist-todo-container {
-  padding-inline-start: 10px;
   display: flex;
   align-items: center;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 .checklist-todo-container:hover {
   background-color: darken($clr5, 3);
@@ -138,8 +167,18 @@
   min-height: 20px;
 }
 
-.details-discussion {
-  background-color: $clr5;
+.details-due-list {
+  display: flex;
+  align-items: center;
+}
+.details-due-list > * {
+  margin-inline-end: 5px;
+}
+
+.details-members-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: rem(5px);
 }
 
 .details-members-list {
@@ -156,46 +195,13 @@
   }
 }
 
-.details-labels-list {
-  display: flex;
-  button {
-    background-color: #e0e0e0;
-    color: $clr3;
-    border: solid 1px $clr3;
-    border-radius: 3px;
-    cursor: pointer;
-    min-width: 50px;
-    height: 23px;
-    transition: all 0.3s;
-  }
-  button:hover {
-    background-color: #c5dbee;
-  }
-}
-
-.details-due-list {
-  display: flex;
-  align-items: center;
-}
-.details-due-list > * {
-  margin-inline-end: 5px;
-}
-
-.details-members {
-  background-color: $clr5;
-}
-
-.details-labels {
-  background-color: $clr5;
-}
-
-.details-due-date {
-  background-color: $clr5;
-}
-
 .details-description {
-  background-color: $clr5;
   margin-bottom: 0;
+}
+
+.details-grid-last {
+  grid-column: -2/-1;
+  grid-row: -2 / -1;
 }
 
 .check-list-title {
@@ -215,7 +221,7 @@
   font-size: 14px;
 
   margin-inline-start: 10px;
-  transition: all .3s;
+  transition: all 0.3s;
   padding: 5px 10px;
   text-align: center;
 }
@@ -224,6 +230,11 @@
   color: $clr3;
   border-radius: 3px;
   background-color: #ff7b64;
+}
+
+.details-disc-header {
+  display: flex;
+  align-items: center;
 }
 
 .discussion-add-item {
