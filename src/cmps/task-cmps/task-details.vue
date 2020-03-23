@@ -5,9 +5,7 @@
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
         </span>
-        <!-- <form @submit.prevent="updateTask"> -->
-          <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
-        <!-- </form> -->
+        <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
         <button class="close-details-btn" @click="closeDetails">
           <i class="fas fa-times"></i>
         </button>
@@ -70,9 +68,11 @@
             </div>
             <textarea
               v-model="editedTask.desc"
+              @input="expandTextArea"
               @change="updateTask"
-              class="details-text-area details-desc-input details-grid-last"
+              class="details-desc-input details-grid-last"
               ref="description"
+              rows="1"
             />
           </section>
 
@@ -185,6 +185,14 @@ export default {
         this.editedTask = JSON.parse(JSON.stringify(prevTask));
         console.log("Err, failed to save task");
       }
+    },
+    expandTextArea() {
+      console.log("Hello!");
+      const textarea = this.$refs.description;
+      var heightLimit = 200;
+      textarea.style.height = "";
+      textarea.style.height =
+        Math.min(textarea.scrollHeight, heightLimit) + "px";
     },
     async addTodo() {
       let emptyTodo = utilService.getEmptyTodo();

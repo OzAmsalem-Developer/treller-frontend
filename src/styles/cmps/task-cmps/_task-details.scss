@@ -83,11 +83,10 @@
   }
 }
 
-
-
 .details-actions {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   button {
     background-color: $clr2;
     border-radius: 3px;
@@ -109,7 +108,8 @@
 .details-info {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  flex-grow: 10;
+  margin-right: 50px;
 
   > * {
     margin-bottom: 10px;
@@ -179,7 +179,6 @@
 }
 
 .details-checklist {
-  background-color: $clr5;
 
   .details-checklist-header {
     display: flex;
@@ -192,6 +191,7 @@
 
 .checklist-todo-container {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   transition: all 0.3s;
 }
