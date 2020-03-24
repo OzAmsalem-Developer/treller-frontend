@@ -1,5 +1,6 @@
 <template>
   <section class="label-picker">
+    <p>Labels</p>
     <div
       class="label"
       v-for="(label, key) in boardLabels"
@@ -7,8 +8,10 @@
       :style="{'background-color': label.color}"
       @click.stop="editLabels(key)"
     >
-      <span>{{label.txt}}</span>
-      <span v-if="checkLabel(key)"><i class="fas fa-check"></i></span>
+      <span class="label-txt">{{label.txt}}</span>
+      <span class="label-status" v-if="checkLabel(key)">
+        <i class="fas fa-check"></i>
+      </span>
     </div>
   </section>
 </template>
@@ -22,7 +25,7 @@ export default {
   },
   methods: {
     async editLabels(boardLabelKey) {
-      if (this.isLoad) return
+      if (this.isLoad) return;
       const labelIdx = this.taskLabels.findIndex(
         label => label === boardLabelKey
       );
@@ -48,8 +51,8 @@ export default {
     checkLabel(boardLabelKey) {
       const labelIdx = this.taskLabels.findIndex(
         label => label === boardLabelKey
-      );      
-      return (labelIdx !== -1)? true : false 
+      );
+      return labelIdx !== -1 ? true : false;
     }
   },
   created() {

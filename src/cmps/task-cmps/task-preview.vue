@@ -7,6 +7,7 @@
       v-if="isMenuOpen"
       :task="task"
       :listId="listId"
+      @click.native.stop
       @remove-task="$emit('remove-task', task.id)"
       @set-labels="updateTask"
       @set-name="updateTask"

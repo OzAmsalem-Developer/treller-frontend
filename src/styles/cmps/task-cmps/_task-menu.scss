@@ -4,6 +4,7 @@
   position: fixed;
   transform: translate(-7px, -5px);
   z-index: 2;
+  cursor: default;
 
   .card-container {
     min-width: 245px;
@@ -68,9 +69,8 @@
     }
   }
 
-  .el-date-editor .el-input__inner , 
-  .el-date-editor .el-icon-time:before{
+  .el-date-editor .el-input__inner,
+  .el-date-editor .el-icon-time:before {
     opacity: 0;
   }
-
 }
