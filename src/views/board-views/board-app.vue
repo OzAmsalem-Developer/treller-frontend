@@ -146,8 +146,8 @@ export default {
       if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList);
       if (idx === this.board.taskLists.length - 1) this.saveBoard();
     },
-    moveTask({ from, to, taskId }) {
-      const fromTaskList = this.board.taskLists.find(tl => tl.id === from);
+    moveTask({ fromListId, toListId, taskId }) {
+      const fromTaskList = this.board.taskLists.find(tl => tl.id === fromListId);
       let taskIdx;
       const task = fromTaskList.tasks.find((t, idx) => {
         if (t.id === taskId) {
@@ -157,7 +157,7 @@ export default {
       });
       fromTaskList.tasks.splice(taskIdx, 1);
 
-      const toTaskList = this.board.taskLists.find(tl => tl.id === to);
+      const toTaskList = this.board.taskLists.find(tl => tl.id === toListId);
       toTaskList.tasks.push(task);
       this.saveBoard();
     },

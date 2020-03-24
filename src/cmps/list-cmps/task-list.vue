@@ -126,11 +126,12 @@ export default {
         this.newTask.name += "\n";
         return;
       }
-
       if (!this.newTask.name.length) {
         this.newTask = null; // (Close add-task)
         return;
       }
+
+      this.newTask.listId = this.taskList.id
       this.listCopy.tasks.push(this.newTask);
       this.saveList("save-list");
       this.newTask = null;
