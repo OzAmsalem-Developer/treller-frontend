@@ -14,6 +14,7 @@
         v-model="moveToList"
         :optionalLists="optionalLists"
         @input="moveTask"
+        @close-picker="toggleMoveMenu"
       />
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
@@ -96,6 +97,7 @@
               v-model="editedTask.desc"
               @input="expandTextArea"
               @change="updateTask"
+              placeholder="Add more information here"
               class="details-desc-input details-grid-last"
               ref="description"
               rows="1"
@@ -118,6 +120,7 @@
             </div>
             <div class="details-grid-last">
               <el-progress
+              class="checklist-progress"
                 v-if="editedTask.checklist.todos.length"
                 :percentage="checklistProgress"
                 :color="progressColor"
