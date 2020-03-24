@@ -18,7 +18,6 @@
               <div class="details-grid-last">
                 <div class="title-container">
                   <span class="title">Labels:</span>
-                  <!-- <span class="action-link">Update</span> -->
                 </div>
                 <div class="list">
                   <label-preview :labels="task.labels" />
@@ -30,7 +29,6 @@
               <div class="details-grid-last">
                 <div class="title-container">
                   <span class="title">Members:</span>
-                  <!-- <span class="action-link" @click="setMembers">Invite</span> -->
                 </div>
                 <div class="list">
                   <member-preview :members="task.members"></member-preview>
@@ -45,7 +43,6 @@
               <div class="dueDate-container details-grid-last">
                 <div class="title-container">
                   <span class="title">Due Date:</span>
-                  <!-- <span class="action-link">Update</span> -->
                 </div>
                 <div class="details-due-list">
                   <input
@@ -56,7 +53,7 @@
                   />
                   <div class="block">
                     <el-date-picker
-                      @change="updateDueDate"
+                      @change="updateTask"
                       v-model="editedTask.dueDate.time"
                       type="datetime"
                       format="MMM dd hh:mm A"
@@ -79,7 +76,6 @@
             </div>
             <div>
               <span class="titles">Description:</span>
-              <!-- <span class="action-link">Edit</span> -->
             </div>
             <textarea
               v-model="editedTask.desc"
@@ -104,7 +100,6 @@
                 @change="updateTask"
                 ref="checklist"
               />
-              <!-- <span class="details-progress">{{checklistProgress}}%</span> -->
             </div>
 
             <div class="details-grid-last">
@@ -222,12 +217,31 @@ export default {
     };
   },
   methods: {
-    updateDueDate() {
-      console.log(
-        "this.editedTask.dueDate.time:",
-        this.editedTask.dueDate.time
-      );
-      this.updateTask();
+    moveTask() {
+      console.log("Please move the Task!");
+    },
+    async updateTask() {
+      await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
+      try {
+        this.editedTask = JSON.parse(JSON.stringify(this.task));
+      } catch (prevTask) {
+        this.editedTask = JSON.parse(JSON.stringify(prevTask));
+        console.log("Err, failed to save task");
+      }
+      socketService.emit("board boardChanged", this.currBoard);
+    },
+    async removeTask() {
+      await this.$store.dispatch({
+        type: "removeTask",
+        task: this.editedTask
+      });
+      try {
+        this.closeDetails();
+      } catch (prevTask) {
+        this.editedTask = JSON.parse(JSON.stringify(prevTask));
+        console.log("Err, failed to save task");
+      }
+      socketService.emit("board boardChanged", this.currBoard);
     },
     async setDueDate() {
       if (this.editedTask.dueDate.isCompleted === null) {
@@ -241,25 +255,6 @@ export default {
       } else {
         this.$refs.calendar.focus();
       }
-    },
-    async updateTask() {
-      await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
-      try {
-        this.editedTask = JSON.parse(JSON.stringify(this.task));
-        // this.$refs.task.focus()
-      } catch (prevTask) {
-        this.editedTask = JSON.parse(JSON.stringify(prevTask));
-        console.log("Err, failed to save task");
-      }
-      socketService.emit("board boardChanged", this.currBoard);
-    },
-    expandTextArea() {
-      console.log("Hello!");
-      const textarea = this.$refs.description;
-      var heightLimit = 200;
-      textarea.style.height = "";
-      textarea.style.height =
-        Math.min(textarea.scrollHeight, heightLimit) + "px";
     },
     async addTodo() {
       let emptyTodo = utilService.getEmptyTodo();
@@ -306,15 +301,6 @@ export default {
         console.log("Failed to save todo + task");
       });
     },
-    setLabels() {
-      console.log("Please set the Labels!");
-    },
-    setMembers() {
-      console.log("Please set the Members!");
-    },
-    updateDescription() {
-      this.$refs.description.focus();
-    },
     async updateChecklist() {
       if (this.editedTask.checklist) {
         this.$refs.checklist.focus();
@@ -329,14 +315,25 @@ export default {
         }
       }
     },
+    setLabels() {
+      console.log("Please set the Labels!");
+    },
+    setMembers() {
+      console.log("Please set the Members!");
+    },
+    updateDescription() {
+      this.$refs.description.focus();
+    },
+    expandTextArea() {
+      console.log("Hello!");
+      const textarea = this.$refs.description;
+      var heightLimit = 200;
+      textarea.style.height = "";
+      textarea.style.height =
+        Math.min(textarea.scrollHeight, heightLimit) + "px";
+    },
     sendComment() {
       this.$refs.comment.focus();
-    },
-    moveTask() {
-      console.log("Please move the Task!");
-    },
-    removeTask() {
-      console.log("Please Remove the task");
     },
     closeDetails() {
       const boardId = this.$store.getters.currBoardId;
