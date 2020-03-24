@@ -161,14 +161,39 @@
         </div>
 
         <section class="details-actions">
-          <button @click="moveTask">Move</button>
-          <!-- <button @click="copyTask">Copy</button> -->
-          <button @click="setLabels">Labels</button>
-          <button @click="setMembers">Members</button>
-          <button @click="setDueDate">Due Date</button>
-          <button @click="updateDescription">Description</button>
-          <button @click="updateChecklist">Checklist</button>
-          <button @click="sendComment">Comments</button>
+          <div class="title">Actions:</div>
+          <button @click="setLabels">
+            <i class="fas fa-tag"></i>
+            <span class="action-title">Labels</span>
+          </button>
+          <button @click="setMembers">
+            <i class="far fa-user"></i>
+            <span class="action-title">Members</span>
+          </button>
+          <button @click="setDueDate">
+            <i class="far fa-clock"></i>
+            <span class="action-title">Due Date</span>
+          </button>
+          <button @click="updateDescription">
+            <i class="fas fa-align-left"></i>
+            <span class="action-title">Description</span>
+          </button>
+          <button @click="updateChecklist">
+            <i class="far fa-check-square"></i>
+            <span class="action-title">Checklist</span>
+          </button>
+          <button @click="sendComment">
+            <i class="far fa-comment"></i>
+            <span class="action-title">Comments</span>
+          </button>
+          <button @click="moveTask">
+            <i class="fas fa-long-arrow-alt-right"></i>
+            <span class="action-title">Move</span>
+          </button>
+          <button @click="removeTask">
+            <i class="far fa-trash-alt"></i>
+            <span class="action-title">Remove</span>
+          </button>
         </section>
       </div>
     </section>
@@ -281,14 +306,11 @@ export default {
         console.log("Failed to save todo + task");
       });
     },
-    closeDetails() {
-      const boardId = this.$store.getters.currBoardId;
-      this.$router.push(`/board/${boardId}`);
+    setLabels() {
+      console.log("Please set the Labels!");
     },
-    closeDetailsOverlay(ev) {
-      if (ev.target !== this.$refs.window) return;
-      const boardId = this.$store.getters.currBoardId;
-      this.$router.push(`/board/${boardId}`);
+    setMembers() {
+      console.log("Please set the Members!");
     },
     updateDescription() {
       this.$refs.description.focus();
@@ -310,20 +332,23 @@ export default {
     sendComment() {
       this.$refs.comment.focus();
     },
-    closeDetailsOnEsc(ev) {
-      if (ev.key === "Escape") this.closeDetails();
-    },
     moveTask() {
       console.log("Please move the Task!");
     },
-    copyTask() {
-      console.log("Please copy the Task!");
+    removeTask() {
+      console.log("Please Remove the task");
     },
-    setLabels() {
-      console.log("Please set the Labels!");
+    closeDetails() {
+      const boardId = this.$store.getters.currBoardId;
+      this.$router.push(`/board/${boardId}`);
     },
-    setMembers() {
-      console.log("Please set the Members!");
+    closeDetailsOverlay(ev) {
+      if (ev.target !== this.$refs.window) return;
+      const boardId = this.$store.getters.currBoardId;
+      this.$router.push(`/board/${boardId}`);
+    },
+    closeDetailsOnEsc(ev) {
+      if (ev.key === "Escape") this.closeDetails();
     }
   },
   computed: {
@@ -347,7 +372,7 @@ export default {
       const progress =
         (isDoneCount / this.editedTask.checklist.todos.length) * 100;
       if (progress === 100) return "#67C23A";
-      else return "#409EFF"
+      else return "#409EFF";
     },
     currBoard() {
       return this.$store.getters.currBoard;
