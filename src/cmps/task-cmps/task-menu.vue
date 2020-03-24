@@ -1,32 +1,33 @@
 <template>
-  <section class="task-menu">
+  <section class="task-menu" ref="taskMenu">
     <div class="card-container">
       <div class="card-details">
         <label-preview :labels="taskCopy.labels" />
-        <textarea class="task-name" type="text" v-model="taskCopy.name"></textarea>
+        <textarea class="task-name" type="text" v-model="taskCopy.name" ref="editTaskName"></textarea>
         <data-indication-preview :task="task" />
       </div>
-      <button class="save-name-btn" @click.stop="setName">Save</button>
     </div>
     <menu class="editor-buttons">
-      <button class="menu-btn" @click.stop="isMenuOpen.label = !isMenuOpen.label">
+      <button class="task-menu-item" @click.stop="isMenuOpen.label = !isMenuOpen.label">
         <i class="fas fa-tag"></i>
         <span class="menu-btn-txt">Labels</span> 
       </button>
-      <button class="menu-btn" @click.stop="isMenuOpen.move = !isMenuOpen.move">
+      <button class="task-menu-item" @click.stop="isMenuOpen.move = !isMenuOpen.move">
         <i class="fas fa-long-arrow-alt-right"></i>
         <span class="menu-btn-txt">Move</span>
         </button>
-      <button class="menu-btn" @click.stop="isMenuOpen.move = !isMenuOpen.move">
+      <button class="task-menu-item" @click.stop="isMenuOpen.move = !isMenuOpen.move">
         <i class="far fa-clock"></i>
         <span class="menu-btn-txt">Change Due Date</span>
         </button>
 
-      <button class="menu-btn" @click.stop="$emit('remove-task')">
+      <button class="task-menu-item" @click.stop="$emit('remove-task')">
         <i class="far fa-trash-alt"></i>
         <span class="menu-btn-txt">Remove</span> 
       </button>
     </menu>
+
+      <button class="save-name-btn" @click.stop="setName(); $emit('clicked')">Save</button>
 
     <move-picker
       class="move-picker"
@@ -43,6 +44,7 @@
       @set-labels="setLabels"
     />
   </section>
+      
 </template>
 
 <script>
@@ -61,7 +63,7 @@ export default {
         label: false
       },
       moveToList: null,
-      taskCopy: null
+      taskCopy: null,
     };
   },
   methods: {
@@ -79,9 +81,6 @@ export default {
     setName() {
       this.$emit("set-name", this.taskCopy);
     }
-    // toggleMenu(){
-    //   this.$emit('toggle-menu')
-    // },
   },
   computed: {
     optionalLists() {
@@ -91,6 +90,11 @@ export default {
     boardLabels() {
       return this.$store.getters.labels;
     }
+  },
+  mounted() {
+    this.$refs.taskMenu.style.top = this.menu.getBoundingClientRect().y - (this.scrollTop / 3) + 'px'
+    this.$refs.taskMenu.style.left = this.menu.getBoundingClientRect().x  - 210 + 'px'
+    this.$refs.editTaskName.select()
   },
   created() {
     this.taskCopy = JSON.parse(JSON.stringify(this.task));
@@ -103,7 +107,8 @@ export default {
   },
   props: {
     task: Object,
-    listId: String
+    scrollTop: Number,
+    menu: HTMLButtonElement
   }
 };
 </script>

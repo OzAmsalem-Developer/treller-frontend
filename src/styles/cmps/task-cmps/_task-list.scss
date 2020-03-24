@@ -21,17 +21,21 @@
     justify-content: space-between;
   }
 
-  .menu-btn {
+  .list-menu-btn {
     font-size: rem(18px);
+    height: 30px;
+    width: 30px;
     font-family: $font-semi;
     outline: 0;
     font-weight: normal;
     color: lighten(#5e6c84, 15) ;
-    transition: color .3s;
+    transition: all .3s;
+    border-radius: 3px;
   }
 
-  .menu-btn:hover {
-    color: #5e6c84;
+  .list-menu-btn:hover {
+    color: $textBlue;
+    background-color: rgba(9, 30, 66, 0.08);
   }
 
   header {

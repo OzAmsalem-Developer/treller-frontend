@@ -43,7 +43,6 @@
               class="details-due-date details-grid-title"
             >
               <div class="dueDate-container details-grid-last">
-
                 <div class="title-container">
                   <span class="title">Due Date:</span>
                   <!-- <span class="action-link">Update</span> -->
@@ -69,7 +68,6 @@
                     ></el-date-picker>
                   </div>
                   <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
-
                 </div>
               </div>
             </section>
@@ -106,10 +104,15 @@
                 @change="updateTask"
                 ref="checklist"
               />
-              <span class="details-progress">{{checklistProgress}}%</span>
+              <!-- <span class="details-progress">{{checklistProgress}}%</span> -->
             </div>
 
             <div class="details-grid-last">
+              <el-progress
+                v-if="editedTask.checklist.todos.length"
+                :percentage="checklistProgress"
+                :color="progressColor"
+              ></el-progress>
               <div
                 class="checklist-todo-container"
                 v-for="item in editedTask.checklist.todos"
@@ -336,6 +339,15 @@ export default {
       const progress =
         (isDoneCount / this.editedTask.checklist.todos.length) * 100;
       return parseInt(progress);
+    },
+    progressColor() {
+      let isDoneCount = this.editedTask.checklist.todos.filter(
+        todo => todo.isDone === true
+      ).length;
+      const progress =
+        (isDoneCount / this.editedTask.checklist.todos.length) * 100;
+      if (progress === 100) return "#67C23A";
+      else return "#409EFF"
     },
     currBoard() {
       return this.$store.getters.currBoard;

@@ -22,6 +22,7 @@ export default {
   },
   methods: {
     async editLabels(boardLabelKey) {
+      if (this.isLoad) return
       const labelIdx = this.taskLabels.findIndex(
         label => label === boardLabelKey
       );
@@ -30,6 +31,7 @@ export default {
       } else {
         this.editedLabels.push(boardLabelKey);
       }
+      // This await is finish to early if I click super fast. can improve with eventBus.
       await this.emit("set-labels", this.editedLabels);
       try {
         this.editedLabels = JSON.parse(JSON.stringify(this.taskLabels));
