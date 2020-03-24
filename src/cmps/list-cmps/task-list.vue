@@ -47,6 +47,7 @@
           />
         </Draggable>
       </Container>
+      <transition name="fade">
       <form class="add-task" @submit.prevent="addTask" @keydown.enter.prevent v-if="newTask">
         <textarea
           class="new-task-box"
@@ -59,11 +60,12 @@
         ></textarea>
         <button ref="addTaskBtn" hidden>Add</button>
       </form>
+      </transition>
     </main>
     <footer>
       <section v-if="newTask" class="new-task-btns">
-        <button @click="$refs.addTaskBtn.click()" ref="sendTaskForm" class="add-task-btn">Add</button>
-        <button @click.prevent="newTask = null" class="close-btn">X</button>
+        <button @click="$refs.addTaskBtn.click()" ref="sendTaskForm" class="add-task-btn inner">Add</button>
+        <button @click.prevent="newTask = null" class="close-btn"><i class="fas fa-times"></i></button>
       </section>
       <button v-else @click="getEmptyTask" class="add-task-btn">
         <i class="fas fa-plus"></i> Add Task
