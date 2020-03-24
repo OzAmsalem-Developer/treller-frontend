@@ -1,50 +1,74 @@
 .task-menu {
-  display: flex;
-  position: absolute;
-  top: 0;
-  right: 0;
-//   background-color: darken($color: #ffffff, $amount: 20%);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  position: fixed;
+  top: auto;
+  transform: translate(-7px, -5px);
   z-index: 2;
-  border-radius: 3px;
 
-  .card-details {
-    padding: 6px 8px 2px;
-    .task-name{
-     width: 100%;
-     min-height: 90px; 
-     resize: none;  
-    }
-    .name-btn {
+  .card-container {
+    min-width: 245px;
+    width: 100%;
+
+    .card-details {
       border-radius: 3px;
+      padding: 6px 8px 2px;
+      margin-bottom: 15px;
+      background-color: #fff;
+      .task-name {
+        overflow: hidden;
+        overflow-wrap: break-word;
+        border: none;
+        outline: none;
+        resize: none;
+        height: 90px;
+        font-size: rem(14px);
+        margin-bottom: 4px;
+        font-family: $font-regular;
+        width: 100%;
+      }
+    }
+    .save-name-btn {
+      background-color: $pGreen;
       color: #fff;
       font-family: $font-semi;
-      padding: 5px;
-      background-color: $pGreen;
       font-size: rem(14px);
+      border-radius: 3px;
+      padding: 6px 24px;
     }
   }
   .editor-buttons {
-    min-width: 80px;
-    box-shadow: $shadow;
-    border-radius: 2px;
-    font-family: $font-regular !important;
-    font-size: rem(13px);
-    border: 0.5px solid #ebecf0;
-    > * {
-      padding: 5px 6px;
+    .menu-btn {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 3px;
+      font-size: rem(14px);
+      float: left;
+      clear: both;
+      color: #e6e6e6;
       display: block;
-      width: 100%;
-      text-align: left;
-      font-family: $font-regular !important;
-      user-select: none;
-      outline: 0;
+      margin: 0 0 4px 8px;
+      padding: 6px 12px 6px 8px;
+      transition: 85ms ease-in;
+
+      .menu-btn-txt {
+        margin-left: 5px;
+      }
+    }
+    .menu-btn:hover {
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      transform: translateX(5px);
     }
 
-    button:hover {
-      background-color: #ebecf0;
-    }
-    .move-picker {
-      // position: absolute;
-    }
+    // min-width: 80px;
+    // box-shadow: $shadow;
+    // border-radius: 3px;
+    // font-family: $font-regular !important;
+    // font-size: rem(13px);
+    // padding: 5px 6px;
+    // display: block;
+    // text-align: left;
+
+    // outline: 0;
   }
 }
