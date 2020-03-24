@@ -97,7 +97,7 @@
                 class="checklist-title"
                 v-model="editedTask.checklist.title"
                 type="text"
-                @change="updateTask"
+                @change="updateCheckListTitle"
                 ref="checklist"
               />
             </div>
@@ -229,6 +229,10 @@ export default {
       }
       socketService.emit("board boardChanged", this.currBoard);
     },
+    updateCheckListTitle(ev) {
+      ev.target.blur()
+      this.updateTask()
+    },
     async removeTask() {
       await this.$store.dispatch({
         type: "removeTask",
@@ -302,13 +306,13 @@ export default {
     },
     async updateChecklist() {
       if (this.editedTask.checklist) {
-        this.$refs.checklist.focus();
+        this.$refs.checklist.select();
       } else {
         let emptyChecklist = utilService.getEmptyChecklist();
         this.editedTask.checklist = emptyChecklist;
         await this.updateTask();
         try {
-          this.$refs.checklist.focus();
+          this.$refs.checklist.select();
         } catch {
           console.log("failed to save checklist");
         }

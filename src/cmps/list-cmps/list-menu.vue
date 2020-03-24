@@ -5,7 +5,7 @@
     <div @click="$emit('add-task')" class="item"><i class="fas fa-plus"></i> Add new task</div>
     <div  @click="isMoveOpen = !isMoveOpen" class="item"><i class="fas fa-arrow-right"></i> Move list</div>
     <list-mover v-if="isMoveOpen" v-model="moveToIdx" @input="moveList" :options="listIdxs" />
-    <div @click="emitEv('remove-list')" class="item"><i class="fas fa-trash"></i> Remove list</div>
+    <div @click="emitEv('remove-list')" class="item"><i class="far fa-trash-alt"></i> Remove list</div>
   </menu>
 </section>
 </template>
