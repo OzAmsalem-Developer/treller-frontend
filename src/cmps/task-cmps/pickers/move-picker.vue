@@ -24,6 +24,9 @@ export default {
     emitListId() {
       if (!this.pickedListId) return;
       this.$emit("input", this.pickedListId);
+    },
+    moveTask() {
+      this.$emit('move-task')
     }
   },
   props: {

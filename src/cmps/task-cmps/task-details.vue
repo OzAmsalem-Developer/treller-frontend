@@ -7,7 +7,10 @@
         v-model="moveToList"
         :optionalLists="optionalLists"
         @input="moveTask"
+        
       />
+      <!-- @move-task="moveTask" -->
+      <!-- @input="moveTask" -->
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
@@ -226,16 +229,23 @@ export default {
     };
   },
   methods: {
+    test() {
+      console.log('moveToList', this.moveToList)
+    },
     toggleListMenu() {
       this.isListOpen = !this.isListOpen;
     },
-    moveTask(toListId) {
+    moveTask() {
       console.log("Please move the Task!");
+      const toListId = this.moveToList;
       console.log("toListId:", toListId);
-    // const fromListId = this.editedTask.
-
+      const fromListId = this.task.listId;
+      const taskId = this.task.id;
+      console.log("taskID:", this.task);
       // const lists = this.$store.getters.taskLists
       this.$emit("move-task", { fromListId, toListId, taskId });
+      this.updateTask()
+      this.$router.push('/board/' + this.currBoard._id)
     },
     async updateTask() {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
@@ -402,7 +412,7 @@ export default {
   },
   created() {
     this.editedTask = JSON.parse(JSON.stringify(this.task));
-    console.log("// Details Task:", this.editedTask);
+    console.log("// Details Task:", this.task);
     document.addEventListener("keyup", this.closeDetailsOnEsc);
   },
   destroyed() {

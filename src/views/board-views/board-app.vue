@@ -12,6 +12,7 @@
       >
         <Draggable v-for="(list,idx) in taskLists" :key="list.id">
           <task-list
+            v-if="list"
             :taskList="list"
             :key="list.id"
             :listIdx="idx"
@@ -43,7 +44,7 @@
         </section>
       </Container>
     </div>
-    <task-details v-if="!isTaskLoad && currTask" />
+    <task-details v-if="!isTaskLoad && isTaskDetailsOpen" @move-task="moveTask" />
   </main>
 </template>
 
@@ -66,6 +67,7 @@ export default {
     return {
       board: null,
       newTaskList: null,
+      isTaskDetailsOpen: false,
       isTaskLoad: false,
       draggingListIdx: null,
       placeholderOpts: {
@@ -81,9 +83,12 @@ export default {
       try {
         this.board = JSON.parse(JSON.stringify(board));
         const taskId = this.$route.params.taskId;
-
-        this.$store.commit({ type: "setTaskById", taskId });
-        this.task = JSON.parse(JSON.stringify(this.currTask));
+        if (taskId) {
+          this.$store.commit({ type: "setTaskById", taskId });
+          isTaskDetailsOpen = true
+        } else {
+           isTaskDetailsOpen = false
+        }
         this.isTaskLoad = false;
       } catch {
         console.log("Err msg to user here");
@@ -147,7 +152,11 @@ export default {
       if (idx === this.board.taskLists.length - 1) this.saveBoard();
     },
     moveTask({ fromListId, toListId, taskId }) {
+      console.log(fromListId)
+      this.isTaskLoad = true
       const fromTaskList = this.board.taskLists.find(tl => tl.id === fromListId);
+      console.log(fromTaskList)
+      if (!fromTaskList) return
       let taskIdx;
       const task = fromTaskList.tasks.find((t, idx) => {
         if (t.id === taskId) {
@@ -157,7 +166,9 @@ export default {
       });
       fromTaskList.tasks.splice(taskIdx, 1);
 
+      console.log('TASK:' , task)
       const toTaskList = this.board.taskLists.find(tl => tl.id === toListId);
+      if (!task) return
       toTaskList.tasks.push(task);
       this.saveBoard();
     },
