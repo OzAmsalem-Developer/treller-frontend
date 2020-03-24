@@ -1,45 +1,57 @@
 <template>
   <section class="task-menu">
-    <div class="card-details">
-      <label-preview :labels="taskCopy.labels"/>
-      <textarea rows="4" type="text" v-model="taskCopy.name"></textarea>
-      <data-indication-preview :task="task"/>
-      <button class="name-btn" @click.stop="setName">Save</button>
+    <div class="card-container">
+      <div class="card-details">
+        <label-preview :labels="taskCopy.labels" />
+        <textarea class="task-name" type="text" v-model="taskCopy.name"></textarea>
+        <data-indication-preview :task="task" />
+      </div>
+      <button class="save-name-btn" @click.stop="setName">Save</button>
     </div>
-    <menu class="editor-buttons" @click="toggleMenu">
-      <button class="move-btn" @click.stop="isMenuOpen.move = !isMenuOpen.move">Move</button>
-      <move-picker
-        class="move-picker"
-        v-if="isMenuOpen.move"
-        :optionalLists="optionalLists"
-        v-model="moveToList"
-        @click.native.stop
-        @input="moveTask"
-      />
-      <button class="label-btn" @click.stop="isMenuOpen.label = !isMenuOpen.label">Labels</button>
-      <labelPicker
-        class="label-picker"
-        v-if="isMenuOpen.label"
-        :boardLabels="boardLabels"
-        :taskLabels="task.labels"
-        @click.native.stop
-        @set-labels="setLabels"
-      />
-      <button class="remove-btn" @click.stop="$emit('remove-task')">Remove</button>
+    <menu class="editor-buttons">
+      <button class="menu-btn" @click.stop="isMenuOpen.label = !isMenuOpen.label">
+        <i class="fas fa-tag"></i>
+        <span class="menu-btn-txt">Labels</span> 
+      </button>
+      <button class="menu-btn" @click.stop="isMenuOpen.move = !isMenuOpen.move">
+        <i class="fas fa-long-arrow-alt-right"></i>
+        <span class="menu-btn-txt">Move</span>
+        </button>
+      <button class="menu-btn" @click.stop="isMenuOpen.move = !isMenuOpen.move">
+        <i class="far fa-clock"></i>
+        <span class="menu-btn-txt">Change Due Date</span>
+        </button>
+
+      <button class="menu-btn" @click.stop="$emit('remove-task')">
+        <i class="far fa-trash-alt"></i>
+        <span class="menu-btn-txt">Remove</span> 
+      </button>
     </menu>
+
+    <move-picker
+      class="move-picker"
+      v-if="isMenuOpen.move"
+      :optionalLists="optionalLists"
+      v-model="moveToList"
+      @input="moveTask"
+    />
+    <labelPicker
+      class="label-picker"
+      v-if="isMenuOpen.label"
+      :boardLabels="boardLabels"
+      :taskLabels="task.labels"
+      @set-labels="setLabels"
+    />
   </section>
 </template>
 
 <script>
 import movePicker from "./pickers/move-picker.vue";
 import labelPicker from "./pickers/label-picker.vue";
-import dataIndicationPreview from "./previews/data-indication-preview.vue"
+import dataIndicationPreview from "./previews/data-indication-preview.vue";
 import labelPreview from "./previews/label-preview.vue";
 
-import {
-  eventBus,
-  EV_moveTask,
-} from "@/services/eventBus.service";
+import { eventBus, EV_moveTask } from "@/services/eventBus.service";
 
 export default {
   data() {
@@ -61,16 +73,15 @@ export default {
       });
     },
     setLabels(taskLabels) {
-      this.taskCopy.labels = taskLabels
-      this.$emit('set-labels', this.taskCopy)
+      this.taskCopy.labels = taskLabels;
+      this.$emit("set-labels", this.taskCopy);
     },
     setName() {
-      this.$emit('set-name', this.taskCopy) 
-    },
-    toggleMenu(){
-      this.$emit('toggle-menu')
-    },
-    
+      this.$emit("set-name", this.taskCopy);
+    }
+    // toggleMenu(){
+    //   this.$emit('toggle-menu')
+    // },
   },
   computed: {
     optionalLists() {
@@ -81,7 +92,7 @@ export default {
       return this.$store.getters.labels;
     }
   },
-    created() {
+  created() {
     this.taskCopy = JSON.parse(JSON.stringify(this.task));
   },
   components: {

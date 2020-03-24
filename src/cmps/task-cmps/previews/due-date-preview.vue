@@ -20,12 +20,7 @@
 import {utilService} from "../../../services/util.service.js"
 
 export default {
-  data() {
-    return {
-      hourfLeft: null
-    }
-  },
-  computed: {
+  computed: { 
     bgColor() {
       if (this.dueDate.isCompleted) return '#61bd4f'
       const time = this.hourfLeft 
@@ -41,11 +36,10 @@ export default {
     },
     color() {
       return (this.hourfLeft > 48)? 'inherit' : '#fff'
-      
+    },
+    hourfLeft() {
+      return utilService.getHoursDifference(this.dueDate.time);
     }
-  },
-  created() {
-    this.hourfLeft = utilService.getHoursDifference(this.dueDate.time);
   },
   props: {
     dueDate: Object

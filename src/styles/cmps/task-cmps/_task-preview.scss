@@ -44,6 +44,10 @@
         padding: 0 4px 0 2px;
       }
     }
+
+    .menu-wrapper {
+      position: absolute;
+    }
   }
 
   .preview-indications > * {
@@ -60,9 +64,6 @@
   }
 }
 
-.preview-wrapper {
-  position: relative;
-}
 
 .task-preview:hover {
   .preview-menu-btn {

@@ -56,12 +56,12 @@
   flex-direction: column;
   button {
     font-family: $font-regular;
-    font-size: rem(16px);
     background-color: $btnGrey;
-    transition: all 0.3s;
+    font-size: rem(14px);
     border-radius: 3px;
     padding: 5px 20px;
     margin-bottom: 5px;
+    transition: all 0.3s;
   }
   button:hover {
     background-color: $hoverBlue;
@@ -79,9 +79,8 @@
   }
   .details-lmd {
     display: flex;
-    // justify-content: space-between;
     flex-wrap: wrap;
-    background-color: rgb(255, 137, 137);
+    // background-color: rgb(255, 137, 137);
 
     .title {
       font-family: $font-regular;
@@ -126,8 +125,6 @@
   }
 }
 
-// details-grid-last
-
 .details-due-date {
   .dueDate-container {
     display: flex;
@@ -137,21 +134,19 @@
       margin-bottom: rem(5px);
     }
 
-    .date-picker-cell {
-      // background-color: red;
-    }
+    // .date-picker-cell {
+    //   // background-color: red;
+    // }
 
     .el-date-editor .el-input__inner {
       font-family: $font-regular;
       font-size: rem(14px);
-      // background-color: rgb(222, 190, 255);
     }
   }
 
   .details-due-list {
     display: flex;
     align-items: center;
-    //   margin-inline-end: 5px;
 
     :first-child {
       margin-inline-end: rem(5px);
@@ -185,7 +180,6 @@
 .details-checklist {
   .details-checklist-header {
     display: flex;
-    // flex-direction: column;
     align-items: center;
 
     .checklist-title {
@@ -211,21 +205,6 @@
   align-items: center;
   transition: all 0.3s;
 
-  .checklist-todo-container:hover {
-    background-color: darken($clr5, 3);
-    border-radius: 3px;
-  }
-  .checklist-todo-container:hover > :last-child {
-    opacity: 1;
-  }
-
-  .checklist-todo-container > :first-child {
-    margin-inline-end: 5px;
-    cursor: pointer;
-    min-width: 16px;
-    min-height: 16px;
-  }
-
   .checklist-todo {
     width: 100%;
     @include input-blur;
@@ -235,50 +214,70 @@
 
   .checklist-todo:focus {
     @include input-focus;
-    font-family: $font-regular;
   }
-
-  .todo-remove-btn {
-    opacity: 0;
-    font-family: $font-bold;
-    font-size: 14px;
-
-    margin-inline-start: 10px;
-    transition: all 0.3s;
-    padding: 5px 10px;
-    text-align: center;
-  }
-
-  .todo-remove-btn:hover {
-    color: $clr3;
-    border-radius: 3px;
-    background-color: #ff7b64;
-  }
-
-  // .checklist-add-todo {
-
-  // }
 }
 
+.todo-remove-btn {
+  opacity: 0;
+  font-family: $font-bold;
+  font-size: 14px;
 
-// .details-disc-header {
-//   display: flex;
-//   align-items: center;
-// }
+  margin-inline-start: 10px;
+  transition: all 0.3s;
+  padding: 5px 10px;
+  text-align: center;
+}
 
-// .discussion-add-item {
-//   margin-bottom: 10px;
-// }
+.todo-remove-btn:hover {
+  color: $clr3;
+  border-radius: 3px;
+  background-color: #ff7b64;
+}
 
-// // Helpers:
+.checklist-todo-container:hover {
+  background-color: darken($clr5, 3);
+  border-radius: 3px;
+}
+.checklist-todo-container:hover > :last-child {
+  opacity: 1;
+}
 
-// .details-clean-input {
-//   @include input-blur;
-// }
+.checklist-todo-container > :first-child {
+  margin-inline-end: 5px;
+  cursor: pointer;
+  min-width: 16px;
+  min-height: 16px;
+}
 
-// .details-clean-input:focus {
-//   @include input-focus;
-// }
+.checklist-add-todo {
+  width: 100%;
+  @include input-blur;
+  font-family: $font-regular;
+  color: $textBlue;
+  font-size: 14px;
+}
+
+.checklist-add-todo:focus {
+  @include input-focus;
+}
+
+.details-disc-header {
+  display: flex;
+  align-items: center;
+}
+
+.discussion-add-item {
+  margin-bottom: 10px;
+  width: 100%;
+  @include input-blur;
+  font-family: $font-regular;
+  color: $textBlue;
+  font-size: 14px;
+}
+
+.discussion-add-item:focus {
+  @include input-focus;
+}
 
 // helpers:
 .details-grid {
