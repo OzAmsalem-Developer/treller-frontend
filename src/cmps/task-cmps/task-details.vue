@@ -18,7 +18,6 @@
               <div class="details-grid-last">
                 <div class="title-container">
                   <span class="title">Labels:</span>
-                  <!-- <span class="action-link">Update</span> -->
                 </div>
                 <div class="list">
                   <label-preview :labels="task.labels" />
@@ -30,7 +29,6 @@
               <div class="details-grid-last">
                 <div class="title-container">
                   <span class="title">Members:</span>
-                  <!-- <span class="action-link" @click="setMembers">Invite</span> -->
                 </div>
                 <div class="list">
                   <member-preview :members="task.members"></member-preview>
@@ -45,7 +43,6 @@
               <div class="dueDate-container details-grid-last">
                 <div class="title-container">
                   <span class="title">Due Date:</span>
-                  <!-- <span class="action-link">Update</span> -->
                 </div>
                 <div class="details-due-list">
                   <input
@@ -56,7 +53,7 @@
                   />
                   <div class="block">
                     <el-date-picker
-                      @change="updateDueDate"
+                      @change="updateTask"
                       v-model="editedTask.dueDate.time"
                       type="datetime"
                       format="MMM dd hh:mm A"
@@ -79,7 +76,6 @@
             </div>
             <div>
               <span class="titles">Description:</span>
-              <!-- <span class="action-link">Edit</span> -->
             </div>
             <textarea
               v-model="editedTask.desc"
@@ -104,7 +100,6 @@
                 @change="updateTask"
                 ref="checklist"
               />
-              <!-- <span class="details-progress">{{checklistProgress}}%</span> -->
             </div>
 
             <div class="details-grid-last">
@@ -161,14 +156,39 @@
         </div>
 
         <section class="details-actions">
-          <button @click="moveTask">Move</button>
-          <!-- <button @click="copyTask">Copy</button> -->
-          <button @click="setLabels">Labels</button>
-          <button @click="setMembers">Members</button>
-          <button @click="setDueDate">Due Date</button>
-          <button @click="updateDescription">Description</button>
-          <button @click="updateChecklist">Checklist</button>
-          <button @click="sendComment">Comments</button>
+          <div class="title">Actions:</div>
+          <button @click="setLabels">
+            <i class="fas fa-tag"></i>
+            <span class="action-title">Labels</span>
+          </button>
+          <button @click="setMembers">
+            <i class="far fa-user"></i>
+            <span class="action-title">Members</span>
+          </button>
+          <button @click="setDueDate">
+            <i class="far fa-clock"></i>
+            <span class="action-title">Due Date</span>
+          </button>
+          <button @click="updateDescription">
+            <i class="fas fa-align-left"></i>
+            <span class="action-title">Description</span>
+          </button>
+          <button @click="updateChecklist">
+            <i class="far fa-check-square"></i>
+            <span class="action-title">Checklist</span>
+          </button>
+          <button @click="sendComment">
+            <i class="far fa-comment"></i>
+            <span class="action-title">Comments</span>
+          </button>
+          <button @click="moveTask">
+            <i class="fas fa-long-arrow-alt-right"></i>
+            <span class="action-title">Move</span>
+          </button>
+          <button @click="removeTask">
+            <i class="far fa-trash-alt"></i>
+            <span class="action-title">Remove</span>
+          </button>
         </section>
       </div>
     </section>
@@ -197,12 +217,31 @@ export default {
     };
   },
   methods: {
-    updateDueDate() {
-      console.log(
-        "this.editedTask.dueDate.time:",
-        this.editedTask.dueDate.time
-      );
-      this.updateTask();
+    moveTask() {
+      console.log("Please move the Task!");
+    },
+    async updateTask() {
+      await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
+      try {
+        this.editedTask = JSON.parse(JSON.stringify(this.task));
+      } catch (prevTask) {
+        this.editedTask = JSON.parse(JSON.stringify(prevTask));
+        console.log("Err, failed to save task");
+      }
+      socketService.emit("board boardChanged", this.currBoard);
+    },
+    async removeTask() {
+      await this.$store.dispatch({
+        type: "removeTask",
+        task: this.editedTask
+      });
+      try {
+        this.closeDetails();
+      } catch (prevTask) {
+        this.editedTask = JSON.parse(JSON.stringify(prevTask));
+        console.log("Err, failed to save task");
+      }
+      socketService.emit("board boardChanged", this.currBoard);
     },
     async setDueDate() {
       if (this.editedTask.dueDate.isCompleted === null) {
@@ -216,25 +255,6 @@ export default {
       } else {
         this.$refs.calendar.focus();
       }
-    },
-    async updateTask() {
-      await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
-      try {
-        this.editedTask = JSON.parse(JSON.stringify(this.task));
-        // this.$refs.task.focus()
-      } catch (prevTask) {
-        this.editedTask = JSON.parse(JSON.stringify(prevTask));
-        console.log("Err, failed to save task");
-      }
-      socketService.emit("board boardChanged", this.currBoard);
-    },
-    expandTextArea() {
-      console.log("Hello!");
-      const textarea = this.$refs.description;
-      var heightLimit = 200;
-      textarea.style.height = "";
-      textarea.style.height =
-        Math.min(textarea.scrollHeight, heightLimit) + "px";
     },
     async addTodo() {
       let emptyTodo = utilService.getEmptyTodo();
@@ -281,18 +301,6 @@ export default {
         console.log("Failed to save todo + task");
       });
     },
-    closeDetails() {
-      const boardId = this.$store.getters.currBoardId;
-      this.$router.push(`/board/${boardId}`);
-    },
-    closeDetailsOverlay(ev) {
-      if (ev.target !== this.$refs.window) return;
-      const boardId = this.$store.getters.currBoardId;
-      this.$router.push(`/board/${boardId}`);
-    },
-    updateDescription() {
-      this.$refs.description.focus();
-    },
     async updateChecklist() {
       if (this.editedTask.checklist) {
         this.$refs.checklist.focus();
@@ -307,23 +315,37 @@ export default {
         }
       }
     },
-    sendComment() {
-      this.$refs.comment.focus();
-    },
-    closeDetailsOnEsc(ev) {
-      if (ev.key === "Escape") this.closeDetails();
-    },
-    moveTask() {
-      console.log("Please move the Task!");
-    },
-    copyTask() {
-      console.log("Please copy the Task!");
-    },
     setLabels() {
       console.log("Please set the Labels!");
     },
     setMembers() {
       console.log("Please set the Members!");
+    },
+    updateDescription() {
+      this.$refs.description.focus();
+    },
+    expandTextArea() {
+      console.log("Hello!");
+      const textarea = this.$refs.description;
+      var heightLimit = 200;
+      textarea.style.height = "";
+      textarea.style.height =
+        Math.min(textarea.scrollHeight, heightLimit) + "px";
+    },
+    sendComment() {
+      this.$refs.comment.focus();
+    },
+    closeDetails() {
+      const boardId = this.$store.getters.currBoardId;
+      this.$router.push(`/board/${boardId}`);
+    },
+    closeDetailsOverlay(ev) {
+      if (ev.target !== this.$refs.window) return;
+      const boardId = this.$store.getters.currBoardId;
+      this.$router.push(`/board/${boardId}`);
+    },
+    closeDetailsOnEsc(ev) {
+      if (ev.key === "Escape") this.closeDetails();
     }
   },
   computed: {
@@ -347,7 +369,7 @@ export default {
       const progress =
         (isDoneCount / this.editedTask.checklist.todos.length) * 100;
       if (progress === 100) return "#67C23A";
-      else return "#409EFF"
+      else return "#409EFF";
     },
     currBoard() {
       return this.$store.getters.currBoard;

@@ -54,17 +54,38 @@
 .details-actions {
   display: flex;
   flex-direction: column;
-  button {
+
+  .title {
     font-family: $font-regular;
+    text-align: center;
+    font-size: rem(16px);
+    margin-bottom: rem(5px);
+  }
+  button {
+    display: flex;
+    align-items: center;
+    min-width: 120px;
+    font-family: $font-light;
     background-color: $btnGrey;
     font-size: rem(14px);
     border-radius: 3px;
-    padding: 5px 20px;
+    padding: 5px 10px;
     margin-bottom: 5px;
     transition: all 0.3s;
+
+    i {
+      font-size: 12px;
+    }
+  }
+
+  button > *:first-child {
+    margin-inline-end: rem(10px);
   }
   button:hover {
     background-color: $hoverBlue;
+  }
+  button:last-child:hover {
+    background-color: #ff7b64;
   }
 }
 
@@ -80,7 +101,6 @@
   .details-lmd {
     display: flex;
     flex-wrap: wrap;
-    // background-color: rgb(255, 137, 137);
 
     .title {
       font-family: $font-regular;
