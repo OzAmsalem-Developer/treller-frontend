@@ -1,6 +1,6 @@
 <template>
   <section class="label-picker">
-    <p>Labels</p>
+    <header>Labels</header>
     <div
       class="label"
       v-for="(label, key) in boardLabels"
