@@ -1,9 +1,16 @@
 <template>
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
     <section v-if="task" class="task-details" ref="task">
+      <label-picker
+        class="move-picker-menu"
+        v-if="isLabelOpen"
+        @set-labels="setLabels"
+        :boardLabels="boardLabels"
+        :taskLabels="task.labels"
+      />
       <move-picker
         class="move-picker-menu"
-        v-if="isListOpen"
+        v-if="isMoveOpen"
         v-model="moveToList"
         :optionalLists="optionalLists"
         @input="moveTask"
@@ -17,7 +24,6 @@
           <i class="fas fa-times"></i>
         </button>
       </div>
-
 
       <h1></h1>
       <div class="details-container">
@@ -165,7 +171,7 @@
 
         <section class="details-actions">
           <div class="title">Actions:</div>
-          <button @click="setLabels">
+          <button @click="toggleLabelMenu">
             <i class="fas fa-tag"></i>
             <span class="action-title">Labels</span>
           </button>
@@ -189,7 +195,7 @@
             <i class="far fa-comment"></i>
             <span class="action-title">Comments</span>
           </button>
-          <button @click="toggleListMenu">
+          <button @click="toggleMoveMenu">
             <i class="fas fa-long-arrow-alt-right"></i>
             <span class="action-title">Move</span>
           </button>
@@ -211,6 +217,7 @@ import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
 import commentPreview from "@/cmps/task-cmps/previews/comment-preview.vue";
 import movePicker from "@/cmps/task-cmps/pickers/move-picker.vue";
+import labelPicker from "@/cmps/task-cmps/pickers/label-picker.vue";
 
 export default {
   data() {
@@ -218,7 +225,8 @@ export default {
       editedTask: null,
       currDueDate: null,
       moveToList: null,
-      isListOpen: false,
+      isLabelOpen: false,
+      isMoveOpen: false,
       listId: null,
       currTodo: {
         txt: ""
@@ -229,30 +237,31 @@ export default {
     };
   },
   methods: {
-    test() {
-      console.log("moveToList", this.moveToList);
-    },
     getListId() {
       const idx = this.$store.getters.taskLists.findIndex(taskList => {
-        let matchingTask = taskList.tasks.find(task => task.id === this.task.id)
-        return !!matchingTask
-      })
-      this.listId = this.$store.getters.taskLists[idx].id
+        let matchingTask = taskList.tasks.find(
+          task => task.id === this.task.id
+        );
+        return !!matchingTask;
+      });
+      this.listId = this.$store.getters.taskLists[idx].id;
     },
-    toggleListMenu() {
-      this.isListOpen = !this.isListOpen;
+    setLabels(labels) {
+      this.editedTask.labels = labels
+      this.updateTask()
+    },
+    toggleMoveMenu() {
+      this.isMoveOpen = !this.isMoveOpen;
+    },
+    toggleLabelMenu() {
+      this.isLabelOpen = !this.isLabelOpen;
     },
     moveTask() {
       const toListId = this.moveToList;
       const taskId = this.task.id;
-      console.log("toListId:", toListId);
-      // console.log("fromListId:", fromListId);
-      console.log("taskId:", taskId);
-      // console.log("taskID:", this.task);
-      // const lists = this.$store.getters.taskLists
-      this.$emit("move-task", {  toListId, taskId });
-      this.updateTask()
-      // this.$router.push('/board/' + this.currBoard._id)
+      this.$emit("move-task", { toListId, taskId });
+      this.updateTask();
+      this.toggleMoveMenu();
     },
     async updateTask() {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
@@ -353,9 +362,6 @@ export default {
         }
       }
     },
-    setLabels() {
-      console.log("Please set the Labels!");
-    },
     setMembers() {
       console.log("Please set the Members!");
     },
@@ -363,7 +369,6 @@ export default {
       this.$refs.description.focus();
     },
     expandTextArea() {
-      console.log("Hello!");
       const textarea = this.$refs.description;
       var heightLimit = 200;
       textarea.style.height = "";
@@ -394,6 +399,9 @@ export default {
       const taskLists = this.$store.getters.taskLists;
       return taskLists.filter(tl => tl.id !== this.listId);
     },
+    boardLabels() {
+      return this.$store.getters.labels;
+    },
     checklistProgress() {
       if (!this.editedTask.checklist.todos.length) return 0;
 
@@ -421,7 +429,7 @@ export default {
     this.editedTask = JSON.parse(JSON.stringify(this.task));
     console.log("// Details Task:", this.task);
     document.addEventListener("keyup", this.closeDetailsOnEsc);
-    this.getListId()
+    this.getListId();
   },
   destroyed() {
     document.removeEventListener("keyup", this.closeDetailsOnEsc);
@@ -431,6 +439,7 @@ export default {
     labelPreview,
     dueDatePreview,
     commentPreview,
+    labelPicker,
     movePicker
   }
 };
