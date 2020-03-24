@@ -13,7 +13,7 @@
 
 .task-details {
   position: relative;
-  background-color: $clr5;
+  background-color: lighten($clr5, 5);
   color: $textBlue;
   font-family: $font-semi;
   width: 768px;
@@ -163,7 +163,6 @@
       font-size: rem(14px);
     }
   }
-
   .details-due-list {
     display: flex;
     align-items: center;

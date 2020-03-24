@@ -101,7 +101,6 @@
                 ref="checklist"
               />
             </div>
-
             <div class="details-grid-last">
               <el-progress
                 v-if="editedTask.checklist.todos.length"
@@ -353,7 +352,7 @@ export default {
       return this.$store.getters.currTask;
     },
     checklistProgress() {
-      if (!this.editedTask.checklist.todos.length) return "0";
+      if (!this.editedTask.checklist.todos.length) return 0;
 
       let isDoneCount = this.editedTask.checklist.todos.filter(
         todo => todo.isDone === true
