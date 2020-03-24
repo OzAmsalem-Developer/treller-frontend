@@ -11,6 +11,284 @@
   width: 100%;
 }
 
+.task-details {
+  position: relative;
+  background-color: $clr5;
+  color: $textBlue;
+  font-family: $font-semi;
+  width: 768px;
+  border-radius: 3px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 30px 15px 30px;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+.task-details-header {
+  .task-title {
+    font-size: rem(20px);
+    @include input-blur;
+  }
+
+  .task-title:focus {
+    @include input-focus;
+  }
+
+  .close-btn {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: rem(18px);
+    min-width: rem(34px);
+    min-height: rem(34px);
+    right: rem(10px);
+    top: rem(10px);
+    padding: rem(2px);
+    transition: all 0.3s;
+    border-radius: 50%;
+  }
+}
+
+.details-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.details-actions {
+  display: flex;
+  flex-direction: column;
+  button {
+    font-family: $font-regular;
+    font-size: rem(16px);
+    background-color: $btnGrey;
+    transition: all 0.3s;
+    border-radius: 3px;
+    padding: 5px 20px;
+    margin-bottom: 5px;
+  }
+  button:hover {
+    background-color: $hoverBlue;
+  }
+}
+
+.details-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-right: rem(50px);
+
+  > * {
+    margin-bottom: rem(10px);
+  }
+  .details-lmd {
+    display: flex;
+    // justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: rgb(255, 137, 137);
+
+    .title {
+      font-family: $font-regular;
+    }
+    > * {
+      margin-inline-end: rem(10px);
+    }
+  }
+}
+
+.details-labels {
+  .title-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: rem(5px);
+  }
+
+  .list {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.details-members {
+  .title-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: rem(5px);
+  }
+
+  .list {
+    display: flex;
+    align-items: center;
+  }
+  button {
+    background-color: #e0e0e0;
+    color: $clr3;
+    transition: all 0.3s;
+  }
+  button:hover {
+    background-color: #c5dbee;
+  }
+}
+
+// details-grid-last
+
+.details-due-date {
+  .dueDate-container {
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      margin-bottom: rem(5px);
+    }
+
+    .date-picker-cell {
+      // background-color: red;
+    }
+
+    .el-date-editor .el-input__inner {
+      font-family: $font-regular;
+      font-size: rem(14px);
+      // background-color: rgb(222, 190, 255);
+    }
+  }
+
+  .details-due-list {
+    display: flex;
+    align-items: center;
+
+    :first-child {
+      margin-inline-end: rem(5px);
+    }
+  }
+
+  input[type="checkbox"] {
+    cursor: pointer;
+    min-width: 20px;
+    min-height: 20px;
+  }
+}
+
+// .details-due-check {
+
+// }
+
+// .details-due-list > * {
+//   margin-inline-end: 5px;
+// }
+
+// .details-desc-header {
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: rem(5px);
+// }
+
+// .details-description {
+//   margin-bottom: 0;
+// }
+
+// .details-desc-input {
+//   font-size: rem(14px);
+//   font-family: $font-regular;
+//   resize: none;
+//   @include input-blur;
+// }
+
+// .details-desc-input:focus {
+//   @include input-focus;
+// }
+
+// .details-checklist {
+
+//   .details-checklist-header {
+//     display: flex;
+//     align-items: center;
+//   }
+//   .details-progress {
+//     padding-inline-start: rem(10px);
+//   }
+// }
+
+// .checklist-todo-container {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   transition: all 0.3s;
+// }
+// .checklist-todo-container:hover {
+//   background-color: darken($clr5, 3);
+//   border-radius: 3px;
+// }
+
+// .checklist-todo-container:hover > :last-child {
+//   opacity: 1;
+// }
+
+// .checklist-todo-container > :first-child {
+//   margin-inline-end: 5px;
+//   cursor: pointer;
+//   min-width: 16px;
+//   min-height: 16px;
+// }
+
+// .checklist-title {
+//   @include input-blur;
+//   font-size: 16px;
+//   font-family: $font-semi;
+// }
+
+// .checklist-title:focus {
+//   @include input-focus;
+// }
+
+// .checklist-todo {
+//   @include input-blur;
+//   font-family: $font-regular;
+// }
+
+// .checklist-todo:focus {
+//   @include input-focus;
+//   font-family: $font-regular;
+// }
+
+// .todo-remove-btn {
+//   opacity: 0;
+//   font-family: $font-bold;
+//   font-size: 14px;
+
+//   margin-inline-start: 10px;
+//   transition: all 0.3s;
+//   padding: 5px 10px;
+//   text-align: center;
+// }
+
+// .todo-remove-btn:hover {
+//   color: $clr3;
+//   border-radius: 3px;
+//   background-color: #ff7b64;
+// }
+
+// .details-disc-header {
+//   display: flex;
+//   align-items: center;
+// }
+
+// .discussion-add-item {
+//   margin-bottom: 10px;
+// }
+
+// // Helpers:
+
+// .details-clean-input {
+//   @include input-blur;
+// }
+
+// .details-clean-input:focus {
+//   @include input-focus;
+// }
+
+// helpers:
 .details-grid {
   display: grid;
   grid-template-columns: 20px 1fr;
@@ -22,6 +300,7 @@
   display: grid;
   grid-template-columns: 20px 1fr;
   grid-template-rows: 1fr;
+  // max-width: 250px;
   column-gap: rem(5px);
 }
 
@@ -32,257 +311,20 @@
 
 .details-icons {
   font-size: 1rem;
-  color: $clr7;
   align-self: center;
 }
 
 .details-titles {
-  font-family: $font-semi;
   font-size: rem(16px);
-  color: $clr7;
-}
-
-.task-details {
-  position: relative;
-  background-color: $clr5;
-  width: 768px;
-  border-radius: 3px;
-  min-height: 300px;
-  display: flex;
-  flex-direction: column;
-  padding: 15px 30px 15px 30px;
-  margin: 0 auto;
-  z-index: 1;
-
-  .task-details-header {
-    .details-title {
-      font-size: rem(20px);
-      @include input-blur;
-      width: 95%;
-    }
-
-    .details-title:focus {
-      @include input-focus;
-    }
-  }
-
-  .close-details-btn {
-    color: $clr7;
-    font-size: rem(16px);
-    position: absolute;
-    right: rem(10px);
-    top: rem(10px);
-    min-width: 30px;
-    min-height: 30px;
-    padding: 2px;
-  }
-
-  .details-container {
-    display: flex;
-    justify-content: space-between;
-  }
-}
-
-.details-actions {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  button {
-    background-color: $clr2;
-    border-radius: 3px;
-    padding: 5px 20px;
-    margin-bottom: 5px;
-  }
-  button {
-    font-size: 16px;
-    font-family: $font-regular;
-    color: $clr3;
-    background-color: #e0e0e0;
-    transition: all 0.3s;
-  }
-  button:hover {
-    background-color: #c5dbee;
-  }
-}
-
-.details-info {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 10;
-  margin-right: 50px;
-
-  > * {
-    margin-bottom: 10px;
-  }
-}
-
-.details-labels-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: rem(5px);
-}
-
-.details-members-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: rem(5px);
-}
-
-.details-members-list {
-  display: flex;
-  align-items: center;
-
-  button {
-    background-color: #e0e0e0;
-    color: $clr3;
-    transition: all 0.3s;
-  }
-  button:hover {
-    background-color: #c5dbee;
-  }
-}
-
-.details-due-check {
-  cursor: pointer;
-  min-width: 20px;
-  min-height: 20px;
-}
-
-.details-due-list {
-  display: flex;
-  align-items: center;
-}
-.details-due-list > * {
-  margin-inline-end: 5px;
-}
-
-.details-desc-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: rem(5px);
-}
-
-.details-description {
-  margin-bottom: 0;
-}
-
-
-.details-desc-input {
-  font-size: rem(14px);
-  font-family: $font-regular;
-  resize: none;
-  @include input-blur;
-}
-
-.details-desc-input:focus {
-  @include input-focus;
-}
-
-.details-checklist {
-
-  .details-checklist-header {
-    display: flex;
-    align-items: center;
-  }
-  .details-progress {
-    padding-inline-start: rem(10px);
-  }
-}
-
-.checklist-todo-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.3s;
-}
-.checklist-todo-container:hover {
-  background-color: darken($clr5, 3);
-  border-radius: 3px;
-}
-
-.checklist-todo-container:hover > :last-child {
-  opacity: 1;
-}
-
-.checklist-todo-container > :first-child {
-  margin-inline-end: 5px;
-  cursor: pointer;
-  min-width: 16px;
-  min-height: 16px;
-}
-
-.checklist-title {
-  @include input-blur;
-  font-size: 16px;
-  color: $clr7;
-  font-family: $font-semi;
-}
-
-.checklist-title:focus {
-  @include input-focus;
-}
-
-.checklist-todo {
-  @include input-blur;
-  font-family: $font-regular;
-}
-
-.checklist-todo:focus {
-  @include input-focus;
-  font-family: $font-regular;
-}
-
-.todo-remove-btn {
-  opacity: 0;
-  font-family: $font-bold;
-  font-size: 14px;
-
-  margin-inline-start: 10px;
-  transition: all 0.3s;
-  padding: 5px 10px;
-  text-align: center;
-}
-
-.todo-remove-btn:hover {
-  color: $clr3;
-  border-radius: 3px;
-  background-color: #ff7b64;
-}
-
-.details-disc-header {
-  display: flex;
-  align-items: center;
-}
-
-.discussion-add-item {
-  margin-bottom: 10px;
-}
-
-// Helpers:
-
-.details-clean-input {
-  @include input-blur;
-}
-
-.details-clean-input:focus {
-  @include input-focus;
 }
 
 .action-link {
   color: $clr2;
-  font-size: 12px;
+  font-size: rem(12px);
   cursor: pointer;
   margin-inline-start: 8px;
 }
 
 .todo-done {
   text-decoration: line-through;
-}
-
-.date-picker-cell {
-  background-color: red;
-}
-
-.el-date-editor .el-input__inner {
-  background-color: rgb(222, 190, 255);
 }
