@@ -80,8 +80,8 @@
               <i class="fas fa-align-left"></i>
             </div>
             <div>
-              <span class="details-titles">Description:</span>
-              <span class="action-link">Edit</span>
+              <span class="titles">Description:</span>
+              <!-- <span class="action-link">Edit</span> -->
             </div>
             <textarea
               v-model="editedTask.desc"
@@ -119,7 +119,7 @@
                 <input
                   type="text"
                   :class="item.isDone? 'todo-done' : ''"
-                  class="details-clean-input checklist-todo"
+                  class="checklist-todo"
                   v-model="item.txt"
                   @change="updateTask"
                 />
@@ -128,7 +128,7 @@
                 </button>
               </div>
               <input
-                class="details-clean-input checklist-add-item"
+                class="checklist-add-todo"
                 v-model="currTodo.txt"
                 type="text"
                 placeholder="add an item"
@@ -146,7 +146,7 @@
               <!-- <span class="action-link">hide activity feed</span> -->
             </div>
             <input
-              class="details-clean-input discussion-add-item details-grid-last"
+              class="discussion-add-item details-grid-last"
               type="text"
               v-model="currComment.txt"
               @change="addComment"
