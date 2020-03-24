@@ -5,78 +5,83 @@
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
         </span>
-        <input v-model="editedTask.name" class="details-title" type="text" @change="updateTask" />
-        <button class="close-details-btn" @click="closeDetails">
+        <input v-model="editedTask.name" class="task-title" type="text" @change="updateTask" />
+        <button class="close-btn" @click="closeDetails">
           <i class="fas fa-times"></i>
         </button>
       </div>
 
       <div class="details-container">
         <div class="details-info">
-          <section v-if="task.labels.length" class="details-grid-title">
-            <div class="details-grid-last">
-              <div class="details-labels-header">
-                <span class="details-titles">Labels:</span>
-                <span class="action-link">Update</span>
+          <div class="details-lmd">
+            <section v-if="task.labels.length" class="details-labels details-grid-title">
+              <div class="details-grid-last">
+                <div class="title-container">
+                  <span class="title">Labels:</span>
+                  <!-- <span class="action-link">Update</span> -->
+                </div>
+                <div class="list">
+                  <label-preview :labels="task.labels" />
+                </div>
               </div>
-              <div class="details-labels-list">
-                <label-preview :labels="task.labels" />
-              </div>
-            </div>
-          </section>
+            </section>
 
-          <section v-if="task.members" class="details-members details-grid-title">
-            <div class="details-grid-last">
-              <div class="details-members-header">
-                <span class="details-titles">Members:</span>
-                <span class="action-link" @click="setMembers">Invite</span>
+            <section v-if="task.members" class="details-members details-grid-title">
+              <div class="details-grid-last">
+                <div class="title-container">
+                  <span class="title">Members:</span>
+                  <!-- <span class="action-link" @click="setMembers">Invite</span> -->
+                </div>
+                <div class="list">
+                  <member-preview :members="task.members"></member-preview>
+                  <button class="member-add-btn member-card" @click="setMembers">+</button>
+                </div>
               </div>
-              <div class="details-members-list">
-                <member-preview :members="task.members"></member-preview>
-                <button class="member-add-btn member-card" @click="setMembers">+</button>
-              </div>
-            </div>
-          </section>
+            </section>
+            <section
+              v-if="task.dueDate.isCompleted !== null"
+              class="details-due-date details-grid-title"
+            >
+              <div class="dueDate-container details-grid-last">
 
-          <section v-if="task.dueDate.isCompleted !== null" class="details-due-date details-grid">
-            <div class="details-icons">
-              <i class="far fa-clock"></i>
-            </div>
-            <div class="details-due-header">
-              <span class="details-titles">Due Date:</span>
-              <span class="action-link">Update</span>
-            </div>
-            <div class="details-due-list details-grid-last">
-              <input
-                class="details-due-check"
-                type="checkbox"
-                v-model="editedTask.dueDate.isCompleted"
-                @change="updateTask"
-              />
-              <div class="block">
-                <el-date-picker
-                  @change="updateDueDate"
-                  v-model="editedTask.dueDate.time"
-                  type="datetime"
-                  format="MMM dd hh:mm A"
-                  value-format="timestamp"
-                  placeholder="Select date and time"
-                  class="el-date-picker"
-                  size="small"
-                  ref="calendar"
-                ></el-date-picker>
+                <div class="title-container">
+                  <span class="title">Due Date:</span>
+                  <!-- <span class="action-link">Update</span> -->
+                </div>
+                <div class="details-due-list">
+                  <input
+                    class="details-due-check"
+                    type="checkbox"
+                    v-model="editedTask.dueDate.isCompleted"
+                    @change="updateTask"
+                  />
+                  <div class="block">
+                    <el-date-picker
+                      @change="updateDueDate"
+                      v-model="editedTask.dueDate.time"
+                      type="datetime"
+                      format="MMM dd hh:mm A"
+                      value-format="timestamp"
+                      placeholder="Select date and time"
+                      class="el-date-picker"
+                      size="mini"
+                      ref="calendar"
+                    ></el-date-picker>
+                  </div>
+                  <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
+
+                </div>
               </div>
-              <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
-            </div>
-          </section>
+            </section>
+          </div>
 
           <section class="details-description details-grid">
             <div class="details-icons">
               <i class="fas fa-align-left"></i>
             </div>
             <div>
-              <span class="details-titles">Description:</span>
-              <span class="action-link">Edit</span>
+              <span class="titles">Description:</span>
+              <!-- <span class="action-link">Edit</span> -->
             </div>
             <textarea
               v-model="editedTask.desc"
@@ -114,7 +119,7 @@
                 <input
                   type="text"
                   :class="item.isDone? 'todo-done' : ''"
-                  class="details-clean-input checklist-todo"
+                  class="checklist-todo"
                   v-model="item.txt"
                   @change="updateTask"
                 />
@@ -123,10 +128,10 @@
                 </button>
               </div>
               <input
-                class="details-clean-input checklist-add-item"
+                class="checklist-add-todo"
                 v-model="currTodo.txt"
                 type="text"
-                placeholder="add an item"
+                placeholder="Add an item"
                 @change="addTodo"
               />
             </div>
@@ -141,7 +146,7 @@
               <!-- <span class="action-link">hide activity feed</span> -->
             </div>
             <input
-              class="details-clean-input discussion-add-item details-grid-last"
+              class="discussion-add-item details-grid-last"
               type="text"
               v-model="currComment.txt"
               @change="addComment"

@@ -10,6 +10,17 @@
     align-items: center;
 }
 
+.close-btn {
+    padding: 8px 14px;
+    border-radius: 3px;
+    transition: .3s;
+    color: $textBlue;
+  }
+  
+  .close-btn:hover {
+    background-color: rgba(9, 30, 66, 0.08);
+  }
+
 // Drug & Drop helpers
 
 .list-drop-preview {
@@ -52,3 +63,16 @@
 .ratio-card { @include aspect-ratio(100, 80); }
 
 .ratio-poster { @include aspect-ratio(100, 150); }
+
+// Vue animations
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .3s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+
+  .fa-plus {
+      font-size: 11px;
+  }

@@ -11,40 +11,11 @@
   width: 100%;
 }
 
-.details-grid {
-  display: grid;
-  grid-template-columns: 20px 1fr;
-  grid-template-rows: 20px 1fr;
-  gap: rem(5px);
-}
-
-.details-grid-title {
-  display: grid;
-  grid-template-columns: 20px 1fr;
-  grid-template-rows: 1fr;
-  column-gap: rem(5px);
-}
-
-.details-grid-last {
-  grid-column: -2/-1;
-  grid-row: -2 / -1;
-}
-
-.details-icons {
-  font-size: 1rem;
-  color: $clr7;
-  align-self: center;
-}
-
-.details-titles {
-  font-family: $font-semi;
-  font-size: rem(16px);
-  color: $clr7;
-}
-
 .task-details {
   position: relative;
   background-color: $clr5;
+  color: $textBlue;
+  font-family: $font-semi;
   width: 768px;
   border-radius: 3px;
   min-height: 300px;
@@ -53,85 +24,97 @@
   padding: 15px 30px 15px 30px;
   margin: 0 auto;
   z-index: 1;
+}
 
-  .task-details-header {
-    .details-title {
-      font-size: rem(20px);
-      @include input-blur;
-      width: 95%;
-    }
-
-    .details-title:focus {
-      @include input-focus;
-    }
+.task-details-header {
+  .task-title {
+    font-size: rem(20px);
+    @include input-blur;
   }
 
-  .close-details-btn {
-    color: $clr7;
-    font-size: rem(16px);
+  .task-title:focus {
+    @include input-focus;
+  }
+
+  .close-btn {
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     right: rem(10px);
     top: rem(10px);
-    min-width: 30px;
-    min-height: 30px;
-    padding: 2px;
   }
+}
 
-  .details-container {
-    display: flex;
-    justify-content: space-between;
-  }
+.details-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .details-actions {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   button {
-    background-color: $clr2;
+    font-family: $font-regular;
+    background-color: $btnGrey;
+    font-size: rem(14px);
     border-radius: 3px;
     padding: 5px 20px;
     margin-bottom: 5px;
-  }
-  button {
-    font-size: 16px;
-    font-family: $font-regular;
-    color: $clr3;
-    background-color: #e0e0e0;
     transition: all 0.3s;
   }
   button:hover {
-    background-color: #c5dbee;
+    background-color: $hoverBlue;
   }
 }
 
 .details-info {
   display: flex;
   flex-direction: column;
-  flex-grow: 10;
-  margin-right: 50px;
+  width: 100%;
+  margin-right: rem(50px);
 
   > * {
-    margin-bottom: 10px;
+    margin-bottom: rem(10px);
+  }
+  .details-lmd {
+    display: flex;
+    flex-wrap: wrap;
+    // background-color: rgb(255, 137, 137);
+
+    .title {
+      font-family: $font-regular;
+    }
+    > * {
+      margin-inline-end: rem(10px);
+    }
   }
 }
 
-.details-labels-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: rem(5px);
+.details-labels {
+  .title-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: rem(5px);
+  }
+
+  .list {
+    display: flex;
+    align-items: center;
+  }
 }
 
-.details-members-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: rem(5px);
-}
+.details-members {
+  .title-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: rem(5px);
+  }
 
-.details-members-list {
-  display: flex;
-  align-items: center;
-
+  .list {
+    display: flex;
+    align-items: center;
+  }
   button {
     background-color: #e0e0e0;
     color: $clr3;
@@ -142,47 +125,74 @@
   }
 }
 
-.details-due-check {
-  cursor: pointer;
-  min-width: 20px;
-  min-height: 20px;
-}
+.details-due-date {
+  .dueDate-container {
+    display: flex;
+    flex-direction: column;
 
-.details-due-list {
-  display: flex;
-  align-items: center;
-}
-.details-due-list > * {
-  margin-inline-end: 5px;
-}
+    .title {
+      margin-bottom: rem(5px);
+    }
 
-.details-desc-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: rem(5px);
+    // .date-picker-cell {
+    //   // background-color: red;
+    // }
+
+    .el-date-editor .el-input__inner {
+      font-family: $font-regular;
+      font-size: rem(14px);
+    }
+  }
+
+  .details-due-list {
+    display: flex;
+    align-items: center;
+
+    :first-child {
+      margin-inline-end: rem(5px);
+    }
+  }
+
+  input[type="checkbox"] {
+    cursor: pointer;
+    min-width: 20px;
+    min-height: 20px;
+  }
 }
 
 .details-description {
-  margin-bottom: 0;
-}
+  .title {
+    margin-bottom: rem(5px);
+  }
 
+  .details-desc-input {
+    font-size: rem(14px);
+    font-family: $font-regular;
+    resize: none;
+    @include input-blur;
+  }
 
-.details-desc-input {
-  font-size: rem(14px);
-  font-family: $font-regular;
-  resize: none;
-  @include input-blur;
-}
-
-.details-desc-input:focus {
-  @include input-focus;
+  .details-desc-input:focus {
+    @include input-focus;
+  }
 }
 
 .details-checklist {
-
   .details-checklist-header {
     display: flex;
     align-items: center;
+
+    .checklist-title {
+      @include input-blur;
+      font-size: 16px;
+      font-family: $font-semi;
+      color: $textBlue;
+      width: 100%;
+    }
+
+    .checklist-title:focus {
+      @include input-focus;
+    }
   }
   .details-progress {
     padding-inline-start: rem(10px);
@@ -194,42 +204,17 @@
   justify-content: space-between;
   align-items: center;
   transition: all 0.3s;
-}
-.checklist-todo-container:hover {
-  background-color: darken($clr5, 3);
-  border-radius: 3px;
-}
 
-.checklist-todo-container:hover > :last-child {
-  opacity: 1;
-}
+  .checklist-todo {
+    width: 100%;
+    @include input-blur;
+    font-family: $font-regular;
+    color: $textBlue;
+  }
 
-.checklist-todo-container > :first-child {
-  margin-inline-end: 5px;
-  cursor: pointer;
-  min-width: 16px;
-  min-height: 16px;
-}
-
-.checklist-title {
-  @include input-blur;
-  font-size: 16px;
-  color: $clr7;
-  font-family: $font-semi;
-}
-
-.checklist-title:focus {
-  @include input-focus;
-}
-
-.checklist-todo {
-  @include input-blur;
-  font-family: $font-regular;
-}
-
-.checklist-todo:focus {
-  @include input-focus;
-  font-family: $font-regular;
+  .checklist-todo:focus {
+    @include input-focus;
+  }
 }
 
 .todo-remove-btn {
@@ -249,6 +234,33 @@
   background-color: #ff7b64;
 }
 
+.checklist-todo-container:hover {
+  background-color: darken($clr5, 3);
+  border-radius: 3px;
+}
+.checklist-todo-container:hover > :last-child {
+  opacity: 1;
+}
+
+.checklist-todo-container > :first-child {
+  margin-inline-end: 5px;
+  cursor: pointer;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+.checklist-add-todo {
+  width: 100%;
+  @include input-blur;
+  font-family: $font-regular;
+  color: $textBlue;
+  font-size: 14px;
+}
+
+.checklist-add-todo:focus {
+  @include input-focus;
+}
+
 .details-disc-header {
   display: flex;
   align-items: center;
@@ -256,33 +268,54 @@
 
 .discussion-add-item {
   margin-bottom: 10px;
-}
-
-// Helpers:
-
-.details-clean-input {
+  width: 100%;
   @include input-blur;
+  font-family: $font-regular;
+  color: $textBlue;
+  font-size: 14px;
 }
 
-.details-clean-input:focus {
+.discussion-add-item:focus {
   @include input-focus;
+}
+
+// helpers:
+.details-grid {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  grid-template-rows: 20px 1fr;
+  gap: rem(5px);
+}
+
+.details-grid-title {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  grid-template-rows: 1fr;
+  // max-width: 250px;
+  column-gap: rem(5px);
+}
+
+.details-grid-last {
+  grid-column: -2/-1;
+  grid-row: -2 / -1;
+}
+
+.details-icons {
+  font-size: 1rem;
+  align-self: center;
+}
+
+.details-titles {
+  font-size: rem(16px);
 }
 
 .action-link {
   color: $clr2;
-  font-size: 12px;
+  font-size: rem(12px);
   cursor: pointer;
   margin-inline-start: 8px;
 }
 
 .todo-done {
   text-decoration: line-through;
-}
-
-.date-picker-cell {
-  background-color: red;
-}
-
-.el-date-editor .el-input__inner {
-  background-color: rgb(222, 190, 255);
 }

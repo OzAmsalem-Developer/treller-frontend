@@ -22,18 +22,24 @@
         </Draggable>
 
         <section class="add-list">
-          <button class="add-btn" v-if="!newTaskList" @click="getEmptyList">+ Add List</button>
-          <form class="add-list" @submit.prevent="addList" v-else>
+           <transition name="fade">
+          <button class="add-list-btn" v-if="!newTaskList" @click="getEmptyList">
+            <i class="fas fa-plus plus-icon"></i> Add List</button>
+             </transition>
+            <transition name="fade">
+          <form class="add-list" @submit.prevent="addList" v-if="newTaskList">
             <input
               ref="listInput"
               type="text"
               class="add-list-input"
               placeholder="List title.."
               v-model="newTaskList.name"
+              @blur="$refs.submitBtn.click()"
             />
-            <button class="new-list-btn">Add</button>
-            <button @click="newTaskList = null" class="close-btn">X</button>
+            <button ref="submitBtn" class="add-list-inner-btn">Add</button>
+            <button @click="newTaskList = null" class="close-btn"><i class="fas fa-times"></i></button>
           </form>
+          </transition>
         </section>
       </Container>
     </div>
@@ -97,6 +103,7 @@ export default {
       socketService.emit("board boardChanged", this.board);
     },
     addList() {
+      if (!this.newTaskList) return
       if (!this.newTaskList.name.length) {
         this.newTaskList = null;
         return;
@@ -107,7 +114,7 @@ export default {
       this.getEmptyList();
       setTimeout(() => {
         utilService.scrollTo(this.$refs.lists, 1500, 700);
-      }, 0);
+      }, 2);
     },
     moveList({ listIdx, toIdx }) {
       const taskList = JSON.parse(

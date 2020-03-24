@@ -4,7 +4,8 @@
   background-color: #ebecf0;
   max-height: 500px;
   position: relative;
-  box-shadow:  0 .45px 0 rgba(9,30,66,.25);
+  box-shadow: 0 0.45px 0 rgba(9, 30, 66, 0.25);
+
   .tasks {
     padding: 0 5px;
     margin: 0 5px;
@@ -12,7 +13,7 @@
     overflow-y: auto;
     max-height: 370px;
   }
-  .edit-list-name  {
+  .edit-list-name {
     width: 272px;
     padding: 10px;
     display: flex;
@@ -21,9 +22,16 @@
   }
 
   .menu-btn {
-    font-size: rem(22px);
-    font-family: $font-bold;
+    font-size: rem(18px);
+    font-family: $font-semi;
     outline: 0;
+    font-weight: normal;
+    color: lighten(#5e6c84, 15) ;
+    transition: color .3s;
+  }
+
+  .menu-btn:hover {
+    color: #5e6c84;
   }
 
   header {
@@ -37,13 +45,11 @@
     .list-name {
       cursor: pointer;
       font-size: 14px;
-      color: $clr3;
+      color: $textBlue;
       font-family: $font-bold;
       flex-grow: 1;
       margin-left: 7px;
     }
-
-
   }
   .list-input {
     padding: 10px;
@@ -54,7 +60,7 @@
     margin-right: 5px;
     padding-bottom: 7px;
     font-size: 14px;
-    color: $clr3;
+    color: $textBlue;
     padding: rem(3px) rem(2px);
     border-radius: 5px;
     font-family: $font-bold;
@@ -66,47 +72,95 @@
     background-color: rgb(252, 252, 252);
     padding-left: rem(10px);
   }
-  .add-task-btn {
-    height: 34px;
-    margin: 10px;
-    padding: 4px 8px;
-    border-radius: 3px;
-    font-family: $font-semi;
-    color: #5e6c84;
-    width: 93%;
-    text-align: left;
-    position: absolute;
-    bottom: 0;
-  }
 
-  .add-task-btn:hover {
-    color: #172b4d;
-    background-color: rgba(9,30,66,.08);
-  }
-
-  .new-task-box {
-    width: 255px;
-    box-shadow: $shadow;
-    resize: none;
-    padding: 5px 8px;
-    display: block;
-    border: 0;
-    outline: 0;
-    background-color: #ffffff;
-    border-radius: 3px;
-    font-family: $font-regular;
-  }
-
-  footer {
-    height: 50px;
-    .close-btn {
-      font-family: $font-bold;
-      position: absolute;
-      bottom: 15px;
-      left: 80px;
+    .plus-icon {
+      font-size: rem(1px);
+      line-height: 0;
+      font-weight: 700 !important;
     }
+
+    .add-task-btn {
+      height: 34px;
+      margin: 10px;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-family: $font-semi;
+      color: #5e6c84;
+      width: 93%;
+      text-align: left;
+      position: absolute;
+      bottom: 0;
+    }
+
+    .add-task-btn:hover {
+      color: #172b4d;
+      background-color: rgba(9, 30, 66, 0.08);
+    }
+  
+  .new-task-btns {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    .add-task-btn.inner {
+      width: unset;
+      padding: 4px 10px;
+      margin-right: 10px;
+      position: static;
+      background-color: $pGreen;
+      color: $clr5;
+    }
+
+    .add-task-btn.inner:hover {
+      background-color: lighten($pGreen, 10);
+    }
+
+  }
+  
+    // fades
+
+    .fade-enter-active {
+      transition: opacity .3s;
+    }
+    .fade-enter {
+      opacity: 0;
+    }
+  
+  .fade-leave-active {
+      display: none;
+    }
+  .fade-leave-to {
+      opacity: unset;
+    }
+  
+    .new-task-box {
+      width: 255px;
+      box-shadow: $shadow;
+      resize: none;
+      padding: 5px 8px;
+      display: block;
+      border: 0;
+      outline: 0;
+      background-color: #ffffff;
+      border-radius: 3px;
+      font-family: $font-regular;
+    }
+  
+    footer {
+      height: 50px;
+      .close-btn {
+        font-family: $font-bold;
+        // position: absolute;
+        bottom: 15px;
+        left: 80px;
+      }
+  
+    .fa-plus {
+      margin-right: rem(5px);
+    }  
   }
 }
+
 
 //Scroll bar
 .tasks::-webkit-scrollbar {
@@ -135,9 +189,8 @@
   cursor: grabbing !important;
 }
 
-
 // Unenabled some shit
 
-.smooth-dnd-container.vertical > .smooth-dnd-draggable-wrapper { 
+.smooth-dnd-container.vertical > .smooth-dnd-draggable-wrapper {
   overflow: unset;
 }
