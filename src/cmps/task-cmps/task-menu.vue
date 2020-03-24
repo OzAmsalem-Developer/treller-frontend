@@ -89,7 +89,6 @@ export default {
   methods: {
     moveTask() {
       eventBus.$emit(EV_moveTask, {
-        fromListId: this.listId,
         toListId: this.moveToList,
         taskId: this.task.id
       });
