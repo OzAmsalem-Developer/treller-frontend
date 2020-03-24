@@ -1,6 +1,13 @@
 <template>
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
     <section v-if="task" class="task-details" ref="task">
+      <move-picker
+        class="move-picker-menu"
+        v-if="isListOpen"
+        v-model="moveToList"
+        :optionalLists="optionalLists"
+        @input="moveTask"
+      />
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
@@ -11,6 +18,8 @@
         </button>
       </div>
 
+
+      <h1></h1>
       <div class="details-container">
         <div class="details-info">
           <div class="details-lmd">
@@ -180,7 +189,7 @@
             <i class="far fa-comment"></i>
             <span class="action-title">Comments</span>
           </button>
-          <button @click="moveTask">
+          <button @click="toggleListMenu">
             <i class="fas fa-long-arrow-alt-right"></i>
             <span class="action-title">Move</span>
           </button>
@@ -201,12 +210,16 @@ import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
 import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
 import commentPreview from "@/cmps/task-cmps/previews/comment-preview.vue";
+import movePicker from "@/cmps/task-cmps/pickers/move-picker.vue";
 
 export default {
   data() {
     return {
       editedTask: null,
       currDueDate: null,
+      moveToList: null,
+      isListOpen: false,
+      listId: null,
       currTodo: {
         txt: ""
       },
@@ -216,8 +229,30 @@ export default {
     };
   },
   methods: {
+    test() {
+      console.log("moveToList", this.moveToList);
+    },
+    getListId() {
+      const idx = this.$store.getters.taskLists.findIndex(taskList => {
+        let matchingTask = taskList.tasks.find(task => task.id === this.task.id)
+        return !!matchingTask
+      })
+      this.listId = this.$store.getters.taskLists[idx].id
+    },
+    toggleListMenu() {
+      this.isListOpen = !this.isListOpen;
+    },
     moveTask() {
-      console.log("Please move the Task!");
+      const toListId = this.moveToList;
+      const taskId = this.task.id;
+      console.log("toListId:", toListId);
+      // console.log("fromListId:", fromListId);
+      console.log("taskId:", taskId);
+      // console.log("taskID:", this.task);
+      // const lists = this.$store.getters.taskLists
+      this.$emit("move-task", {  toListId, taskId });
+      this.updateTask()
+      // this.$router.push('/board/' + this.currBoard._id)
     },
     async updateTask() {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
@@ -230,8 +265,8 @@ export default {
       socketService.emit("board boardChanged", this.currBoard);
     },
     updateCheckListTitle(ev) {
-      ev.target.blur()
-      this.updateTask()
+      ev.target.blur();
+      this.updateTask();
     },
     async removeTask() {
       await this.$store.dispatch({
@@ -355,6 +390,10 @@ export default {
     task() {
       return this.$store.getters.currTask;
     },
+    optionalLists() {
+      const taskLists = this.$store.getters.taskLists;
+      return taskLists.filter(tl => tl.id !== this.listId);
+    },
     checklistProgress() {
       if (!this.editedTask.checklist.todos.length) return 0;
 
@@ -380,8 +419,9 @@ export default {
   },
   created() {
     this.editedTask = JSON.parse(JSON.stringify(this.task));
-    console.log("// Details Task:", this.editedTask);
+    console.log("// Details Task:", this.task);
     document.addEventListener("keyup", this.closeDetailsOnEsc);
+    this.getListId()
   },
   destroyed() {
     document.removeEventListener("keyup", this.closeDetailsOnEsc);
@@ -390,7 +430,8 @@ export default {
     memberPreview,
     labelPreview,
     dueDatePreview,
-    commentPreview
+    commentPreview,
+    movePicker
   }
 };
 </script>

@@ -1,4 +1,7 @@
 <template>
+<section>
+    <div class="div-screen" @click.stop="$emit('clicked', taskCopy)"></div>
+
   <section v-if="task" class="task-menu" ref="taskMenu">
     <div class="card-container">
       <div class="card-details">
@@ -27,7 +30,7 @@
       </button>
     </menu>
 
-    <button class="save-name-btn" @click.stop="setName(); $emit('clicked')">Save</button>
+    <button class="save-name-btn" @click.stop="setName(); $emit('clicked', taskCopy)">Save</button>
 
     <labelPicker
       class="label-picker"
@@ -59,6 +62,8 @@
       </el-date-picker>
     </div>
   </section>
+</section>
+
 </template>
 
 <script>
@@ -84,7 +89,6 @@ export default {
   methods: {
     moveTask() {
       eventBus.$emit(EV_moveTask, {
-        fromListId: this.listId,
         toListId: this.moveToList,
         taskId: this.task.id
       });

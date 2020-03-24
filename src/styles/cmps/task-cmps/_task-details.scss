@@ -24,6 +24,14 @@
   padding: 15px 30px 15px 30px;
   margin: 0 auto;
   z-index: 1;
+
+  .move-picker-menu {
+    position: fixed;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+    z-index: 2;
+  }
 }
 
 .task-details-header {
@@ -54,6 +62,7 @@
 .details-actions {
   display: flex;
   flex-direction: column;
+  position: relative;
 
   .title {
     font-family: $font-regular;
@@ -63,6 +72,7 @@
   }
   button {
     display: flex;
+    // position: relative;
     align-items: center;
     min-width: 120px;
     font-family: $font-light;

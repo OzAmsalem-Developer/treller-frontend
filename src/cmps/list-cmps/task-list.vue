@@ -104,9 +104,6 @@ export default {
     };
   },
   methods: {
-    closeMenu() {
-      console.log("We");
-    },
     getEmptyTask() {
       this.newTask = boardService.getEmptyTask();
       setTimeout(() => {

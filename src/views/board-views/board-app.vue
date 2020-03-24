@@ -12,6 +12,7 @@
       >
         <Draggable v-for="(list,idx) in taskLists" :key="list.id">
           <task-list
+            v-if="list"
             :taskList="list"
             :key="list.id"
             :listIdx="idx"
@@ -34,16 +35,16 @@
               class="add-list-input"
               placeholder="List title.."
               v-model="newTaskList.name"
-              @blur="$refs.submitBtn.click()"
+              @blur="blurAddList"
             />
-            <button ref="submitBtn" class="add-list-inner-btn">Add</button>
+            <button ref="addListBtn" class="add-list-inner-btn">Add</button>
             <button @click="newTaskList = null" class="close-btn"><i class="fas fa-times"></i></button>
           </form>
           </transition>
         </section>
       </Container>
     </div>
-    <task-details v-if="!isTaskLoad && currTask" />
+    <task-details v-if="!isTaskLoad && isTaskDetailsOpen" @move-task="moveTask" />
   </main>
 </template>
 
@@ -66,7 +67,9 @@ export default {
     return {
       board: null,
       newTaskList: null,
+      isTaskDetailsOpen: false,
       isTaskLoad: false,
+      isListSaved: false,
       draggingListIdx: null,
       placeholderOpts: {
         className: "list-drop-preview",
@@ -77,13 +80,18 @@ export default {
   },
   methods: {
     async loadBoardAndTask(boardId) {
+      console.log('// BOARD ID:', boardId)
       const board = await this.$store.dispatch({ type: "loadById", boardId });
       try {
+      console.log('// BOARD after dispatch:', board)
         this.board = JSON.parse(JSON.stringify(board));
         const taskId = this.$route.params.taskId;
-
-        this.$store.commit({ type: "setTaskById", taskId });
-        this.task = JSON.parse(JSON.stringify(this.currTask));
+        if (taskId) {
+          this.$store.commit({ type: "setTaskById", taskId });
+          this.isTaskDetailsOpen = true
+        } else {
+           this.isTaskDetailsOpen = false
+        }
         this.isTaskLoad = false;
       } catch {
         console.log("Err msg to user here");
@@ -108,6 +116,7 @@ export default {
         this.newTaskList = null;
         return;
       }
+      this.isListSaved = true
       this.board.taskLists.push(this.newTaskList);
       this.saveBoard();
       this.newTaskList = null;
@@ -115,6 +124,18 @@ export default {
       setTimeout(() => {
         utilService.scrollTo(this.$refs.lists, 1500, 700);
       }, 2);
+    },
+    blurAddList() {
+      setTimeout(() => {
+        if (this.isListSaved) {
+          this.isListSaved = false
+        } else {
+          if (!this.$refs.addListBtn) return
+            this.$refs.addListBtn.click()
+            this.newTaskList = null;
+            this.isListSaved = false
+        }
+      }, 150);
     },
     moveList({ listIdx, toIdx }) {
       const taskList = JSON.parse(
@@ -146,18 +167,30 @@ export default {
       if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList);
       if (idx === this.board.taskLists.length - 1) this.saveBoard();
     },
-    moveTask({ fromListId, toListId, taskId }) {
+    moveTask({ toListId, taskId }) {
+      var fromListId
+      const idx = this.taskLists.findIndex(taskList => {
+        let matchingTask = taskList.tasks.find(task => task.id === taskId)
+        return !!matchingTask
+      })
+      fromListId = this.taskLists[idx].id
+
       const fromTaskList = this.board.taskLists.find(tl => tl.id === fromListId);
+      if (!fromTaskList) return
       let taskIdx;
-      const task = fromTaskList.tasks.find((t, idx) => {
+      var task = fromTaskList.tasks.find((t, idx) => {
         if (t.id === taskId) {
           taskIdx = idx;
           return true;
         }
       });
+
+
       fromTaskList.tasks.splice(taskIdx, 1);
 
+      console.log('TASK:' , task)
       const toTaskList = this.board.taskLists.find(tl => tl.id === toListId);
+      if (!task) return
       toTaskList.tasks.push(task);
       this.saveBoard();
     },
