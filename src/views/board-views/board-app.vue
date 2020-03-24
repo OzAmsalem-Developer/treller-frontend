@@ -80,7 +80,9 @@ export default {
   },
   methods: {
     async loadBoardAndTask(boardId) {
+      console.log('// BOARD ID:', boardId)
       const board = await this.$store.dispatch({ type: "loadById", boardId });
+      console.log('// BOARD after dispatch:', board)
       try {
         this.board = JSON.parse(JSON.stringify(board));
         const taskId = this.$route.params.taskId;
