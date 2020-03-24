@@ -1,6 +1,6 @@
 <template>
   <section v-if="taskList" class="task-list">
-    <section class="edit-list-name"  v-if="isEditName">
+    <section class="edit-list-name" v-if="isEditName">
       <input
         @mouseup="focus"
         @change="saveListName"
@@ -11,23 +11,32 @@
         ref="listNameInput"
         draggable="false"
       />
-      <button @click="isMenuOpen = !isMenuOpen" class="menu-btn"><i class="menu-icon fas fa-ellipsis-h"></i></button>
+
+      <div @click="isMenuOpen = false" class="screen-trans"></div>
+      <button @click="isMenuOpen = !isMenuOpen" class="menu-btn">
+        <i class="menu-icon fas fa-ellipsis-h"></i>
+      </button>
+
       <list-menu
-        @add-task="getEmptyTask(); isMenuOpen = false"
+        @add-task="getEmptyTask"
         @list-moved="moveList"
         :listId="taskList.id"
         v-if="isMenuOpen"
-      />
+        @clicked="isMenuOpen = false"
+      ></list-menu>
     </section>
 
     <header class="list-header" v-else>
       <h3 class="list-name" v-if="!isEditName" @click="editListName">{{taskList.name}}</h3>
-      <button @click="isMenuOpen = !isMenuOpen" class="menu-btn"><i class="menu-icon fas fa-ellipsis-h"></i></button>
+      <button @click="isMenuOpen = !isMenuOpen" class="menu-btn">
+        <i class="menu-icon fas fa-ellipsis-h"></i>
+      </button>
       <list-menu
         @add-task="getEmptyTask(); isMenuOpen = false"
         @list-moved="moveList"
         :listId="taskList.id"
         v-if="isMenuOpen"
+        @clicked="isMenuOpen = false"
       />
     </header>
     <main class="tasks" ref="tasks">
@@ -48,28 +57,30 @@
         </Draggable>
       </Container>
       <transition name="fade">
-      <form class="add-task" @submit.prevent="addTask" @keydown.enter.prevent v-if="newTask">
-        <textarea
-          class="new-task-box"
-          ref="taskInput"
-          @keyup.enter.prevent="addTask"
-          v-model="newTask.name"
-          cols="30"
-          rows="3"
-          placeholder="Task name"
-        ></textarea>
-        <button ref="addTaskBtn" hidden>Add</button>
-      </form>
+        <form class="add-task" @submit.prevent="addTask" @keydown.enter.prevent v-if="newTask">
+          <textarea
+            class="new-task-box"
+            ref="taskInput"
+            @keyup.enter.prevent="addTask"
+            v-model="newTask.name"
+            cols="30"
+            rows="3"
+            placeholder="Task name"
+          ></textarea>
+          <button ref="addTaskBtn" hidden>Add</button>
+        </form>
       </transition>
     </main>
     <footer>
       <section v-if="newTask" class="new-task-btns">
         <button @click="$refs.addTaskBtn.click()" ref="sendTaskForm" class="add-task-btn inner">Add</button>
-        <button @click.prevent="newTask = null" class="close-btn"><i class="fas fa-times"></i></button>
+        <button @click.prevent="newTask = null" class="close-btn">
+          <i class="fas fa-times"></i>
+        </button>
       </section>
       <button v-else @click="getEmptyTask" class="add-task-btn">
         <i class="fas fa-plus"></i> Add Task
-        </button>
+      </button>
     </footer>
   </section>
 </template>
@@ -77,6 +88,7 @@
 <script>
 import taskPreview from "@/cmps/task-cmps/task-preview.vue";
 import { boardService } from "@/services/board.service";
+import { eventBus, EV_closeFromScreen } from "@/services/eventBus.service";
 import { utilService } from "@/services/util.service";
 import listMenu from "@/cmps/list-cmps/list-menu";
 import { Container, Draggable } from "vue-smooth-dnd";
@@ -91,6 +103,9 @@ export default {
     };
   },
   methods: {
+    closeMenu() {
+      console.log("We");
+    },
     getEmptyTask() {
       this.newTask = boardService.getEmptyTask();
       setTimeout(() => {

@@ -1,14 +1,17 @@
 <template>
+<section>
+    <div class="screen-trans" @click="$emit('clicked')"></div>
   <menu class="list-menu">
     <div @click="emitEv('remove-list')" class="item">Remove list</div>
     <div @click="$emit('add-task')" class="item">Add new task</div>
     <div  @click="isMoveOpen = !isMoveOpen" class="item">Move list</div>
     <list-mover v-if="isMoveOpen" v-model="moveToIdx" @input="moveList" :options="listIdxs" />
   </menu>
+</section>
 </template>
 
 <script>
-import {eventBus} from '@/services/eventBus.service'
+import {eventBus, EV_closeFromScreen} from '@/services/eventBus.service'
 import listMover from '@/cmps/list-cmps/list-mover'
 
 export default {
