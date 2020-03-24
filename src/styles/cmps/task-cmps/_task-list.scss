@@ -27,6 +27,7 @@
     outline: 0;
     font-weight: normal;
     color: lighten(#5e6c84, 15) ;
+    transition: color .3s;
   }
 
   .menu-btn:hover {
