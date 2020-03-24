@@ -7,10 +7,7 @@
         v-model="moveToList"
         :optionalLists="optionalLists"
         @input="moveTask"
-        
       />
-      <!-- @move-task="moveTask" -->
-      <!-- @input="moveTask" -->
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
@@ -230,22 +227,25 @@ export default {
   },
   methods: {
     test() {
-      console.log('moveToList', this.moveToList)
+      console.log("moveToList", this.moveToList);
     },
     toggleListMenu() {
       this.isListOpen = !this.isListOpen;
     },
     moveTask() {
-      console.log("Please move the Task!");
+      console.log("// moveTask function:");
       const toListId = this.moveToList;
-      console.log("toListId:", toListId);
-      const fromListId = this.task.listId;
+      // const fromListId = this.task.listId;
       const taskId = this.task.id;
-      console.log("taskID:", this.task);
+      console.log("toListId:", toListId);
+      // console.log("fromListId:", fromListId);
+      console.log("taskId:", taskId);
+      // console.log("taskID:", this.task);
       // const lists = this.$store.getters.taskLists
       this.$emit("move-task", { fromListId, toListId, taskId });
-      this.updateTask()
-      this.$router.push('/board/' + this.currBoard._id)
+      this.updateTask();
+      const boardId = this.$store.getters.currBoardId;
+      this.$router.push(`/board/${boardId}`);
     },
     async updateTask() {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });

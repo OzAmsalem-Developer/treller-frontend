@@ -23,6 +23,7 @@ export default {
   methods: {
     emitListId() {
       if (!this.pickedListId) return;
+      console.log('Move-Picker emit list id:', this.pickedListId)
       this.$emit("input", this.pickedListId);
     },
     moveTask() {
