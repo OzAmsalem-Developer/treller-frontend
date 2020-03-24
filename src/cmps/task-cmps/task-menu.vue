@@ -10,32 +10,25 @@
     <menu class="editor-buttons">
       <button class="task-menu-item" @click.stop="isMenuOpen.label = !isMenuOpen.label">
         <i class="fas fa-tag"></i>
-        <span class="menu-btn-txt">Labels</span> 
+        <span class="menu-btn-txt">Labels</span>
       </button>
       <button class="task-menu-item" @click.stop="isMenuOpen.move = !isMenuOpen.move">
         <i class="fas fa-long-arrow-alt-right"></i>
         <span class="menu-btn-txt">Move</span>
-        </button>
-      <button class="task-menu-item" @click.stop="isMenuOpen.move = !isMenuOpen.move">
+      </button>
+      <button class="task-menu-item" @click.stop="isMenuOpen.dueDate = !isMenuOpen.dueDate">
         <i class="far fa-clock"></i>
         <span class="menu-btn-txt">Change Due Date</span>
-        </button>
+      </button>
 
       <button class="task-menu-item" @click.stop="$emit('remove-task')">
         <i class="far fa-trash-alt"></i>
-        <span class="menu-btn-txt">Remove</span> 
+        <span class="menu-btn-txt">Remove</span>
       </button>
     </menu>
 
-      <button class="save-name-btn" @click.stop="setName(); $emit('clicked')">Save</button>
+    <button class="save-name-btn" @click.stop="setName(); $emit('clicked')">Save</button>
 
-    <move-picker
-      class="move-picker"
-      v-if="isMenuOpen.move"
-      :optionalLists="optionalLists"
-      v-model="moveToList"
-      @input="moveTask"
-    />
     <labelPicker
       class="label-picker"
       v-if="isMenuOpen.label"
@@ -43,8 +36,28 @@
       :taskLabels="task.labels"
       @set-labels="setLabels"
     />
+    <move-picker
+      class="move-picker"
+      v-if="isMenuOpen.move"
+      :optionalLists="optionalLists"
+      v-model="moveToList"
+      @input="moveTask"
+    />
+    <div class="block">
+      <el-date-picker
+        v-if="isMenuOpen.dueDate"
+        type="datetime"
+        format="MMM dd hh:mm A"
+        value-format="timestamp"
+        placeholder="Select date and time"
+        class="el-date-picker"
+        size="mini"
+        ref="calendar"
+      ></el-date-picker>
+    </div>
+        <!-- v-model="editedTask.dueDate.time" -->
+        <!-- @change="updateDueDate" -->
   </section>
-      
 </template>
 
 <script>
@@ -60,10 +73,11 @@ export default {
     return {
       isMenuOpen: {
         move: false,
-        label: false
+        label: false,
+        dueDate: false
       },
       moveToList: null,
-      taskCopy: null,
+      taskCopy: null
     };
   },
   methods: {
@@ -92,9 +106,11 @@ export default {
     }
   },
   mounted() {
-    this.$refs.taskMenu.style.top = this.menu.getBoundingClientRect().y - (this.scrollTop / 3) + 'px'
-    this.$refs.taskMenu.style.left = this.menu.getBoundingClientRect().x  - 210 + 'px'
-    this.$refs.editTaskName.select()
+    this.$refs.taskMenu.style.top =
+      this.menu.getBoundingClientRect().y - this.scrollTop / 3 + "px";
+    this.$refs.taskMenu.style.left =
+      this.menu.getBoundingClientRect().x - 210 + "px";
+    this.$refs.editTaskName.select();
   },
   created() {
     this.taskCopy = JSON.parse(JSON.stringify(this.task));
