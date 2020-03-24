@@ -4,10 +4,11 @@
       v-if="isMenuOpen"
       :task="task"
       :listId="listId"
-      @click.native.stop=""
+      @click.native.stop
       @remove-task="$emit('remove-task', task.id)"
       @set-labels="updateTask"
       @set-name="updateTask"
+      @set-due-date="updateTask"
       :menu="$refs.pMenuBtn"
       :scrollTop="scrollTop"
       @clicked="isMenuOpen=false"
