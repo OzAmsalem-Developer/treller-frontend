@@ -10,6 +10,17 @@
     align-items: center;
 }
 
+.close-btn {
+    padding: 8px 14px;
+    border-radius: 3px;
+    transition: .3s;
+    color: $textBlue;
+  }
+  
+  .close-btn:hover {
+    background-color: rgba(9, 30, 66, 0.08);
+  }
+
 // Drug & Drop helpers
 
 .list-drop-preview {

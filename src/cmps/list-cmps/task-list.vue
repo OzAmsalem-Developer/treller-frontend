@@ -22,7 +22,7 @@
 
     <header class="list-header" v-else>
       <h3 class="list-name" v-if="!isEditName" @click="editListName">{{taskList.name}}</h3>
-      <button @click="isMenuOpen = !isMenuOpen" class="menu-btn"><i class="fas fa-ellipsis-h"></i></button>
+      <button @click="isMenuOpen = !isMenuOpen" class="menu-btn"><i class="menu-icon fas fa-ellipsis-h"></i></button>
       <list-menu
         @add-task="getEmptyTask(); isMenuOpen = false"
         @list-moved="moveList"

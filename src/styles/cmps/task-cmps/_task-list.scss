@@ -5,6 +5,7 @@
   max-height: 500px;
   position: relative;
   box-shadow: 0 0.45px 0 rgba(9, 30, 66, 0.25);
+
   .tasks {
     padding: 0 5px;
     margin: 0 5px;
@@ -21,9 +22,15 @@
   }
 
   .menu-btn {
-    font-size: rem(22px);
-    font-family: $font-bold;
+    font-size: rem(18px);
+    font-family: $font-semi;
     outline: 0;
+    font-weight: normal;
+    color: lighten(#5e6c84, 15) ;
+  }
+
+  .menu-btn:hover {
+    color: #5e6c84;
   }
 
   header {
@@ -93,7 +100,6 @@
     display: flex;
     align-items: center;
     height: 100%;
-    // margin: 0 10px;
 
     .add-task-btn.inner {
       width: unset;
@@ -108,20 +114,8 @@
       background-color: lighten($pGreen, 10);
     }
 
-    .close-btn {
-      padding: 8px 14px;
-      border-radius: 3px;
-    }
-
-    .close-btn:hover {
-      background-color: rgba(9, 30, 66, 0.08);
-    }
-
-    .menu-icon {
-      font-weight: normal;
-      color: #5e6c84;
-    }
   }
+  
     // fades
 
     .fade-enter-active {
