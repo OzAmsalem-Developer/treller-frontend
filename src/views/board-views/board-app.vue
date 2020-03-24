@@ -35,9 +35,9 @@
               class="add-list-input"
               placeholder="List title.."
               v-model="newTaskList.name"
-              @blur="$refs.submitBtn.click()"
+              @blur="blurAddList"
             />
-            <button ref="submitBtn" class="add-list-inner-btn">Add</button>
+            <button ref="addListBtn" class="add-list-inner-btn">Add</button>
             <button @click="newTaskList = null" class="close-btn"><i class="fas fa-times"></i></button>
           </form>
           </transition>
@@ -69,6 +69,7 @@ export default {
       newTaskList: null,
       isTaskDetailsOpen: false,
       isTaskLoad: false,
+      isListSaved: false,
       draggingListIdx: null,
       placeholderOpts: {
         className: "list-drop-preview",
@@ -113,6 +114,7 @@ export default {
         this.newTaskList = null;
         return;
       }
+      this.isListSaved = true
       this.board.taskLists.push(this.newTaskList);
       this.saveBoard();
       this.newTaskList = null;
@@ -120,6 +122,18 @@ export default {
       setTimeout(() => {
         utilService.scrollTo(this.$refs.lists, 1500, 700);
       }, 2);
+    },
+    blurAddList() {
+      setTimeout(() => {
+        if (this.isListSaved) {
+          this.isListSaved = false
+        } else {
+          if (!this.$refs.addListBtn) return
+            this.$refs.addListBtn.click()
+            this.newTaskList = null;
+            this.isListSaved = false
+        }
+      }, 150);
     },
     moveList({ listIdx, toIdx }) {
       const taskList = JSON.parse(

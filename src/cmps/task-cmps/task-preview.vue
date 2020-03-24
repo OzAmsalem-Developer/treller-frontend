@@ -11,14 +11,13 @@
       @set-due-date="updateTask"
       :menu="$refs.pMenuBtn"
       :scrollTop="scrollTop"
-      @clicked="isMenuOpen=false"
+      @clicked="closeMenu"
     >
     </task-menu>
   <section class="task-preview" @click="taskDetailsPage" >
     <button ref="pMenuBtn" class="preview-menu-btn" @click="openMenu">
       <i class="fas fa-pencil-alt"></i>
     </button>
-    <div class="div-screen" v-if="isMenuOpen"  @click.stop="isMenuOpen = false"></div>
     
     <label-preview :labels="taskCopy.labels" />
     <p class="preview-title">{{task.name}}</p>
@@ -71,6 +70,10 @@ export default {
     openMenu(ev) {
       ev.stopPropagation();
       this.isMenuOpen = !this.isMenuOpen;
+    },
+    closeMenu(task) {
+      this.updateTask(task)
+      this.isMenuOpen = false
     },
     taskDetailsPage() {
       this.$router.push(this.taskDetails);
