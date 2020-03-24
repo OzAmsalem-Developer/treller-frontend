@@ -27,13 +27,19 @@
         width: 100%;
       }
     }
-
-
-    .save-name-btn:hover {
-      background-color: lighten($pGreen, 10);
-    }
-
-    
+  }
+  .save-name-btn {
+    background-color: $pGreen;
+    color: $clr5;
+    font-family: $font-semi;
+    font-size: rem(14px);
+    border-radius: 3px;
+    padding: 6px 24px;
+    margin-top: 4px;
+    justify-self: start;
+  }
+  .save-name-btn:hover {
+    background-color: lighten($pGreen, 10);
   }
   .editor-buttons {
     .task-menu-item {
@@ -60,17 +66,11 @@
       color: #fff;
       transform: translateX(5px);
     }
-
   }
-}
 
-.save-name-btn {
-  background-color: $pGreen;
-  color: $clr5;
-  font-family: $font-semi;
-  font-size: rem(14px);
-  border-radius: 3px;
-  padding: 6px 24px;
-  margin-top: 4px;
-  justify-self: start;
+  .el-date-editor .el-input__inner , 
+  .el-date-editor .el-icon-time:before{
+    opacity: 0;
+  }
+
 }

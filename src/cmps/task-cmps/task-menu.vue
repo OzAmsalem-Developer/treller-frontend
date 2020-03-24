@@ -1,5 +1,5 @@
 <template>
-  <section class="task-menu" ref="taskMenu">
+  <section v-if="task" class="task-menu" ref="taskMenu">
     <div class="card-container">
       <div class="card-details">
         <label-preview :labels="taskCopy.labels" />
@@ -16,7 +16,7 @@
         <i class="fas fa-long-arrow-alt-right"></i>
         <span class="menu-btn-txt">Move</span>
       </button>
-      <button class="task-menu-item" @click.stop="isMenuOpen.dueDate = !isMenuOpen.dueDate">
+      <button class="task-menu-item" @click.stop="openDueDate">
         <i class="far fa-clock"></i>
         <span class="menu-btn-txt">Change Due Date</span>
       </button>
@@ -45,7 +45,9 @@
     />
     <div class="block">
       <el-date-picker
-        v-if="isMenuOpen.dueDate"
+        v-show="isMenuOpen.dueDate"
+        v-model="taskCopy.dueDate.time"
+        @change="setDueDate"
         type="datetime"
         format="MMM dd hh:mm A"
         value-format="timestamp"
@@ -53,10 +55,9 @@
         class="el-date-picker"
         size="mini"
         ref="calendar"
-      ></el-date-picker>
+      >
+      </el-date-picker>
     </div>
-        <!-- v-model="editedTask.dueDate.time" -->
-        <!-- @change="updateDueDate" -->
   </section>
 </template>
 
@@ -94,6 +95,15 @@ export default {
     },
     setName() {
       this.$emit("set-name", this.taskCopy);
+    },
+    setDueDate() {
+      this.$emit("set-due-date", this.taskCopy);
+    },
+    openDueDate(){
+      this.isMenuOpen.dueDate = !this.isMenuOpen.dueDate
+      setTimeout(() => {
+        this.$refs.calendar.focus()
+      }, 0) 
     }
   },
   computed: {
