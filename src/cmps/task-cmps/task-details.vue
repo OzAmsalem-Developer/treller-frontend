@@ -131,7 +131,7 @@
                 class="checklist-add-todo"
                 v-model="currTodo.txt"
                 type="text"
-                placeholder="add an item"
+                placeholder="Add an item"
                 @change="addTodo"
               />
             </div>
