@@ -157,6 +157,7 @@
   .details-due-list {
     display: flex;
     align-items: center;
+    //   margin-inline-end: 5px;
 
     :first-child {
       margin-inline-end: rem(5px);
@@ -170,104 +171,101 @@
   }
 }
 
-// .details-due-check {
+.details-description {
+  .title {
+    margin-bottom: rem(5px);
+  }
 
-// }
+  .details-desc-input {
+    font-size: rem(14px);
+    font-family: $font-regular;
+    resize: none;
+    @include input-blur;
+  }
 
-// .details-due-list > * {
-//   margin-inline-end: 5px;
-// }
+  .details-desc-input:focus {
+    @include input-focus;
+  }
+}
 
-// .details-desc-header {
-//   display: flex;
-//   align-items: center;
-//   margin-bottom: rem(5px);
-// }
+.details-checklist {
+  .details-checklist-header {
+    display: flex;
+    // flex-direction: column;
+    align-items: center;
 
-// .details-description {
-//   margin-bottom: 0;
-// }
+    .checklist-title {
+      @include input-blur;
+      font-size: 16px;
+      font-family: $font-semi;
+      color: $textBlue;
+      width: 100%;
+    }
 
-// .details-desc-input {
-//   font-size: rem(14px);
-//   font-family: $font-regular;
-//   resize: none;
-//   @include input-blur;
-// }
+    .checklist-title:focus {
+      @include input-focus;
+    }
+  }
+  .details-progress {
+    padding-inline-start: rem(10px);
+  }
+}
 
-// .details-desc-input:focus {
-//   @include input-focus;
-// }
+.checklist-todo-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s;
 
-// .details-checklist {
+  .checklist-todo-container:hover {
+    background-color: darken($clr5, 3);
+    border-radius: 3px;
+  }
+  .checklist-todo-container:hover > :last-child {
+    opacity: 1;
+  }
 
-//   .details-checklist-header {
-//     display: flex;
-//     align-items: center;
-//   }
-//   .details-progress {
-//     padding-inline-start: rem(10px);
-//   }
-// }
+  .checklist-todo-container > :first-child {
+    margin-inline-end: 5px;
+    cursor: pointer;
+    min-width: 16px;
+    min-height: 16px;
+  }
 
-// .checklist-todo-container {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   transition: all 0.3s;
-// }
-// .checklist-todo-container:hover {
-//   background-color: darken($clr5, 3);
-//   border-radius: 3px;
-// }
+  .checklist-todo {
+    width: 100%;
+    @include input-blur;
+    font-family: $font-regular;
+    color: $textBlue;
+  }
 
-// .checklist-todo-container:hover > :last-child {
-//   opacity: 1;
-// }
+  .checklist-todo:focus {
+    @include input-focus;
+    font-family: $font-regular;
+  }
 
-// .checklist-todo-container > :first-child {
-//   margin-inline-end: 5px;
-//   cursor: pointer;
-//   min-width: 16px;
-//   min-height: 16px;
-// }
+  .todo-remove-btn {
+    opacity: 0;
+    font-family: $font-bold;
+    font-size: 14px;
 
-// .checklist-title {
-//   @include input-blur;
-//   font-size: 16px;
-//   font-family: $font-semi;
-// }
+    margin-inline-start: 10px;
+    transition: all 0.3s;
+    padding: 5px 10px;
+    text-align: center;
+  }
 
-// .checklist-title:focus {
-//   @include input-focus;
-// }
+  .todo-remove-btn:hover {
+    color: $clr3;
+    border-radius: 3px;
+    background-color: #ff7b64;
+  }
 
-// .checklist-todo {
-//   @include input-blur;
-//   font-family: $font-regular;
-// }
+  // .checklist-add-todo {
 
-// .checklist-todo:focus {
-//   @include input-focus;
-//   font-family: $font-regular;
-// }
+  // }
+}
 
-// .todo-remove-btn {
-//   opacity: 0;
-//   font-family: $font-bold;
-//   font-size: 14px;
-
-//   margin-inline-start: 10px;
-//   transition: all 0.3s;
-//   padding: 5px 10px;
-//   text-align: center;
-// }
-
-// .todo-remove-btn:hover {
-//   color: $clr3;
-//   border-radius: 3px;
-//   background-color: #ff7b64;
-// }
 
 // .details-disc-header {
 //   display: flex;
