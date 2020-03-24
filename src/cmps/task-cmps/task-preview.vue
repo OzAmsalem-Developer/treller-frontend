@@ -1,6 +1,6 @@
 <template>
-  <section class="task-preview" @click="taskDetailsPage">
-    <button class="preview-menu-btn" @click="toggleMenu">
+  <section class="task-preview" @click="taskDetailsPage" >
+    <button ref="pMenuBtn" class="preview-menu-btn" @click="openMenu">
       <i class="fas fa-pencil-alt"></i>
     </button>
       <task-menu
@@ -8,11 +8,15 @@
       :task="task"
       :listId="listId"
       @click.native.stop=""
-      @toggle-menu="toggleMenu"
       @remove-task="$emit('remove-task', task.id)"
       @set-labels="updateTask"
       @set-name="updateTask"
-    />
+      :menu="$refs.pMenuBtn"
+      :scrollTop="scrollTop"
+      @clicked="isMenuOpen=false"
+    >
+    </task-menu>
+    <div class="div-screen" v-if="isMenuOpen"  @click.stop="isMenuOpen = false"></div>
     
     <label-preview :labels="taskCopy.labels" />
     <p class="preview-title">{{task.name}}</p>
@@ -54,10 +58,13 @@ export default {
         task.checklist ||
         task.members.length
       )
+    },
+    scrollTop() {
+      return document.getElementById(this.listId).scrollTop
     }
   },
   methods: {
-    toggleMenu(ev) {
+    openMenu(ev) {
       ev.stopPropagation();
       this.isMenuOpen = !this.isMenuOpen;
     },
@@ -92,7 +99,8 @@ export default {
   },
   props: {
     task: Object,
-    listId: String
+    listId: String,
+    elTasks: HTMLElement
   }
 };
 </script>

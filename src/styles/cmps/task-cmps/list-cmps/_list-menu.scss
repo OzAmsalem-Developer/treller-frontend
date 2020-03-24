@@ -8,8 +8,17 @@
     box-shadow: $shadow;
     font-size: rem(13px);
     border: 0.5px solid #ebecf0;
+    color: $textBlue;
     > * {
         padding: 5px 6px;
+        cursor: pointer;
+    }
+
+    .fas, .far {
+        color: $textBlue;
+        font-size: 14px;
+        margin: 3px;
+        margin-left: 0px;
     }
 
     .item:hover {

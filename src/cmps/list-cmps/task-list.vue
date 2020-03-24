@@ -2,9 +2,8 @@
   <section v-if="taskList" class="task-list">
     <section class="edit-list-name" v-if="isEditName">
       <input
-        @mouseup="focus"
+      @click="isEditName = true"
         @change="saveListName"
-        @blur="isEditName = false"
         class="list-input"
         type="text"
         v-model="listCopy.name"
@@ -12,11 +11,11 @@
         draggable="false"
       />
 
-      <div @click="isMenuOpen = false" class="screen-trans"></div>
-      <button @click="isMenuOpen = !isMenuOpen" class="menu-btn">
+      <button @click="isMenuOpen = !isMenuOpen" class="list-menu-btn">
         <i class="menu-icon fas fa-ellipsis-h"></i>
       </button>
 
+      <div v-if="isMenuOpen" @click="isMenuOpen = false" class="screen-trans"></div>
       <list-menu
         @add-task="getEmptyTask"
         @list-moved="moveList"
@@ -28,7 +27,7 @@
 
     <header class="list-header" v-else>
       <h3 class="list-name" v-if="!isEditName" @click="editListName">{{taskList.name}}</h3>
-      <button @click="isMenuOpen = !isMenuOpen" class="menu-btn">
+      <button @click="isMenuOpen = !isMenuOpen" class="list-menu-btn">
         <i class="menu-icon fas fa-ellipsis-h"></i>
       </button>
       <list-menu
@@ -39,10 +38,11 @@
         @clicked="isMenuOpen = false"
       />
     </header>
-    <main class="tasks" ref="tasks">
+    <main class="tasks" ref="tasks" :id="taskList.id">
       <Container
         @drop="onDrop"
         group-name="tasks"
+        drag-handle-selector=".task-preview"
         :get-child-payload="getTaskPayload(taskList.id)"
         drag-class="task-dragging"
         drop-class="task-dropping"
@@ -51,6 +51,7 @@
           <task-preview
             :task="task"
             :listId="taskList.id"
+            :elTasks="$refs.tasks"
             @remove-task="removeTask"
             @update-task="saveTask"
           />
@@ -180,7 +181,7 @@ export default {
     },
     saveListName(ev) {
       this.saveList("save-list");
-      ev.target.blur();
+      this.isEditName = false
     },
     focus(ev) {
       ev.target.focus();
