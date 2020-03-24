@@ -7,7 +7,7 @@
   cursor: default;
 
   .card-container {
-    min-width: 245px;
+    width: 245px;
     width: 100%;
     cursor: default;
 
@@ -75,6 +75,7 @@
   }
 
   .label-picker {
-      position: fixed;
+      position: absolute;
+      left: 51%;
   }
 }

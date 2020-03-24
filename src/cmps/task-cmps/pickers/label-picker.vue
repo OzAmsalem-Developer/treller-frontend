@@ -20,6 +20,9 @@
         </button>
       </div>
     </div>
+    <button class="close-btn" @click="closePicker">
+      <i class="fas fa-times"></i>
+    </button>
   </section>
 </template>
 
@@ -60,6 +63,9 @@ export default {
         label => label === boardLabelKey
       );
       return labelIdx !== -1 ? true : false;
+    },
+    closePicker() {
+      this.$emit('close-picker')
     }
   },
   created() {

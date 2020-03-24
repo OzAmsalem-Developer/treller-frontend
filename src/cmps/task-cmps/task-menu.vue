@@ -38,6 +38,7 @@
       :boardLabels="boardLabels"
       :taskLabels="task.labels"
       @set-labels="setLabels"
+      @close-picker="isMenuOpen.label = false"
     />
     <move-picker
       class="move-picker"
