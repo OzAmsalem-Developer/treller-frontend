@@ -18,6 +18,8 @@
         </button>
       </div>
 
+
+      <h1></h1>
       <div class="details-container">
         <div class="details-info">
           <div class="details-lmd">
@@ -217,6 +219,7 @@ export default {
       currDueDate: null,
       moveToList: null,
       isListOpen: false,
+      listId: null,
       currTodo: {
         txt: ""
       },
@@ -229,23 +232,27 @@ export default {
     test() {
       console.log("moveToList", this.moveToList);
     },
+    getListId() {
+      const idx = this.$store.getters.taskLists.findIndex(taskList => {
+        let matchingTask = taskList.tasks.find(task => task.id === this.task.id)
+        return !!matchingTask
+      })
+      this.listId = this.$store.getters.taskLists[idx].id
+    },
     toggleListMenu() {
       this.isListOpen = !this.isListOpen;
     },
     moveTask() {
-      console.log("// moveTask function:");
       const toListId = this.moveToList;
-      // const fromListId = this.task.listId;
       const taskId = this.task.id;
       console.log("toListId:", toListId);
       // console.log("fromListId:", fromListId);
       console.log("taskId:", taskId);
       // console.log("taskID:", this.task);
       // const lists = this.$store.getters.taskLists
-      this.$emit("move-task", { fromListId, toListId, taskId });
-      this.updateTask();
-      const boardId = this.$store.getters.currBoardId;
-      this.$router.push(`/board/${boardId}`);
+      this.$emit("move-task", {  toListId, taskId });
+      this.updateTask()
+      // this.$router.push('/board/' + this.currBoard._id)
     },
     async updateTask() {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
@@ -414,6 +421,7 @@ export default {
     this.editedTask = JSON.parse(JSON.stringify(this.task));
     console.log("// Details Task:", this.task);
     document.addEventListener("keyup", this.closeDetailsOnEsc);
+    this.getListId()
   },
   destroyed() {
     document.removeEventListener("keyup", this.closeDetailsOnEsc);

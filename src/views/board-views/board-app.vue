@@ -82,15 +82,15 @@ export default {
     async loadBoardAndTask(boardId) {
       console.log('// BOARD ID:', boardId)
       const board = await this.$store.dispatch({ type: "loadById", boardId });
-      console.log('// BOARD after dispatch:', board)
       try {
+      console.log('// BOARD after dispatch:', board)
         this.board = JSON.parse(JSON.stringify(board));
         const taskId = this.$route.params.taskId;
         if (taskId) {
           this.$store.commit({ type: "setTaskById", taskId });
-          isTaskDetailsOpen = true
+          this.isTaskDetailsOpen = true
         } else {
-           isTaskDetailsOpen = false
+           this.isTaskDetailsOpen = false
         }
         this.isTaskLoad = false;
       } catch {
@@ -167,19 +167,25 @@ export default {
       if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList);
       if (idx === this.board.taskLists.length - 1) this.saveBoard();
     },
-    moveTask({ fromListId, toListId, taskId }) {
-      console.log(fromListId)
-      this.isTaskLoad = true
+    moveTask({ toListId, taskId }) {
+      var fromListId
+      const idx = this.taskLists.findIndex(taskList => {
+        let matchingTask = taskList.tasks.find(task => task.id === taskId)
+        return !!matchingTask
+      })
+      fromListId = this.taskLists[idx].id
+
       const fromTaskList = this.board.taskLists.find(tl => tl.id === fromListId);
-      console.log(fromTaskList)
       if (!fromTaskList) return
       let taskIdx;
-      const task = fromTaskList.tasks.find((t, idx) => {
+      var task = fromTaskList.tasks.find((t, idx) => {
         if (t.id === taskId) {
           taskIdx = idx;
           return true;
         }
       });
+
+
       fromTaskList.tasks.splice(taskIdx, 1);
 
       console.log('TASK:' , task)
