@@ -1,13 +1,14 @@
 <template>
   <section class="move-picker">
-    <form @submit.prevent="moveTask">
-      <p>List</p>
-      <select v-model="pickedListId">
-        <option v-for="list in optionalLists" :key="list.id" :value="list.id"
-        >{{list.name}}</option>
+    <form @submit.prevent="emitListId">
+      <span class="title">Move Task</span>
+      <span class="dest">Select destination</span>
+
+      <select v-model="pickedListId" placeholder="Select list">
+        <option v-for="list in optionalLists" :key="list.id" :value="list.id">{{list.name}}</option>
       </select>
-      <br/>
-      <button>Save</button>
+      <br />
+      <button>Move</button>
     </form>
   </section>
 </template>
@@ -20,9 +21,9 @@ export default {
     };
   },
   methods: {
-    moveTask() {
-      if (!this.pickedListId) return
-      this.$emit('input', this.pickedListId)
+    emitListId() {
+      if (!this.pickedListId) return;
+      this.$emit("input", this.pickedListId);
     }
   },
   props: {
@@ -31,6 +32,3 @@ export default {
   }
 };
 </script>
-
-<style>
-</style>

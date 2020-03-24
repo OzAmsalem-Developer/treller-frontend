@@ -1,6 +1,13 @@
 <template>
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
     <section v-if="task" class="task-details" ref="task">
+      <move-picker
+        class="move-picker-menu"
+        v-if="isListOpen"
+        v-model="moveToList"
+        :optionalLists="optionalLists"
+        @input="moveTask"
+      />
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
@@ -180,7 +187,7 @@
             <i class="far fa-comment"></i>
             <span class="action-title">Comments</span>
           </button>
-          <button @click="moveTask">
+          <button @click="toggleListMenu">
             <i class="fas fa-long-arrow-alt-right"></i>
             <span class="action-title">Move</span>
           </button>
@@ -201,12 +208,15 @@ import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
 import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
 import commentPreview from "@/cmps/task-cmps/previews/comment-preview.vue";
+import movePicker from "@/cmps/task-cmps/pickers/move-picker.vue";
 
 export default {
   data() {
     return {
       editedTask: null,
       currDueDate: null,
+      moveToList: null,
+      isListOpen: false,
       currTodo: {
         txt: ""
       },
@@ -216,8 +226,16 @@ export default {
     };
   },
   methods: {
-    moveTask() {
+    toggleListMenu() {
+      this.isListOpen = !this.isListOpen;
+    },
+    moveTask(toListId) {
       console.log("Please move the Task!");
+      console.log("toListId:", toListId);
+    // const fromListId = this.editedTask.
+
+      // const lists = this.$store.getters.taskLists
+      this.$emit("move-task", { fromListId, toListId, taskId });
     },
     async updateTask() {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
@@ -230,8 +248,8 @@ export default {
       socketService.emit("board boardChanged", this.currBoard);
     },
     updateCheckListTitle(ev) {
-      ev.target.blur()
-      this.updateTask()
+      ev.target.blur();
+      this.updateTask();
     },
     async removeTask() {
       await this.$store.dispatch({
@@ -355,6 +373,10 @@ export default {
     task() {
       return this.$store.getters.currTask;
     },
+    optionalLists() {
+      const taskLists = this.$store.getters.taskLists;
+      return taskLists.filter(tl => tl.id !== this.listId);
+    },
     checklistProgress() {
       if (!this.editedTask.checklist.todos.length) return 0;
 
@@ -390,7 +412,8 @@ export default {
     memberPreview,
     labelPreview,
     dueDatePreview,
-    commentPreview
+    commentPreview,
+    movePicker
   }
 };
 </script>
