@@ -20,7 +20,7 @@
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
         </span>
-        <input v-model="editedTask.name" class="task-title" type="text" @change="updateTask" />
+        <input v-model="editedTask.name" class="task-title" type="text" @change="updateAndBlur" />
         <button class="close-btn" @click="closeDetails">
           <i class="fas fa-times"></i>
         </button>
@@ -114,7 +114,7 @@
                 class="checklist-title"
                 v-model="editedTask.checklist.title"
                 type="text"
-                @change="updateCheckListTitle"
+                @change="updateAndBlur"
                 ref="checklist"
               />
             </div>
@@ -276,7 +276,7 @@ export default {
       }
       socketService.emit("board boardChanged", this.currBoard);
     },
-    updateCheckListTitle(ev) {
+    updateAndBlur(ev) {
       ev.target.blur();
       this.updateTask();
     },
@@ -369,7 +369,7 @@ export default {
       console.log("Please set the Members!");
     },
     updateDescription() {
-      this.$refs.description.focus();
+      this.$refs.description.select();
     },
     expandTextArea() {
       const textarea = this.$refs.description;

@@ -35,11 +35,12 @@
   font-family: $font-light;
 }
 .comment-txt {
+  font-family: $font-regular;
   grid-column: 2 / -1;
   grid-row: 2 / 3;
   font-size: rem(14px);
   box-shadow: $shadow;
-  background-color: rgb(252, 252, 252);
+  background-color: rgb(255, 255, 255);
   padding: 5px 5px;
   border-radius: 3px;
 }
