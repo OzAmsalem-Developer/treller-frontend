@@ -183,10 +183,7 @@ export default {
         }
       });
 
-
       fromTaskList.tasks.splice(taskIdx, 1);
-
-      console.log('TASK:' , task)
       const toTaskList = this.board.taskLists.find(tl => tl.id === toListId);
       if (!task) return
       toTaskList.tasks.push(task);
@@ -194,7 +191,7 @@ export default {
     },
     updateBoard(board) {
       this.$store.commit({ type: "setCurrBoard", board });
-      this.board = JSON.parse(JSON.stringify(this.storeBoard));
+      this.board = JSON.parse(JSON.stringify(board));
     },
     getEmptyList() {
       this.newTaskList = this.newTaskList ? null : boardService.getEmptyList();
@@ -224,7 +221,8 @@ export default {
   },
   created() {
     const boardId = this.$route.params.boardId;
-
+    console.log(boardId);
+    
     (async () => {
       await this.loadBoardAndTask(boardId); // Render the task details when taskId is passed as param
       // Socket updates

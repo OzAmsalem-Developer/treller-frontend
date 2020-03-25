@@ -10,8 +10,9 @@
       @set-name="updateTask"
       @set-due-date="updateTask"
       :menu="$refs.pMenuBtn"
-      :scrollTop="scrollTop"
+      :isScroll="isScroll"
       @clicked="closeMenu"
+      @closed="isMenuOpen = false"
     >
     </task-menu>
   <section class="task-preview" @click="taskDetailsPage" >
@@ -62,8 +63,10 @@ export default {
         task.members.length
       )
     },
-    scrollTop() {
-      return document.getElementById(this.listId).scrollTop
+    isScroll() {
+      const elList = document.getElementById(this.listId)
+      var hasVerticalScrollbar = elList.scrollHeight > elList.clientHeight;
+      return hasVerticalScrollbar
     }
   },
   methods: {

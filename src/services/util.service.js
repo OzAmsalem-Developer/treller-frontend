@@ -9,7 +9,8 @@ export const utilService = {
     getEmptyChecklist,
     getEmptyTodo,
     getEmptyComment,
-    applyDrag
+    applyDrag,
+    expandTextArea
 }
 
 
@@ -72,6 +73,14 @@ function getEmptyComment() {
         imgUrl: null
     }
 }
+
+function expandTextArea(textarea) {
+    var heightLimit = 200;
+    textarea.style.height = "";
+    textarea.style.height = Math.min(textarea.scrollHeight, heightLimit) + "px";
+}
+
+
 
 // Returns a lorem with 'length' chars.
 function makeLorem(length) {

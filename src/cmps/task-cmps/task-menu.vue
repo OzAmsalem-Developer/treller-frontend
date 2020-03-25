@@ -1,69 +1,72 @@
 <template>
-<section>
-    <div class="div-screen" @click.stop="$emit('clicked', taskCopy)"></div>
+  <section>
+    <div class="div-screen" @click.stop="$emit('clicked', taskCopy); updateCopy();"></div>
 
-  <section v-if="task" class="task-menu" ref="taskMenu">
-    <div class="card-container">
-      <div class="card-details">
-        <label-preview :labels="taskCopy.labels" />
-        <textarea class="task-name" type="text" v-model="taskCopy.name" ref="editTaskName"></textarea>
-        <data-indication-preview :task="task" />
+    <section v-if="task" class="task-menu" ref="taskMenu">
+      <div class="card-container">
+        <div class="card-details">
+          <label-preview :labels="taskCopy.labels" />
+          <textarea
+            @input="expand"
+            class="task-name"
+            type="text"
+            v-model="taskCopy.name"
+            ref="editTaskName"
+          ></textarea>
+          <data-indication-preview :task="task" />
+        </div>
+        <button class="save-name-btn" @click.stop="setName">Save</button>
       </div>
-    </div>
-    <menu class="editor-buttons">
-      <button class="task-menu-item" @click.stop="isMenuOpen.label = !isMenuOpen.label">
-        <i class="fas fa-tag"></i>
-        <span class="menu-btn-txt">Labels</span>
-      </button>
-      <button class="task-menu-item" @click.stop="isMenuOpen.move = !isMenuOpen.move">
-        <i class="fas fa-long-arrow-alt-right"></i>
-        <span class="menu-btn-txt">Move</span>
-      </button>
-      <button class="task-menu-item" @click.stop="openDueDate">
-        <i class="far fa-clock"></i>
-        <span class="menu-btn-txt">Change Due Date</span>
-      </button>
+      <menu class="editor-buttons" :class="btnsClass">
+        <button class="task-menu-item" @click.stop="isMenuOpen.label = !isMenuOpen.label">
+          <i class="fas fa-tag"></i>
+          <span class="menu-btn-txt">Labels</span>
+        </button>
+        <button class="task-menu-item" @click.stop="isMenuOpen.move = !isMenuOpen.move">
+          <i class="fas fa-long-arrow-alt-right"></i>
+          <span class="menu-btn-txt">Move</span>
+        </button>
+        <button class="task-menu-item" @click.stop="openDueDate">
+          <i class="far fa-clock"></i>
+          <span class="menu-btn-txt">Change Due Date</span>
+        </button>
 
-      <button class="task-menu-item" @click.stop="$emit('remove-task')">
-        <i class="far fa-trash-alt"></i>
-        <span class="menu-btn-txt">Remove</span>
-      </button>
-    </menu>
+        <button class="task-menu-item" @click.stop="$emit('remove-task')">
+          <i class="far fa-trash-alt"></i>
+          <span class="menu-btn-txt">Remove</span>
+        </button>
+      </menu>
 
-    <button class="save-name-btn" @click.stop="setName(); $emit('clicked', taskCopy)">Save</button>
-
-    <labelPicker
-      class="label-picker"
-      v-if="isMenuOpen.label"
-      :boardLabels="boardLabels"
-      :taskLabels="task.labels"
-      @set-labels="setLabels"
-    />
-    <move-picker
-      class="move-picker"
-      v-if="isMenuOpen.move"
-      :optionalLists="optionalLists"
-      v-model="moveToList"
-      @input="moveTask"
-    />
-    <div class="block">
-      <el-date-picker
-        v-show="isMenuOpen.dueDate"
-        v-model="taskCopy.dueDate.time"
-        @change="setDueDate"
-        type="datetime"
-        format="MMM dd hh:mm A"
-        value-format="timestamp"
-        placeholder="Select date and time"
-        class="el-date-picker"
-        size="mini"
-        ref="calendar"
-      >
-      </el-date-picker>
-    </div>
+      <labelPicker
+        class="label-picker"
+        v-if="isMenuOpen.label"
+        :boardLabels="boardLabels"
+        :taskLabels="task.labels"
+        @set-labels="setLabels"
+      />
+      <move-picker
+        class="move-picker"
+        v-if="isMenuOpen.move"
+        :optionalLists="optionalLists"
+        v-model="moveToList"
+        @input="moveTask"
+      />
+      <div class="block">
+        <el-date-picker
+          v-show="isMenuOpen.dueDate"
+          v-model="taskCopy.dueDate.time"
+          @change="setDueDate"
+          type="datetime"
+          format="MMM dd hh:mm A"
+          value-format="timestamp"
+          placeholder="Select date and time"
+          class="el-date-picker"
+          size="mini"
+          ref="calendar"
+        ></el-date-picker>
+      </div>
+    </section>
   </section>
-</section>
-
 </template>
 
 <script>
@@ -71,6 +74,7 @@ import movePicker from "./pickers/move-picker.vue";
 import labelPicker from "./pickers/label-picker.vue";
 import dataIndicationPreview from "./previews/data-indication-preview.vue";
 import labelPreview from "./previews/label-preview.vue";
+import { utilService } from "@/services/util.service";
 
 import { eventBus, EV_moveTask } from "@/services/eventBus.service";
 
@@ -87,27 +91,44 @@ export default {
     };
   },
   methods: {
-    moveTask() {
-      eventBus.$emit(EV_moveTask, {
+    async moveTask() {
+      await eventBus.emit(EV_moveTask, {
         toListId: this.moveToList,
         taskId: this.task.id
       });
+      this.updateCopy();
     },
-    setLabels(taskLabels) {
+    async setLabels(taskLabels) {
       this.taskCopy.labels = taskLabels;
-      this.$emit("set-labels", this.taskCopy);
+      await this.emit("set-labels", this.taskCopy);
+      this.updateCopy();
     },
-    setName() {
-      this.$emit("set-name", this.taskCopy);
+    async setName() {
+      await this.emit("set-name", this.taskCopy);
+      this.updateCopy();
+      this.$emit("closed");
     },
-    setDueDate() {
-      this.$emit("set-due-date", this.taskCopy);
+    async setDueDate() {
+      await this.emit("set-due-date", this.taskCopy);
+      this.updateCopy();
     },
-    openDueDate(){
-      this.isMenuOpen.dueDate = !this.isMenuOpen.dueDate
+    openDueDate() {
+      this.isMenuOpen.dueDate = !this.isMenuOpen.dueDate;
       setTimeout(() => {
-        this.$refs.calendar.focus()
-      }, 0) 
+        this.$refs.calendar.focus();
+      }, 0);
+    },
+    expand() {
+      utilService.expandTextArea(this.$refs.editTaskName);
+    },
+    updateCopy() {
+      this.taskCopy = JSON.parse(JSON.stringify(this.task));
+    },
+    emit(eventName, value) {
+      return new Promise((resolve, reject) => {
+        this.$emit(eventName, value);
+        this.$nextTick(resolve);
+      });
     }
   },
   computed: {
@@ -117,17 +138,21 @@ export default {
     },
     boardLabels() {
       return this.$store.getters.labels;
+    },
+    btnsClass() {
+      return (this.menu.getBoundingClientRect().x - 190 > document.body.clientWidth / 2) ?
+      'left' : ''
     }
   },
   mounted() {
-    this.$refs.taskMenu.style.top =
-      this.menu.getBoundingClientRect().y - this.scrollTop / 3 + "px";
-    this.$refs.taskMenu.style.left =
-      this.menu.getBoundingClientRect().x - 210 + "px";
+    this.$refs.taskMenu.style.top = this.menu.getBoundingClientRect().y - 5 + "px";
+    let taskWidth = this.isScroll ?  210 : 220
+    this.$refs.taskMenu.style.left = this.menu.getBoundingClientRect().x - taskWidth + "px";
     this.$refs.editTaskName.select();
+    this.expand();
   },
   created() {
-    this.taskCopy = JSON.parse(JSON.stringify(this.task));
+    this.updateCopy();
   },
   components: {
     movePicker,
@@ -137,7 +162,7 @@ export default {
   },
   props: {
     task: Object,
-    scrollTop: Number,
+    isScroll: Boolean,
     menu: HTMLButtonElement
   }
 };

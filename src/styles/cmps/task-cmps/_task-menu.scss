@@ -1,14 +1,19 @@
 .task-menu {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  // display: grid;
+  // grid-template-columns: repeat(2, 1fr);
+  // transform: translate(-7px, -5px);
+  
   position: fixed;
-  transform: translate(-7px, -5px);
+  display: flex;
   z-index: 2;
   cursor: default;
 
+  .label-preview {
+    margin-bottom: rem(10px);
+  }
+
   .card-container {
     min-width: 245px;
-    width: 100%;
     cursor: default;
 
     .card-details {
@@ -17,15 +22,15 @@
       margin-bottom: 15px;
       background-color: #fff;
       .task-name {
-        overflow: hidden;
-        overflow-wrap: break-word;
+        // overflow: hidden;
+        // overflow-wrap: break-word;
         border: none;
         outline: none;
         resize: none;
-        height: 90px;
+        min-height: 50px;
         font-size: rem(14px);
         font-family: $font-regular;
-        width: 100%;
+        // width: 170px;
       }
     }
   }
@@ -43,6 +48,8 @@
     background-color: lighten($pGreen, 10);
   }
   .editor-buttons {
+    white-space: nowrap;
+
     .task-menu-item {
       background: rgba(0, 0, 0, 0.6);
       border-radius: 3px;
@@ -66,6 +73,18 @@
       background: rgba(0, 0, 0, 0.8);
       color: #fff;
       transform: translateX(5px);
+    }
+  }
+
+  .editor-buttons.left {
+    position: absolute;
+    left: -185px;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    
+    .task-menu-item:hover {
+      transform: translateX(-5px);
     }
   }
 

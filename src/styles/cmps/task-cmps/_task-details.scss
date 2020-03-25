@@ -32,11 +32,18 @@
     // transform: translate(-50%, -50%);
     z-index: 2;
   }
+
+  .el-progress {
+    margin-bottom: 10px;
+  }
 }
 
 .task-details-header {
+
+  margin-bottom: rem(10px);
   .task-title {
     font-size: rem(20px);
+    width: 80%;
     @include input-blur;
   }
 
@@ -111,7 +118,7 @@
   .details-lmd {
     display: flex;
     flex-wrap: wrap;
-
+    margin-bottom: rem(10px);
     .title {
       font-family: $font-regular;
     }

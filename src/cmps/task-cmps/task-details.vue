@@ -370,10 +370,7 @@ export default {
     },
     expandTextArea() {
       const textarea = this.$refs.description;
-      var heightLimit = 200;
-      textarea.style.height = "";
-      textarea.style.height =
-        Math.min(textarea.scrollHeight, heightLimit) + "px";
+      utilService.expandTextArea(textarea)
     },
     sendComment() {
       this.$refs.comment.focus();
@@ -433,6 +430,9 @@ export default {
   },
   destroyed() {
     document.removeEventListener("keyup", this.closeDetailsOnEsc);
+  },
+  mounted() {
+  this.expandTextArea()
   },
   components: {
     memberPreview,
