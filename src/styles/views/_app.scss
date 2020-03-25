@@ -1,6 +1,9 @@
 #app {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+
     .view {
-        padding-top: 40px;
+        flex: 1;
     }
-    height: 100%;
 }
