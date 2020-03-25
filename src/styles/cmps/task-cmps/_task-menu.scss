@@ -13,10 +13,10 @@
   }
 
   .card-container {
-    min-width: 245px;
     cursor: default;
-
+    
     .card-details {
+      width: 245px;
       border-radius: 3px;
       padding: 6px 8px 2px;
       margin-bottom: 15px;

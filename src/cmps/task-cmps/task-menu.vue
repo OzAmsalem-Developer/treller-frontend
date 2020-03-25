@@ -43,12 +43,14 @@
         :boardLabels="boardLabels"
         :taskLabels="task.labels"
         @set-labels="setLabels"
+        @close-picker="isMenuOpen.label = false"
       />
       <move-picker
         class="move-picker"
         v-if="isMenuOpen.move"
         :optionalLists="optionalLists"
         v-model="moveToList"
+        @close-picker="isMenuOpen.move = false"
         @input="moveTask"
       />
       <div class="block">
