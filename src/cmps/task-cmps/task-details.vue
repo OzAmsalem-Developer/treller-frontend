@@ -2,7 +2,7 @@
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
     <section v-if="task" class="task-details" ref="task">
       <label-picker
-        class="move-picker-menu"
+        class="move-label-menu"
         v-if="isLabelOpen"
         @set-labels="setLabels"
         :boardLabels="boardLabels"

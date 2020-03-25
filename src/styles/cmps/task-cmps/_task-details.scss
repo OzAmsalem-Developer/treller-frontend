@@ -25,8 +25,16 @@
   margin: 0 auto;
   z-index: 1;
 
+  .move-label-menu {
+    position: fixed;
+    border: solid darken($btnGrey, 10) 1px;
+    right: 50px;
+    z-index: 2;
+  }
+
   .move-picker-menu {
     position: fixed;
+    border: solid darken($btnGrey, 10) 1px;
     right: 50px;
     z-index: 2;
   }
