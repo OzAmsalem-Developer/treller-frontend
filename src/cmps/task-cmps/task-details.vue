@@ -2,11 +2,12 @@
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
     <section v-if="task" class="task-details" ref="task">
       <label-picker
-        class="move-picker-menu"
+        class="move-label-menu"
         v-if="isLabelOpen"
         @set-labels="setLabels"
         :boardLabels="boardLabels"
         :taskLabels="task.labels"
+        @close-picker="toggleLabelMenu"
       />
       <move-picker
         class="move-picker-menu"
@@ -14,12 +15,13 @@
         v-model="moveToList"
         :optionalLists="optionalLists"
         @input="moveTask"
+        @close-picker="toggleMoveMenu"
       />
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
         </span>
-        <input v-model="editedTask.name" class="task-title" type="text" @change="updateTask" />
+        <input v-model="editedTask.name" class="task-title" type="text" @change="updateAndBlur" />
         <button class="close-btn" @click="closeDetails">
           <i class="fas fa-times"></i>
         </button>
@@ -96,6 +98,7 @@
               v-model="editedTask.desc"
               @input="expandTextArea"
               @change="updateTask"
+              placeholder="Add more information here"
               class="details-desc-input details-grid-last"
               ref="description"
               rows="1"
@@ -112,12 +115,13 @@
                 class="checklist-title"
                 v-model="editedTask.checklist.title"
                 type="text"
-                @change="updateCheckListTitle"
+                @change="updateAndBlur"
                 ref="checklist"
               />
             </div>
             <div class="details-grid-last">
               <el-progress
+              class="checklist-progress"
                 v-if="editedTask.checklist.todos.length"
                 :percentage="checklistProgress"
                 :color="progressColor"
@@ -273,7 +277,7 @@ export default {
       }
       socketService.emit("board boardChanged", this.currBoard);
     },
-    updateCheckListTitle(ev) {
+    updateAndBlur(ev) {
       ev.target.blur();
       this.updateTask();
     },
@@ -366,7 +370,7 @@ export default {
       console.log("Please set the Members!");
     },
     updateDescription() {
-      this.$refs.description.focus();
+      this.$refs.description.select();
     },
     expandTextArea() {
       const textarea = this.$refs.description;

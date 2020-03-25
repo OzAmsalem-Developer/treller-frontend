@@ -13,7 +13,7 @@
 
 .task-details {
   position: relative;
-  background-color: lighten($clr5, 5);
+  background-color: lighten($clr5, 3);
   color: $textBlue;
   font-family: $font-semi;
   width: 768px;
@@ -25,11 +25,17 @@
   margin: 0 auto;
   z-index: 1;
 
+  .move-label-menu {
+    position: fixed;
+    border: solid darken($btnGrey, 10) 1px;
+    right: 50px;
+    z-index: 2;
+  }
+
   .move-picker-menu {
     position: fixed;
-    // top: 50%;
-    // left: 50%;
-    // transform: translate(-50%, -50%);
+    border: solid darken($btnGrey, 10) 1px;
+    right: 50px;
     z-index: 2;
   }
 
@@ -43,7 +49,7 @@
   margin-bottom: rem(10px);
   .task-title {
     font-size: rem(20px);
-    width: 80%;
+    width: 95%;
     @include input-blur;
   }
 
@@ -218,6 +224,10 @@
     display: flex;
     align-items: center;
 
+    .checklist-progress {
+      margin-bottom: rem(30px);
+    }
+
     .checklist-title {
       @include input-blur;
       font-size: 16px;
@@ -327,7 +337,6 @@
   display: grid;
   grid-template-columns: 20px 1fr;
   grid-template-rows: 1fr;
-  // max-width: 250px;
   column-gap: rem(5px);
 }
 

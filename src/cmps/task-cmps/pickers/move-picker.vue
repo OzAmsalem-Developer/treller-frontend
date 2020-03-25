@@ -1,5 +1,8 @@
 <template>
   <section class="move-picker">
+    <button @click="$emit('close-picker')" class="close">
+      <i class="fas fa-times"></i>
+    </button>
     <form @submit.prevent="emitListId">
       <span class="title">Move Task</span>
       <span class="dest">Select destination</span>
@@ -23,7 +26,6 @@ export default {
   methods: {
     emitListId() {
       if (!this.pickedListId) return;
-      console.log('Move-Picker emit list id:', this.pickedListId)
       this.$emit("input", this.pickedListId);
     },
     moveTask() {

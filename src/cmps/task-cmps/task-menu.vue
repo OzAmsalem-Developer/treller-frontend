@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     async moveTask() {
-      await eventBus.emit(EV_moveTask, {
+      await eventBus.$emit(EV_moveTask, {
         toListId: this.moveToList,
         taskId: this.task.id
       });

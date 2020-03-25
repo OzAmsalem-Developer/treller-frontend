@@ -1,32 +1,40 @@
 .move-picker {
   background-color: white;
   width: 300px;
+  min-height: 300px;
   font-family: $font-regular;
   font-size: rem(16px);
   display: flex;
   justify-content: center;
-  border: solid black 1px;
   border-radius: 3px;
-
+  .close {
+    min-width: rem(20px);
+    min-height: rem(20px);
+    position: absolute;
+    right: rem(5px);
+    top: rem(5px);
+    cursor: pointer;
+  }
   form {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     min-width: 200px;
     padding: rem(10px);
 
     > * {
-        margin-bottom: rem(15px);
+      margin-bottom: rem(15px);
     }
 
     .title {
-        font-size: rem(18px);
+      font-size: rem(18px);
     }
 
     .dest {
-        text-transform: uppercase;
-        font-family: $font-semi;
-        font-size: rem(14px);
+      text-transform: uppercase;
+      font-family: $font-semi;
+      font-size: rem(14px);
     }
     select {
       width: 90%;
@@ -42,11 +50,11 @@
       width: 100px;
       border-radius: 3px;
       padding: rem(5px) rem(10px);
-      transition: all .3s;
+      transition: all 0.3s;
     }
 
     button:hover {
-        background-color: darken($pGreen, 10);
+      background-color: darken($pGreen, 10);
     }
   }
 }

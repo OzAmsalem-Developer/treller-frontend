@@ -93,7 +93,8 @@
     opacity: 0;
   }
 
-  .label-picker {
-      position: fixed;
+  .label-picker , .move-picker {
+      position: absolute;
+      left: 51%;
   }
 }
