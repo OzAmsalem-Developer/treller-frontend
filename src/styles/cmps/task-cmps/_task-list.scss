@@ -22,7 +22,7 @@
   }
 
   .list-menu-btn {
-    font-size: rem(18px);
+    font-size: 0.925rem;;
     height: 30px;
     width: 30px;
     font-family: $font-semi;
@@ -41,6 +41,7 @@
   header {
     width: 272px;
     padding: 10px;
+    padding-right: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -169,7 +170,7 @@
 //Scroll bar
 .tasks::-webkit-scrollbar {
   background-color: rgba(255, 255, 255, 0);
-  width: 10.5px;
+  width: 6.5px;
 }
 
 .tasks::-webkit-scrollbar-track {
@@ -177,16 +178,12 @@
   // border: 16px solid rgba(17, 59, 175, 0.904);
 }
 .tasks::-webkit-scrollbar-thumb {
-  border: 16px solid #bfc4ce;
+  border: 16px solid #bdc5d8;
   border-radius: 10px;
 }
 
 .tasks::-webkit-scrollbar-track {
   background-color: #dadbe2;
-}
-
-.tasks::-webkit-scrollbar-thumb {
-  background-color: #212121;
 }
 
 .being-dragged {

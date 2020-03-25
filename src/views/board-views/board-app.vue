@@ -23,23 +23,28 @@
         </Draggable>
 
         <section class="add-list">
-           <transition name="fade">
-          <button class="add-list-btn" v-if="!newTaskList" @click="getEmptyList">
-            <i class="fas fa-plus plus-icon"></i> Add List</button>
-             </transition>
-            <transition name="fade">
-          <form class="add-list" @submit.prevent="addList" v-if="newTaskList">
-            <input
-              ref="listInput"
-              type="text"
-              class="add-list-input"
-              placeholder="List title.."
-              v-model="newTaskList.name"
-              @blur="blurAddList"
-            />
-            <button ref="addListBtn" class="add-list-inner-btn">Add</button>
-            <button @click="newTaskList = null" class="close-btn"><i class="fas fa-times"></i></button>
-          </form>
+          <transition name="fade">
+            <button class="add-list-btn" v-if="!newTaskList" @click="getEmptyList">
+              <i class="fas fa-plus plus-icon"></i> Add List
+            </button>
+          </transition>
+          <transition name="fade">
+            <form class="add-list" @submit.prevent="addList" v-if="newTaskList">
+              <input
+                ref="listInput"
+                type="text"
+                class="add-list-input"
+                placeholder="List title.."
+                v-model="newTaskList.name"
+                @blur="blurAddList"
+              />
+              <div class="btns">
+                <button ref="addListBtn" class="add-list-inner-btn">Add</button>
+                <button @click="newTaskList = null" class="close-btn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </form>
           </transition>
         </section>
       </Container>
@@ -86,9 +91,9 @@ export default {
         const taskId = this.$route.params.taskId;
         if (taskId) {
           this.$store.commit({ type: "setTaskById", taskId });
-          this.isTaskDetailsOpen = true
+          this.isTaskDetailsOpen = true;
         } else {
-           this.isTaskDetailsOpen = false
+          this.isTaskDetailsOpen = false;
         }
         this.isTaskLoad = false;
       } catch {
@@ -109,12 +114,12 @@ export default {
       socketService.emit("board boardChanged", this.board);
     },
     addList() {
-      if (!this.newTaskList) return
+      if (!this.newTaskList) return;
       if (!this.newTaskList.name.length) {
         this.newTaskList = null;
         return;
       }
-      this.isListSaved = true
+      this.isListSaved = true;
       this.board.taskLists.push(this.newTaskList);
       this.saveBoard();
       this.newTaskList = null;
@@ -126,12 +131,12 @@ export default {
     blurAddList() {
       setTimeout(() => {
         if (this.isListSaved) {
-          this.isListSaved = false
+          this.isListSaved = false;
         } else {
-          if (!this.$refs.addListBtn) return
-            this.$refs.addListBtn.click()
-            this.newTaskList = null;
-            this.isListSaved = false
+          if (!this.$refs.addListBtn) return;
+          this.$refs.addListBtn.click();
+          this.newTaskList = null;
+          this.isListSaved = false;
         }
       }, 150);
     },
@@ -166,15 +171,17 @@ export default {
       if (idx === this.board.taskLists.length - 1) this.saveBoard();
     },
     moveTask({ toListId, taskId }) {
-      var fromListId
+      var fromListId;
       const idx = this.taskLists.findIndex(taskList => {
-        let matchingTask = taskList.tasks.find(task => task.id === taskId)
-        return !!matchingTask
-      })
-      fromListId = this.taskLists[idx].id
+        let matchingTask = taskList.tasks.find(task => task.id === taskId);
+        return !!matchingTask;
+      });
+      fromListId = this.taskLists[idx].id;
 
-      const fromTaskList = this.board.taskLists.find(tl => tl.id === fromListId);
-      if (!fromTaskList) return
+      const fromTaskList = this.board.taskLists.find(
+        tl => tl.id === fromListId
+      );
+      if (!fromTaskList) return;
       let taskIdx;
       var task = fromTaskList.tasks.find((t, idx) => {
         if (t.id === taskId) {
@@ -185,7 +192,7 @@ export default {
 
       fromTaskList.tasks.splice(taskIdx, 1);
       const toTaskList = this.board.taskLists.find(tl => tl.id === toListId);
-      if (!task) return
+      if (!task) return;
       toTaskList.tasks.push(task);
       this.saveBoard();
     },
@@ -222,7 +229,7 @@ export default {
   created() {
     const boardId = this.$route.params.boardId;
     console.log(boardId);
-    
+
     (async () => {
       await this.loadBoardAndTask(boardId); // Render the task details when taskId is passed as param
       // Socket updates
