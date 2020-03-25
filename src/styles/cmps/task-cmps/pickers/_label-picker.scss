@@ -17,6 +17,7 @@
       display: flex;
       justify-content: space-between;
       .label-card {
+        cursor: pointer;
         display: flex;
         justify-content: space-between;
         font-size: rem(14px);
