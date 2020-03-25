@@ -35,9 +35,9 @@
           <i class="far fa-trash-alt"></i>
           <span class="menu-btn-txt">Remove</span>
         </button>
-      </menu>
 
-      <labelPicker
+        <div ref="pickersContainer" class="pickers-container">
+                <labelPicker
         class="label-picker"
         v-if="isMenuOpen.label"
         :boardLabels="boardLabels"
@@ -67,6 +67,10 @@
           ref="calendar"
         ></el-date-picker>
       </div>
+        </div>
+
+      </menu>
+
     </section>
   </section>
 </template>
@@ -147,9 +151,13 @@ export default {
     }
   },
   mounted() {
-    this.$refs.taskMenu.style.top = this.menu.getBoundingClientRect().y - 5 + "px";
-    let taskWidth = this.isScroll ?  210 : 220
+    this.$refs.taskMenu.style.top = this.menu.getBoundingClientRect().y - 3 + "px";
+    let taskWidth = this.isScroll ?  210 : 215
     this.$refs.taskMenu.style.left = this.menu.getBoundingClientRect().x - taskWidth + "px";
+
+    if (this.menu.getBoundingClientRect().y > 400) {
+      this.$refs.pickersContainer.style.top = -200 + 'px'
+    }
     this.$refs.editTaskName.select();
     this.expand();
   },
