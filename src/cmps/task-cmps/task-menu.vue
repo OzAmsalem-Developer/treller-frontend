@@ -45,6 +45,7 @@
       v-if="isMenuOpen.move"
       :optionalLists="optionalLists"
       v-model="moveToList"
+      @close-picker="isMenuOpen.move = false"
       @input="moveTask"
     />
     <div class="block">

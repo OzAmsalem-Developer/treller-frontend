@@ -8,7 +8,6 @@
 
   .card-container {
     width: 245px;
-    width: 100%;
     cursor: default;
 
     .card-details {
@@ -74,7 +73,7 @@
     opacity: 0;
   }
 
-  .label-picker {
+  .label-picker , .move-picker {
       position: absolute;
       left: 51%;
   }
