@@ -20,7 +20,7 @@
       <i class="fas fa-pencil-alt"></i>
     </button>
     
-    <label-preview :labels="taskCopy.labels" />
+    <label-preview :labels="task.labels" />
     <p class="preview-title">{{task.name}}</p>
     <dataIndicationPreview :task="task"/>
   </section>

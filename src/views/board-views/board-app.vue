@@ -199,6 +199,7 @@ export default {
     updateBoard(board) {
       this.$store.commit({ type: "setCurrBoard", board });
       this.board = JSON.parse(JSON.stringify(board));
+      console.log('Board updated');
     },
     getEmptyList() {
       this.newTaskList = this.newTaskList ? null : boardService.getEmptyList();
