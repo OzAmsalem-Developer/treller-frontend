@@ -7,6 +7,7 @@
         @set-labels="setLabels"
         :boardLabels="boardLabels"
         :taskLabels="task.labels"
+        @close-picker="toggleLabelMenu"
       />
       <move-picker
         class="move-picker-menu"
