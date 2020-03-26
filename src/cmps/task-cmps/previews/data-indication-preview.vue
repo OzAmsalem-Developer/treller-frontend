@@ -17,8 +17,8 @@
         class="preview-attachments"
         v-if="task.attachments.length"
       >
-      <i class="fas fa-stream"></i>
-      ({{task.attachments.length}})
+      <i class="fas fa-paperclip"></i>
+      {{task.attachments.length}}
       </div>
     </section>
 

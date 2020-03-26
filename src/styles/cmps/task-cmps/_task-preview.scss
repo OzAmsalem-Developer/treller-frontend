@@ -24,6 +24,10 @@
     color: darken($color: #5e6c84, $amount: 25%);
     background-color: darken($color: #ffffff, $amount: 10%);
   }
+  .preview-img {
+    max-width: 230px;
+    object-fit: cover;
+  }
   .preview-title {
     margin-bottom: 4px;
     font-family: $font-regular;
