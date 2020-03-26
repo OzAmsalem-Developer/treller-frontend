@@ -1,7 +1,6 @@
 <template>
   <section class="home-page">
     <div class="hero">
-      <!-- <p class="hero-txt">Better, Faster, Stronger, Together.</p> -->
       <div class="cta-hero">
         <p class="hero-txt">Boost your team's productivity with real-time sharable workspace.</p>
         <router-link class="cta-board-btn" to="/board/5e7a6b94152ac30558217046">Try tasky now</router-link>
