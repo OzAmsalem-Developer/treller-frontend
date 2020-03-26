@@ -1,11 +1,13 @@
 <template>
   <section class="main-header">
-    <div class="logo-container">
-      <h1 class="main-title">tasky</h1>
-      <img class="main-logo" src="../../assets/logo/tasky.png" />
-    </div>
+    <router-link class="logo-link" to="/">
+      <div class="logo-container">
+        <h1 class="main-title">tasky</h1>
+        <img class="main-logo" src="../../assets/logo/tasky.png" />
+      </div>
+    </router-link>
     <nav class="nav-links">
-      <router-link class="testu" to="/">Home</router-link>
+      <router-link to="/">Home</router-link>
       <router-link to="/board/5e7a6b94152ac30558217046">Board</router-link>
       <!-- <router-link to="/about">About</router-link>
       <router-link to="/dashboard">Dashboard</router-link>-->

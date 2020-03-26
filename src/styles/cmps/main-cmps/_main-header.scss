@@ -1,15 +1,21 @@
 .main-header {
+  position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 5px 20px;
   width: 100%;
   height: rem(40px);
+  z-index: 1;
 
   .user {
     background-color: white;
   }
+}
+
+.logo-link {
+  text-decoration: none;
 }
 
 .logo-container {
