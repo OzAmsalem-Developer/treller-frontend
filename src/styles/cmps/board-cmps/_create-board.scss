@@ -1,0 +1,35 @@
+.create-board {
+    border-radius: 3px;
+    padding: 10px;
+    box-shadow: $shadow;
+    font-family: $font-regular;
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 3;
+    background-color: #fafbfc;
+    position: absolute;
+    min-width: 400px;
+
+    .set-style-btn {
+        color: #808080;
+        background-color: lighten(#808080, 25);
+        transition: .3s;
+    }
+    
+    .set-style-btn:hover {
+        background-color: $btnGrey;
+    }
+
+    input {
+        width: 270px;
+        padding: 10px 8px;
+        border: 0;
+        outline: 0;
+        font-family: $font-bold;
+        color: black;
+        border-radius: 3px;
+        background: #ebecf0;
+        font-size: rem(16px);
+    }
+}
