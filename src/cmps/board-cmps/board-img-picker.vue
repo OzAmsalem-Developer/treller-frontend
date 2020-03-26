@@ -24,7 +24,7 @@ export default {
       return require(`../../assets/img/background/${idx}.jpg`)
     },
     setBoardImage(idx){
-      const imgUrl = this.getImgUrl(idx)
+      const imgUrl =  'url(' + this.getImgUrl(idx) + ')'
       this.$emit('set-board-img', imgUrl)
     }
   }
