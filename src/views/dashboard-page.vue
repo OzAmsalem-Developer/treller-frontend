@@ -12,14 +12,12 @@ export default {
     }
   },
   created() {
-    userId = this.$route.params.userId
+    const userId = this.$route.params.userId
     if (!userId) {
       if (loggeninUser) {
         this.$router.push('/user/dashboard/' + loggeninUser._id)
       }
     }
-
-    // Now get user etc..
   }
 }
 </script>

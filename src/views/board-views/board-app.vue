@@ -29,7 +29,7 @@
             </button>
           </transition>
           <transition name="fade">
-            <form class="add-list" @keyup.enter="isListSaved = false" @submit.prevent="addList" v-if="newTaskList">
+            <form class="add-list" @keyup.enter="isListSaved = false" @submit.prevent="addList"  v-if="newTaskList">
               <input
                 ref="listInput"
                 type="text"
@@ -213,7 +213,7 @@ export default {
     updateStyle(background) {
       this.board.style.background = background 
       this.saveBoard()
-    }
+    } 
   },
   computed: {
     taskLists() {
