@@ -2,9 +2,9 @@
   <header class="board-header">
     <div class="board-nav">
       <div class="board-data-container">
-        <h3>{{boardName}}</h3>
+        <span class="board-name">{{boardName}}</span>
       </div>
-      <button @click="toggleMenu" class="boarn-menu-btn">Menu</button>
+      <button @click="toggleMenu" class="menu-btn">Menu</button>
     </div>
 
     <!-- v-show="isMenuOpen" -->

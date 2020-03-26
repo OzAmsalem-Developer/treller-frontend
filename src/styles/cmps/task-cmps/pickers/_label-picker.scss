@@ -19,30 +19,34 @@
       align-items: center;
       justify-content: space-between;
       .label-card {
-        cursor: pointer;
-        position: relative;
-        display: flex;
-        justify-content: space-between;
         font-size: rem(14px);
         padding: 3px;
         border-radius: 3px;
-        font-family: $font-bold;
         color: #fff;
+        font-family: $font-bold;
         margin: 0 0 4px;
         padding: 6px 12px;
         min-height: 20px;
         width: 100%;
 
-        .label-txt {
-          transition: padding 0.3s;
-          width: 100%;
+        .default-card {
           cursor: pointer;
-        }
-        .label-txt:hover {
-          padding-left: 5px;
+          position: relative;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .label-txt {
+            transition: padding 0.3s;
+            width: 100%;
+            cursor: pointer;
+          }
+          .label-txt:hover {
+            padding-left: 5px;
+          }
         }
       }
-      .label-edit {
+      .label-edit-btn {
         height: 26px;
         width: 30px;
         margin: 0 auto;
@@ -51,12 +55,23 @@
         color: #5e6c84;
         outline: 0;
         transition: background-color 0.3s;
-
       }
-    }
+      .label-edit-btn:hover {
+        background-color: rgba(183, 190, 201, 0.514);
+      }
 
-    .label-edit:hover {
-      background-color: rgba(183, 190, 201, 0.514);
+      .label-save-btn {
+        background-color: $pGreen;
+        color: $clr5;
+        font-family: $font-semi;
+        font-size: rem(14px);
+        border-radius: 3px;
+        padding: 6px 12px;
+        margin: 0 0 4px 4px;
+      }
+      .label-save-btn:hover {
+        background-color: lighten($pGreen, 10);
+      }
     }
   }
 
