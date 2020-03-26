@@ -29,6 +29,9 @@
       @closed="closeMenu('statistic')"
       @update-style="updateStyle"
     />
+    <button class="close-btn" v-if="isMenuOpen.main" @click="goBack">
+      <i class="fas fa-times"></i>
+    </button>
   </menu>
 </template>
 
@@ -57,7 +60,10 @@ export default {
     },
     updateStyle(background) {
       this.$emit("update-style", background);
-    }
+    },
+    goBack() {
+      this.$emit("closed");
+    },
   },
   components: {
     boardStyleMenu,
