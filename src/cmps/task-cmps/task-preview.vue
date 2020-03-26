@@ -22,6 +22,7 @@
     </button>
     
     <label-preview :labels="task.labels" />
+    <img class="preview-img" v-if="task.attachments.length" :src="task.attachments[0]" />
     <p class="preview-title">{{task.name}}</p>
     <dataIndicationPreview :task="task"/>
   </section>

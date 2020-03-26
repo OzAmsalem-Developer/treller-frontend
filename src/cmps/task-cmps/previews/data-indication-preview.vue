@@ -16,7 +16,10 @@
       <div
         class="preview-attachments"
         v-if="task.attachments.length"
-      >Attachments({{task.attachments.length}})</div>
+      >
+      <i class="fas fa-paperclip"></i>
+      {{task.attachments.length}}
+      </div>
     </section>
 
     <section class="preview-members" v-if="task.members.length">

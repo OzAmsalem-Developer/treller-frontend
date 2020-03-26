@@ -5,22 +5,34 @@
       <div
         class="label"
         v-for="(label, key) in boardLabels"
-        :key="label.id"
-        @click.stop="editLabels(key)"
+        :key="label.id" 
       >
-        <div class="label-card" :style="{'background-color': label.color}">
+        <div class="label-card" 
+        :style="{'background-color': label.color}"
+        @click.stop="editLabels(key)"
+        >
+          <span v-if="isOnEditMode[key]" class="label-input">
+            <input type="text">
+          </span>
+          <div class="default-card" v-else>
           <span class="label-txt">{{label.txt}}</span>
           <span class="label-status" v-if="checkLabel(key)">
             <i class="fas fa-check"></i>
           </span>
+
+          </div>
         </div>
-        <button class="label-edit" @click.stop="">
+
+        <button v-if="isOnEditMode[key]" class="label-save-btn" @click.stop="saveLabel(key)">
+          Save
+        </button>
+        <button v-else class="label-edit-btn" @click.stop="isOnEditMode[key]=true">
           <i class="fas fa-pencil-alt"></i>
         </button>
       </div>
     </div>
     <button class="close-btn" @click="closePicker">
-      <i class="fas fa-times"></i>
+      <i class="fas fa-times"></i>  
     </button>
   </section>
 </template>
@@ -29,7 +41,8 @@
 export default {
   data() {
     return {
-      editedLabels: null
+      editedLabels: null,
+      isOnEditMode: {}
     };
   },
   methods: {
@@ -65,10 +78,21 @@ export default {
     },
     closePicker() {
       this.$emit("close-picker");
+    },
+    saveLabel(key){
+      this.isOnEditMode[key] = false
+    },
+    setEditMode(labelKeys){
+      for (let i=0 ; i<labelKeys.length; i++){
+        this.isOnEditMode[labelKeys[i]] = false
+      }
     }
   },
   created() {
     this.editedLabels = JSON.parse(JSON.stringify(this.taskLabels));
+    const labelKeys = Object.keys(this.boardLabels)
+    this.setEditMode(labelKeys)
+    
   },
   props: {
     boardLabels: Object,

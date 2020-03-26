@@ -45,7 +45,6 @@
 }
 
 .task-details-header {
-
   margin-bottom: rem(10px);
   .task-title {
     font-size: rem(20px);
@@ -83,9 +82,9 @@
     font-size: rem(16px);
     margin-bottom: rem(5px);
   }
-  button {
+  button,
+  .add-image-btn {
     display: flex;
-    // position: relative;
     align-items: center;
     min-width: 120px;
     font-family: $font-light;
@@ -95,21 +94,37 @@
     padding: 5px 10px;
     margin-bottom: 5px;
     transition: all 0.3s;
-
-    i {
-      font-size: 12px;
-    }
   }
+}
 
-  button > *:first-child {
+button > *:first-child {
+  margin-inline-end: rem(10px);
+}
+button:hover {
+  background-color: $hoverBlue;
+}
+button:last-child:hover {
+  background-color: #ff7b64;
+}
+
+i {
+  font-size: 12px;
+}
+.add-image-btn {
+  cursor: pointer;
+  user-select: none;
+
+  > *:first-child {
     margin-inline-end: rem(10px);
   }
-  button:hover {
-    background-color: $hoverBlue;
-  }
-  button:last-child:hover {
-    background-color: #ff7b64;
-  }
+}
+
+.add-image-btn:hover {
+  background-color: $hoverBlue;
+}
+
+#add-img {
+  display: none;
 }
 
 .details-info {
@@ -216,6 +231,13 @@
 
   .details-desc-input:focus {
     @include input-focus;
+  }
+}
+
+.details-attachment {
+  img {
+    max-width: 500px;
+    object-fit: cover;
   }
 }
 
