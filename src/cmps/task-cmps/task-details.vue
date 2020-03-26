@@ -104,12 +104,20 @@
               rows="1"
             />
           </section>
+          <section v-if="editedTask.attachments.length" class="details-attachment details-grid">
+            <div class="details-icons">
+              <i class="far fa-image"></i>
+            </div>
+            <div>
+              <span class="titles">Image:</span>
+            </div>
+            <img class="details-grid-last" :src="getTaskImg" />
+          </section>
 
           <section v-if="task.checklist" class="details-checklist details-grid">
             <div class="details-icons">
               <i class="far fa-check-square"></i>
             </div>
-
             <div class="details-checklist-header">
               <input
                 class="checklist-title"
@@ -121,7 +129,7 @@
             </div>
             <div class="details-grid-last">
               <el-progress
-              class="checklist-progress"
+                class="checklist-progress"
                 v-if="editedTask.checklist.todos.length"
                 :percentage="checklistProgress"
                 :color="progressColor"
@@ -191,6 +199,11 @@
             <i class="fas fa-align-left"></i>
             <span class="action-title">Description</span>
           </button>
+          <label class="add-image-btn" for="add-img">
+            <i class="far fa-image"></i>
+            <span class="action-title">Add Image</span>
+          </label>
+          <input id="add-img" @change="uploadImg" type="file" />
           <button @click="updateChecklist">
             <i class="far fa-check-square"></i>
             <span class="action-title">Checklist</span>
@@ -216,6 +229,7 @@
 <script>
 import { utilService } from "@/services/util.service.js";
 import { socketService } from "@/services/socket.service.js";
+import { cloudinaryService } from "@/services/cloudinary.service.js";
 import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
 import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
@@ -241,6 +255,11 @@ export default {
     };
   },
   methods: {
+    async uploadImg(ev) {
+      const imgUrl = await cloudinaryService.uploadImg(ev);
+      this.editedTask.attachments.unshift(imgUrl);
+      this.updateTask();
+    },
     getListId() {
       const idx = this.$store.getters.taskLists.findIndex(taskList => {
         let matchingTask = taskList.tasks.find(
@@ -251,8 +270,8 @@ export default {
       this.listId = this.$store.getters.taskLists[idx].id;
     },
     setLabels(labels) {
-      this.editedTask.labels = labels
-      this.updateTask()
+      this.editedTask.labels = labels;
+      this.updateTask();
     },
     toggleMoveMenu() {
       this.isMoveOpen = !this.isMoveOpen;
@@ -374,7 +393,7 @@ export default {
     },
     expandTextArea() {
       const textarea = this.$refs.description;
-      utilService.expandTextArea(textarea)
+      utilService.expandTextArea(textarea);
     },
     sendComment() {
       this.$refs.comment.focus();
@@ -395,6 +414,9 @@ export default {
   computed: {
     task() {
       return this.$store.getters.currTask;
+    },
+    getTaskImg() {
+      return this.editedTask.attachments[0];
     },
     optionalLists() {
       const taskLists = this.$store.getters.taskLists;
@@ -436,7 +458,7 @@ export default {
     document.removeEventListener("keyup", this.closeDetailsOnEsc);
   },
   mounted() {
-  this.expandTextArea()
+    this.expandTextArea();
   },
   components: {
     memberPreview,
