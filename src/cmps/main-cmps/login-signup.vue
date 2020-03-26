@@ -1,39 +1,46 @@
 <template>
   <section>
-    <div class="screen"></div>
+    <div @click="$emit('closed')" class="div-screen"></div>
 
     <section class="login-signup">
-      <div class="login" v-if="isLogin">
-        <h2>Login to your account</h2>
+      <div class="page" v-if="isLoginPage">
+        <header>
+          <h2>Login to your account</h2>
+          <button @click="$emit('closed')" class="close-btn">
+            <i class="fas fa-times"></i>
+          </button>
+        </header>
         <hr />
+
         <form class="login-form" @submit.prevent="login">
-          <input v-modal="loginCredentials.email" type="email" placeholder="Email" />
-          <input v-modal="loginCredentials.password" type="password" placeholder="Password" />
-          <button class="login-btn">Login</button>
+          <input v-model="loginCredentials.email" type="email" placeholder="Email" />
+          <input v-model="loginCredentials.password" type="password" placeholder="Password" />
+          <button class="send-btn save-btn">Login</button>
         </form>
         <div class="new">
           New ?
-          <button @click="isLogin = false">Create new account</button>
+          <button @click="isLoginPage = false">Create new account</button>
         </div>
       </div>
 
-      <div class="signup" v-else>
-        <h2>Singup to FREE collaborate with other peoples</h2>
+      <div class="page" v-else>
+        <header>
+          <h2>Singup for FREE collaborate with other peoples</h2>
+          <button @click="$emit('closed')" class="close-btn">
+            <i class="fas fa-times"></i>
+          </button>
+        </header>
         <hr />
         <form class="signup-form" @submit.prevent="signup">
-          <input v-modal="newCredentials.username" type="text" placeholder="Full name" />
-          <input v-modal="newCredentials.email" type="email" placeholder="Email" />
-          <input v-modal="newCredentials.password" type="password" placeholder="Password" />
-          <input
-            v-modal="confirmPassword"
-            type="password"
-            placeholder="Confirm your password"
-          />
-          <button class="login-btn">Login</button>
+          <input v-model="newCredentials.username" type="text" placeholder="Full name" />
+          <input v-model="newCredentials.email" type="email" placeholder="Email" />
+          <input v-model="newCredentials.password" type="password" placeholder="Password" />
+          <input v-model="confirmPassword" type="password" placeholder="Confirm your password" />
+          <button class="send-btn save-btn">Signup</button>
         </form>
         <div class="already">
           Already have a user ?
-          <button @click="isLogin = true">Login</button>
+          <button @click="isLoginPage = true">Login</button>
         </div>
       </div>
     </section>
@@ -44,39 +51,51 @@
 export default {
   data() {
     return {
-      isLogin: true,
+      isLoginPage: true,
       loginCredentials: {
         email: "",
         password: ""
       },
       newCredentials: {
         email: "",
-        username: '',
-        password: "",
+        username: "",
+        password: ""
       },
-        confirmPassword: ""
+      confirmPassword: ""
     };
   },
   methods: {
-    async login() { 
+    async login() {
       try {
-        await this.$store.dispatch({ type: "login", credentials: this.loginCredentials });
+        await this.$store.dispatch({
+          type: "login",
+          credentials: this.loginCredentials
+        });
         console.log("Logged in sucessfully");
       } catch {
         console.log("Try again");
       }
     },
     async signup() {
-        if(this.credentials.password === this.confirmPass) {
-              await this.$store.dispatch({type: 'signup', credentials})
-                console.log('Signed up')
-        } else {
-            console.log('Wrong confirm password');
-        }
+      if (this.newCredentials.password === this.confirmPassword) {
+        await this.$store.dispatch({
+          type: "signup",
+          credentials: this.newCredentials
+        });
+        console.log("Signed up");
+      } else {
+        console.log("Wrong confirm password");
+      }
     },
     closeWindow() {
-        this.$store.commit({type: 'closeWindow'})
+      this.$store.commit({ type: "closeWindow" });
     }
+  },
+  created() {
+    this.isLoginPage = this.isLogin;
+  },
+  props: {
+    isLogin: Boolean
   }
 };
 </script>

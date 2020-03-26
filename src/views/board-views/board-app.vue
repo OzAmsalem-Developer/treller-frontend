@@ -210,10 +210,9 @@ export default {
         if (this.$refs.listInput) this.$refs.listInput.focus();
       }, 0);
     },
-    updateStyle(color) {
-      this.board.bgColor = color 
+    updateStyle(background) {
+      this.board.style.background = background 
       this.saveBoard()
-      .then(console.log(this.board))
     }
   },
   computed: {

@@ -2,7 +2,7 @@ import { userService } from '@/services/user.service.js'
 
 export const userStore = {
   state: {
-    loggedinUser: userService.getLoggedInUser(),
+    loggedinUser: null,
     filterBy: {
       txt: ''
     }
@@ -21,6 +21,10 @@ export const userStore = {
     }
   },
   actions: {
+    async getLoggedinUser(context) {
+      const user = await userService.getLoggedInUser()
+      context.commit({type: 'setLoggedinUser', user})
+    },
     async login(context, { credentials }) {
       try {
         const user = await userService.login(credentials)
@@ -49,5 +53,8 @@ export const userStore = {
       const users = await userService.query(filterBy)
       return users
     },
+    async logout(context) {
+      await userService.logout()
+    }
   }
 }

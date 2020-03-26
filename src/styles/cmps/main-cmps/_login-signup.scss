@@ -1,24 +1,61 @@
 .login-signup {
-    position: absolute;
-    height: 450px;
-    width: 350px;
-    background-color: #ffffff;
-    border-radius: 3px;
-    box-shadow: $shadow;
-    font-family: $font-regular;
+  position: absolute;
+  height: 450px;
+  width: 400px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  padding: 10px;
+  box-shadow: $shadow;
+  font-family: $font-regular;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
 
-    input {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        font-family: $font-regular;
-    }
+  .page {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
-    form {
+    header {
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        h2 {
+            font-family: $font-semi;
+            color: $textBlue;
+            font-size: rem(18px);
+        }
     }
+  }
+
+  .send-btn {
+      margin-top: rem(10px);
+    align-self: flex-start;
+  }
+
+  hr {
+    background-color: rgba(9, 30, 66, 0.13);
+    border: 0;
+    height: 1px;
+    margin: 16px 0;
+    padding: 0;
+    width: 100%;
+  }
+  input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: $font-regular;
+  }
+
+  form {
+      flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
 }
