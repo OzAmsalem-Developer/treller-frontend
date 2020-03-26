@@ -17,7 +17,7 @@
           <input v-model="loginCredentials.password" type="password" placeholder="Password" required/>
           <button class="send-btn save-btn">Login</button>
         </form>
-        <div class="new">
+        <div class="switch">
           New ?
           <button @click="isLoginPage = false">Create new account</button>
         </div>
@@ -38,7 +38,7 @@
           <input v-model="confirmPassword" type="password" placeholder="Confirm your password" required/>
           <button class="send-btn save-btn">Signup</button>
         </form>
-        <div class="already">
+        <div class="switch">
           Already have a user ?
           <button @click="isLoginPage = true">Login</button>
         </div>
