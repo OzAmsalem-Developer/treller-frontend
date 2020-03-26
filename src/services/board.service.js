@@ -14,7 +14,7 @@ export const boardService = {
 }
 
 function query(userId) {
-    return httpService.get(baseUrl)
+    return httpService.get(baseUrl, userId)
 }
 
 function getById(id) {
@@ -39,7 +39,9 @@ function save(board) {
 function getEmptyBoard() {
     return {
         name: '',
-        theme: 'default',
+        style: {},
+        activities: [],
+        members : [],
         labels: {
             label1: {
                 color: '#ff78cb',

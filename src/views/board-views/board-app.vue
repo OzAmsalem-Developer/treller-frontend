@@ -244,6 +244,7 @@ export default {
       socketService.on("board boardChanged", this.updateBoard);
     })();
 
+
     //Event Bus
     eventBus.$on(EV_removeList, this.removeList);
     eventBus.$on(EV_moveTask, this.moveTask);
