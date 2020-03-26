@@ -115,6 +115,15 @@ export const boardStore = ({
                 console.log('Err: Board saving failed')
                 return Promise.reject(prevBoard)
             }
+        },
+        async createBoard(context, { board }) {
+            const newBoard = await boardService.save(board)
+            try {
+                return newBoard
+            } catch {
+                console.log('Board create failed')
+                return Promise.reject()
+            }
         }
     }
 })

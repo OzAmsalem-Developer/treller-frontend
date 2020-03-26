@@ -39,7 +39,9 @@ function save(board) {
 function getEmptyBoard() {
     return {
         name: '',
-        style: {},
+        style: {
+            background: "url(/img/1.d168fb79.jpg)"
+        },
         activities: [],
         members : [],
         labels: {
