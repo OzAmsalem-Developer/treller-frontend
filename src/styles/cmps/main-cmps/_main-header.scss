@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(6, 84, 113);
+  background-color: rgba(0, 0, 0, 0.8);
   padding: 0 10px;
   width: 100%;
   height: rem(40px);
@@ -12,13 +12,39 @@
   }
 }
 
-.main-logo {
-  color: $clr4;
+.logo-container {
+  display: flex;
+  user-select: none;
+
+  :first-child {
+    margin-inline-end: 5px;
+  }
+  .main-title {
+    font-family: $font-logo;
+    font-size: rem(26px);
+    color: white;
+    // color: $clr4;
+  }
+
+  .main-logo {
+    height: 36px;
+  }
+}
+
+.login-btns > * {
+  color: white;
+  text-decoration: none;
+  margin-inline-end: 5px;
+  font-size: rem(16px);
 }
 
 .nav-links > * {
   display: inline-block;
-  color: $clr2;
+  font-family: $font-regular;
+  font-size: rem(16px);
+  // color: $clr2;
+  color: white;
   text-decoration: none;
   min-width: 100px;
+
 }
