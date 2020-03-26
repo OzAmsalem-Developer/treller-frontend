@@ -6,7 +6,9 @@
     position: relative;
     background: rgba(0, 0, 0, 0.1);
 
-
+    .open-menu{
+        right: 0;
+      }
     .board-nav{
         display: flex;
         justify-content: space-between;
