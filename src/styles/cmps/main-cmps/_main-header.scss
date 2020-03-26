@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.8);
-  padding: 0 10px;
+  padding: 5px 20px;
   width: 100%;
   height: rem(40px);
 
@@ -23,7 +23,6 @@
     font-family: $font-logo;
     font-size: rem(24px);
     color: white;
-    // color: $clr4;
   }
 
   .main-logo {
@@ -42,9 +41,7 @@
   display: inline-block;
   font-family: $font-regular;
   font-size: rem(16px);
-  // color: $clr2;
   color: white;
   text-decoration: none;
   min-width: 100px;
-
 }
