@@ -1,5 +1,5 @@
 <template>
-  <main class="board-app" v-if="board">
+  <main class="board-app" v-if="board" :style="{background: storeBoard.style.background}">
     <board-header @update-style="updateStyle"></board-header>
     <div ref="lists" class="lists-container">
       <Container

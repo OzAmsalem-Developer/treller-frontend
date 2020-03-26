@@ -11,7 +11,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-
   .page {
     height: 100%;
     display: flex;
@@ -33,6 +32,20 @@
   .send-btn {
       margin-top: rem(15px);
     align-self: flex-start;
+    color: $textBlue;
+  }
+
+  .switch {
+    font-family: $font-regular;
+    font-size: rem(12px);
+    text-align: right;
+
+    button {
+        font-family: $font-bold;
+        font-size: rem(12px);
+        text-decoration: underline;
+        outline: none;
+    }
   }
 
   hr {
