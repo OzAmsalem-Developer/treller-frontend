@@ -6,6 +6,7 @@
   background-color: #ffffff;
   box-shadow: $shadow;
   font-size: rem(14px);
+  max-width: 250px;
   cursor: pointer;
 
   .preview-menu-btn {
@@ -16,6 +17,8 @@
     right: 6px;
     color: #5e6c84;
     outline: none;
+    border-radius: 3px;
+    transition: .3s;
   }
   .preview-menu-btn:hover{
     color: darken($color: #5e6c84, $amount: 25%);

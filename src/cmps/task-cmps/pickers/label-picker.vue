@@ -8,14 +8,13 @@
         :key="label.id"
         @click.stop="editLabels(key)"
       >
-        
-        <div class="label-card" :style="{'background-color': label.color}" >
+        <div class="label-card" :style="{'background-color': label.color}">
           <span class="label-txt">{{label.txt}}</span>
           <span class="label-status" v-if="checkLabel(key)">
             <i class="fas fa-check"></i>
           </span>
         </div>
-        <button class="label-edit">
+        <button class="label-edit" @click.stop="">
           <i class="fas fa-pencil-alt"></i>
         </button>
       </div>
@@ -65,7 +64,7 @@ export default {
       return labelIdx !== -1 ? true : false;
     },
     closePicker() {
-      this.$emit('close-picker')
+      this.$emit("close-picker");
     }
   },
   created() {

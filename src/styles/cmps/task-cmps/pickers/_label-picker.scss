@@ -1,7 +1,7 @@
 .label-picker {
   background-color: #ffffff;
   width: 300px;
-  padding: 0 12px;
+  padding: 10px 10px 2px 10px;
   border-radius: 3px;
   font-family: $font-semi;
   color: #5e6c84;
@@ -9,15 +9,18 @@
   .label-header {
     border-bottom: 1px solid lighten($color: #e4e4e4, $amount: 4%);
     font-size: rem(14px);
-    margin: 15px 0 8px 0;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
   }
   .label-container {
     margin-bottom: 15px;
     .label {
       display: flex;
+      align-items: center;
       justify-content: space-between;
       .label-card {
         cursor: pointer;
+        position: relative;
         display: flex;
         justify-content: space-between;
         font-size: rem(14px);
@@ -29,32 +32,36 @@
         padding: 6px 12px;
         min-height: 20px;
         width: 100%;
-        
+
         .label-txt {
-            transition: padding 0.3s;
+          transition: padding 0.3s;
           width: 100%;
+          cursor: pointer;
         }
         .label-txt:hover {
           padding-left: 5px;
         }
       }
       .label-edit {
-        margin: 3px 0 0 6px;
-        padding: 0 4px;
-        opacity: 0;
+        height: 26px;
+        width: 30px;
+        margin: 0 auto;
+        margin-left: 10px;
+        border-radius: 3px;
         color: #5e6c84;
         outline: 0;
+        transition: opacity 0.2s;
       }
     }
+
+    .label-edit:hover {
+      background-color: rgba(183, 190, 201, 0.514);
+    }
   }
-  .label:hover {
-      .label-edit{
-          opacity: 100%;
-      }
-  }
-  .close-btn{
-      position: absolute;
-      top: 0;
-      right: 0;
+
+  .close-btn {
+    position: absolute;
+    top: 3px;
+    right: 3px;
   }
 }

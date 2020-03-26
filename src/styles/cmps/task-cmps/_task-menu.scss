@@ -49,7 +49,7 @@
   }
   .editor-buttons {
     white-space: nowrap;
-
+    position: relative;
     .task-menu-item {
       background: rgba(0, 0, 0, 0.6);
       border-radius: 3px;
@@ -74,6 +74,12 @@
       color: #fff;
       transform: translateX(5px);
     }
+
+    .pickers-container {
+      top: -50px;
+      left: 8px;
+      position: absolute;
+    }
   }
 
   .editor-buttons.left {
@@ -86,6 +92,10 @@
     .task-menu-item:hover {
       transform: translateX(-5px);
     }
+
+    .pickers-container {
+      left: -125px;
+    }
   }
 
   .el-date-editor .el-input__inner,
@@ -93,8 +103,5 @@
     opacity: 0;
   }
 
-  .label-picker , .move-picker {
-      position: absolute;
-      left: 51%;
-  }
+
 }

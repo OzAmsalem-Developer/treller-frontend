@@ -4,6 +4,7 @@
       <input
       @click="isEditName = true"
         @change="saveListName"
+        @blur="saveListName"
         class="list-input"
         type="text"
         v-model="listCopy.name"
@@ -63,6 +64,7 @@
             class="new-task-box"
             ref="taskInput"
             @keyup.enter.prevent="addTask"
+            @blur="blurTask"
             v-model="newTask.name"
             cols="30"
             rows="3"
@@ -98,6 +100,7 @@ export default {
   data() {
     return {
       newTask: null,
+      isTaskSaved: false,
       isMenuOpen: false,
       listCopy: null,
       isEditName: false
@@ -119,7 +122,7 @@ export default {
     },
     addTask(ev) {
       // allow break line on shift+enter
-      if (ev.shiftKey) {
+      if ( ev && ev.shiftKey) {
         this.newTask.name += "\n";
         return;
       }
@@ -128,6 +131,7 @@ export default {
         return;
       }
 
+      this.isTaskSaved = true
       this.newTask.listId = this.taskList.id
       this.listCopy.tasks.push(this.newTask);
       this.saveList("save-list");
@@ -183,6 +187,19 @@ export default {
     },
     focus(ev) {
       ev.target.focus();
+    },
+    blurTask() {
+      setTimeout(() => {
+        this.isTaskSaved = false
+        if (this.isTaskSaved) return
+        else {
+          if ( this.newTask && this.newTask.name.length > 0) {
+            this.addTask()
+          } else {
+            this.newTask = null
+          }
+        }
+      }, 150)
     },
     removeTask(taskId) {
       const idx = this.listCopy.tasks.findIndex(t => t.id === taskId);
