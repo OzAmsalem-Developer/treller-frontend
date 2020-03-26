@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <section class="features">
+    <section class="features-main container">
       <div class="intro">
         <h3>The power of the internet is here</h3>
       </div>
