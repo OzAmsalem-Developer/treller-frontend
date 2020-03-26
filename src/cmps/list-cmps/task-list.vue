@@ -111,7 +111,7 @@ export default {
       this.newTask = boardService.getEmptyTask();
       setTimeout(() => {
         this.$refs.tasks.scrollTo(0, this.$refs.tasks.scrollHeight);
-        this.$refs.taskInput.focus();
+        if(this.$refs.taskInput) this.$refs.taskInput.focus();
       }, 2);
     },
     editListName() {
@@ -126,16 +126,18 @@ export default {
         this.newTask.name += "\n";
         return;
       }
+      this.isTaskSaved = true
+
       if (!this.newTask.name.length) {
         this.newTask = null; // (Close add-task)
         return;
       }
 
-      this.isTaskSaved = true
+      
       this.newTask.listId = this.taskList.id
       this.listCopy.tasks.push(this.newTask);
       this.saveList("save-list");
-      this.newTask = null;
+      // this.newTask = null;
       this.getEmptyTask();
       setTimeout(() => {
         this.$refs.tasks.scrollTo(0, this.$refs.tasks.scrollHeight);
@@ -190,14 +192,14 @@ export default {
     },
     blurTask() {
       setTimeout(() => {
+        if (this.isTaskSaved) {
         this.isTaskSaved = false
-        if (this.isTaskSaved) return
+          return
+        }
         else {
-          if ( this.newTask && this.newTask.name.length > 0) {
-            this.addTask()
-          } else {
+          if ( this.newTask && this.newTask.name.length > 0) this.addTask()
             this.newTask = null
-          }
+            this.isTaskSaved = false
         }
       }, 150)
     },

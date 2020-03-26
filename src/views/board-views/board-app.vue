@@ -29,7 +29,7 @@
             </button>
           </transition>
           <transition name="fade">
-            <form class="add-list" @submit.prevent="addList" v-if="newTaskList">
+            <form class="add-list" @keyup.enter="isListSaved = false" @submit.prevent="addList" v-if="newTaskList">
               <input
                 ref="listInput"
                 type="text"
@@ -113,13 +113,13 @@ export default {
       }
       socketService.emit("board boardChanged", this.board);
     },
-    addList() {
+    addList(ev) {
       if (!this.newTaskList) return;
+      this.isListSaved = true
       if (!this.newTaskList.name.length) {
         this.newTaskList = null;
         return;
       }
-      this.isListSaved = true;
       this.board.taskLists.push(this.newTaskList);
       this.saveBoard();
       this.newTaskList = null;
@@ -132,9 +132,11 @@ export default {
       setTimeout(() => {
         if (this.isListSaved) {
           this.isListSaved = false;
+          return
         } else {
-          if (!this.$refs.addListBtn) return;
-          this.$refs.addListBtn.click();
+          if (this.newTaskList && this.newTaskList.name.length > 0 ) {
+              this.addList()
+          } 
           this.newTaskList = null;
           this.isListSaved = false;
         }
@@ -229,7 +231,6 @@ export default {
   },
   created() {
     const boardId = this.$route.params.boardId;
-    console.log(boardId);
 
     (async () => {
       await this.loadBoardAndTask(boardId); // Render the task details when taskId is passed as param
