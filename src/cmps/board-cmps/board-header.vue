@@ -7,8 +7,9 @@
       <button @click="toggleMenu" class="boarn-menu-btn">Menu</button>
     </div>
 
+    <!-- v-show="isMenuOpen" -->
     <boardMenu 
-    v-if="isMenuOpen"
+    :class="openMenuClass"
     @closed="isMenuOpen = false"
     @update-style="updateStyle"
     />
@@ -27,6 +28,9 @@ export default {
     boardName() {
       return this.$store.getters.currBoard.name
     },
+    openMenuClass(){
+      return (this.isMenuOpen)? 'open-menu' : ''
+    }
   },
   methods: {
     toggleMenu() {
