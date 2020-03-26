@@ -9,6 +9,8 @@
 
     <boardMenu 
     v-if="isMenuOpen"
+    @closed="isMenuOpen = false"
+    @update-style="updateStyle"
     />
   </header>
 </template>
@@ -29,6 +31,9 @@ export default {
   methods: {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen
+   },
+   updateStyle(background){
+     this.$emit('update-style', background)
    }
   },
   components: {

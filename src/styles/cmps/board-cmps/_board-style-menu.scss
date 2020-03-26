@@ -1,0 +1,20 @@
+
+.board-style-menu {
+    position: relative;
+    
+    .btn {
+        height: 120px;
+        border: 1px solid lighten($color: #381616, $amount: 40%);;
+        margin: 10px 0;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+
+    .close-btn {
+        position: absolute;
+        top: -43px;
+        left: 0;
+        padding: 6px;
+    }
+}

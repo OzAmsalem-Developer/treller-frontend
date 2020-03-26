@@ -1,6 +1,6 @@
 <template>
   <main class="board-app" v-if="board">
-    <board-header></board-header>
+    <board-header @update-style="updateStyle"></board-header>
     <div ref="lists" class="lists-container">
       <Container
         @drop="onDrop"
@@ -199,6 +199,11 @@ export default {
         utilService.scrollTo(document.querySelector("html"), 1500, 700);
         if (this.$refs.listInput) this.$refs.listInput.focus();
       }, 0);
+    },
+    updateStyle(color) {
+      this.board.bgColor = color 
+      this.saveBoard()
+      .then(console.log(this.board))
     }
   },
   computed: {
