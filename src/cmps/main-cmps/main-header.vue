@@ -1,7 +1,7 @@
 <template>
   <section class="main-header">
     <div class="logo-container">
-      <h1 class="main-title">taski</h1>
+      <h1 class="main-title">tasky</h1>
       <img class="main-logo" src="../../assets/logo/tasky.png" />
     </div>
     <nav class="nav-links">
