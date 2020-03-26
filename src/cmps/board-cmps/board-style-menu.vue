@@ -1,11 +1,19 @@
 <template>
   <div class="board-style-menu">
     <div v-if="isMenuOpen.main">
-      <div class="btn color-picker-btn center-flex" @click="openColorPicker">
-        <h3>Colors</h3>
+      <div
+        class="btn color-picker-btn center-flex"
+        @click="openColorPicker"
+        :style="{'backgroundImage': bgColorImg()}"
+      >
+        <h3 class="txt-btn">Colors</h3>
       </div>
-      <div class="btn img-picker-btn center-flex" @click="openImgPicker">
-        <h3>Images</h3>
+      <div
+        class="btn img-picker-btn center-flex"
+        @click="openImgPicker"
+        :style="{'backgroundImage': bgImg()}"
+      >
+        <h3 class="txt-btn">Images</h3>
       </div>
     </div>
 
@@ -39,6 +47,12 @@ export default {
     };
   },
   methods: {
+    bgColorImg() {
+      return "url(" + require("@/assets/img/board-menu/bg-color.jpg") + ")";
+    },
+    bgImg() {
+      return "url(" + require("@/assets/img/board-menu/bg-img.jpg") + ")";
+    },
     openColorPicker() {
       this.isMenuOpen.main = false;
       this.isMenuOpen.colorPicker = true;
