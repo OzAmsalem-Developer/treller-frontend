@@ -28,7 +28,7 @@
 
     <header class="list-header" v-else>
       <h3 class="list-name" v-if="!isEditName" @click="editListName">{{taskList.name}}</h3>
-      <button @click="isMenuOpen = !isMenuOpen" class="list-menu-btn">
+      <button @click="isMenuOpen = !isMenuOpen" class="list-menu-btn" >
         <i class="menu-icon fas fa-ellipsis-h"></i>
       </button>
       <list-menu

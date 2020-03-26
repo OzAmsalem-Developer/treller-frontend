@@ -6,7 +6,7 @@ export const boardStore = ({
         currBoard: null,
         filterBy: null,
         currTask: null,
-        isLabelsMini: false
+        isLabelsMini: false,
     },
     getters: {
         currBoardId(state) {
@@ -27,6 +27,7 @@ export const boardStore = ({
         isLabelsMini(state) {
             return state.isLabelsMini
         }
+
     },
     mutations: {
         setBoards(state, { boards }) {
