@@ -1,9 +1,9 @@
 <template>
   <section class="label-preview">
-    <div class="label-card" 
+    <div @click.stop="toggleMini" class="label-card" :class="labelClass"
     v-for="label in labels" 
     :style="{'background-color': boardLabelsMap[label].color}">
-        {{boardLabelsMap[label].txt}}
+        {{ labelText(boardLabelsMap[label])}}
     </div>
   </section>
 </template>
@@ -14,6 +14,22 @@ export default {
     return {
       boardLabelsMap: this.$store.getters.labels,
     };
+  },
+  methods: {
+    toggleMini() {
+      this.$store.commit({type: 'toggleMiniLabals'})
+    },
+    labelText(label) {
+      return this.isMini ? '' : label.txt
+    }
+  },
+  computed: {
+    isMini() {
+      return this.$store.getters.isLabelsMini
+    },
+    labelClass() {
+      return (this.isMini) ? 'mini-label' : ''
+    }
   },
   props: {
     labels: Array

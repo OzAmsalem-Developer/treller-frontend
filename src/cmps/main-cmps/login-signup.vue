@@ -13,8 +13,8 @@
         <hr />
 
         <form class="login-form" @submit.prevent="login">
-          <input v-model="loginCredentials.email" type="email" placeholder="Email" />
-          <input v-model="loginCredentials.password" type="password" placeholder="Password" />
+          <input v-model="loginCredentials.email" type="email" placeholder="Email" required/>
+          <input v-model="loginCredentials.password" type="password" placeholder="Password" required/>
           <button class="send-btn save-btn">Login</button>
         </form>
         <div class="new">
@@ -25,17 +25,17 @@
 
       <div class="page" v-else>
         <header>
-          <h2>Singup for FREE collaborate with other peoples</h2>
+          <h2>Singup for FREE collaboration with other peoples</h2>
           <button @click="$emit('closed')" class="close-btn">
             <i class="fas fa-times"></i>
           </button>
         </header>
         <hr />
         <form class="signup-form" @submit.prevent="signup">
-          <input v-model="newCredentials.username" type="text" placeholder="Full name" />
-          <input v-model="newCredentials.email" type="email" placeholder="Email" />
-          <input v-model="newCredentials.password" type="password" placeholder="Password" />
-          <input v-model="confirmPassword" type="password" placeholder="Confirm your password" />
+          <input v-model="newCredentials.username" type="text" placeholder="Full name" required/>
+          <input v-model="newCredentials.email" type="email" placeholder="Email" required/>
+          <input v-model="newCredentials.password" type="password" placeholder="Password" required/>
+          <input v-model="confirmPassword" type="password" placeholder="Confirm your password" required/>
           <button class="send-btn save-btn">Signup</button>
         </form>
         <div class="already">
@@ -77,12 +77,17 @@ export default {
       }
     },
     async signup() {
+      if (!this.newCredentials.email.length || !this.newCredentials.password.length ) {
+        this.$emit('closed')
+        return
+      }
       if (this.newCredentials.password === this.confirmPassword) {
         await this.$store.dispatch({
           type: "signup",
           credentials: this.newCredentials
         });
         console.log("Signed up");
+         this.$emit('closed')
       } else {
         console.log("Wrong confirm password");
       }

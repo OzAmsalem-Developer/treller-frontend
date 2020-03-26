@@ -5,7 +5,8 @@ export const boardStore = ({
         boards: [],
         currBoard: null,
         filterBy: null,
-        currTask: null
+        currTask: null,
+        isLabelsMini: false
     },
     getters: {
         currBoardId(state) {
@@ -22,6 +23,9 @@ export const boardStore = ({
         },
         currBoard(state) {
             return state.currBoard
+        },
+        isLabelsMini(state) {
+            return state.isLabelsMini
         }
     },
     mutations: {
@@ -43,6 +47,9 @@ export const boardStore = ({
                 let currTask = taskList.tasks.find(task => task.id === taskId)
                 if (currTask) state.currTask = currTask
             })
+        },
+        toggleMiniLabals(state) {
+            state.isLabelsMini = !state.isLabelsMini
         }
     },
     actions: {

@@ -8,9 +8,20 @@
     font-family: $font-bold;
 
     .label-card {
+        cursor: pointer;
         border-radius: 3px;
         padding: 0 8px;
         margin-inline-end:5px ;
         margin-bottom: 3px;
+        height: 18px;
+        min-width: 45px;
+        transition: width .3s, height .3s;
+    }
+
+    .label-card.mini-label {
+        border-radius: 20px;
+        // padding: 4px 21px;
+        height: 10px;
+        width: 45px;
     }
 }
