@@ -13,6 +13,7 @@
       :isScroll="isScroll"
       @clicked="closeMenu"
       @closed="isMenuOpen = false"
+      
     >
     </task-menu>
   <section class="task-preview" @click="taskDetailsPage" >

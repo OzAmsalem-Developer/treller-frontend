@@ -29,6 +29,12 @@
 
 // BOARD CMPS
 @import 'cmps/board-cmps/board-header';
+@import 'cmps/board-cmps/board-menu';
+@import 'cmps/board-cmps/board-style-menu';
+@import 'cmps/board-cmps/board-color-picker';
+@import 'cmps/board-cmps/board-img-picker';
+@import 'cmps/board-cmps/board-statistic';
+@import 'cmps/board-cmps/board-activity';
 
 // TASKLIST CMPS
 @import 'cmps/task-cmps/list-cmps/list-menu';
