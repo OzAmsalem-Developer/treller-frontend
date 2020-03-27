@@ -4,17 +4,22 @@
       <span>Menu</span>
     </div>
     <div class="menu" v-if="isMenuOpen.main">
-      <button class="menu-btn" @click="openMenu('boardStyle')">
-        <i class="far fa-image btn-icon"></i>
-        <span class="btn-txt">Board Styling</span>
-      </button>
-      <button class="menu-btn" @click="openMenu('statistic')">
-        <i class="fas fa-chart-line btn-icon"></i>
-        <span class="btn-txt">Show Board Stats</span>
-      </button>
+      <div class="menu-btn-container">
+        <button class="menu-btn" @click="openMenu('boardStyle')">
+          <i class="far fa-image btn-icon"></i>
+          <span class="btn-txt">Board Styling</span>
+        </button>
+        <button class="menu-btn" @click="openMenu('statistic')">
+          <i class="fas fa-chart-line btn-icon"></i>
+          <span class="btn-txt">Show Board Stats</span>
+        </button>
+      </div>
 
       <div class="activities">
-        <span class="title">Activities</span>
+        <div class="title">
+          <i class="far fa-list-alt title-icon"></i>
+          <span class="title-txt">Activities</span>
+        </div>
         <!-- Activities component here -->
       </div>
     </div>
@@ -63,7 +68,7 @@ export default {
     },
     goBack() {
       this.$emit("closed");
-    },
+    }
   },
   components: {
     boardStyleMenu,
