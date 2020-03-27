@@ -14,15 +14,16 @@
         cursor: pointer;
     }
 
-    .fas, .far {
-        color: $textBlue;
-        font-size: 14px;
-        margin: 3px;
-        margin-left: 0px;
-    }
-
     .item {
         transition: .3s;
+        color: $textBlue;
+        font-size: 14px;
+        padding: 5px 10px;
+        margin-left: 0px;
+
+        span {
+            margin-inline-start: 5px;
+        }
     }
 
     .item:hover {

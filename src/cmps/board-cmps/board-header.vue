@@ -4,11 +4,11 @@
       <span class="board-name">{{currBoard.name}}</span>
     </div>
     <div class="members">
-      <user-avatar v-for="user in currBoard.members" :user="user" />
+      <user-avatar v-for="user in currBoard.members" :key="user._id" :user="user" />
     </div>
     <div class="board-nav">
-      <button @click="isInvite = !isInvite" class="menu-btn"><i class="fas fa-user-plus"></i></button>
-      <button @click="toggleMenu" class="menu-btn"><i class="fas fa-bars"></i></button>
+      <button @click="isInvite = !isInvite" class="nav-menu-btn"><i class="fas fa-user-plus"></i></button>
+      <button @click="toggleMenu" class="nav-menu-btn"><i class="fas fa-bars"></i></button>
     </div>
 
     <invite-members @closed="isInvite = false" v-if="isInvite" />

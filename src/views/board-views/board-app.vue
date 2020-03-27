@@ -25,7 +25,8 @@
         <section class="add-list">
           <transition name="fade">
             <button class="add-list-btn" v-if="!newTaskList" @click="getEmptyList">
-              <i class="fas fa-plus plus-icon"></i> Add List
+              <i class="fas fa-plus plus-icon"></i>
+              <span>Add List</span>
             </button>
           </transition>
           <transition name="fade">
@@ -243,7 +244,7 @@ export default {
       }, 0);
     },
     updateStyle(background) {
-      const user = JSON.parse(JSON.stringify(loggedinUser));
+      const user = JSON.parse(JSON.stringify(this.loggedinUser));
       const miniBoard = user.boards.find(
         board => board._id === this.storeBoard._id
       );
@@ -280,10 +281,13 @@ export default {
       if (newCurrTask)
         this.$store.dispatch({ type: "updateTask", task: newCurrTask });
       this.saveBoard();
+<<<<<<< HEAD
     },
     addActivity(activity) {
       this.board.activities.unshift(activity);
       this.saveBoard();
+=======
+>>>>>>> 4e16e05e0ab084ce5ead73257c29c9e67a6620a4
     }
   },
   computed: {
