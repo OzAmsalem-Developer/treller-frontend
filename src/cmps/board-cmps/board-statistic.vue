@@ -1,6 +1,6 @@
 <template>
   <div class="board-statistic">
-    <listChart :chartdata="listChart.chartData" :options="listChart.options" />
+    <listChart v-if="currBoard" :chartData="listsChart.chartData" :options="listsChart.options" />
     <button class="close-btn" @click="goBack">
       <i class="fas fa-arrow-left"></i>
     </button>
@@ -10,14 +10,14 @@
 <script>
 import listChart from "./list-chart";
 export default {
-  data() {
-    return {
-      listChart: {
+  computed: {
+    listsChart(){
+      return {
         chartData: {
-          labels: this.listNames,
+          labels: this.listsNames,
           datasets: [
             {
-              data: this.listsTasksCount,
+              data: this.listsTasksCount ,
               backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
                 "rgba(54, 162, 235, 0.2)",
@@ -44,29 +44,26 @@ export default {
           }
         }
       }
-    };
-  },
-  computed: {
+    },
     currBoard() {
       return this.$store.getters.currBoard;
     },
-    listNames() {
-      const boardListNames = []
-      this.currBoard.taskLists.forEach(list => boardListNames.push(list.name));
-      return boardListNames;
+    listsNames() {
+      return this.currBoard.taskLists.map(list => list.name)
     },
     listsTasksCount() {
-      const listsTasksCount = [];
-      this.currBoard.taskLists.forEach(list => {
-        listsTasksCount.push(list.tasks.length);
-      });
-      return listsTasksCount;
+      return this.currBoard.taskLists.map(list => list.tasks.length)
     }
   },
   methods: {
     goBack() {
       this.$emit("closed");
-    },
+    }, 
+  },
+  created() {
+    console.log(this.listsNames, this.listsTasksCount);
+    
+    console.log(this.listsChart);
     
   },
   components: {
