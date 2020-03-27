@@ -9,7 +9,16 @@
 
 <script>
 import listChart from "./list-chart";
+import {utilService} from "../../services/util.service.js"
 export default {
+  data() {
+    return {
+      listsChartColors: {
+        fill: null,
+        border: null
+      }
+    }
+  },
   computed: {
     listsChart(){
       return {
@@ -18,21 +27,8 @@ export default {
           datasets: [
             {
               data: this.listsTasksCount ,
-              backgroundColor: [
-                "rgba(255, 99, 132, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(255, 206, 86, 0.2)",
-                "rgba(75, 192, 192, 0.2)",
-                "rgba(153, 102, 255, 0.2)"
-              ],
-              borderColor: [
-                "rgba(255, 99, 132, 1)",
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
-                "rgba(75, 192, 192, 1)",
-                "rgba(153, 102, 255, 1)",
-                "rgba(255, 159, 64, 1)"
-              ],
+              backgroundColor: this.listsChartColors.fill,
+              borderColor: this.listsChartColors.border,
               borderWidth: 1
             }
           ]
@@ -59,12 +55,13 @@ export default {
     goBack() {
       this.$emit("closed");
     }, 
+    setListsChartColors() {
+      const colors = utilService.getRandomChartColors()
+      this.listsChartColors = colors
+    }
   },
   created() {
-    console.log(this.listsNames, this.listsTasksCount);
-    
-    console.log(this.listsChart);
-    
+    this.setListsChartColors()
   },
   components: {
     listChart

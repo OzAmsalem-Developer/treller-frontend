@@ -12,6 +12,7 @@
     "chart.js": "^2.9.3",
     "core-js": "^3.6.4",
     "element-ui": "^2.13.0",
+    "hex-to-rgba": "^2.0.1",
     "moment": "^2.24.0",
     "register-service-worker": "^1.6.2",
     "socket.io": "^2.3.0",
