@@ -73,7 +73,8 @@ import {
   EV_moveTask,
   EV_addMember,
   EV_removeMember,
-  EV_updateBoardLabels
+  EV_updateBoardLabels,
+  EV_addActivity
 } from "@/services/eventBus.service";
 
 export default {
@@ -130,7 +131,15 @@ export default {
         return;
       }
       this.board.taskLists.push(this.newTaskList);
+      this.board.activities.unshift({
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: null,
+        operation: "added new tasks list " + `"${this.newTaskList.name}"`
+      });
       this.saveBoard();
+      console.log(this.board);
+
       this.newTaskList = null;
       this.getEmptyList();
       setTimeout(() => {
@@ -157,6 +166,14 @@ export default {
       );
       this.board.taskLists.splice(listIdx, 1);
       this.board.taskLists.splice(toIdx, 0, taskList);
+      let from = this.board.taskLists[listIdx].name;
+      let to = this.board.taskLists[toIdx].name;
+      this.board.activities.unshift({
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: null,
+        operation: "list moved from " + from + " to " + to
+      });
       this.saveBoard();
     },
     onDrop(dropResult) {
@@ -168,7 +185,14 @@ export default {
     },
     removeList(listId) {
       const idx = this.board.taskLists.findIndex(list => list.id === listId);
+      let listName = this.board.taskLists[idx].name
       this.board.taskLists.splice(idx, 1);
+      this.board.activities.unshift({
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: null,
+        operation: "list " + listName + " removed "
+      });
       this.saveBoard();
     },
     saveTaskList(taskList) {
@@ -220,7 +244,7 @@ export default {
       }, 0);
     },
     updateStyle(background) {
-      const user = JSON.parse(JSON.stringify(this.$store.getters.loggedinUser));
+      const user = JSON.parse(JSON.stringify(this.loggedinUser));
       const miniBoard = user.boards.find(
         board => board._id === this.storeBoard._id
       );
@@ -257,6 +281,10 @@ export default {
       if (newCurrTask)
         this.$store.dispatch({ type: "updateTask", task: newCurrTask });
       this.saveBoard();
+    },
+    addActivity(activity) {
+      this.board.activities.unshift(activity);
+      this.saveBoard();
     }
   },
   computed: {
@@ -268,6 +296,9 @@ export default {
     },
     storeBoard() {
       return this.$store.getters.currBoard;
+    },
+    loggedinUser() {
+      return this.$store.getters.loggedinUser;
     }
   },
   watch: {
@@ -294,6 +325,7 @@ export default {
     eventBus.$on(EV_addMember, this.addMember);
     eventBus.$on(EV_removeMember, this.removeMember);
     eventBus.$on(EV_updateBoardLabels, this.updateBoardLabels);
+    eventBus.$on(EV_addActivity, this.addActivity);
   },
   destroyed() {
     eventBus.$off(EV_removeList, this.removeList);
@@ -301,6 +333,7 @@ export default {
     eventBus.$off(EV_addMember, this.addMember);
     eventBus.$off(EV_removeMember, this.removeMember);
     eventBus.$off(EV_updateBoardLabels, this.updateBoardLabels);
+    eventBus.$off(EV_addActivity, this.addActivity);
   },
   components: {
     boardHeader,
