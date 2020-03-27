@@ -1,5 +1,8 @@
 <template>
   <div class="board-statistic">
+    <div class="task-list-chart">
+      <span class="chart-title"></span>
+    </div>
     <listChart v-if="currBoard" :chartData="listsChart.chartData" :options="listsChart.options" />
     <button class="close-btn" @click="goBack">
       <i class="fas fa-arrow-left"></i>
@@ -37,6 +40,11 @@ export default {
           legend: {
             position: "top",
             align: "start",
+          },
+          title: {
+            display: true,
+            text: 'List Popularity',
+            fontSize: 18
           }
         }
       }
