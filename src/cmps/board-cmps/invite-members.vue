@@ -1,15 +1,18 @@
 <template>
   <section class="invite-members">
+      <header>
+        <div class="title"><i class="fas fa-user-plus"></i> Invite members</div>
         <div class="close-btn" @click="$emit('closed')"><i class="fas fa-times"></i></div>
-    <header>
+      </header>
+   
       <input
         placeholder="User name or email"
         v-model="searchStr"
         @input="searchUsers"
         type="text"
         class="search"
+        :style="{'background': searchIcon}"
       />
-    </header>
     <div class="members-container">
       <div class="member" v-for="member in searchRes" @click="addMember(member)">
         <user-avatar :user="member" />
@@ -63,6 +66,9 @@ export default {
   computed: {
     currBoard() {
       return this.$store.getters.currBoard;
+    },
+    searchIcon() {
+        return require('@/assets/img/search-icon.png')
     }
   },
   watch: {
