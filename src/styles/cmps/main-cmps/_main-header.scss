@@ -9,8 +9,9 @@
   height: rem(40px);
   z-index: 1;
 
-  .user {
-    background-color: white;
+  .username {
+    text-decoration: none;
+    color: white;
   }
 
 
@@ -38,11 +39,24 @@
   }
 }
 
-.login-btns > * {
+.login-btns > * , .logout{
   color: white;
   text-decoration: none;
-  margin-inline-end: 5px;
+  margin-inline-end: 15px;
   font-size: rem(16px);
+  border: 0.5px solid rgba(255, 255, 255, 0.24);
+  padding: 6px 10px;
+  border-radius: 3px;
+  transition: .3s;
+}
+
+.logout {
+  margin-left: 20px;
+}
+
+.login-btns > *:hover {
+  background-color: whitesmoke;
+  color: $clr1;
 }
 
 .nav-links > * {

@@ -1,0 +1,79 @@
+.invite-members {
+    background-color: whitesmoke;
+    position: absolute;
+    right: 72px;
+    width: 280px;
+    border-radius: 3px;
+    box-shadow: -1px 1px 1px rgba(9,30,66,.25);
+    // padding: 10px;
+    z-index: 2;
+    top: 45px;
+    .close-btn {
+        position: absolute;
+        cursor: pointer;
+        left: 0;
+    }
+    .close-btn:hover {
+        background-color: #c1c1c1;
+    }
+    header {
+        padding: 33px 10px 0 10px;
+        text-align: center;
+
+        input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-family: $font-regular;
+            outline: 0;
+          }
+    }
+
+    .members-container {
+        height: 300px;
+        overflow-y: auto;
+        margin-bottom: 4px;
+    }
+
+    .member {
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        padding-left: 10px;
+        cursor: pointer;
+        transition: .3s;
+        .name {
+            margin-left: 10px;
+        }
+        .remove-img  {
+            display: none;
+        }
+    }
+    .member:hover {
+        background-color: rgba(201, 188, 188, 0.753);
+    }
+    
+}
+
+
+//Scroll bar
+.members-container::-webkit-scrollbar {
+    background-color: rgba(255, 255, 255, 0);
+    width: 8.5px;
+  }
+  
+  .members-container::-webkit-scrollbar-track {
+    border-radius: 10px;
+    // border: 16px solid rgba(17, 59, 175, 0.904);
+  }
+  .members-container::-webkit-scrollbar-thumb {
+    border: 16px solid rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+  }
+  
+  .members-container::-webkit-scrollbar-track {
+    background-color: #dadbe2;
+  }

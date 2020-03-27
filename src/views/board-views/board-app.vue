@@ -64,7 +64,9 @@ import { socketService } from "@/services/socket.service.js";
 import {
   eventBus,
   EV_removeList,
-  EV_moveTask
+  EV_moveTask,
+  EV_addMember,
+  EV_removeMember
 } from "@/services/eventBus.service";
 
 export default {
@@ -218,7 +220,16 @@ export default {
 
       this.board.style.background = background 
       this.saveBoard()
-    } 
+    },
+    addMember(user) {
+      this.board.members.push(user)
+      this.saveBoard()
+    },
+    removeMember(userId) {
+      const idx = this.board.members.findIndex(m => m._id === userId)
+      this.board.members.splice(idx, 1)
+       this.saveBoard()
+    }
   },
   computed: {
     taskLists() {
@@ -253,10 +264,14 @@ export default {
     //Event Bus
     eventBus.$on(EV_removeList, this.removeList);
     eventBus.$on(EV_moveTask, this.moveTask);
+    eventBus.$on(EV_addMember, this.addMember);
+    eventBus.$on(EV_removeMember, this.removeMember);
   },
   destroyed() {
     eventBus.$off(EV_removeList, this.removeList);
     eventBus.$off(EV_moveTask, this.moveTask);
+    eventBus.$off(EV_addMember, this.addMember);
+    eventBus.$off(EV_removeMember, this.removeMember);
   },
   components: {
     boardHeader,

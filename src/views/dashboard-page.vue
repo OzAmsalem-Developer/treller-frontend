@@ -6,7 +6,7 @@
      <div class="hello center-flex">Hello {{loggedinUser.username}}</div>
     </header>
     <section class="boards">
-    <board-preview v-for="board in loggedinUser.boards" :board="board" />
+    <board-preview  v-for="board in loggedinUser.boards" :board="board" />
     <button @click="isCreate = true" class="new-board-btn">Create new board</button>
     <create-board @board-created="createBoard" v-if="isCreate" @closed="isCreate = false"/>
     </section>
