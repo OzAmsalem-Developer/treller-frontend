@@ -29,7 +29,12 @@
             </button>
           </transition>
           <transition name="fade">
-            <form class="add-list" @keyup.enter="isListSaved = false" @submit.prevent="addList"  v-if="newTaskList">
+            <form
+              class="add-list"
+              @keyup.enter="isListSaved = false"
+              @submit.prevent="addList"
+              v-if="newTaskList"
+            >
               <input
                 ref="listInput"
                 type="text"
@@ -67,7 +72,8 @@ import {
   EV_moveTask,
   EV_addMember,
   EV_removeMember,
-  EV_updateBoardLabels
+  EV_updateBoardLabels,
+  EV_addActivity
 } from "@/services/eventBus.service";
 
 export default {
@@ -118,13 +124,21 @@ export default {
     },
     addList(ev) {
       if (!this.newTaskList) return;
-      this.isListSaved = true
+      this.isListSaved = true;
       if (!this.newTaskList.name.length) {
         this.newTaskList = null;
         return;
       }
       this.board.taskLists.push(this.newTaskList);
+      this.board.activities.unshift({
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: null,
+        operation: "added new tasks list " + `"${this.newTaskList.name}"`
+      });
       this.saveBoard();
+      console.log(this.board);
+
       this.newTaskList = null;
       this.getEmptyList();
       setTimeout(() => {
@@ -135,11 +149,11 @@ export default {
       setTimeout(() => {
         if (this.isListSaved) {
           this.isListSaved = false;
-          return
+          return;
         } else {
-          if (this.newTaskList && this.newTaskList.name.length > 0 ) {
-              this.addList()
-          } 
+          if (this.newTaskList && this.newTaskList.name.length > 0) {
+            this.addList();
+          }
           this.newTaskList = null;
           this.isListSaved = false;
         }
@@ -151,6 +165,14 @@ export default {
       );
       this.board.taskLists.splice(listIdx, 1);
       this.board.taskLists.splice(toIdx, 0, taskList);
+      let from = this.board.taskLists[listIdx].name;
+      let to = this.board.taskLists[toIdx].name;
+      this.board.activities.unshift({
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: null,
+        operation: "list moved from " + from + " to " + to
+      });
       this.saveBoard();
     },
     onDrop(dropResult) {
@@ -162,7 +184,14 @@ export default {
     },
     removeList(listId) {
       const idx = this.board.taskLists.findIndex(list => list.id === listId);
+      let listName = this.board.taskLists[idx].name
       this.board.taskLists.splice(idx, 1);
+      this.board.activities.unshift({
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: null,
+        operation: "list " + listName + " removed "
+      });
       this.saveBoard();
     },
     saveTaskList(taskList) {
@@ -204,7 +233,7 @@ export default {
     updateBoard(board) {
       this.$store.commit({ type: "setCurrBoard", board });
       this.board = JSON.parse(JSON.stringify(board));
-      console.log('Board updated');
+      console.log("Board updated");
     },
     getEmptyList() {
       this.newTaskList = this.newTaskList ? null : boardService.getEmptyList();
@@ -214,39 +243,47 @@ export default {
       }, 0);
     },
     updateStyle(background) {
-      const user =  JSON.parse(JSON.stringify(this.$store.getters.loggedinUser));
-      const miniBoard = user.boards.find(board => board._id === this.storeBoard._id)
-      miniBoard.style.background = background
-      this.$store.dispatch({type: 'updateUser', user})
+      const user = JSON.parse(JSON.stringify(loggedinUser));
+      const miniBoard = user.boards.find(
+        board => board._id === this.storeBoard._id
+      );
+      miniBoard.style.background = background;
+      this.$store.dispatch({ type: "updateUser", user });
 
-      this.board.style.background = background 
-      this.saveBoard()
+      this.board.style.background = background;
+      this.saveBoard();
     },
     addMember(user) {
-      this.board.members.push(user)
-      this.saveBoard()
+      this.board.members.push(user);
+      this.saveBoard();
     },
     removeMember(userId) {
-      const idx = this.board.members.findIndex(m => m._id === userId)
-      this.board.members.splice(idx, 1)
-       this.saveBoard()
+      const idx = this.board.members.findIndex(m => m._id === userId);
+      this.board.members.splice(idx, 1);
+      this.saveBoard();
     },
     updateBoardLabels(labels) {
-      this.board.labels = labels
-      let newCurrTask
+      this.board.labels = labels;
+      let newCurrTask;
 
       this.board.taskLists.forEach(taskList => {
         taskList.tasks.forEach(task => {
-         const newTaskLabels = task.labels.map(label => {
-            const updatedLabel = labels.find(l => l.id === label.id)
-            return updatedLabel
-          })
-          task.labels = newTaskLabels
-          if (task.id === this.currTask.id) newCurrTask = JSON.parse(JSON.stringify(task))
-        })
-      })
-      if (newCurrTask) this.$store.dispatch({type: 'updateTask', task: newCurrTask})
-      this.saveBoard()
+          const newTaskLabels = task.labels.map(label => {
+            const updatedLabel = labels.find(l => l.id === label.id);
+            return updatedLabel;
+          });
+          task.labels = newTaskLabels;
+          if (task.id === this.currTask.id)
+            newCurrTask = JSON.parse(JSON.stringify(task));
+        });
+      });
+      if (newCurrTask)
+        this.$store.dispatch({ type: "updateTask", task: newCurrTask });
+      this.saveBoard();
+    },
+    addActivity(activity) {
+      this.board.activities.unshift(activity);
+      this.saveBoard();
     }
   },
   computed: {
@@ -258,6 +295,9 @@ export default {
     },
     storeBoard() {
       return this.$store.getters.currBoard;
+    },
+    loggedinUser() {
+      return this.$store.getters.loggedinUser;
     }
   },
   watch: {
@@ -278,13 +318,13 @@ export default {
       socketService.on("board boardChanged", this.updateBoard);
     })();
 
-
     //Event Bus
     eventBus.$on(EV_removeList, this.removeList);
     eventBus.$on(EV_moveTask, this.moveTask);
     eventBus.$on(EV_addMember, this.addMember);
     eventBus.$on(EV_removeMember, this.removeMember);
     eventBus.$on(EV_updateBoardLabels, this.updateBoardLabels);
+    eventBus.$on(EV_addActivity, this.addActivity);
   },
   destroyed() {
     eventBus.$off(EV_removeList, this.removeList);
@@ -292,6 +332,7 @@ export default {
     eventBus.$off(EV_addMember, this.addMember);
     eventBus.$off(EV_removeMember, this.removeMember);
     eventBus.$off(EV_updateBoardLabels, this.updateBoardLabels);
+    eventBus.$off(EV_addActivity, this.addActivity);
   },
   components: {
     boardHeader,
