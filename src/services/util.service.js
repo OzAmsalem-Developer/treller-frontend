@@ -1,3 +1,5 @@
+import hexToRgba from 'hex-to-rgba'
+
 export const utilService = {
     getRandom,
     makeLorem,
@@ -10,7 +12,8 @@ export const utilService = {
     getEmptyTodo,
     getEmptyComment,
     applyDrag,
-    expandTextArea
+    expandTextArea,
+    getRandomChartColors
 }
 
 
@@ -100,6 +103,21 @@ function getRandomColor() {
         color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+}
+
+function getRandomChartColors() {
+    const colors = {
+        fill: [],
+        border: []
+    }
+    for (let i=0; i<30 ; i++){
+        var hexColor = getRandomColor()
+        var borderColor = hexToRgba(hexColor)
+        var fillColor = hexToRgba(hexColor, 0.2)
+        colors.fill.push(fillColor)
+        colors.border.push(borderColor)
+    }
+    return colors
 }
 
 

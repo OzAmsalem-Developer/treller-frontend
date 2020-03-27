@@ -16,35 +16,50 @@
 
     .menu-header{
         margin: 14px 0;
-        border-bottom: 1px solid lighten($color: #e4e4e4, $amount: 4%);
+        border-bottom: 1px solid #d5d9e0;
         text-align: center;
         padding-bottom: 4px;
     }
 
     .menu {
-        .menu-btn{
-            display: block;
-            font-size: 1rem;
-            font-family: $font-semi;
-            color: $textBlue ;
-            margin: 4px 0;
-            padding: 6px;
-            border-radius: 3px;
-            outline: 0;
-            width: 100%;
-            text-align: left;
-            .btn-txt{
-                padding-left: 6px;
+        .menu-btn-container{
+            margin-bottom: 50px;
+            .menu-btn{
+                display: block;
+                font-size: 1rem;
+                font-family: $font-semi;
+                color: $textBlue ;
+                margin: 4px 0;
+                padding: 6px;
+                border-radius: 3px;
+                outline: 0;
+                width: 100%;
+                text-align: left;
+                .btn-txt{
+                    padding-left: 10px;
+                }
+                .btn-icon{
+                    font-size: rem(17px);
+                }
+            
             }
-        
-        }
-        .menu-btn:hover {
-            background-color: rgba(9,30,66,.08);
+            .menu-btn:hover {
+                background-color: rgba(9,30,66,.08);
+            }
         }
         .activities{
-            margin: 70px 0 10px;
+            margin: 0 0 10px;
             .title{
-                border-bottom: 1px solid lighten($color: #e4e4e4, $amount: 4%);
+                width: 100%;
+                border-bottom: 1px solid #d5d9e0;
+                margin-bottom: 4px;
+                .title-icon::before{
+                    font-size: rem(15px);
+                }
+                .title-txt{
+                    font-family: $font-regular;
+                    padding-left: 8px;
+                }
             }
         }
     }
@@ -52,7 +67,7 @@
     .close-btn {
         position: absolute;
         top: 10px;
-        left: 10px;
+        right: 10px;
         padding: 6px;
     }
 

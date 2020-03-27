@@ -37,13 +37,25 @@
     .board-nav{
         display: flex;
         align-items: center;
-
+        
         .board-data-container{
             .board-name{
                 font-family: $font-semi;
                 font-size: rem(18px);
                 padding: 0 12px;
             }
+        }
+        .menu-btn {
+            background-color: rgba(0,0,0,.08);
+            // height: 32px;
+            padding: 8px 14px;
+            border-radius: 3px;
+            transition: .1s ease;
+            margin: 0 5px;
+            color: papayawhip;
+        }
+        .menu-btn:hover {
+            background-color: rgba(0,0,0,.16)
         }
     }
 }
