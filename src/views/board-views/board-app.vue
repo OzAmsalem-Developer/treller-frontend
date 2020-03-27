@@ -25,11 +25,17 @@
         <section class="add-list">
           <transition name="fade">
             <button class="add-list-btn" v-if="!newTaskList" @click="getEmptyList">
-              <i class="fas fa-plus plus-icon"></i> Add List
+              <i class="fas fa-plus plus-icon"></i>
+              <span>Add List</span>
             </button>
           </transition>
           <transition name="fade">
-            <form class="add-list" @keyup.enter="isListSaved = false" @submit.prevent="addList"  v-if="newTaskList">
+            <form
+              class="add-list"
+              @keyup.enter="isListSaved = false"
+              @submit.prevent="addList"
+              v-if="newTaskList"
+            >
               <input
                 ref="listInput"
                 type="text"
@@ -118,7 +124,7 @@ export default {
     },
     addList(ev) {
       if (!this.newTaskList) return;
-      this.isListSaved = true
+      this.isListSaved = true;
       if (!this.newTaskList.name.length) {
         this.newTaskList = null;
         return;
@@ -135,11 +141,11 @@ export default {
       setTimeout(() => {
         if (this.isListSaved) {
           this.isListSaved = false;
-          return
+          return;
         } else {
-          if (this.newTaskList && this.newTaskList.name.length > 0 ) {
-              this.addList()
-          } 
+          if (this.newTaskList && this.newTaskList.name.length > 0) {
+            this.addList();
+          }
           this.newTaskList = null;
           this.isListSaved = false;
         }
@@ -204,7 +210,7 @@ export default {
     updateBoard(board) {
       this.$store.commit({ type: "setCurrBoard", board });
       this.board = JSON.parse(JSON.stringify(board));
-      console.log('Board updated');
+      console.log("Board updated");
     },
     getEmptyList() {
       this.newTaskList = this.newTaskList ? null : boardService.getEmptyList();
@@ -214,39 +220,43 @@ export default {
       }, 0);
     },
     updateStyle(background) {
-      const user =  JSON.parse(JSON.stringify(this.$store.getters.loggedinUser));
-      const miniBoard = user.boards.find(board => board._id === this.storeBoard._id)
-      miniBoard.style.background = background
-      this.$store.dispatch({type: 'updateUser', user})
+      const user = JSON.parse(JSON.stringify(this.$store.getters.loggedinUser));
+      const miniBoard = user.boards.find(
+        board => board._id === this.storeBoard._id
+      );
+      miniBoard.style.background = background;
+      this.$store.dispatch({ type: "updateUser", user });
 
-      this.board.style.background = background 
-      this.saveBoard()
+      this.board.style.background = background;
+      this.saveBoard();
     },
     addMember(user) {
-      this.board.members.push(user)
-      this.saveBoard()
+      this.board.members.push(user);
+      this.saveBoard();
     },
     removeMember(userId) {
-      const idx = this.board.members.findIndex(m => m._id === userId)
-      this.board.members.splice(idx, 1)
-       this.saveBoard()
+      const idx = this.board.members.findIndex(m => m._id === userId);
+      this.board.members.splice(idx, 1);
+      this.saveBoard();
     },
     updateBoardLabels(labels) {
-      this.board.labels = labels
-      let newCurrTask
+      this.board.labels = labels;
+      let newCurrTask;
 
       this.board.taskLists.forEach(taskList => {
         taskList.tasks.forEach(task => {
-         const newTaskLabels = task.labels.map(label => {
-            const updatedLabel = labels.find(l => l.id === label.id)
-            return updatedLabel
-          })
-          task.labels = newTaskLabels
-          if (task.id === this.currTask.id) newCurrTask = JSON.parse(JSON.stringify(task))
-        })
-      })
-      if (newCurrTask) this.$store.dispatch({type: 'updateTask', task: newCurrTask})
-      this.saveBoard()
+          const newTaskLabels = task.labels.map(label => {
+            const updatedLabel = labels.find(l => l.id === label.id);
+            return updatedLabel;
+          });
+          task.labels = newTaskLabels;
+          if (task.id === this.currTask.id)
+            newCurrTask = JSON.parse(JSON.stringify(task));
+        });
+      });
+      if (newCurrTask)
+        this.$store.dispatch({ type: "updateTask", task: newCurrTask });
+      this.saveBoard();
     }
   },
   computed: {
@@ -277,7 +287,6 @@ export default {
       socketService.emit("board topic", this.board._id);
       socketService.on("board boardChanged", this.updateBoard);
     })();
-
 
     //Event Bus
     eventBus.$on(EV_removeList, this.removeList);
