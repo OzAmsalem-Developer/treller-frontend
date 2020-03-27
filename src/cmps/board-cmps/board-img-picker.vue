@@ -5,8 +5,6 @@
       :src="getImgUrl(idx)"
       @click="setBoardImage(idx)"
       />
-         
-
     </div>
     <button class="close-btn" @click.stop="goBack">
       <i class="fas fa-arrow-left"></i>

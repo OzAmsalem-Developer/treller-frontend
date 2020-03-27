@@ -1,3 +1,65 @@
-.temp-class {
-    color: #000000;
+.dasboard-page {
+  padding: 20px;
+  margin-top: 20px;
+  padding-top: rem(40px);
+
+  header {
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    grid-template-rows: 1fr;
+    align-items: center;
+    column-gap: rem(7px);
+    margin-bottom: rem(20px);
+
+    h2 {
+      font-family: $font-bold;
+      color: $textBlue;
+      font-size: rem(21px);
+    }
+
+    .hello {
+      font-family: $font-semi;
+      color: $textBlue;
+      font-size: rem(14px);
+      border-radius: 3px;
+      border: 0.5px solid lightgrey;
+      padding: 5px;
+    }
+  }
+  .boards {
+    display: flex;
+    flex-wrap: wrap;
+    > * {
+      margin-right: 10px;
+    }
+  }
+  .new-board-btn {
+    width: 225px;
+    height: 140px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #d3d3d3;
+    font-family: $font-regular;
+    color: $textBlue;
+    transition: 0.2s;
+  }
+
+  .new-board-btn:hover {
+    background-color: lighten(#d3d3d3, 5);
+  }
+}
+
+.board-preview {
+  width: 225px;
+  height: 140px;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
+
+  .name {
+    font-family: $font-bold;
+    color: $clr5;
+    font-size: rem(18px);
+  }
 }

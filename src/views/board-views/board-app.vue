@@ -212,6 +212,11 @@ export default {
       }, 0);
     },
     updateStyle(background) {
+      const user =  JSON.parse(JSON.stringify(this.$store.getters.loggedinUser));
+      const miniBoard = user.boards.find(board => board._id === this.storeBoard._id)
+      miniBoard.style.background = background
+      this.$store.dispatch({type: 'updateUser', user})
+
       this.board.style.background = background 
       this.saveBoard()
     },
@@ -248,6 +253,7 @@ export default {
       socketService.emit("board topic", this.board._id);
       socketService.on("board boardChanged", this.updateBoard);
     })();
+
 
     //Event Bus
     eventBus.$on(EV_removeList, this.removeList);

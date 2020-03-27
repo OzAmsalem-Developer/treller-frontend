@@ -97,15 +97,18 @@
   }
 }
 
-button > *:first-child {
-  margin-inline-end: rem(10px);
+.details-actions {
+  button > *:first-child {
+    margin-inline-end: rem(10px);
+  }
+  button:hover {
+    background-color: $hoverBlue;
+  }
+  button:last-child:hover {
+    background-color: #ff7b64;
+  }
 }
-button:hover {
-  background-color: $hoverBlue;
-}
-button:last-child:hover {
-  background-color: #ff7b64;
-}
+
 
 i {
   font-size: 12px;

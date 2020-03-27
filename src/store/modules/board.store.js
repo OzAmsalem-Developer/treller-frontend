@@ -2,7 +2,6 @@ import { boardService } from '@/services/board.service.js'
 
 export const boardStore = ({
     state: {
-        boards: [],
         currBoard: null,
         filterBy: null,
         currTask: null,
@@ -53,18 +52,9 @@ export const boardStore = ({
             state.isLabelsMini = !state.isLabelsMini
         }
     },
+
     actions: {
-        async loadBoards(context) {
-            // const userId = context.state.getters.loggedinUser._id
-            const boards = await boardService.query()
-            try {
-                context.commit({ type: 'setBoards', boards })
-                return boards
-            } catch {
-                console.log('Err: Boards load failed')
-                throw new Error()
-            }
-        },
+
         async loadById(context, { boardId }) {
             const board = await boardService.getById(boardId)
             try {
@@ -124,6 +114,15 @@ export const boardStore = ({
                 context.commit({ type: 'setCurrBoard', prevBoard })
                 console.log('Err: Board saving failed')
                 return Promise.reject(prevBoard)
+            }
+        },
+        async createBoard(context, { board }) {
+            const newBoard = await boardService.save(board)
+            try {
+                return newBoard
+            } catch {
+                console.log('Board create failed')
+                return Promise.reject()
             }
         }
     }
