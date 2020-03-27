@@ -48,13 +48,13 @@
       font-family: $font-semi;
       transition: all 0.1s ease;
       cursor: pointer;
+      color: papayawhip;
 
       i {
         text-align: center;
-        font-size: rem(16px);
+        font-size: rem(14px);
       }
 
-      color: papayawhip;
     }
     .nav-menu-btn:hover {
       background-color: rgba(0, 0, 0, 0.7);

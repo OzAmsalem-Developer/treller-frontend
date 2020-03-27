@@ -32,7 +32,6 @@ export default {
   },
   created() {
     this.editedLabel = JSON.parse(JSON.stringify(this.label));
-    console.log(this.isCheck);
     
   },
   props: {

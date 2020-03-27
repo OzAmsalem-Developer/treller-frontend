@@ -5,7 +5,7 @@ export const boardStore = ({
         currBoard: null,
         filterBy: null,
         currTask: null,
-        isLabelsMini: false,
+        isLabelsMini: true,
     },
     getters: {
         currBoardId(state) {
