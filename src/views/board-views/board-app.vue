@@ -281,13 +281,10 @@ export default {
       if (newCurrTask)
         this.$store.dispatch({ type: "updateTask", task: newCurrTask });
       this.saveBoard();
-<<<<<<< HEAD
     },
     addActivity(activity) {
       this.board.activities.unshift(activity);
       this.saveBoard();
-=======
->>>>>>> 4e16e05e0ab084ce5ead73257c29c9e67a6620a4
     }
   },
   computed: {
