@@ -1,4 +1,10 @@
 
+.container {
+width: 98vw;
+border-inline-start: solid rgb(255, 0, 128) 2px;
+border-inline-end: solid rgb(255, 0, 128) 2px;
+}
+
 .site-block {
     margin-bottom: rem(20px);
 }
