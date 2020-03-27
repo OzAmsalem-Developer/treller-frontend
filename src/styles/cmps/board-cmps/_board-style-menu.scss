@@ -11,13 +11,18 @@
         font-family: $font-semi;
         cursor: pointer;
         transition: all 0.3;
+        .txt-btn{
+            background-color: rgba(0, 0, 0, 0.15);
+            padding: 6px 12px;
+            border-radius: 3px;
+        }
 
     }
     .btn:hover {
         opacity: 0.8;
         .txt-btn {
             font-size: rem(20px);
-            opacity: 1;
+            
         }
     }
 

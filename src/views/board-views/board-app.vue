@@ -64,7 +64,10 @@ import { socketService } from "@/services/socket.service.js";
 import {
   eventBus,
   EV_removeList,
-  EV_moveTask
+  EV_moveTask,
+  EV_addMember,
+  EV_removeMember,
+  EV_updateBoardLabels
 } from "@/services/eventBus.service";
 
 export default {
@@ -211,9 +214,27 @@ export default {
       }, 0);
     },
     updateStyle(background) {
+      const user =  JSON.parse(JSON.stringify(this.$store.getters.loggedinUser));
+      const miniBoard = user.boards.find(board => board._id === this.storeBoard._id)
+      miniBoard.style.background = background
+      this.$store.dispatch({type: 'updateUser', user})
+
       this.board.style.background = background 
       this.saveBoard()
-    } 
+    },
+    addMember(user) {
+      this.board.members.push(user)
+      this.saveBoard()
+    },
+    removeMember(userId) {
+      const idx = this.board.members.findIndex(m => m._id === userId)
+      this.board.members.splice(idx, 1)
+       this.saveBoard()
+    },
+    updateBoardLabels(labels) {
+      this.board.labels = labels
+      this.saveBoard()
+    }
   },
   computed: {
     taskLists() {
@@ -248,10 +269,16 @@ export default {
     //Event Bus
     eventBus.$on(EV_removeList, this.removeList);
     eventBus.$on(EV_moveTask, this.moveTask);
+    eventBus.$on(EV_addMember, this.addMember);
+    eventBus.$on(EV_removeMember, this.removeMember);
+    eventBus.$on(EV_updateBoardLabels, this.updateBoardLabels);
   },
   destroyed() {
     eventBus.$off(EV_removeList, this.removeList);
     eventBus.$off(EV_moveTask, this.moveTask);
+    eventBus.$off(EV_addMember, this.addMember);
+    eventBus.$off(EV_removeMember, this.removeMember);
+    eventBus.$off(EV_updateBoardLabels, this.updateBoardLabels);
   },
   components: {
     boardHeader,

@@ -21,7 +21,16 @@
         margin-left: 0px;
     }
 
+    .item {
+        transition: .3s;
+    }
+
     .item:hover {
         background-color: #ebecf0;
+    }
+
+    .item.remove:hover {
+        background-color: #ff7b64;
+        color: $clr3;
     }
 }

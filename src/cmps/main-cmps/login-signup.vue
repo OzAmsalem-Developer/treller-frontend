@@ -72,6 +72,7 @@ export default {
           credentials: this.loginCredentials
         });
         console.log("Logged in sucessfully");
+        this.$emit('closed')
       } catch {
         console.log("Try again");
       }

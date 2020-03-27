@@ -6,9 +6,9 @@
      <div class="hello center-flex">Hello {{loggedinUser.username}}</div>
     </header>
     <section class="boards">
-    <board-preview v-for="board in minimalBoards" :board="board" />
+    <board-preview  v-for="board in loggedinUser.boards" :board="board" />
     <button @click="isCreate = true" class="new-board-btn">Create new board</button>
-    <create-board v-if="isCreate" @closed="isCreate = false"/>
+    <create-board @board-created="createBoard" v-if="isCreate" @closed="isCreate = false"/>
     </section>
 
   </section>
@@ -21,10 +21,22 @@ export default {
   data() {
     return {
       newBoard: null,
-      minimalBoards: null,
       userCopy: null,
       isCreate: false
     };
+  },
+  methods: {
+    async createBoard(board) {
+      const minimalBoard = {
+        _id: board._id,
+        name: board.name,
+        style: board.style
+      }
+      this.userCopy.boards.push(minimalBoard)
+      const user = await this.$store.dispatch({type: 'updateUser' , user: this.userCopy})
+      this.userCopy = JSON.parse(JSON.stringify(user))
+      this.isCreate = false
+    }
   },
   computed: {
     loggedinUser() {
@@ -35,7 +47,6 @@ export default {
       (async () => {
       await this.$store.dispatch({type: 'getLoggedinUser'})
       this.userCopy = JSON.parse(JSON.stringify(this.loggedinUser))
-      this.minimalBoards = this.loggedinUser.boards
     })();
     
   },

@@ -2,10 +2,7 @@ import { userService } from '@/services/user.service.js'
 
 export const userStore = {
   state: {
-    loggedinUser: null,
-    filterBy: {
-      txt: ''
-    }
+    loggedinUser: null
   },
   getters: {
     loggedinUser(state) {
@@ -15,9 +12,6 @@ export const userStore = {
   mutations: {
     setLoggedinUser(state, { user }) {
       state.loggedinUser = user
-    },
-    setFilterBy(state, { filterBy }) {
-      state.filterBy = filterBy
     }
   },
   actions: {
@@ -45,12 +39,12 @@ export const userStore = {
       }
     },
     async updateUser(context, { user }) {
-      await userService.updateUser(user)
+      await userService.update(user)
       context.commit({type: 'setLoggedinUser', user})
+      return user
     },
-    async loadUsers(context) {
-      const filterBy = context.state.filterBy
-      const users = await userService.query(filterBy)
+    async loadUsers(context, {searchStr = ''}) {
+      const users = await userService.query(searchStr)
       return users
     },
     async logout(context) {

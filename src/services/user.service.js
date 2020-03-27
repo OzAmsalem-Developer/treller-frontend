@@ -8,7 +8,7 @@ export const userService = {
     login,
     logout,
     signup,
-    getUsers,
+    query,
     getById,
     remove,
     update,
@@ -59,8 +59,8 @@ async function logout() {
     sessionStorage.clear();
     localStorage.clear();
 }
-function getUsers() {
-    return httpService.get('user')
+function query(searchStr) {
+    return httpService.get('user', searchStr)
 }
 
 function _handleLogin(user) {
