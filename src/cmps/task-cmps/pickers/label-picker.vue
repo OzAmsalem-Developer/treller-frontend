@@ -3,11 +3,12 @@
     <h4 class="label-header">Labels</h4>
     <div class="label-container">
       <label-card
-        v-for="(label,key) in boardLabels"
+        v-for="label in boardLabels"
         :label="label"
-        :key="label.txt"
-        @update-board-label="updateBoardLabels(key, label)"
-        @update-task-label="editTaskLabels(key)"
+        :key="label.id"
+        :isCheck="checkLabel(label)"
+        @update-board-label="updateBoardLabels"
+        @update-task-label="editTaskLabels"
       />
     </div>
 
@@ -30,24 +31,20 @@ export default {
     };
   },
   methods: {
-    async editTaskLabels(boardLabelKey) {
-      if (this.isLoad) return;
-      const labelIdx = this.taskLabels.findIndex(
-        label => label === boardLabelKey
-      );
+    async editTaskLabels(label) {
+      const labelIdx = this.taskLabels.findIndex(tl => tl.id === label.id);
       if (labelIdx !== -1) {
         this.editedTaskLabels.splice(labelIdx, 1);
       } else {
-        this.editedTaskLabels.push(boardLabelKey);
+        this.editedTaskLabels.push(label);
       }
-      // This await is finish to early if I click super fast. can improve with eventBus.
       await this.emit("set-labels", this.editedTaskLabels);
       this.editedTaskLabels = JSON.parse(JSON.stringify(this.taskLabels));
     },
-    updateBoardLabels(key, label) {
-      console.log(key, label);
-      
-      this.editedBoardLabels[key] = label;
+    updateBoardLabels(label) {
+      const idx = this.editedBoardLabels.findIndex(l => l.id === label.id)
+      if (idx === -1) return
+      this.editedBoardLabels.splice(idx, 1, label)
       eventBus.$emit(EV_updateBoardLabels, this.editedBoardLabels);
       this.editedBoardLabels = JSON.parse(JSON.stringify(this.boardLabels));
     },
@@ -57,32 +54,20 @@ export default {
         this.$nextTick(resolve);
       });
     },
-    checkLabel(boardLabelKey) {
-      const labelIdx = this.taskLabels.findIndex(
-        label => label === boardLabelKey
-      );
-      return labelIdx !== -1;
+    checkLabel(label) {
+      const found = this.taskLabels.find(l => l.id === label.id);
+      return !!found;
     },
     closePicker() {
       this.$emit("close-picker");
-    },
-    updateLabel(key) {
-      this.isOnEditMode[key] = false;
-    },
-    setEditMode(labelKeys) {
-      for (let i = 0; i < labelKeys.length; i++) {
-        this.isOnEditMode[labelKeys[i]] = false;
-      }
     }
   },
   created() {
     this.editedTaskLabels = JSON.parse(JSON.stringify(this.taskLabels));
     this.editedBoardLabels = JSON.parse(JSON.stringify(this.boardLabels));
-    const labelKeys = Object.keys(this.boardLabels);
-    this.setEditMode(labelKeys);
   },
   props: {
-    boardLabels: Object,
+    boardLabels: Array,
     taskLabels: Array
   },
   components: {

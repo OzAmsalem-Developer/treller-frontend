@@ -233,6 +233,19 @@ export default {
     },
     updateBoardLabels(labels) {
       this.board.labels = labels
+      let newCurrTask
+
+      this.board.taskLists.forEach(taskList => {
+        taskList.tasks.forEach(task => {
+         const newTaskLabels = task.labels.map(label => {
+            const updatedLabel = labels.find(l => l.id === label.id)
+            return updatedLabel
+          })
+          task.labels = newTaskLabels
+          if (task.id === this.currTask.id) newCurrTask = JSON.parse(JSON.stringify(task))
+        })
+      })
+      if (newCurrTask) this.$store.dispatch({type: 'updateTask', task: newCurrTask})
       this.saveBoard()
     }
   },
