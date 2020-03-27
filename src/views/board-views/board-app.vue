@@ -64,7 +64,8 @@ import { socketService } from "@/services/socket.service.js";
 import {
   eventBus,
   EV_removeList,
-  EV_moveTask
+  EV_moveTask,
+  EV_updateBoardLabels
 } from "@/services/eventBus.service";
 
 export default {
@@ -213,7 +214,11 @@ export default {
     updateStyle(background) {
       this.board.style.background = background 
       this.saveBoard()
-    } 
+    },
+    updateBoardLabels(labels) {
+      this.board.labels = labels
+      this.saveBoard()
+    }
   },
   computed: {
     taskLists() {
@@ -247,6 +252,7 @@ export default {
     //Event Bus
     eventBus.$on(EV_removeList, this.removeList);
     eventBus.$on(EV_moveTask, this.moveTask);
+    eventBus.$on(EV_updateBoardLabels, this.updateBoardLabels);
   },
   destroyed() {
     eventBus.$off(EV_removeList, this.removeList);

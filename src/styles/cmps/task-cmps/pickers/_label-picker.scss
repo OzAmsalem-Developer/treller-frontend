@@ -1,4 +1,4 @@
-.label-picker {
+.label-picker-container {
   background-color: #ffffff;
   width: 300px;
   padding: 10px 10px 2px 10px;
@@ -29,7 +29,7 @@
         min-height: 20px;
         width: 100%;
 
-        .default-card {
+        
           cursor: pointer;
           position: relative;
           display: flex;
@@ -44,7 +44,7 @@
           .label-txt:hover {
             padding-left: 5px;
           }
-        }
+        
       }
       .label-edit-btn {
         height: 26px;
