@@ -31,6 +31,11 @@ export default {
       return (this.isMini) ? 'mini-label' : ''
     }
   },
+  created() {
+    console.log('boardLabelsMap', this.boardLabelsMap, 'labels',this.labels);
+    console.log(this.$store.getters.currBoard);
+    
+  },
   props: {
     labels: Array
   }
