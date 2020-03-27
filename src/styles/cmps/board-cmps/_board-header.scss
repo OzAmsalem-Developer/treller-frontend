@@ -1,61 +1,62 @@
 .board-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  margin-bottom: 10px;
+  position: relative;
+  background: hsla(0, 0%, 100%, 0.5);
+  color: #172b4d;
+  padding: 0 15px;
+
+  .members {
+    display: flex;
+    overflow-x: hidden;
+    .user-avatar {
+      float: left;
+      height: 32px;
+      width: 32px;
+    }
+  }
+
+  .open-menu {
+    right: 0;
+  }
+  .board-nav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: 40px;
-    margin-bottom: 10px;
-    position: relative;
-    background: hsla(0,0%,100%,.5);
-    color: #172b4d;
-    padding: 0 15px;
 
-    .members {
-        display: flex;
-        overflow-x: hidden;
-        .user-avatar {
-            float: left;
-            height: 32px ;
-            width: 32px ;
-        }
+    > :first-child {
+      background-color: red;
+      margin: 0 5px;
     }
 
-    .menu-btn {
-        background-color: rgba(0, 0, 0, 0.38);
-        // height: 32px;
-        padding: 8px 14px;
-        border-radius: 3px;
-        transition: .1s ease;
-        margin: 0 5px;
-        color: papayawhip;
-    }
-    .menu-btn:hover {
-        background-color: rgba(0,0,0,.16)
-    }
-    .open-menu{
-        right: 0;
+    .board-data-container {
+      .board-name {
+        font-family: $font-semi;
+        font-size: rem(18px);
+        padding: 0 12px;
       }
-    .board-nav{
-        display: flex;
-        align-items: center;
-        
-        .board-data-container{
-            .board-name{
-                font-family: $font-semi;
-                font-size: rem(18px);
-                padding: 0 12px;
-            }
-        }
-        .menu-btn {
-            background-color: rgba(0,0,0,.08);
-            // height: 32px;
-            padding: 8px 14px;
-            border-radius: 3px;
-            transition: .1s ease;
-            margin: 0 5px;
-            color: papayawhip;
-        }
-        .menu-btn:hover {
-            background-color: rgba(0,0,0,.16)
-        }
     }
+
+    .nav-menu-btn {
+      background-color: rgba(0, 0, 0, 0.5);
+      min-width: 50px;
+      padding: 8px 14px;
+      outline: 0;
+      border-radius: 3px;
+      font-family: $font-semi;
+      transition: all 0.1s ease;
+      cursor: pointer;
+      color: papayawhip;
+
+      i {
+        text-align: center;
+        font-size: rem(14px);
+      }
+    }
+    .nav-menu-btn:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+  }
 }
