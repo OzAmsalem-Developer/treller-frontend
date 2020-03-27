@@ -41,7 +41,7 @@ export default {
       this.$refs.createCmp.style["background"] = background;
     },
     async createBoard() {
-      if (!this.newBoard.name.legth) return
+      if (!this.newBoard.name.length) return
       this.newBoard.members.push(this.$store.getters.loggedinUser);
       const board = await this.$store.dispatch({
         type: "createBoard",
