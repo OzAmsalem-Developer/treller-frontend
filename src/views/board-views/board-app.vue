@@ -66,7 +66,8 @@ import {
   EV_removeList,
   EV_moveTask,
   EV_addMember,
-  EV_removeMember
+  EV_removeMember,
+  EV_updateBoardLabels
 } from "@/services/eventBus.service";
 
 export default {
@@ -229,6 +230,10 @@ export default {
       const idx = this.board.members.findIndex(m => m._id === userId)
       this.board.members.splice(idx, 1)
        this.saveBoard()
+    },
+    updateBoardLabels(labels) {
+      this.board.labels = labels
+      this.saveBoard()
     }
   },
   computed: {
@@ -266,12 +271,14 @@ export default {
     eventBus.$on(EV_moveTask, this.moveTask);
     eventBus.$on(EV_addMember, this.addMember);
     eventBus.$on(EV_removeMember, this.removeMember);
+    eventBus.$on(EV_updateBoardLabels, this.updateBoardLabels);
   },
   destroyed() {
     eventBus.$off(EV_removeList, this.removeList);
     eventBus.$off(EV_moveTask, this.moveTask);
     eventBus.$off(EV_addMember, this.addMember);
     eventBus.$off(EV_removeMember, this.removeMember);
+    eventBus.$off(EV_updateBoardLabels, this.updateBoardLabels);
   },
   components: {
     boardHeader,
