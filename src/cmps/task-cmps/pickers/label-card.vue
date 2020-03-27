@@ -1,12 +1,13 @@
 <template>
 <section class="label-card-cmp">
-  <div class="label-card"  :style="{'background-color': label.color}"  @click.stop="$emit('update-task-label')">
+  <div class="label-card"  :style="{'background-color': label.color}"  @click.stop="toggleTaskLabel">
     <span v-if="!isEdit">{{label.txt}}</span>
     <form v-else class="edit-label-name" @submit.prevent="editBoardLabel">
       <input type="text" v-model="editedLabel.txt" placeholder="Label name">
     </form>
-    <button @click.stop="isEdit = true" class="label-edit-btn"><i class="fas fa-pencil-alt"></i></button>
+    <span v-if="isCheck" class="check-icon"><i class="fas fa-check"></i></span>
   </div>
+    <button @click.stop="isEdit = !isEdit" class="label-edit-btn"><i class="fas fa-pencil-alt"></i></button>
 </section>
 
 </template>
@@ -20,19 +21,23 @@ export default {
     };
   },
   methods: {
-    saveLabel() {
-      this.$emit("update-label", this.editedLabel);
-    },
     editBoardLabel() {
         this.$emit('update-board-label', this.editedLabel);
         this.isEdit = false
+    },
+    toggleTaskLabel() {
+      if (this.isEdit) return
+      this.$emit('update-task-label', this.label)
     }
   },
   created() {
     this.editedLabel = JSON.parse(JSON.stringify(this.label));
+    console.log(this.isCheck);
+    
   },
   props: {
-    label: Object
+    label: Object,
+    isCheck: Boolean
   }
 };
 </script>

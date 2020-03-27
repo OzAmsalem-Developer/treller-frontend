@@ -5,7 +5,7 @@
     <section v-if="task" class="task-menu" ref="taskMenu">
       <div class="card-container">
         <div class="card-details">
-          <label-preview :labels="taskCopy.labels" />
+          <label-preview :labels="task.labels" />
           <textarea
             @input="expand"
             class="task-name"

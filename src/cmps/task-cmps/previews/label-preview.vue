@@ -2,19 +2,14 @@
   <section class="label-preview">
     <div @click.stop="toggleMini" class="label-card" :class="labelClass"
     v-for="label in labels" 
-    :style="{'background-color': boardLabelsMap[label].color}">
-        {{ labelText(boardLabelsMap[label])}}
+    :style="{'background-color': label.color}">
+        {{ labelText(label)}}
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      boardLabelsMap: this.$store.getters.labels,
-    };
-  },
   methods: {
     toggleMini() {
       this.$store.commit({type: 'toggleMiniLabals'})
