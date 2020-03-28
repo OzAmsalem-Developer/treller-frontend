@@ -26,6 +26,11 @@ export default {
       this.isLoginSignup = true;
     }
   },
+  computed: {
+    loggedinUser() {
+      return this.$store.getters.loggedinUser
+    }
+  },
   created() {
     this.$store.dispatch({type: 'getLoggedinUser'})
   },

@@ -33,4 +33,28 @@
         left: 0;
         padding: 6px;
     }
+
+    .board-img-picker .img-container {
+        height: 445px;
+        overflow-y: auto;
+    }
 }
+
+//Scroll bar
+.board-img-picker .img-container::-webkit-scrollbar {
+    background-color: rgba(255, 255, 255, 0);
+    width: 8.5px;
+  }
+  
+  .board-img-picker .img-container::-webkit-scrollbar-track {
+    border-radius: 10px;
+    // border: 16px solid rgba(17, 59, 175, 0.904);
+  }
+  .board-img-picker .img-container::-webkit-scrollbar-thumb {
+    border: 16px solid rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+  }
+  
+  .board-img-picker .img-container::-webkit-scrollbar-track {
+    background-color: #dadbe2;
+  }
