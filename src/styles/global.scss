@@ -22,6 +22,9 @@
 @import 'cmps/main-cmps/login-signup';
 @import 'cmps/main-cmps/user-avatar';
 
+// DASHBOARD CMPS
+@import 'cmps/dashboard-cmps/user-profile';
+
 // TASK CMPS
 @import 'cmps/task-cmps/task-list';
 @import 'cmps/task-cmps/task-preview';
@@ -41,7 +44,9 @@
 @import 'cmps/board-cmps/user-activity';
 
 // TASKLIST CMPS
-@import 'cmps/task-cmps/list-cmps/list-menu';
+@import 'cmps/list-cmps/list-menu';
+@import 'cmps/list-cmps/list-mover';
+
 
 //TASK CMPS => PREVIEWS
 @import 'cmps/task-cmps/previews/label-preview';
