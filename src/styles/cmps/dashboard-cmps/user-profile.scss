@@ -4,6 +4,102 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 450px;
+  //   width: 400px;
   min-height: 450px;
-  background-color: rebeccapurple;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+  padding: 10px 20px;
+  box-shadow: $shadow;
+  font-family: $font-regular;
+  color: $textBlue;
+  z-index: 2;
+
+  // .login-signup {
+
+  // .page {
+  //   height: 100%;
+  //   display: flex;
+  //   flex-direction: column;
+
+  .close-btn {
+    padding-top: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: rem(10px);
+    user-select: none;
+
+    // h2 {
+    //   font-family: $font-regular;
+    //   color: $textBlue;
+    //   font-size: rem(20px);
+    //   margin-inline-end: rem(10px);
+    // }
+
+    span {
+      font-family: $font-logo;
+      color: $textBlue;
+      font-size: rem(26px);
+      margin-inline-end: rem(4px);
+    }
+
+    img {
+      height: rem(40px);
+    }
+  }
+
+  hr {
+    background-color: rgba(9, 30, 66, 0.13);
+    border: 0;
+    height: 1px;
+    margin-bottom: rem(16px);
+    padding: 0;
+    width: 100%;
+  }
+
+  .user-profile-container {
+    // padding: 0 30px;
+    .profile-view {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 30px;
+      img {
+        height: 120px;
+        width: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: solid 1px darken(#f8f8f8, 40);
+        margin-inline-end: 20px;
+      }
+
+      .profile-name {
+        display: flex;
+        // justify-content: center;
+        align-items: center;
+        span {
+          font-size: rem(24px);
+          font-family: $font-regular;
+          color: $textBlue;
+        }
+      }
+    }
+
+    .profile-edit {
+      .profile-name-container {
+        display: flex;
+        justify-content: space-between;
+        button {
+          background-color: $btnGrey;
+          padding: 10px 20px;
+          width: 100px;
+        }
+      }
+    }
+  }
 }
