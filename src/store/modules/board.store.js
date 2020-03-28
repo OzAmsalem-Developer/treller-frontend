@@ -14,6 +14,15 @@ export const boardStore = ({
         taskLists(state) {
             return state.currBoard.taskLists
         },
+        boardTasks(state) {
+            const boardTasks = []
+            state.currBoard.taskLists.forEach(list => {
+                list.tasks.forEach(task => {
+                    boardTasks.push(task)
+                })    
+            })
+            return boardTasks
+        },
         currTask(state) {
             return state.currTask
         },

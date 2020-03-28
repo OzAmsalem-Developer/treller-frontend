@@ -113,7 +113,7 @@ function getRandomChartColors() {
     for (let i=0; i<30 ; i++){
         var hexColor = getRandomColor()
         var borderColor = hexToRgba(hexColor)
-        var fillColor = hexToRgba(hexColor, 0.2)
+        var fillColor = hexToRgba(hexColor, 0.4)
         colors.fill.push(fillColor)
         colors.border.push(borderColor)
     }
