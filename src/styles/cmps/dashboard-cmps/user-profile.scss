@@ -1,5 +1,9 @@
 .user-profile {
-    width: 450px;
-    min-height: 450px;
-    background-color: rebeccapurple;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  min-height: 450px;
+  background-color: rebeccapurple;
 }

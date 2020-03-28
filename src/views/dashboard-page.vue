@@ -1,13 +1,13 @@
 <template>
   <section v-if="loggedinUser" class="dasboard-page">
+    <user-profile v-if="isUserProfile" />
     <header>
       <span class="icon">
         <i class="far fa-star"></i>
       </span>
       <h2 class="title">My Boards</h2>
       <div class="user-profile-container">
-        <button class="hello center-flex">Hello {{loggedinUser.username}}</button>
-        <user-profile />
+        <button class="hello center-flex" @click="toggleUserProfile">Hello {{loggedinUser.username}}</button>
       </div>
     </header>
     <section class="boards">
@@ -27,7 +27,8 @@ export default {
     return {
       newBoard: null,
       userCopy: null,
-      isCreate: false
+      isCreate: false,
+      isUserProfile: false
     };
   },
   methods: {
@@ -45,6 +46,9 @@ export default {
       this.$store.commit({ type: "setLoggedinUser", user });
       this.userCopy = JSON.parse(JSON.stringify(user));
       this.isCreate = false;
+    },
+    toggleUserProfile() {
+      this.isUserProfile = !this.isUserProfile
     }
   },
   computed: {
