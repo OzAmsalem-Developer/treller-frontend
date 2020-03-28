@@ -1,0 +1,65 @@
+.user-activity {
+  display: flex;
+  flex-direction: column;
+  font-size: rem(14px);
+  margin-bottom: rem(15px);
+  margin-right: 5px;
+
+  .from-operation {
+    display: flex;
+  }
+
+  .avatar .remove-img {
+    display: none;
+  }
+
+  .user-avatar {
+    height: 35px;
+    width: 35px;
+    margin-right: 5px;
+    cursor: default;
+  }
+
+  .user-name {
+      font-family: $font-bold;
+  }
+
+  .time {
+    align-self: flex-end;
+    font-size: rem(12px);
+    font-family: $font-light;
+  }
+
+  .task-link {
+      align-self: flex-start;
+      text-decoration: underline;
+      font-family: $font-light;
+      font-size: rem(13px);
+      margin-left: 45px;
+      color: inherit;
+  }
+}
+
+.board-activities {
+    height: 280px;
+    overflow-y: auto;
+}
+
+//Scroll bar
+.board-activities::-webkit-scrollbar {
+    background-color: rgba(255, 255, 255, 0);
+    width: 8.5px;
+  }
+  
+  .board-activities::-webkit-scrollbar-track {
+    border-radius: 10px;
+    // border: 16px solid rgba(17, 59, 175, 0.904);
+  }
+  .board-activities::-webkit-scrollbar-thumb {
+    border: 16px solid rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+  }
+  
+  .board-activities::-webkit-scrollbar-track {
+    background-color: #dadbe2;
+  }

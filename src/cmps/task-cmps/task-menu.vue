@@ -8,7 +8,7 @@
           <label-preview :labels="task.labels" />
           <textarea
             @input="expand"
-            class="task-name"
+            class="menu-task-name"
             type="text"
             v-model="taskCopy.name"
             ref="editTaskName"

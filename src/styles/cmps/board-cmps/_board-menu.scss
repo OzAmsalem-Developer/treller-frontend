@@ -52,12 +52,13 @@
             .title{
                 width: 100%;
                 border-bottom: 1px solid #d5d9e0;
-                margin-bottom: 4px;
+                margin-bottom: 10px;
+                padding-bottom: 5px;
                 .title-icon::before{
                     font-size: rem(15px);
                 }
                 .title-txt{
-                    font-family: $font-regular;
+                    font-family: $font-semi;
                     padding-left: 8px;
                 }
             }
@@ -68,7 +69,7 @@
         position: absolute;
         top: 10px;
         right: 10px;
-        padding: 6px;
+        padding: 5px 8px;
     }
 
 }

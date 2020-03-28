@@ -21,12 +21,13 @@
       padding: 6px 8px 2px;
       margin-bottom: 15px;
       background-color: #fff;
-      .task-name {
+      .menu-task-name {
         // overflow: hidden;
         // overflow-wrap: break-word;
         border: none;
         outline: none;
         resize: none;
+        width: 100%;
         min-height: 50px;
         font-size: rem(14px);
         font-family: $font-regular;

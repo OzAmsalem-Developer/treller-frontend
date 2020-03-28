@@ -31,7 +31,9 @@
     }
 
     .item.remove:hover {
-        background-color: #ff7b64;
-        color: $clr3;
+        .remove-list-icon {
+
+            color: #ff7b64;
+        }
     }
 }

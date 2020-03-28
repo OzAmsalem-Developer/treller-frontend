@@ -91,7 +91,7 @@
 <script>
 import taskPreview from "@/cmps/task-cmps/task-preview.vue";
 import { boardService } from "@/services/board.service";
-import { eventBus, EV_closeFromScreen } from "@/services/eventBus.service";
+import { eventBus, EV_closeFromScreen, EV_addActivity } from "@/services/eventBus.service";
 import { utilService } from "@/services/util.service";
 import listMenu from "@/cmps/list-cmps/list-menu";
 import { Container, Draggable } from "vue-smooth-dnd";
@@ -132,11 +132,19 @@ export default {
         this.newTask = null; // (Close add-task)
         return;
       }
-
       
       this.newTask.listId = this.taskList.id
       this.listCopy.tasks.push(this.newTask);
       this.saveList("save-list");
+
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.newTask.id,
+        operation: "added task " + `"${this.newTask.name}"` + " to " + this.taskList.name + " list"
+      })
+
+     
       // this.newTask = null;
       this.getEmptyTask();
       setTimeout(() => {
@@ -145,13 +153,8 @@ export default {
       this.$refs.taskInput.focus();
     },
     async saveList(evName) {
-      this.listCopy = JSON.parse(JSON.stringify(this.listCopy));
       await this.emit(evName, this.listCopy);
-      try {
-        this.listCopy = JSON.parse(JSON.stringify(this.taskList));
-      } catch {
-        this.listCopy = JSON.parse(JSON.stringify(this.taskList));
-      }
+      this.listCopy = JSON.parse(JSON.stringify(this.taskList));
     },
     async saveTask(task) {
       const idx = this.listCopy.tasks.findIndex(t => t.id === task.id);
@@ -184,6 +187,12 @@ export default {
       this.isMenuOpen = false;
     },
     saveListName(ev) {
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: null,
+        operation: "changed list name to " + `"${this.listCopy.name}"`
+      })
       this.saveList("save-list");
       this.isEditName = false
     },
@@ -205,7 +214,14 @@ export default {
     },
     removeTask(taskId) {
       const idx = this.listCopy.tasks.findIndex(t => t.id === taskId);
+      const taskName = this.listCopy.tasks[idx].name
       if (idx !== -1) this.listCopy.tasks.splice(idx, 1);
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: null,
+        operation: "removed task " + `"${taskName}"`
+      })
       this.saveList("save-list");
     }
   },
@@ -215,6 +231,9 @@ export default {
   computed: {
     tasks() {
       return this.taskList.tasks;
+    },
+    loggedinUser() {
+      return this.$store.getters.loggedinUser
     }
   },
   props: {

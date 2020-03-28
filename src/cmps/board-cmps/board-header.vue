@@ -11,7 +11,9 @@
       <button @click="toggleMenu" class="nav-menu-btn"><i class="fas fa-bars"></i></button>
     </div>
 
+      <transition name="fade">
     <invite-members @closed="isInvite = false" v-if="isInvite" />
+    </transition>
     <boardMenu :class="openMenuClass" @closed="isMenuOpen = false" @update-style="updateStyle" />
   </header>
 </template>

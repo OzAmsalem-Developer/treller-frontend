@@ -228,6 +228,7 @@
 
 <script>
 import { utilService } from "@/services/util.service.js";
+import { eventBus, EV_addActivity } from "@/services/eventBus.service.js";
 import { socketService } from "@/services/socket.service.js";
 import { cloudinaryService } from "@/services/cloudinary.service.js";
 import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
@@ -257,7 +258,14 @@ export default {
   methods: {
     async uploadImg(ev) {
       const imgUrl = await cloudinaryService.uploadImg(ev);
-      this.editedTask.attachments.unshift(imgUrl);
+
+    this.editedTask.attachments.unshift(imgUrl);
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "added image to task " + `"${this.task.name}"`
+      })
       this.updateTask();
     },
     getListId() {
@@ -271,6 +279,12 @@ export default {
     },
     setLabels(labels) {
       this.editedTask.labels = labels;
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "updated task labels for " + `"${this.task.name}"`
+      })
       this.updateTask();
     },
     toggleMoveMenu() {
@@ -301,6 +315,13 @@ export default {
       this.updateTask();
     },
     async removeTask() {
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: null,
+        operation: "removed task " + `"${this.task.name}"`
+      })
+
       await this.$store.dispatch({
         type: "removeTask",
         task: this.editedTask
@@ -316,6 +337,14 @@ export default {
     async setDueDate() {
       if (this.editedTask.dueDate.isCompleted === null) {
         this.editedTask.dueDate.isCompleted = false;
+
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "set due date to" + `"${this.task.name}"`
+      })
+
         await this.updateTask();
         try {
           this.$refs.calendar.focus();
@@ -330,6 +359,14 @@ export default {
       let emptyTodo = utilService.getEmptyTodo();
       emptyTodo.txt = this.currTodo.txt;
       this.editedTask.checklist.todos.push(emptyTodo);
+
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "added todo item to task " + `"${this.task.name}"`
+      })
+
       await this.updateTask();
       try {
         this.currTodo.txt = "";
@@ -351,8 +388,16 @@ export default {
     async addComment() {
       let emptyComment = utilService.getEmptyComment();
       emptyComment.txt = this.currComment.txt;
-      emptyComment.from = "Guest";
+      emptyComment.from = this.loggedinUser;
       this.editedTask.comments.unshift(emptyComment);
+
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "added todo item to task " + `"${this.task.name}"`
+      })
+
       await this.updateTask();
       try {
         this.currComment.txt = "";
@@ -375,6 +420,14 @@ export default {
       if (this.editedTask.checklist) {
         this.$refs.checklist.select();
       } else {
+
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "added checklist to" + `"${this.task.name}"`
+      })
+
         let emptyChecklist = utilService.getEmptyChecklist();
         this.editedTask.checklist = emptyChecklist;
         await this.updateTask();
@@ -446,6 +499,9 @@ export default {
     },
     currBoard() {
       return this.$store.getters.currBoard;
+    },
+    loggedinUser() {
+      return this.$store.getters.loggedinUser;
     }
   },
   created() {
