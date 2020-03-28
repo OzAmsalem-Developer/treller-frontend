@@ -1,11 +1,21 @@
 .comments-preview {
   display: flex;
   flex-direction: column;
+
+  .user-avatar {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    font-family: OpenSans-semiBold, sans-serif;
+    color: #eeeeee;
+    position: relative;
+    cursor: pointer;
+}
+
 }
 .comment-card {
   display: grid;
   grid-template-columns: 40px 1fr;
-  grid-template-rows: 1fr 1fr;
   row-gap: 5px;
   padding: 5px;
   margin-bottom: 5px;

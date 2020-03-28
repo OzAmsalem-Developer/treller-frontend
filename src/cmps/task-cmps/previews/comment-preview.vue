@@ -2,10 +2,10 @@
   <section class="comments-preview">
     <div class="comment-card" v-for="comment in comments" :key="comment.id">
       <div class="comment-img-container member-card">
-        <div class="comment-img member-card-name">{{comment.from.charAt(0)}}</div>
+        <user-avatar :user="comment.from" />
       </div>
       <div class="comment-info">
-        <div class="comment-from">{{comment.from}}</div>
+        <div class="comment-from">{{comment.from.username}}</div>
         <div class="comment-time">{{comment.createdAt | minimalDate}}</div>
       </div>
       <div class="comment-txt">{{comment.txt}}</div>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import userAvatar from '@/cmps/main-cmps/user-avatar'
 export default {
   methods: {
     removeComment(id) {
@@ -25,6 +26,9 @@ export default {
   },
   props: {
     comments: Array
+  },
+  components: {
+    userAvatar
   }
 };
 </script>
