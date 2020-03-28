@@ -1,24 +1,20 @@
 <template>
   <section class="move-picker">
-    <button @click="$emit('close-picker')" class="close">
-      <i class="fas fa-times"></i>
-    </button>
     <form @submit.prevent="emitListId">
       <span class="title">Move Task</span>
       <span class="dest">Select destination</span>
-
       <v-select 
       class="move-selector"
       :options="optionalLists" label="name" 
       @input="setSelected" 
       placeholder="Select List"
       />
-      <!-- <select v-model="pickedListId" placeholder="Select list">
-        <option v-for="list in optionalLists" :key="list.id" :value="list.id">{{list.name}}</option>
-      </select> -->
-      <br />
+      <br/>
       <button class="move-task-btn">Move</button>
     </form>
+    <button @click="$emit('close-picker')" class="close">
+      <i class="fas fa-times"></i>
+    </button>
   </section>
 </template>
 

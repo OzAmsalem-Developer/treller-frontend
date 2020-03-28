@@ -44,7 +44,9 @@
 @import 'cmps/board-cmps/user-activity';
 
 // TASKLIST CMPS
-@import 'cmps/task-cmps/list-cmps/list-menu';
+@import 'cmps/list-cmps/list-menu';
+@import 'cmps/list-cmps/list-mover';
+
 
 //TASK CMPS => PREVIEWS
 @import 'cmps/task-cmps/previews/label-preview';

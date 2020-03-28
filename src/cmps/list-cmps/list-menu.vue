@@ -6,11 +6,16 @@
         <i class="fas fa-plus"></i>
         <span>Add new task</span>
       </div>
-      <div @click="isMoveOpen = !isMoveOpen" class="item">
+      <div @click="isMoveOpen = !isMoveOpen" class="item move-list-btn">
         <i class="fas fa-arrow-right"></i>
         <span>Move list</span>
       </div>
-      <list-mover v-if="isMoveOpen" v-model="moveToIdx" @input="moveList" :options="listIdxs" />
+      <list-mover v-if="isMoveOpen" 
+      v-model="moveToIdx" 
+      @input="moveList" 
+      @close-picker="isMoveOpen = false"
+      :options="listIdxs" 
+      />
       <div @click="emitEv('remove-list')" class="item remove">
         <i class="far fa-trash-alt remove-list-icon"></i>
         <span>Remove list</span>
