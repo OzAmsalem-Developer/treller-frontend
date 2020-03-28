@@ -1,7 +1,7 @@
 .move-picker {
   background-color: white;
   width: 300px;
-  min-height: 300px;
+  padding: 10px 10px 0;
   font-family: $font-regular;
   font-size: rem(16px);
   display: flex;
@@ -18,17 +18,19 @@
   form {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    min-width: 200px;
-    padding: rem(10px);
+    width: 100%;
 
     > * {
       margin-bottom: rem(15px);
     }
 
     .title {
-      font-size: rem(18px);
+      border-bottom: 1px solid lighten($color: #e4e4e4, $amount: 4%);
+      font-size: rem(14px);
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      font-family: $font-semi;
+      color: #5e6c84;
     }
 
     .dest {
@@ -36,13 +38,13 @@
       font-family: $font-semi;
       font-size: rem(14px);
     }
-    select {
-      width: 90%;
+    .move-selector {
+      width: 100%;
       cursor: pointer;
       font-family: $font-light;
     }
 
-    button {
+    .move-task-btn {
       font-size: 16px;
       font-family: $font-semi;
       background-color: $pGreen;
@@ -50,6 +52,7 @@
       width: 100px;
       border-radius: 3px;
       padding: rem(5px) rem(10px);
+      margin-bottom: 10px;
       transition: all 0.3s;
     }
 
