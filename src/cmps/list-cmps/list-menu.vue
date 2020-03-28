@@ -12,7 +12,7 @@
       </div>
       <list-mover v-if="isMoveOpen" v-model="moveToIdx" @input="moveList" :options="listIdxs" />
       <div @click="emitEv('remove-list')" class="item remove">
-        <i class="far fa-trash-alt"></i>
+        <i class="far fa-trash-alt remove-list-icon"></i>
         <span>Remove list</span>
       </div>
     </menu>

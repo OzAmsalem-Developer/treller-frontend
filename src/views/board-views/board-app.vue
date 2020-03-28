@@ -135,7 +135,7 @@ export default {
         from: this.loggedinUser,
         createdAt: Date.now(),
         taskId: null,
-        operation: "added new tasks list " + `"${this.newTaskList.name}"`
+        operation: "added new list " + `"${this.newTaskList.name}"`
       });
       this.saveBoard();
       console.log(this.board);
@@ -166,13 +166,11 @@ export default {
       );
       this.board.taskLists.splice(listIdx, 1);
       this.board.taskLists.splice(toIdx, 0, taskList);
-      let from = this.board.taskLists[listIdx].name;
-      let to = this.board.taskLists[toIdx].name;
       this.board.activities.unshift({
         from: this.loggedinUser,
         createdAt: Date.now(),
         taskId: null,
-        operation: "list moved from " + from + " to " + to
+        operation: "moved list " + `"${this.board.taskLists[listIdx].name}"`
       });
       this.saveBoard();
     },
@@ -191,7 +189,7 @@ export default {
         from: this.loggedinUser,
         createdAt: Date.now(),
         taskId: null,
-        operation: "list " + listName + " removed "
+        operation: "removed " + `"${listName}""` + "  list"
       });
       this.saveBoard();
     },
@@ -229,6 +227,14 @@ export default {
       const toTaskList = this.board.taskLists.find(tl => tl.id === toListId);
       if (!task) return;
       toTaskList.tasks.push(task);
+      
+      this.board.activities.unshift({
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: taskId,
+        operation: "moved task  " + `"${task.name}""` + "  to list " + `"${toTaskList.name}""`
+      });
+
       this.saveBoard();
     },
     updateBoard(board) {
@@ -249,18 +255,39 @@ export default {
         board => board._id === this.storeBoard._id
       );
       miniBoard.style.background = background;
-      this.$store.dispatch({ type: "updateUser", user });
-
+      const savedUser = this.$store.dispatch({ type: "updateUser", user });
+      this.$store.commit({type: 'setLoggedinUser', savedUser})
       this.board.style.background = background;
+
+      this.board.activities.unshift({
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: null,
+        operation: "changed board background style"
+      });
+
       this.saveBoard();
     },
     addMember(user) {
       this.board.members.push(user);
+      this.board.activities.unshift({
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: null,
+        operation: "invited " + user.username + " to the board"
+      });
       this.saveBoard();
     },
     removeMember(userId) {
       const idx = this.board.members.findIndex(m => m._id === userId);
+      const userName = this.board.members[idx].username
       this.board.members.splice(idx, 1);
+      this.board.activities.unshift({
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: null,
+        operation: "remove " + userName + " from this board"
+      });
       this.saveBoard();
     },
     updateBoardLabels(labels) {
@@ -283,8 +310,12 @@ export default {
       this.saveBoard();
     },
     addActivity(activity) {
-      this.board.activities.unshift(activity);
-      this.saveBoard();
+      const board = JSON.parse(JSON.stringify(this.board));
+      board.activities.unshift(activity);
+      // Updating the copy and the store, and waiting to the next 'saveBoard'
+      // for saving to database
+      this.$store.commit({type: 'setCurrBoard', board: board})
+      this.board = JSON.parse(JSON.stringify(board));
     }
   },
   computed: {

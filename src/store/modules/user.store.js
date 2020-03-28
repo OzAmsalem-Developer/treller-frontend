@@ -40,7 +40,6 @@ export const userStore = {
     },
     async updateUser(context, { user }) {
       await userService.update(user)
-      context.commit({type: 'setLoggedinUser', user})
       return user
     },
     async loadUsers(context, {searchStr = ''}) {

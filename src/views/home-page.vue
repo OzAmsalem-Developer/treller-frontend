@@ -7,13 +7,13 @@
       </div>
     </div>
 
-    <section class="features-main container">
+    <section class="features-main">
       <div class="intro">
         <h3>The power of the internet is here</h3>
       </div>
       <div class="features-container">
         <div class="feature-main websocket">
-          <img src="../assets/img/homepage/feature1.png" />
+          <img class="feature-image" src="../assets/img/homepage/feature1.png" />
           <div class="feature-info">
             <h2>Web Sockets</h2>
             <p>With the power of web sockets, you and your team can enjoy a workspace that updates in real-time, keeping everyone synced and up to date.</p>
@@ -24,10 +24,10 @@
             <h2>Drag n Drop!</h2>
             <p>Try our Drag n Drop technology to easily move & update your tasks with your mouse or finger.</p>
           </div>
-          <img src="../assets/img/homepage/feature2.png" />
+          <img class="feature-image" src="../assets/img/homepage/feature2.png" />
         </div>
         <div class="feature-main customize">
-          <img src="../assets/img/homepage/feature3.png" />
+          <img class="feature-image" src="../assets/img/homepage/feature3.png" />
           <div class="feature-info">
             <h2>Make it yours.</h2>
             <p>Make it feel like home for you and your team. Customize the board's appearance, Organize your lists to fit the team's flow.</p>

@@ -14,8 +14,11 @@
     overflow-x: hidden;
     .user-avatar {
       float: left;
-      height: 32px;
-      width: 32px;
+      height: 34px;
+      width: 34px;
+    }
+    .avatar .remove-img {
+      right: -1px;
     }
   }
 

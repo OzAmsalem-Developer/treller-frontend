@@ -20,7 +20,7 @@
           <i class="far fa-list-alt title-icon"></i>
           <span class="title-txt">Activities</span>
         </div>
-        <!-- Activities component here -->
+        <board-activities :activities="boardActivities"/>
       </div>
     </div>
 
@@ -43,6 +43,7 @@
 <script>
 import boardStyleMenu from "./board-style-menu.vue";
 import boardStatistic from "./board-statistic";
+import boardActivities from "./board-activities";
 
 export default {
   data() {
@@ -70,9 +71,20 @@ export default {
       this.$emit("closed");
     }
   },
+  computed: {
+    boardActivities() {
+      return this.$store.getters.currBoard.activities
+    }
+  },
+    watch: {
+    '$route'() {
+      this.goBack()
+    }
+  },
   components: {
     boardStyleMenu,
-    boardStatistic
+    boardStatistic,
+    boardActivities
   }
 };
 </script>

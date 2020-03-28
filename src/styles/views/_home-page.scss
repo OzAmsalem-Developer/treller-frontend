@@ -1,188 +1,171 @@
 .home-page {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  // width: 100%;
+  width: 100%;
 
+  // HOMEPAGE CHILD:
   .hero {
     height: 100vh;
     width: 100%;
     background: url(~@/assets/img/homepage/hero.png);
     background-repeat: no-repeat;
-    object-fit: contain;
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-  }
-
-  .cta-hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 400px;
-    margin-inline-start: 10vh;
-    margin-bottom: 200px;
-
-    p {
-      color: white;
-      font-size: rem(20px);
-      font-family: $font-semi;
-      margin-bottom: rem(25px);
-      text-align: center;
-    }
-
-    .cta-board-btn {
-      min-width: 100px;
-      color: $textBlue;
-      background-color: #ffe600;
-      border: none;
-      border-radius: 20px;
-      box-shadow: $shadow;
-      font-family: $font-bold;
-      font-size: 30px;
-      padding: 10px 20px;
-      text-decoration: none;
-    }
-  }
-}
-
-@media (max-width: 1450px) {
-  .hero {
-    width: 50%;
-  }
-}
-
-.features-main {
-  margin: auto 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  .intro {
-    font-family: $font-regular;
-    font-size: rem(36px);
-    text-transform: uppercase;
-    text-align: center;
-    padding: 60px 0;
-  }
-
-  @media (max-width: $break-wide) {
-    .intro {
-      font-size: rem(30px);
-    }
-  }
-
-  @media (max-width: $break-normal) {
-    .intro {
-      font-size: rem(26px);
-    }
-  }
-
-  @media (max-width: $break-normal) {
-    .intro {
-      font-size: rem(24px);
-    }
-  }
-
-  .features-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    :first-child {
-      margin-inline-end: 50px;
-    }
-
-    @media (max-width: 1024px) {
-      :first-child {
-        margin-inline-end: 0;
-      }
-    }
-  }
-
-  .feature-main {
-    display: flex;
-    justify-content: center;
-    padding: 0 20px;
-    margin-bottom: 100px;
-
-    @media (max-width: 1024px) {
+    .cta-hero {
+      display: flex;
       flex-direction: column;
+      justify-content: flex-start;
       align-items: center;
-      padding: 0;
-
-      :first-child {
-        margin-bottom: 20px;
-      }
-
-      .dnd {
-        flex-direction: column-reverse;
-      }
-    }
-  }
-
-  @media (max-width: 1024px) {
-    .dnd {
-      flex-direction: column-reverse;
-
-      img {
-        margin-bottom: 20px;
-      }
-    }
-  }
-
-  .feature-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 400px;
-
-    > * {
-      margin-bottom: 20px;
-    }
-
-    h2 {
-      font-size: rem(30px);
-    }
-
-    p {
-      font-size: rem(20px);
-    }
-
-    @media (max-width: 600px) {
-      h2 {
-        font-size: rem(24px);
-      }
+      max-width: 400px;
+      margin-inline-start: 20px;
+      margin-top: 180px;
 
       p {
-        font-size: rem(18px);
+        color: white;
+        font-size: rem(20px);
+        font-family: $font-semi;
+        margin-bottom: rem(25px);
+        text-align: center;
+        max-width: 300px;
+      }
+
+      .cta-board-btn {
+        border: none;
+        outline: none;
+        text-decoration: none;
+        font-family: $font-bold;
+        box-shadow: $shadow;
+        color: $textBlue;
+        text-transform: uppercase;
+        background: rgb(255, 230, 0);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 230, 0, 1) 0%,
+          rgba(255, 217, 0, 1) 50%,
+          rgba(255, 205, 0, 1) 100%
+        );
+        border-radius: 40px;
+        font-size: rem(30px);
+        padding: rem(20px) rem(30px);
+        transform: scale(1);
+        transition: all 0.3s;
+      }
+
+      .cta-board-btn:hover {
+        transform: scale(1.02);
       }
     }
   }
 
-  img {
-    width: 600px;
-    border-radius: 2px;
-    object-fit: cover;
-  }
+  // HOMEPAGE CHILD:
+  .features-main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    .intro {
+      font-family: $font-regular;
+      font-size: rem(36px);
+      text-transform: uppercase;
+      text-align: center;
+      padding: rem(80px) 0;
+    }
 
-  @media (max-width: 1200px) {
-    img {
-      width: 500px;
+    .features-container {
+      padding: 0 15px;
+
+      .feature-main {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 100px;
+
+        > :first-child {
+          margin-inline-end: 20px;
+        }
+
+        @media (max-width: $break-wide) {
+          > :first-child {
+            margin-inline-end: 0;
+          }
+        }
+
+        .feature-info {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+
+          > :first-child {
+            margin: 20px 0;
+          }
+
+          h2 {
+            font-size: rem(30px);
+          }
+
+          p {
+            font-size: rem(20px);
+            max-width: 450px;
+          }
+        }
+
+        img {
+          width: 600px;
+          border-radius: 2px;
+          object-fit: cover;
+          // object-fit: contain;
+        }
+
+        @media (max-width: 1120px) {
+          .feature-image {
+            width: 500px;
+          }
+        }
+        @media (max-width: $break-wide) {
+          .feature-image {
+            width: 600px;
+          }
+        }
+        @media (max-width: $break-normal) {
+          .feature-image {
+            width: 99%;
+          }
+        }
+        @media (max-width: $break-narrow) {
+          .feature-image {
+            width: 350px;
+          }
+        }
+      }
+    }
+    @media (max-width: $break-normal) {
+      .intro {
+        font-size: rem(30px);
+      }
     }
   }
+}
 
-  @media (max-width: 600px) {
-    img {
-      max-width: 400px;
+@media (max-width: $break-wide) {
+  .home-page {
+    .hero {
+      background: url(~@/assets/img/homepage/hero.png);
+      background-size: cover;
+      object-fit: contain;
+    }
+
+    .feature-main {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+
+    .dnd {
+      flex-direction: column-reverse;
     }
   }
 }
