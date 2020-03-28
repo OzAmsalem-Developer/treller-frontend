@@ -1,18 +1,20 @@
-
 <script>
-import { Doughnut, mixins } from "vue-chartjs";
+import { Bar, mixins } from "vue-chartjs";
 const { reactiveProp } = mixins
 export default {
 
-  extends: Doughnut,
+  extends: Bar,
   mixins: [reactiveProp],
   mounted() {
     this.renderChart(this.chartData, this.options);
   },
+  created() {
+      console.log('label-cmp',this.chartData, this.options);
+      
+  },
   props: {
     options:{
       type: Object,
-      default: null
     } 
   }
 };
