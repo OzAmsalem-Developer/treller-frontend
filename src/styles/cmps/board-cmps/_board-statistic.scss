@@ -2,9 +2,13 @@
 .board-statistic {
     .task-list-chart{
         margin-bottom: 30px;
-        padding-bottom: 15px;
+        padding-bottom: 40px;
         border-bottom: 1px solid #d5d9e0;
 
+    }
+    .label-chart #bar-chart{
+        max-width: 95%;
+        padding-bottom: 40px;
     }
     .close-btn {
         position: absolute;
