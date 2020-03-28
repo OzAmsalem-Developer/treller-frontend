@@ -1,22 +1,27 @@
 <template>
   <section v-if="loggedinUser" class="dasboard-page">
     <header>
-    <span class="icon"><i class="far fa-star"></i></span>
-     <h2 class="title">My Boards</h2>
-     <button class="hello center-flex">Hello {{loggedinUser.username}}</button>
+      <span class="icon">
+        <i class="far fa-star"></i>
+      </span>
+      <h2 class="title">My Boards</h2>
+      <div class="user-profile-container">
+        <button class="hello center-flex">Hello {{loggedinUser.username}}</button>
+        <user-profile />
+      </div>
     </header>
     <section class="boards">
-    <board-preview  v-for="board in loggedinUser.boards" :key="board._id" :board="board" />
-    <button @click="isCreate = true" class="new-board-btn">Create new board</button>
-    <create-board @board-created="createBoard" v-if="isCreate" @closed="isCreate = false"/>
+      <board-preview v-for="board in loggedinUser.boards" :key="board._id" :board="board" />
+      <button @click="isCreate = true" class="new-board-btn">Create new board</button>
+      <create-board @board-created="createBoard" v-if="isCreate" @closed="isCreate = false" />
     </section>
-
   </section>
 </template>
 
 <script>
-import boardPreview from '@/cmps/board-cmps/board-preview'
-import createBoard from '@/cmps/board-cmps/create-board'
+import userProfile from "@/cmps/dashboard-cmps/user-profile";
+import boardPreview from "@/cmps/board-cmps/board-preview";
+import createBoard from "@/cmps/board-cmps/create-board";
 export default {
   data() {
     return {
@@ -31,12 +36,15 @@ export default {
         _id: board._id,
         name: board.name,
         style: board.style
-      }
-      this.userCopy.boards.push(minimalBoard)
-      const user = await this.$store.dispatch({type: 'updateUser' , user: this.userCopy})
-      this.$store.commit({type: 'setLoggedinUser' , user})
-      this.userCopy = JSON.parse(JSON.stringify(user))
-      this.isCreate = false
+      };
+      this.userCopy.boards.push(minimalBoard);
+      const user = await this.$store.dispatch({
+        type: "updateUser",
+        user: this.userCopy
+      });
+      this.$store.commit({ type: "setLoggedinUser", user });
+      this.userCopy = JSON.parse(JSON.stringify(user));
+      this.isCreate = false;
     }
   },
   computed: {
@@ -45,13 +53,13 @@ export default {
     }
   },
   created() {
-      (async () => {
-      await this.$store.dispatch({type: 'getLoggedinUser'})
-      this.userCopy = JSON.parse(JSON.stringify(this.loggedinUser))
+    (async () => {
+      await this.$store.dispatch({ type: "getLoggedinUser" });
+      this.userCopy = JSON.parse(JSON.stringify(this.loggedinUser));
     })();
-    
   },
   components: {
+    userProfile,
     boardPreview,
     createBoard
   }
