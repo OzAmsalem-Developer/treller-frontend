@@ -41,17 +41,23 @@ export default {
       await this.emit("set-labels", this.editedTaskLabels);
       this.editedTaskLabels = JSON.parse(JSON.stringify(this.taskLabels));
     },
-    updateBoardLabels(label) {
+    async updateBoardLabels(label) {
       const idx = this.editedBoardLabels.findIndex(l => l.id === label.id)
       if (idx === -1) return
       this.editedBoardLabels.splice(idx, 1, label)
-      eventBus.$emit(EV_updateBoardLabels, this.editedBoardLabels);
+      await this.busEmit(EV_updateBoardLabels, this.editedBoardLabels);
       this.editedBoardLabels = JSON.parse(JSON.stringify(this.boardLabels));
     },
     emit(eventName, value) {
       return new Promise((resolve, reject) => {
         this.$emit(eventName, value);
         this.$nextTick(resolve);
+      })
+    },
+    busEmit(eventName, value) {
+      return new Promise((resolve, reject) => {
+        eventBus.$emit(eventName, value);
+        eventBus.$nextTick(resolve);
       });
     },
     checkLabel(label) {

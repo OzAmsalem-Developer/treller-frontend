@@ -44,7 +44,22 @@
       .label-txt:hover {
         padding-left: 5px;
       }
+      .label-name-input {
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+        border-radius: 3px;
+        color: #fff;
+        font-family: $font-bold;
+        font-size: rem(14px);
+      }
+      .label-name-input::placeholder {
+        font-family: $font-light;
+        color: #fff;
+        font-size: rem(14px);
+      }
     }
+
     .label-edit-btn {
       height: 26px;
       width: 30px;

@@ -300,7 +300,7 @@ export default {
             return updatedLabel;
           });
           task.labels = newTaskLabels;
-          if (task.id === this.currTask.id)
+          if (this.currTask && task.id === this.currTask.id)
             newCurrTask = JSON.parse(JSON.stringify(task));
         });
       });
