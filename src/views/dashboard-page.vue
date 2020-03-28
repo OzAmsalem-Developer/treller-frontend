@@ -34,6 +34,7 @@ export default {
       }
       this.userCopy.boards.push(minimalBoard)
       const user = await this.$store.dispatch({type: 'updateUser' , user: this.userCopy})
+      this.$store.commit({type: 'setLoggedinUser' , user})
       this.userCopy = JSON.parse(JSON.stringify(user))
       this.isCreate = false
     }

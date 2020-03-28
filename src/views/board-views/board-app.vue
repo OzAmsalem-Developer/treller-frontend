@@ -274,7 +274,7 @@ export default {
         from: this.loggedinUser,
         createdAt: Date.now(),
         taskId: null,
-        operation: "invited " + user.username + " to the board"
+        operation: "invited " + user.username + " to this board"
       });
       this.saveBoard();
     },
@@ -292,8 +292,12 @@ export default {
     },
     updateBoardLabels(labels) {
       this.board.labels = labels;
+      if (!this.currTask) {
+           this.saveBoard();
+           return
+        }
+        
       let newCurrTask;
-
       this.board.taskLists.forEach(taskList => {
         taskList.tasks.forEach(task => {
           const newTaskLabels = task.labels.map(label => {

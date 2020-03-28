@@ -62,12 +62,16 @@ export default {
       this.$emit("close-picker");
     }
   },
+  computed: {
+    boardLabels() {
+      return this.$store.getters.labels
+    }
+  },
   created() {
     this.editedTaskLabels = JSON.parse(JSON.stringify(this.taskLabels));
     this.editedBoardLabels = JSON.parse(JSON.stringify(this.boardLabels));
   },
   props: {
-    boardLabels: Array,
     taskLabels: Array
   },
   components: {
