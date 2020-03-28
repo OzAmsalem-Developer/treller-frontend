@@ -11,7 +11,6 @@
         @input="searchUsers"
         type="text"
         class="search"
-        :style="{'background': searchIcon}"
       />
     <div class="members-container">
       <div class="member" v-for="member in searchRes" @click="addMember(member)">
@@ -40,20 +39,14 @@ export default {
         searchStr: this.searchStr
       });
       const searchRes = users.filter(user => {
-        if (!user.boards) return false;
         const currBoard = user.boards.find(
-          board => board._id === this.$store.getters.currBoard._id
+          board => board._id === this.currBoard._id
         );
         return currBoard ? false : true;
       });
-      console.log(searchRes);
-
       this.searchRes = searchRes;
     },
     addMember(member) {
-      eventBus.$emit(EV_addMember, member);
-      const idx = this.searchRes.findIndex(m => m._id === member._id);
-      this.searchRes.splice(idx, 1);
       const user = JSON.parse(JSON.stringify(member));
       user.boards.push({
         _id: this.currBoard._id,
@@ -61,19 +54,17 @@ export default {
         name: this.currBoard.name
       });
       this.$store.dispatch({ type: "updateUser", user });
+      eventBus.$emit(EV_addMember, member);
     }
   },
   computed: {
     currBoard() {
       return this.$store.getters.currBoard;
-    },
-    searchIcon() {
-        return require('@/assets/img/search-icon.png')
     }
   },
   watch: {
-      'currBoard.members'(from, to) {
-          this.searchUsers()
+      'currBoard.members'() {
+       this.searchUsers()
       }
   },
   created() {

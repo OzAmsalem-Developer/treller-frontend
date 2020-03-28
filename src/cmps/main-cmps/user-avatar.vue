@@ -15,10 +15,8 @@ import {eventBus,EV_removeMember} from "@/services/eventBus.service";
 export default {
     methods: {
     async removeMember(userId) {
-        const users =  await this.$store.dispatch({type: 'loadUsers'})
-        
+      const users =  await this.$store.dispatch({type: 'loadUsers'})
       const user = users.find(u => u._id === userId)
-        console.log(userId);
       if (!user) return
       const idx = user.boards.findIndex(board => board._id === this.$store.getters.currBoard._id)
       user.boards.splice(idx, 1)

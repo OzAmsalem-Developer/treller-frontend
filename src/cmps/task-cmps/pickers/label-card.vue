@@ -3,11 +3,14 @@
   <div class="label-card"  :style="{'background-color': label.color}"  @click.stop="toggleTaskLabel">
     <span v-if="!isEdit">{{label.txt}}</span>
     <form v-else class="edit-label-name" @submit.prevent="editBoardLabel">
-      <input type="text" v-model="editedLabel.txt" placeholder="Label name">
+      <input @blur="blurEditLabel" 
+      class="label-name-input" type="text" 
+      v-model="editedLabel.txt" ref="editLabelImput"
+       placeholder="Label name">
     </form>
     <span v-if="isCheck" class="check-icon"><i class="fas fa-check"></i></span>
   </div>
-    <button @click.stop="isEdit = !isEdit" class="label-edit-btn"><i class="fas fa-pencil-alt"></i></button>
+    <button @click.stop="toggleEdit" class="label-edit-btn"><i class="fas fa-pencil-alt"></i></button>
 </section>
 
 </template>
@@ -24,10 +27,24 @@ export default {
     editBoardLabel() {
         this.$emit('update-board-label', this.editedLabel);
         this.isEdit = false
+        this.editedLabel = JSON.parse(JSON.stringify(this.label));
     },
     toggleTaskLabel() {
       if (this.isEdit) return
       this.$emit('update-task-label', this.label)
+    },
+    blurEditLabel() {
+      setTimeout(() => {
+        this.editedLabel = JSON.parse(JSON.stringify(this.label));
+      }, 5)
+    },
+    toggleEdit() {
+      this.isEdit = !this.isEdit
+      if (this.isEdit) {
+       setTimeout(() => {
+        this.$refs.editLabelImput.select()
+       }, 5)
+      }
     }
   },
   created() {

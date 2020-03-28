@@ -40,7 +40,6 @@
                 <labelPicker
         class="label-picker"
         v-if="isMenuOpen.label"
-        :boardLabels="boardLabels"
         :taskLabels="task.labels"
         @set-labels="setLabels"
         @close-picker="isMenuOpen.label = false"

@@ -292,11 +292,6 @@ export default {
     },
     updateBoardLabels(labels) {
       this.board.labels = labels;
-      if (!this.currTask) {
-           this.saveBoard();
-           return
-        }
-        
       let newCurrTask;
       this.board.taskLists.forEach(taskList => {
         taskList.tasks.forEach(task => {
@@ -305,12 +300,13 @@ export default {
             return updatedLabel;
           });
           task.labels = newTaskLabels;
-          if (task.id === this.currTask.id)
+          if (this.currTask && task.id === this.currTask.id)
             newCurrTask = JSON.parse(JSON.stringify(task));
         });
       });
-      if (newCurrTask)
+      if (this.currTask) {
         this.$store.dispatch({ type: "updateTask", task: newCurrTask });
+      }
       this.saveBoard();
     },
     addActivity(activity) {
