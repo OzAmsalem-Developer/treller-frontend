@@ -73,3 +73,28 @@
     }
 
 }
+
+.board-statistic {
+    height: 440px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+//Scroll bar
+.board-statistic::-webkit-scrollbar {
+    background-color: rgba(255, 255, 255, 0);
+    width: 8.5px;
+  }
+  
+.board-statistic::-webkit-scrollbar-track {
+    border-radius: 10px;
+    // border: 16px solid rgba(17, 59, 175, 0.904);
+  }
+.board-statistic::-webkit-scrollbar-thumb {
+    border: 16px solid rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+  }
+  
+.board-statistic::-webkit-scrollbar-track {
+    background-color: #dadbe2;
+  }

@@ -5,7 +5,7 @@
     <section class="login-signup">
       <div class="page" v-if="isLoginPage">
         <header>
-          <h2>Login to your account</h2>
+          <h2>Login to tasky</h2>
           <button @click="$emit('closed')" class="close-btn">
             <i class="fas fa-times"></i>
           </button>
