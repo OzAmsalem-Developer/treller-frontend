@@ -6,20 +6,13 @@
   width: 450px;
   //   width: 400px;
   min-height: 450px;
-  background-color: #f8f8f8;
+  background-color: $clr5;
   border-radius: 3px;
   padding: 10px 20px;
   box-shadow: $shadow;
   font-family: $font-regular;
   color: $textBlue;
   z-index: 2;
-
-  // .login-signup {
-
-  // .page {
-  //   height: 100%;
-  //   display: flex;
-  //   flex-direction: column;
 
   .close-btn {
     padding-top: 10px;
@@ -34,13 +27,6 @@
     align-items: center;
     margin-bottom: rem(10px);
     user-select: none;
-
-    // h2 {
-    //   font-family: $font-regular;
-    //   color: $textBlue;
-    //   font-size: rem(20px);
-    //   margin-inline-end: rem(10px);
-    // }
 
     span {
       font-family: $font-logo;
@@ -64,7 +50,6 @@
   }
 
   .user-profile-container {
-    // padding: 0 30px;
     .profile-view {
       display: flex;
       justify-content: flex-start;
@@ -80,7 +65,6 @@
 
       .profile-name {
         display: flex;
-        // justify-content: center;
         align-items: center;
         span {
           font-size: rem(24px);
@@ -91,15 +75,87 @@
     }
 
     .profile-edit {
-      .profile-name-container {
+      display: grid;
+      grid-template-columns: rem(160px) 1fr;
+      grid-template-rows: repeat(3, rem(30px));
+      gap: rem(6px);
+
+      .profile-menu-btn {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        font-family: $font-regular;
+        font-size: rem(14px);
+        color: $textBlue;
+        background-color: darken($btnGrey, 10);
+        border-radius: 3px;
+        cursor: pointer;
+        transition: all 0.3s;
+        align-self: center;
+        padding: 0 rem(10px);
+      }
+
+      .profile-menu-btn:hover {
+        background-color: $hoverBlue;
+      }
+
+      .profile-name-btn {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+      }
+
+      .profile-img-input {
+        display: none;
+      }
+
+      .profile-name-container {
+        grid-column: 1 / 3;
+        grid-row: -1 / -2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        input {
+          width: 100%;
+          border: none;
+          background-color: #fff;
+          height: 100%;
+          font-family: $font-regular;
+          color: $textBlue;
+          padding-inline-start: rem(5px);
+        }
+
         button {
-          background-color: $btnGrey;
-          padding: 10px 20px;
-          width: 100px;
+          background-color: $pGreen;
+          font-family: $font-semi;
+          font-size: rem(16px);
+          color: #fff;
+          border-radius: 3px;
+          // padding: 10px 10px;
+          height: 100%;
+          min-width: 70px;
+          margin-inline-start: rem(5px);
+        }
+
+        .profile-cancel-btn {
+          color: black;
+          background-color: darken($btnGrey, 20);
         }
       }
+    }
+  }
+}
+
+@media (max-width: $break-narrow) {
+  .user-profile {
+    width: 99%;
+  }
+
+  .profile-name {
+    span {
+      font-size: rem(20px);
     }
   }
 }
