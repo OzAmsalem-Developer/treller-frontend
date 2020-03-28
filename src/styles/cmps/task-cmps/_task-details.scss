@@ -21,7 +21,7 @@
   min-height: 300px;
   display: flex;
   flex-direction: column;
-  padding: 15px 30px 15px 30px;
+  padding: 15px 30px;
   margin: 0 auto;
   z-index: 1;
 
@@ -30,12 +30,11 @@
     border: solid darken($btnGrey, 10) 1px;
     right: 50px;
     z-index: 2;
-
   }
 
   .details-members {
     margin-left: 15px;
-  } 
+  }
 
   .members {
     display: flex;
@@ -44,22 +43,22 @@
   .user-avatar {
     height: 35px;
     width: 35px;
-}
+  }
 
-.invite-members {
-  background-color: #ffffff;
-}
+  .invite-members {
+    background-color: #ffffff;
+  }
 
-.invite-members .members-container {
-  height: 190px;
-}
+  .invite-members .members-container {
+    height: 190px;
+  }
 
-.avatar .remove-img {
-  right: -3px;
-  top: 0;
-  height: 18px;
-  width: 18px;
-}
+  .avatar .remove-img {
+    right: -3px;
+    top: 0;
+    height: 18px;
+    width: 18px;
+  }
 
   .move-picker-menu {
     position: fixed;
@@ -137,7 +136,6 @@
     background-color: #ff7b64;
   }
 }
-
 
 i {
   font-size: 12px;
@@ -422,4 +420,37 @@ i {
 
 .todo-done {
   text-decoration: line-through;
+}
+
+@media (max-width: 800px) {
+  .task-details {
+    // margin: 0;
+    width: 97%;
+    min-width: 375px;
+
+    .details-container {
+      flex-direction: column;
+    }
+  }
+
+  .details-attachment {
+    img {
+      max-width: 350px;
+      object-fit: cover;
+    }
+  }
+}
+
+
+
+@media (max-width: $break-narrow) {
+  .task-details {
+    padding: 15px 15px;
+    // margin-bottom: 100px;
+  }
+
+  .details-due-list {
+    display: flex;
+    flex-direction: column;
+  }
 }
