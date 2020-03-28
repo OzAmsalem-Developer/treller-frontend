@@ -42,7 +42,7 @@ function getEmptyBoard() {
     return {
         name: '',
         style: {
-            background: 'url(assets/img/1.dcc8d602.jpg)'
+            background: `url("/img/1.dcc8d602.jpg")`
         },
         activities: [],
         members : [],

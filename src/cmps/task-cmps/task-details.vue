@@ -43,17 +43,17 @@
               </div>
             </section>
 
-            <section v-if="task.members" class="details-members details-grid-title">
-              <div class="details-grid-last">
+            <section v-if="task.members" class="details-members">
+              <div class="detils-members-container">
                 <div class="title-container">
                   <span class="title">Members:</span>
                 </div>
-                <div class="list">
-                    <div class="members">
-                      <user-avatar v-for="member in task.members" :user="member" :key="member._id" />
-                    </div>
-                  <button class="member-add-btn member-card" @click="isAddMember = !isAddMember">+</button>
+                <div class="members">
+                      <user-avatar @member-removed="removeMember"
+                       v-for="member in task.members" :user="member" :key="member._id" />
+                  <button class="member-add-btn member-card" @click="isAddMember = !isAddMember"><i class="fas fa-plus"></i></button>
                 </div>
+
               </div>
             </section>
             <section
@@ -446,6 +446,12 @@ export default {
     addMember(member) {
         this.editedTask.members.push(member)
         this.updateTask()
+    },
+    removeMember(userId) {
+       const idx = this.editedTask.members.findIndex(m => m._id === userId)
+       if (idx === -1) return
+       this.editedTask.members.splice(idx, 1)
+       this.updateTask()
     },
     updateDescription() {
       this.$refs.description.select();

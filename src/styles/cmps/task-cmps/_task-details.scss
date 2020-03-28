@@ -30,7 +30,40 @@
     border: solid darken($btnGrey, 10) 1px;
     right: 50px;
     z-index: 2;
+
   }
+
+  .details-members {
+    margin-left: 15px;
+  } 
+
+  .members {
+    display: flex;
+  }
+
+  .user-avatar {
+    height: 35px;
+    width: 35px;
+}
+
+.invite-members {
+  background-color: #ffffff;
+  position: absolute;
+  right: 72px;
+  width: 280px;
+  border-radius: 3px;
+  -webkit-box-shadow: -1px 1px 1px rgba(9, 30, 66, 0.25);
+  box-shadow: -1px 1px 1px rgba(9, 30, 66, 0.25);
+  z-index: 2;
+  top: 45px;
+}
+
+.avatar .remove-img {
+  right: -3px;
+  top: 0;
+  height: 18px;
+  width: 18px;
+}
 
   .move-picker-menu {
     position: fixed;
@@ -178,8 +211,13 @@ i {
   }
   button {
     background-color: #e0e0e0;
-    color: $clr3;
+    color: grey;
     transition: all 0.3s;
+    border: 0;
+    outline: 0;
+    height: 35px;
+    width: 35px;
+    margin-left: 10px;
   }
   button:hover {
     background-color: #c5dbee;
