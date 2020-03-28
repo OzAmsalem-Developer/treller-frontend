@@ -100,27 +100,25 @@
 }
 
 .details-actions {
-  display: flex;
-  flex-direction: column;
-  position: relative;
+  display: grid;
+  grid-template-columns: 120px ;
+  grid-template-rows: repeat(10, 30px);
+  row-gap: 6px;
 
   .title {
     font-family: $font-regular;
     text-align: center;
     font-size: rem(16px);
-    margin-bottom: rem(5px);
   }
   button,
   .add-image-btn {
     display: flex;
     align-items: center;
-    min-width: 120px;
     font-family: $font-light;
     background-color: $btnGrey;
     font-size: rem(14px);
     border-radius: 3px;
     padding: 5px 10px;
-    margin-bottom: 5px;
     transition: all 0.3s;
   }
 }
@@ -431,6 +429,18 @@ i {
     .details-container {
       flex-direction: column;
     }
+
+    .details-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      // grid-template-rows: repeat(10, 30px);
+      row-gap: 0;
+      gap: 6px;
+
+      .title {
+        grid-column: 1 / -1;
+      }
+    }
   }
 
   .details-attachment {
@@ -446,11 +456,14 @@ i {
 @media (max-width: $break-narrow) {
   .task-details {
     padding: 15px 15px;
-    // margin-bottom: 100px;
   }
 
-  .details-due-list {
-    display: flex;
-    flex-direction: column;
-  }
+  // .details-due-list {
+  //   display: flex;
+  //   flex-direction: column;
+
+  //   .block{
+  //     order: -1;
+  //   }
+  // }
 }
