@@ -1,5 +1,5 @@
 <template>
-  <section v-if="user">
+  <section v-if="userCopy">
     <div @click="$emit('closed')" class="div-screen"></div>
     <section class="user-profile">
       <button @click="$emit('closed')" class="close-btn">
@@ -12,8 +12,8 @@
       <hr />
       <section class="user-profile-container">
         <div class="profile-view">
-          <img v-if="this.user.imgUrl" :src="this.user.imgUrl" alt />
-          <div v-else :style="{backgroundColor: this.user.avatarColor}">
+          <img v-if="this.userCopy.imgUrl" :src="this.userCopy.imgUrl" alt />
+          <div v-else :style="{backgroundColor: this.userCopy.avatarColor}">
             <span>{{avatarTxt}}</span>
           </div>
           <div class="profile-name">
@@ -86,7 +86,7 @@ export default {
   },
   computed: {
     avatarTxt() {
-      return this.user.username.slice(0, 1).toUpperCase();
+      return this.userCopy.username.slice(0, 1).toUpperCase();
     }
   },
   props: {

@@ -28,7 +28,6 @@
         </button>
       </div>
 
-      <h1></h1>
       <div class="details-container">
         <div class="details-info">
           <div class="details-lmd">
