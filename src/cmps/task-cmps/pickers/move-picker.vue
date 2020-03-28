@@ -7,9 +7,14 @@
       <span class="title">Move Task</span>
       <span class="dest">Select destination</span>
 
-      <select v-model="pickedListId" placeholder="Select list">
+      <v-select 
+      :options="optionalLists" label="name" 
+      @input="setSelected" 
+      placeholder="Select List"
+      />
+      <!-- <select v-model="pickedListId" placeholder="Select list">
         <option v-for="list in optionalLists" :key="list.id" :value="list.id">{{list.name}}</option>
-      </select>
+      </select> -->
       <br />
       <button>Move</button>
     </form>
@@ -17,6 +22,8 @@
 </template>
 
 <script>
+import vSelect from 'vue-select'
+
 export default {
   data() {
     return {
@@ -30,7 +37,13 @@ export default {
     },
     moveTask() {
       this.$emit('move-task')
+    },
+    setSelected(selectedList) {
+      this.pickedListId = (selectedList)? selectedList.id : null  
     }
+  },
+  components: {
+    vSelect
   },
   props: {
     value: String,
