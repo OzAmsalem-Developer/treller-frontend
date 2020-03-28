@@ -42,6 +42,8 @@
     <main class="tasks" ref="tasks" :id="taskList.id">
       <Container
         @drop="onDrop"
+        @drag-end="onDragEnd"
+        :drag-begin-delay="delayDrag"
         group-name="tasks"
         drag-handle-selector=".task-preview"
         :get-child-payload="getTaskPayload(taskList.id)"
@@ -170,6 +172,11 @@ export default {
       );
       this.saveList("save-lists-order");
     },
+    onDragEnd() {
+      console.log('end')
+      document.querySelector('body').classList.remove('smooth-dnd-no-user-select')
+      document.querySelector('body').classList.remove('smooth-dnd-disable-touch-action')
+    },
     getTaskPayload(listId) {
       return index => {
         return this.$store.getters.taskLists.filter(tl => tl.id === listId)[0]
@@ -239,6 +246,9 @@ export default {
     },
     loggedinUser() {
       return this.$store.getters.loggedinUser
+    },
+    delayDrag() {
+      return screen.width > 900 ? 0 : 500
     }
   },
   props: {
