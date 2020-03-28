@@ -8,6 +8,7 @@
       <span class="dest">Select destination</span>
 
       <v-select 
+      class="move-selector"
       :options="optionalLists" label="name" 
       @input="setSelected" 
       placeholder="Select List"
@@ -16,7 +17,7 @@
         <option v-for="list in optionalLists" :key="list.id" :value="list.id">{{list.name}}</option>
       </select> -->
       <br />
-      <button>Move</button>
+      <button class="move-task-btn">Move</button>
     </form>
   </section>
 </template>
