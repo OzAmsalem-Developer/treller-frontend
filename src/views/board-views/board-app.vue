@@ -249,14 +249,16 @@ export default {
         if (this.$refs.listInput) this.$refs.listInput.focus();
       }, 0);
     },
-    updateStyle(background) {
+    async updateStyle(background) {
+      if (!this.loggedinUser) return
       const user = JSON.parse(JSON.stringify(this.loggedinUser));
       const miniBoard = user.boards.find(
         board => board._id === this.storeBoard._id
       );
       miniBoard.style.background = background;
-      const savedUser = this.$store.dispatch({ type: "updateUser", user });
-      this.$store.commit({type: 'setLoggedinUser', savedUser})
+      const savedUser = await this.$store.dispatch({ type: "updateUser", user });
+      
+      this.$store.commit({type: 'setLoggedinUser', user: savedUser})
       this.board.style.background = background;
 
       this.board.activities.unshift({

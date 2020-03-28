@@ -3,10 +3,10 @@
     <header>
     <span class="icon"><i class="far fa-star"></i></span>
      <h2 class="title">My Boards</h2>
-     <div class="hello center-flex">Hello {{loggedinUser.username}}</div>
+     <button class="hello center-flex">Hello {{loggedinUser.username}}</button>
     </header>
     <section class="boards">
-    <board-preview  v-for="board in loggedinUser.boards" :board="board" />
+    <board-preview  v-for="board in loggedinUser.boards" :key="board._id" :board="board" />
     <button @click="isCreate = true" class="new-board-btn">Create new board</button>
     <create-board @board-created="createBoard" v-if="isCreate" @closed="isCreate = false"/>
     </section>
