@@ -48,14 +48,10 @@
 
 .invite-members {
   background-color: #ffffff;
-  position: absolute;
-  right: 72px;
-  width: 280px;
-  border-radius: 3px;
-  -webkit-box-shadow: -1px 1px 1px rgba(9, 30, 66, 0.25);
-  box-shadow: -1px 1px 1px rgba(9, 30, 66, 0.25);
-  z-index: 2;
-  top: 45px;
+}
+
+.invite-members .members-container {
+  height: 190px;
 }
 
 .avatar .remove-img {

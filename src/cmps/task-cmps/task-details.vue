@@ -17,7 +17,7 @@
         @input="moveTask"
         @close-picker="toggleMoveMenu"
       />
-      <add-member v-if="isAddMember" @add-task-member="addMember" @closed="isAddMember = false"/>
+      <add-member :task="task" v-if="isAddMember" @add-task-member="addMember" @closed="isAddMember = false"/>
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
@@ -308,7 +308,9 @@ export default {
     async updateTask() {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
       try {
-        this.editedTask = JSON.parse(JSON.stringify(this.task));
+        setTimeout(() => {
+          this.editedTask = JSON.parse(JSON.stringify(this.task));
+        }, 2);
       } catch (prevTask) {
         this.editedTask = JSON.parse(JSON.stringify(prevTask));
         console.log("Err, failed to save task");
@@ -445,12 +447,29 @@ export default {
     },
     addMember(member) {
         this.editedTask.members.push(member)
+
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "added " + member.username + ' to ' + `"${this.task.name}"`
+      })
+
         this.updateTask()
     },
     removeMember(userId) {
        const idx = this.editedTask.members.findIndex(m => m._id === userId)
        if (idx === -1) return
+       const userName = this.editedTask.members[idx].username
        this.editedTask.members.splice(idx, 1)
+
+      eventBus.$emit(EV_addActivity, {  
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "remove " + userName + ' from ' + `"${this.task.name}"`
+      })
+ 
        this.updateTask()
     },
     updateDescription() {

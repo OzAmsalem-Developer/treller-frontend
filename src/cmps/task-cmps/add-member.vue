@@ -34,11 +34,9 @@ export default {
   },
   methods: {
     async searchUsers() {
-      console.log(this.boardMembers);
-      
       const searchRes = this.boardMembers.filter(user => {
         let isAlreadyMember = false
-        this.currTask.members.forEach(member => {
+        this.task.members.forEach(member => {
           if (member._id === user._id) isAlreadyMember = true 
         })
         return !isAlreadyMember;
@@ -50,20 +48,20 @@ export default {
     }
   },
   computed: {
-    currTask() {
-      return this.$store.getters.currTask;
-    },
     boardMembers() {
       return this.$store.getters.currBoard.members
     }
   },
   watch: {
-      'currTask.members'() {
+      'task.members'() {
        this.searchUsers()
       }
   },
   created() {
     this.searchUsers();
+  },
+  props: {
+    task: Object
   },
   components: {
     userAvatar
