@@ -94,7 +94,7 @@ export default {
           title: {
             display: true,
             text: "Labels Distribution",
-            fontSize: 27
+            fontSize: 27,
           },
           tooltips: {
             titleFontSize: 20,
