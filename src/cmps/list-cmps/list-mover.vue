@@ -1,16 +1,27 @@
 <template>
   <section class="list-mover">
     <form @submit.prevent="moveList">
-      <select v-model="moveTo">
-        <option v-for="listIdx in options" :key="listIdx" :value="listIdx"
-        >Position {{listIdx}}</option>
-      </select>
-      <button>Save</button>
+      <div class="list-mover-header">
+        <span class="title">Move List</span>
+        <button @click="$emit('close-picker')" class="close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <span class="dest">Select destination</span>
+      <v-select
+        class="move-list-selector"
+        :options="options"
+        @input="setSelected"
+        placeholder="Select Destination"
+      />
+      <button class="move-list-btn">Save</button>
     </form>
   </section>
 </template>
 
 <script>
+import vSelect from "vue-select";
+
 export default {
   data() {
     return {
@@ -19,9 +30,15 @@ export default {
   },
   methods: {
     moveList() {
-      if (!this.moveTo) return
-      this.$emit('input', this.moveTo)
+      if (!this.moveTo) return;
+      this.$emit("input", this.moveTo);
+    },
+    setSelected(listIdx) {
+      this.moveTo = listIdx;
     }
+  },
+  components: {
+    vSelect
   },
   props: {
     value: Number,
