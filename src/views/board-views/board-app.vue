@@ -74,7 +74,8 @@ import {
   EV_addMember,
   EV_removeMember,
   EV_updateBoardLabels,
-  EV_addActivity
+  EV_addActivity,
+  EV_boardLabelsSaved
 } from "@/services/eventBus.service";
 
 export default {
@@ -116,6 +117,7 @@ export default {
       try {
         this.board = JSON.parse(JSON.stringify(this.storeBoard));
         console.log("CMP: Board Saved Succesfully");
+        return this.board
       } catch (prevBoard) {
         this.board = JSON.parse(JSON.stringify(board));
         console.log("Err, board didnt saved");
@@ -292,7 +294,7 @@ export default {
       });
       this.saveBoard();
     },
-    updateBoardLabels(labels) {
+    async updateBoardLabels(labels) {
       this.board.labels = labels;
       let newCurrTask;
       this.board.taskLists.forEach(taskList => {
@@ -303,13 +305,14 @@ export default {
           });
           task.labels = newTaskLabels;
           if (this.currTask && task.id === this.currTask.id)
-            newCurrTask = JSON.parse(JSON.stringify(task));
+             newCurrTask = JSON.parse(JSON.stringify(task));
         });
       });
       if (this.currTask) {
-        this.$store.dispatch({ type: "updateTask", task: newCurrTask });
+        await this.$store.dispatch({ type: "updateTask", task: newCurrTask });
       }
-      this.saveBoard();
+      const savedBoard = await this.saveBoard();
+      eventBus.$emit(EV_boardLabelsSaved, savedBoard.labels)
     },
     addActivity(activity) {
       const board = JSON.parse(JSON.stringify(this.board));

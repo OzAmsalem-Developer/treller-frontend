@@ -225,6 +225,11 @@ export default {
       this.saveList("save-list");
     }
   },
+  watch: {
+    tasks() {
+      this.listCopy = JSON.parse(JSON.stringify(this.taskList));
+    }
+  },
   created() {
     this.listCopy = JSON.parse(JSON.stringify(this.taskList));
   },
