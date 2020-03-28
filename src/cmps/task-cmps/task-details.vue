@@ -17,6 +17,7 @@
         @input="moveTask"
         @close-picker="toggleMoveMenu"
       />
+      <add-member v-if="isAddMember" @add-task-member="addMember" @closed="isAddMember = false"/>
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
@@ -48,8 +49,10 @@
                   <span class="title">Members:</span>
                 </div>
                 <div class="list">
-                  <member-preview :members="task.members"></member-preview>
-                  <button class="member-add-btn member-card" @click="setMembers">+</button>
+                    <div class="members">
+                      <user-avatar v-for="member in task.members" :user="member" :key="member._id" />
+                    </div>
+                  <button class="member-add-btn member-card" @click="isAddMember = !isAddMember">+</button>
                 </div>
               </div>
             </section>
@@ -187,7 +190,7 @@
             <i class="fas fa-tag"></i>
             <span class="action-title">Labels</span>
           </button>
-          <button @click="setMembers">
+          <button @click="isAddMember = !isAddMember">
             <i class="far fa-user"></i>
             <span class="action-title">Members</span>
           </button>
@@ -231,12 +234,13 @@ import { utilService } from "@/services/util.service.js";
 import { eventBus, EV_addActivity } from "@/services/eventBus.service.js";
 import { socketService } from "@/services/socket.service.js";
 import { cloudinaryService } from "@/services/cloudinary.service.js";
-import memberPreview from "@/cmps/task-cmps/previews/member-preview.vue";
+import userAvatar from "@/cmps/main-cmps/user-avatar";
 import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
 import commentPreview from "@/cmps/task-cmps/previews/comment-preview.vue";
 import movePicker from "@/cmps/task-cmps/pickers/move-picker.vue";
 import labelPicker from "@/cmps/task-cmps/pickers/label-picker.vue";
+import addMember from '@/cmps/task-cmps/add-member'
 
 export default {
   data() {
@@ -246,6 +250,7 @@ export default {
       moveToList: null,
       isLabelOpen: false,
       isMoveOpen: false,
+      isAddMember: false,
       listId: null,
       currTodo: {
         txt: ""
@@ -364,7 +369,7 @@ export default {
         from: this.loggedinUser,
         createdAt: Date.now(),
         taskId: this.task.id,
-        operation: "added todo item to task " + `"${this.task.name}"`
+        operation: "added todo item " + `"${this.currTodo.txt}"` + " to task " +  `"${this.task.name}"`
       })
 
       await this.updateTask();
@@ -395,7 +400,7 @@ export default {
         from: this.loggedinUser,
         createdAt: Date.now(),
         taskId: this.task.id,
-        operation: "added todo item to task " + `"${this.task.name}"`
+        operation: "leave a comment " +  `"${this.currComment.txt}"` + ' in ' + `"${this.task.name}"`
       })
 
       await this.updateTask();
@@ -438,8 +443,9 @@ export default {
         }
       }
     },
-    setMembers() {
-      console.log("Please set the Members!");
+    addMember(member) {
+        this.editedTask.members.push(member)
+        this.updateTask()
     },
     updateDescription() {
       this.$refs.description.select();
@@ -517,12 +523,13 @@ export default {
     this.expandTextArea();
   },
   components: {
-    memberPreview,
+    userAvatar,
     labelPreview,
     dueDatePreview,
     commentPreview,
     labelPicker,
-    movePicker
+    movePicker,
+    addMember
   }
 };
 </script>

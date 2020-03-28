@@ -6,7 +6,7 @@
       </div>
       <div class="comment-info">
         <div class="comment-from">{{comment.from.username}}</div>
-        <div class="comment-time">{{comment.createdAt | minimalDate}}</div>
+        <div class="comment-time">{{comment.createdAt | dateAgo}}</div>
       </div>
       <div class="comment-txt">{{comment.txt}}</div>
       <div class="comment-controls">

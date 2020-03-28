@@ -5,20 +5,25 @@
   .user-avatar {
     height: 35px;
     width: 35px;
-    border-radius: 50%;
-    font-family: OpenSans-semiBold, sans-serif;
-    color: #eeeeee;
-    position: relative;
-    cursor: pointer;
+    cursor: default;
+}
+
+.avatar .remove-img {
+  display: none;
 }
 
 }
 .comment-card {
   display: grid;
   grid-template-columns: 40px 1fr;
-  row-gap: 5px;
+  column-gap: 5px;
   padding: 5px;
   margin-bottom: 5px;
+}
+
+.comment-time {
+  font-family: $font-light;
+  font-size: rem(12px);
 }
 
 .comment-img-container {
@@ -40,11 +45,9 @@
   margin-inline-end: 10px;
   font-family: $font-bold;
 }
-.comment-info > *:last-child {
-  font-size: rem(14px);
-  font-family: $font-light;
-}
+
 .comment-txt {
+  justify-self: start;
   font-family: $font-regular;
   grid-column: 2 / -1;
   grid-row: 2 / 3;

@@ -36,11 +36,13 @@ function save(board) {
 
 // Empty objects service
 
+import bgImg from '../assets/img/background/1.jpg'
+
 function getEmptyBoard() {
     return {
         name: '',
         style: {
-            background: "url(/img/1.d168fb79.jpg)"
+            background: 'url(assets/img/1.dcc8d602.jpg)'
         },
         activities: [],
         members : [],
