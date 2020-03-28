@@ -1,7 +1,6 @@
 <template>
   <section v-if="user">
     <div @click="$emit('closed')" class="div-screen"></div>
-
     <section class="user-profile">
       <button @click="$emit('closed')" class="close-btn">
         <i class="fas fa-times"></i>
@@ -11,7 +10,6 @@
         <img class="sign-main-logo" src="../../assets/logo/tasky-blue.png" />
       </header>
       <hr />
-      <!--  -->
       <section class="user-profile-container">
         <div class="profile-view">
           <img v-if="this.user.imgUrl" :src="this.user.imgUrl" alt />
@@ -23,28 +21,27 @@
           </div>
         </div>
         <div class="profile-edit">
-          <div class="profile-name-container">
-            <button class="profile-name-btn" @click="toggleEditName">Edit username</button>
+          <label class="profile-menu-btn" for="profile-user-avatar">Edit profile image</label>
+          <input
+            type="file"
+            id="profile-user-avatar"
+            class="profile-img-input"
+            @change="uploadAvatarImg"
+          />
+          <button class="profile-menu-btn profile-name-btn" @click="toggleEditName">Edit username</button>
+          <div class="profile-name-container" v-if="isEditName">
             <input
-              v-if="isEditName"
               type="txt"
               name="profile-user-name"
               class="profile-name-input"
               v-model="userCopy.username"
             />
-            <button v-if="isEditName" class="profile-name-btn" @click="updateUser">Save</button>
+            <button class="profile-save-btn" @click="updateUsername">Save</button>
+            <button class="profile-cancel-btn" @click="toggleEditName">Cancel</button>
           </div>
-          <input
-            type="file"
-            name="peofile-user-avatar"
-            class="profile-name-input"
-            @change="uploadAvatarImg"
-          />
         </div>
       </section>
-      <!-- <pre>{{this.user}}</pre> -->
     </section>
-    <!--  -->
   </section>
 </template>
 
@@ -64,7 +61,10 @@ export default {
       this.userCopy.imgUrl = imgUrl;
       this.updateUser();
     },
-
+    async updateUsername() {
+      await this.updateUser();
+      this.toggleEditName();
+    },
     async updateUser() {
       const user = await this.$store.dispatch({
         type: "updateUser",
