@@ -20,7 +20,7 @@
 
 <script>
 import labelCard from "./label-card";
-import { eventBus, EV_updateBoardLabels } from "@/services/eventBus.service";
+import { eventBus, EV_updateBoardLabels, EV_boardLabelsSaved } from "@/services/eventBus.service";
 
 export default {
   data() {
@@ -45,8 +45,8 @@ export default {
       const idx = this.editedBoardLabels.findIndex(l => l.id === label.id)
       if (idx === -1) return
       this.editedBoardLabels.splice(idx, 1, label)
-      await this.busEmit(EV_updateBoardLabels, this.editedBoardLabels);
-      this.editedBoardLabels = JSON.parse(JSON.stringify(this.boardLabels));
+      eventBus.$emit(EV_updateBoardLabels, this.editedBoardLabels);
+
     },
     emit(eventName, value) {
       return new Promise((resolve, reject) => {
@@ -66,6 +66,11 @@ export default {
     },
     closePicker() {
       this.$emit("close-picker");
+    },
+    updateCopy(boardLabels) {
+      this.editedBoardLabels = JSON.parse(JSON.stringify(boardLabels));
+      this.editedTaskLabels = JSON.parse(JSON.stringify(this.taskLabels));
+      this.$emit("set-labels", this.editedTaskLabels);
     }
   },
   computed: {
@@ -76,6 +81,11 @@ export default {
   created() {
     this.editedTaskLabels = JSON.parse(JSON.stringify(this.taskLabels));
     this.editedBoardLabels = JSON.parse(JSON.stringify(this.boardLabels));
+
+    eventBus.$on(EV_boardLabelsSaved, this.updateCopy)
+  },
+  destroyed() {
+    eventBus.$off(EV_boardLabelsSaved, this.updateCopy)
   },
   props: {
     taskLabels: Array
