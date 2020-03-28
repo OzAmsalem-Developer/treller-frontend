@@ -173,9 +173,8 @@ export default {
       this.saveList("save-lists-order");
     },
     onDragEnd() {
-      console.log('end')
-      document.querySelector('body').classList.remove('smooth-dnd-no-user-select')
-      document.querySelector('body').classList.remove('smooth-dnd-disable-touch-action')
+      // Unlocking the drag for mobile on end (Should contribute this to the package creator)
+      document.querySelector('body').classList.remove('smooth-dnd-no-user-select', 'smooth-dnd-disable-touch-action')
     },
     getTaskPayload(listId) {
       return index => {
