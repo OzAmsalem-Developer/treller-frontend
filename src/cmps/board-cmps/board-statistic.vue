@@ -130,7 +130,7 @@ export default {
     },
     labelsName() {
       return this.boardLabels.map((label, idx) => {
-        return label.txt ? label.txt : "label " + idx;
+        return label.txt ? label.txt : "label " + (idx+1);
       })
     },
     boardLabels() {
