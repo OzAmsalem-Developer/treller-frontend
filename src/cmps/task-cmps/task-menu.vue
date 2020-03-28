@@ -26,6 +26,10 @@
           <i class="fas fa-long-arrow-alt-right"></i>
           <span class="menu-btn-txt">Move</span>
         </button>
+          <button class="task-menu-item" @click.stop="isMenuOpen.members = !isMenuOpen.members">
+          <i class="fas fa-user-plus" aria-hidden="true"></i>
+          <span class="menu-btn-txt">Members</span>
+        </button>
         <button class="task-menu-item" @click.stop="openDueDate">
           <i class="far fa-clock"></i>
           <span class="menu-btn-txt">Change Due Date</span>
@@ -37,6 +41,9 @@
         </button>
 
         <div ref="pickersContainer" class="pickers-container">
+
+          <add-member :task="task" v-if="isMenuOpen.members"  
+          @add-task-member="addMember" @closed="isMenuOpen.members = false" />
                 <labelPicker
         class="label-picker"
         v-if="isMenuOpen.label"
@@ -80,8 +87,8 @@ import labelPicker from "./pickers/label-picker.vue";
 import dataIndicationPreview from "./previews/data-indication-preview.vue";
 import labelPreview from "./previews/label-preview.vue";
 import { utilService } from "@/services/util.service";
-
-import { eventBus, EV_moveTask } from "@/services/eventBus.service";
+import addMember from '@/cmps/task-cmps/add-member'
+import { eventBus, EV_moveTask, EV_addActivity } from "@/services/eventBus.service";
 
 export default {
   data() {
@@ -89,7 +96,8 @@ export default {
       isMenuOpen: {
         move: false,
         label: false,
-        dueDate: false
+        dueDate: false,
+        members: false
       },
       moveToList: null,
       taskCopy: null
@@ -101,20 +109,64 @@ export default {
         toListId: this.moveToList,
         taskId: this.task.id
       });
+
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "moved task " + `"${this.task.name}"`
+      })
+
       this.updateCopy();
     },
     async setLabels(taskLabels) {
       this.taskCopy.labels = taskLabels;
       await this.emit("set-labels", this.taskCopy);
+
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "set task labels for " + `"${this.task.name}"`
+      })
+
       this.updateCopy();
     },
     async setName() {
       await this.emit("set-name", this.taskCopy);
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "changed task name from " + `"${this.task.name}"` + ' to ' + `"${this.taskCopy.name}"`
+      })
+
       this.updateCopy();
       this.$emit("closed");
     },
     async setDueDate() {
       await this.emit("set-due-date", this.taskCopy);
+
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "set due date for task " + `"${this.task.name}"`
+      })
+
+      this.updateCopy();
+    },
+    async addMember(member) {
+      this.taskCopy.members.push(member)
+      await this.emit("add-member", this.taskCopy);
+
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "added " + `"${member.username}"` + ' to ' + `"${this.task.name}"`
+      })
+
       this.updateCopy();
     },
     openDueDate() {
@@ -147,6 +199,9 @@ export default {
     btnsClass() {
       return (this.menu.getBoundingClientRect().x - 190 > document.body.clientWidth / 2) ?
       'left' : ''
+    },
+    loggedinUser() {
+      return this.$store.getters.loggedinUser
     }
   },
   mounted() {
@@ -167,7 +222,8 @@ export default {
     movePicker,
     labelPicker,
     dataIndicationPreview,
-    labelPreview
+    labelPreview,
+    addMember
   },
   props: {
     task: Object,

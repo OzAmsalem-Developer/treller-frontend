@@ -59,6 +59,8 @@ export default {
             fontSize: 18
           },
           tooltips: {
+             titleFontSize: 15,
+            bodyFontSize: 13,
             callbacks: {
               label: function(tooltipItem, data, datasetIndex) {
                 var indice = tooltipItem.index;
@@ -72,7 +74,7 @@ export default {
             }
           }
         }
-      }
+      };
     },
     taskLabelsChart() {
       return {
@@ -80,7 +82,7 @@ export default {
           labels: this.labelsName,
           datasets: [
             {
-              label: 'Most Popular',
+              label: "Label",
               data: this.labelsBoardCount,
               backgroundColor: this.labelsChartColors.fill,
               borderColor: this.labelsChartColors.border,
@@ -91,17 +93,16 @@ export default {
         options: {
           title: {
             display: true,
-            text: "Labels Popularity",
-            fontSize: 18
+            text: "Labels Distribution",
+            fontSize: 27,
           },
           tooltips: {
+            titleFontSize: 20,
+            bodyFontSize: 20,
             callbacks: {
               label: function(tooltipItem, data, datasetIndex) {
                 var indice = tooltipItem.index;
-                return (
-                  data.datasets[0].data[indice] +
-                  " Apparitions"
-                );
+                return data.datasets[0].data[indice] + " Apparitions";
               }
             }
           },
@@ -109,6 +110,7 @@ export default {
           scales: {
             xAxes: [
               {
+                barPercentage: 0.9,
                 ticks: {
                   beginAtZero: true
                 }
@@ -123,15 +125,15 @@ export default {
             ]
           }
         }
-      }
+      };
     },
     currBoard() {
       return this.$store.getters.currBoard;
     },
     labelsName() {
       return this.boardLabels.map((label, idx) => {
-        return label.txt ? label.txt : "label " + (idx+1);
-      })
+        return label.txt ? label.txt : "label " + (idx + 1);
+      });
     },
     boardLabels() {
       return this.$store.getters.labels;

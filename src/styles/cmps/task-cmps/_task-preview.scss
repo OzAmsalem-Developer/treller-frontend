@@ -18,9 +18,9 @@
     color: #5e6c84;
     outline: none;
     border-radius: 3px;
-    transition: .3s;
+    transition: 0.3s;
   }
-  .preview-menu-btn:hover{
+  .preview-menu-btn:hover {
     color: darken($color: #5e6c84, $amount: 25%);
     background-color: darken($color: #ffffff, $amount: 10%);
   }
@@ -32,6 +32,15 @@
     margin-bottom: 4px;
     font-family: $font-regular;
     overflow-wrap: break-word;
+  }
+
+  .avatar .remove-img {
+    display: none;
+  }
+
+  .user-avatar {
+    height: 30px;
+    width: 30px;
   }
 }
 .preview-data {
@@ -60,11 +69,6 @@
 .preview-indications :first-child {
   margin-left: 0;
 }
-.preview-members {
-  margin-bottom: 4px;
-  margin-left: auto;
-}
-
 
 .task-preview:hover {
   .preview-menu-btn {

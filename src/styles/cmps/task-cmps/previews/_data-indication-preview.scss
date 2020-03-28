@@ -32,5 +32,7 @@
   .preview-members {
     margin-bottom: 4px;
     margin-left: auto;
+    display: flex;
+    flex-wrap: wrap;
   }
 }
