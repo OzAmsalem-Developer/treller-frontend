@@ -23,13 +23,13 @@
     </section>
 
     <section class="preview-members" v-if="task.members.length">
-      <member-preview :members="task.members" />
+      <user-avatar v-for="member in task.members" :user="member" :key="member._id" />
     </section>
   </div>
 </template>
 
 <script>
-import memberPreview from "../previews/member-preview.vue";
+import userAvatar from "@/cmps/main-cmps/user-avatar";
 import dueDatePreview from "../previews/due-date-preview.vue";
 
 export default {
@@ -53,8 +53,8 @@ export default {
     }
   },
   components: {
-    memberPreview,
-    dueDatePreview
+    dueDatePreview,
+    userAvatar
   },
   props: {
     task: Object

@@ -4,7 +4,7 @@
       <span class="board-name">{{currBoard.name}}</span>
     </div>
     <div class="members">
-      <user-avatar v-for="user in currBoard.members" :key="user._id" :user="user" />
+      <user-avatar v-for="user in currBoard.members" @member-removed="removeMember" :key="user._id" :user="user" />
     </div>
     <div class="board-nav">
       <button @click="isInvite = !isInvite" class="nav-menu-btn"><i class="fas fa-user-plus"></i></button>
@@ -22,6 +22,8 @@
 import boardMenu from "./board-menu.vue";
 import inviteMembers from "./invite-members";
 import userAvatar from "@/cmps/main-cmps/user-avatar";
+import {eventBus,EV_removeMember} from "@/services/eventBus.service";
+
 export default {
   data() {
     return {
@@ -43,6 +45,15 @@ export default {
     },
     updateStyle(background) {
       this.$emit("update-style", background);
+    },
+    async removeMember(userId) {
+      const users =  await this.$store.dispatch({type: 'loadUsers'})
+      const user = users.find(u => u._id === userId)
+      if (!user) return
+      const idx = user.boards.findIndex(board => board._id === this.$store.getters.currBoard._id)
+      user.boards.splice(idx, 1)
+      this.$store.dispatch({type: 'updateUser', user})
+        eventBus.$emit(EV_removeMember, userId)
     }
   },
   components: {
