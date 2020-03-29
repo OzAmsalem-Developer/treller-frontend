@@ -347,7 +347,6 @@ export default {
     backgroundStyle() {
       return {
         backgroundImage: this.storeBoard.style.background,
-        // position: "fixed",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         height: "100vh"
