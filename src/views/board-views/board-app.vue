@@ -1,5 +1,5 @@
 <template>
-  <main class="board-app" v-if="board" :style="backgroundStyle">
+  <main class="board-app" v-if="board && backgroundStyle" :style="backgroundStyle">
     <board-header @update-style="updateStyle"></board-header>
     <div ref="lists" class="lists-container">
       <Container
@@ -353,7 +353,8 @@ export default {
     },
     backgroundStyle() {
       return {
-        backgroundImage: this.storeBoard.style.background,
+        // background: this.board.style.background,
+        backgroundImage: this.board.style.background,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         height: "100vh"
