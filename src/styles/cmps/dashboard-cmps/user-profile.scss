@@ -4,7 +4,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 450px;
-  //   width: 400px;
   min-height: 450px;
   background-color: $clr5;
   border-radius: 3px;
@@ -25,7 +24,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: rem(10px);
+    margin: 0 0 rem(10px);
     user-select: none;
 
     span {
@@ -54,7 +53,8 @@
       display: flex;
       justify-content: flex-start;
       margin-bottom: 30px;
-      img, .text-avatar {
+      img,
+      .text-avatar {
         height: 120px;
         width: 120px;
         object-fit: cover;
@@ -67,8 +67,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color: rgb(252, 252, 252);
         font-size: rem(80px);
+        font-family: $font-semi;
+        color: $clr5;
+        span {
+          margin: auto 0;
+        }
       }
 
       .profile-name {
