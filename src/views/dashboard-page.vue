@@ -1,6 +1,6 @@
 <template>
   <section v-if="loggedinUser" class="dasboard-page">
-    <user-profile @closed="toggleUserProfile" v-if="isUserProfile" :user="userCopy"/>
+    <user-profile @closed="toggleUserProfile" v-if="isUserProfile"/>
     <header>
       <span class="icon">
         <i class="far fa-star"></i>
