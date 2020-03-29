@@ -55,8 +55,10 @@ export default {
   computed: {
       style() {
         return {
-          background: this.newBoard.style.background,
-          backgroundSize: 'cover'
+          backgroundImage: this.newBoard.style.background,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          height: '100%',
       } 
     }
   },
