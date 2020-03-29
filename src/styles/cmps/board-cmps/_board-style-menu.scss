@@ -1,7 +1,7 @@
 
 .board-style-menu {
     position: relative;
-    
+    min-height: 450px;
     .btn {
         height: 120px;
         border: 0.5px solid lighten($color: #a19595, $amount: 40%);;

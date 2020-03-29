@@ -21,7 +21,7 @@
   min-height: 300px;
   display: flex;
   flex-direction: column;
-  padding: 15px 30px 15px 30px;
+  padding: 15px 30px;
   margin: 0 auto;
   z-index: 1;
 
@@ -30,12 +30,11 @@
     border: solid darken($btnGrey, 10) 1px;
     right: 50px;
     z-index: 2;
-
   }
 
   .details-members {
     margin-left: 15px;
-  } 
+  }
 
   .members {
     display: flex;
@@ -44,22 +43,22 @@
   .user-avatar {
     height: 35px;
     width: 35px;
-}
+  }
 
-.invite-members {
-  background-color: #ffffff;
-}
+  .invite-members {
+    background-color: #ffffff;
+  }
 
-.invite-members .members-container {
-  height: 190px;
-}
+  .invite-members .members-container {
+    height: 190px;
+  }
 
-.avatar .remove-img {
-  right: -3px;
-  top: 0;
-  height: 18px;
-  width: 18px;
-}
+  .avatar .remove-img {
+    right: -3px;
+    top: 0;
+    height: 18px;
+    width: 18px;
+  }
 
   .move-picker-menu {
     position: fixed;
@@ -101,27 +100,25 @@
 }
 
 .details-actions {
-  display: flex;
-  flex-direction: column;
-  position: relative;
+  display: grid;
+  grid-template-columns: 120px;
+  grid-template-rows: repeat(10, 30px);
+  row-gap: 6px;
 
   .title {
     font-family: $font-regular;
     text-align: center;
     font-size: rem(16px);
-    margin-bottom: rem(5px);
   }
   button,
   .add-image-btn {
     display: flex;
     align-items: center;
-    min-width: 120px;
     font-family: $font-light;
     background-color: $btnGrey;
     font-size: rem(14px);
     border-radius: 3px;
     padding: 5px 10px;
-    margin-bottom: 5px;
     transition: all 0.3s;
   }
 }
@@ -137,7 +134,6 @@
     background-color: #ff7b64;
   }
 }
-
 
 i {
   font-size: 12px;
@@ -221,37 +217,45 @@ i {
 }
 
 .details-due-date {
-  .dueDate-container {
-    display: flex;
-    flex-direction: column;
-
-    .title {
-      margin-bottom: rem(5px);
-    }
-
-    // .date-picker-cell {
-    //   // background-color: red;
-    // }
-
-    .el-date-editor .el-input__inner {
-      font-family: $font-regular;
-      font-size: rem(14px);
-    }
+  display: grid;
+  grid-template-columns: 20px 20px 1fr 90px;
+  grid-template-rows: 1fr;
+  gap: rem(5px);
+  .title-container {
+    grid-column: 2 / -1;
+    grid-row: 1 / 2;
   }
-  .details-due-list {
+  .details-due-check-main {
     display: flex;
+    justify-content: center;
     align-items: center;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+  }
+  .el-date-picker {
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
 
-    :first-child {
-      margin-inline-end: rem(5px);
+    .el-input__icon {
+      color: $textBlue;
     }
   }
 
+  .due-date-preview {
+    grid-row: 2 / 3;
+    grid-column: -2 / -1;
+  }
+
+  .el-date-editor .el-input__inner {
+    font-family: $font-regular;
+    font-size: rem(14px);
+  }
   input[type="checkbox"] {
     cursor: pointer;
     min-width: 20px;
     min-height: 20px;
   }
+  // .date-picker-cell
 }
 
 .details-description {
@@ -422,4 +426,63 @@ i {
 
 .todo-done {
   text-decoration: line-through;
+}
+
+@media (max-width: 800px) {
+  .task-details {
+    width: 97%;
+    min-width: 375px;
+
+    .details-container {
+      flex-direction: column;
+    }
+
+    .details-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      grid-template-rows: auto;
+      row-gap: 0;
+      gap: 6px;
+
+      .title {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
+  .details-attachment {
+    img {
+      max-width: 350px;
+      object-fit: cover;
+    }
+  }
+}
+
+@media (max-width: $break-narrow) {
+  .task-details {
+    padding: 15px 15px;
+  }
+  .details-due-date {
+    grid-template-columns: 20px 20px 1fr;
+    grid-template-rows: 30px 1fr 30px;
+    gap: rem(5px);
+    .title-container {
+      grid-column: 2 / -1;
+      grid-row: 1 / 2;
+    }
+    .details-due-check-main {
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+    }
+    .el-date-picker {
+      grid-column: 3 / 4;
+      grid-row: 2 / 3;
+    }
+    .due-date-preview {
+      grid-column: -2 / -1;
+      grid-row: -2 / -1;
+      max-width: 100px;
+      margin: 0;
+    }
+  }
 }

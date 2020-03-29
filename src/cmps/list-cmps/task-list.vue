@@ -1,5 +1,5 @@
 <template>
-  <section v-if="taskList" class="task-list">
+  <section v-if="taskList" class="task-list" @touchend="onDragEnd">
     <section class="edit-list-name" v-if="isEditName">
       <input
       @click="isEditName = true"
@@ -42,6 +42,8 @@
     <main class="tasks" ref="tasks" :id="taskList.id">
       <Container
         @drop="onDrop"
+        @drag-end="onDragEnd"
+        :drag-begin-delay="delayDrag"
         group-name="tasks"
         drag-handle-selector=".task-preview"
         :get-child-payload="getTaskPayload(taskList.id)"
@@ -170,6 +172,10 @@ export default {
       );
       this.saveList("save-lists-order");
     },
+    onDragEnd() {
+      // Unlocking the drag for mobile on end (Should contribute this to the package creator)
+      document.querySelector('body').classList.remove('smooth-dnd-no-user-select', 'smooth-dnd-disable-touch-action')
+    },
     getTaskPayload(listId) {
       return index => {
         return this.$store.getters.taskLists.filter(tl => tl.id === listId)[0]
@@ -225,6 +231,11 @@ export default {
       this.saveList("save-list");
     }
   },
+  watch: {
+    tasks() {
+      this.listCopy = JSON.parse(JSON.stringify(this.taskList));
+    }
+  },
   created() {
     this.listCopy = JSON.parse(JSON.stringify(this.taskList));
   },
@@ -234,6 +245,9 @@ export default {
     },
     loggedinUser() {
       return this.$store.getters.loggedinUser
+    },
+    delayDrag() {
+      return screen.width > 900 ? 0 : 400
     }
   },
   props: {
