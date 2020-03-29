@@ -1,5 +1,5 @@
 <template>
-  <main class="board-app" v-if="board" :style="{background: storeBoard.style.background}">
+  <main class="board-app" v-if="board" :style="backgroundStyle">
     <board-header @update-style="updateStyle"></board-header>
     <div ref="lists" class="lists-container">
       <Container
@@ -117,7 +117,7 @@ export default {
       try {
         this.board = JSON.parse(JSON.stringify(this.storeBoard));
         console.log("CMP: Board Saved Succesfully");
-        return this.board
+        return this.board;
       } catch (prevBoard) {
         this.board = JSON.parse(JSON.stringify(board));
         console.log("Err, board didnt saved");
@@ -185,7 +185,7 @@ export default {
     },
     removeList(listId) {
       const idx = this.board.taskLists.findIndex(list => list.id === listId);
-      let listName = this.board.taskLists[idx].name
+      let listName = this.board.taskLists[idx].name;
       this.board.taskLists.splice(idx, 1);
       this.board.activities.unshift({
         from: this.loggedinUser,
@@ -229,12 +229,16 @@ export default {
       const toTaskList = this.board.taskLists.find(tl => tl.id === toListId);
       if (!task) return;
       toTaskList.tasks.push(task);
-      
+
       this.board.activities.unshift({
         from: this.loggedinUser,
         createdAt: Date.now(),
         taskId: taskId,
-        operation: "moved task  " + `"${task.name}""` + "  to list " + `"${toTaskList.name}""`
+        operation:
+          "moved task  " +
+          `"${task.name}""` +
+          "  to list " +
+          `"${toTaskList.name}""`
       });
 
       this.saveBoard();
@@ -252,17 +256,20 @@ export default {
       }, 0);
     },
     async updateStyle(background) {
-      if (!this.loggedinUser) return
+      if (!this.loggedinUser) return;
       const user = JSON.parse(JSON.stringify(this.loggedinUser));
       const miniBoard = user.boards.find(
         board => board._id === this.storeBoard._id
       );
       miniBoard.style.background = background;
-      const savedUser = await this.$store.dispatch({ type: "updateUser", user });
-      
-      this.$store.commit({type: 'setLoggedinUser', user: savedUser})
+      const savedUser = await this.$store.dispatch({
+        type: "updateUser",
+        user
+      });
+
+      this.$store.commit({ type: "setLoggedinUser", user: savedUser });
       this.board.style.background = background;
-      this.board.style.backgroundSize = 'cover';
+      this.board.style.backgroundSize = "cover";
 
       this.board.activities.unshift({
         from: this.loggedinUser,
@@ -285,7 +292,7 @@ export default {
     },
     removeMember(userId) {
       const idx = this.board.members.findIndex(m => m._id === userId);
-      const userName = this.board.members[idx].username
+      const userName = this.board.members[idx].username;
       this.board.members.splice(idx, 1);
       this.board.activities.unshift({
         from: this.loggedinUser,
@@ -306,21 +313,21 @@ export default {
           });
           task.labels = newTaskLabels;
           if (this.currTask && task.id === this.currTask.id)
-             newCurrTask = JSON.parse(JSON.stringify(task));
+            newCurrTask = JSON.parse(JSON.stringify(task));
         });
       });
       if (this.currTask) {
         await this.$store.dispatch({ type: "updateTask", task: newCurrTask });
       }
       const savedBoard = await this.saveBoard();
-      eventBus.$emit(EV_boardLabelsSaved, savedBoard.labels)
+      eventBus.$emit(EV_boardLabelsSaved, savedBoard.labels);
     },
     addActivity(activity) {
       const board = JSON.parse(JSON.stringify(this.board));
       board.activities.unshift(activity);
       // Updating the copy and the store, and waiting to the next 'saveBoard'
       // for saving to database
-      this.$store.commit({type: 'setCurrBoard', board: board})
+      this.$store.commit({ type: "setCurrBoard", board: board });
       this.board = JSON.parse(JSON.stringify(board));
     }
   },
@@ -336,6 +343,15 @@ export default {
     },
     loggedinUser() {
       return this.$store.getters.loggedinUser;
+    },
+    backgroundStyle() {
+      return {
+        backgroundImage: this.storeBoard.style.background,
+        // position: "fixed",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        height: "100vh"
+      };
     }
   },
   watch: {
