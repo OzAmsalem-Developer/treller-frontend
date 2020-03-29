@@ -441,7 +441,7 @@ i {
     .details-actions {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      // grid-template-rows: repeat(10, 30px);
+      grid-template-rows: auto;
       row-gap: 0;
       gap: 6px;
 
