@@ -351,13 +351,22 @@ export default {
     loggedinUser() {
       return this.$store.getters.loggedinUser;
     },
-    backgroundStyle() {
+    backgroundColor() {
+      return {
+        background: this.storeBoard.style.background,
+      }
+    },
+    backgroundImage() {
       return {
         backgroundImage: this.storeBoard.style.background,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        height: "100vh"
-      };
+    }
+    },
+    backgroundStyle() {
+      return (this.storeBoard.style.background.charAt(0) === '#')?  //if hex color
+      this.backgroundColor :
+      this.backgroundImage 
     }
   },
   watch: {
