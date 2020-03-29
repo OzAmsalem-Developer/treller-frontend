@@ -88,6 +88,7 @@ export default {
         this.$emit("closed");
       } catch {
         console.log("Try again");
+        this.$store.dispatch({type: 'getLoggedinUser'})
       }
     },
     async signup() {
@@ -102,9 +103,14 @@ export default {
         await this.$store.dispatch({
           type: "signup",
           credentials: this.newCredentials
-        });
+        })
+        try {
         console.log("Signed up");
         this.$emit("closed");
+          } catch {
+            this.$store.dispatch({type: 'getLoggedinUser'})
+        }
+
       } else {
         console.log("Wrong confirm password");
       }

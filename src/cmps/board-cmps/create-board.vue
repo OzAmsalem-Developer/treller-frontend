@@ -3,7 +3,7 @@
     <div @click="$emit('closed')" class="div-screen"></div>
     <section class="create-board" :style="{background: newBoard.style.background}" ref="createCmp">
         <form  @submit.prevent="createBoard">
-          <input v-model="newBoard.name" placeholder="Board title.." type="text" />
+          <input ref="newBoardInput" v-model="newBoard.name" placeholder="Board title.." type="text" />
           <button class="save-btn">Create board</button>
         </form>
       <button
@@ -50,6 +50,9 @@ export default {
       this.$emit("board-created", board);
       this.newBoard = boardService.getEmptyBoard();
     }
+  },
+  mounted() {
+    this.$refs.newBoardInput.focus()
   },
   created() {
     this.newBoard = boardService.getEmptyBoard();
