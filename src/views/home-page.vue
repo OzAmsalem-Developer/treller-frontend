@@ -3,7 +3,7 @@
     <div class="hero">
       <div class="cta-hero">
         <p class="hero-txt">Boost your team's productivity with real-time sharable workspace.</p>
-        <router-link class="cta-board-btn" to="/board/5e7f5cb58be18a4b647dc9d3">Try tasky now</router-link>
+        <router-link class="cta-board-btn" to="/board/5e80aa10ca357df65afec6f8">Try tasky now</router-link>
       </div>
     </div>
 
