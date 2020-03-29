@@ -249,6 +249,10 @@ i {
     user-select: none;
     grid-row: 2 / 3;
     grid-column: -2 / -1;
+
+    i {
+      font-size: rem(16px);
+    }
   }
 
   .el-date-editor .el-input__inner {
