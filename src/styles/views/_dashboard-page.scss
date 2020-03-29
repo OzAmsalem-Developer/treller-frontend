@@ -33,19 +33,43 @@
       margin-right: 10px;
     }
   }
+  @media(max-width:550px) {
+    .boards {
+      justify-content: center;
+    }
+  
+    .board-preview {
+      width: 100%;
+      height: 230px;
+    }
+  
+    .dasboard-page .new-board-btn {
+      width: 100%;
+      height: 230px;
+    }
+  }
+
+
   .new-board-btn {
     width: 225px;
     height: 140px;
     border-radius: 5px;
     cursor: pointer;
     background-color: #d3d3d3;
-    font-family: $font-regular;
+    font-family: $font-semi;
     color: $textBlue;
     transition: 0.2s;
   }
 
   .new-board-btn:hover {
     background-color: lighten(#d3d3d3, 5);
+  }
+}
+
+@media(max-width:550px) {
+  .dasboard-page .new-board-btn {
+    width: 100%;
+    height: 230px;
   }
 }
 

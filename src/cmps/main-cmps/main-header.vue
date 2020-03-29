@@ -34,10 +34,10 @@ export default {
     }
   },
   methods: {
-    logout() {
-      this.$store.dispatch({ type: "logout" });
-      this.$store.dispatch({ type: "getLoggedinUser" });
+    async logout() {
+      await this.$store.dispatch({ type: "logout" });
       this.$router.push('/')
+      this.$store.dispatch({ type: "getLoggedinUser" });
     }
   }
 };

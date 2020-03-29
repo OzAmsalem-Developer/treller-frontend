@@ -3,7 +3,7 @@
     <div class="menu-header">
       <span>Menu</span>
     </div>
-    <div class="menu" v-if="isMenuOpen.main">
+    <div class="menu" v-if="isMenuOpen.main" >
       <div class="menu-btn-container">
         <button class="menu-btn" @click="openMenu('boardStyle')">
           <i class="far fa-image btn-icon"></i>
@@ -127,6 +127,9 @@ export default {
     },
     loggedInUser() {
       return this.$store.getters.loggedinUser;
+    },
+    isMobile() {
+      return true
     }
   },
   watch: {

@@ -4,9 +4,9 @@
   flex-direction: column;
   padding-top: rem(40px);
   overflow-x: hidden;
-  
-    .lists-container {
-      flex: 1;
+
+  .lists-container {
+    flex: 1;
     min-width: 200px;
     overflow-x: auto;
     display: flex;
@@ -16,18 +16,14 @@
     margin-bottom: 8px;
     padding-bottom: 28px;
     // min-height: 512px;
-    .task-list  {
-        margin-right: 9px;
-        border-radius: 3px;
+    .task-list {
+      margin-right: 9px;
+      border-radius: 3px;
     }
     .smooth-dnd-container:first-child {
       margin-left: 10px;
       height: 100%;
     }
-  }
-
-  .board-app.view{
-    background-size: cover;
   }
 
   .add-list {
@@ -38,15 +34,15 @@
     background: #ebecf0;
     width: 270px;
     padding: 10px 8px;
-    border-radius: 3px ;
+    border-radius: 3px;
     font-family: $font-bold;
     color: #5e6c84;
     margin-right: 10px;
   }
-  
+
   .add-list-btn:hover {
-    background-color:rgb(218, 219, 226);
-  } 
+    background-color: rgb(218, 219, 226);
+  }
 
   .add-list-input {
     width: 270px;
@@ -57,6 +53,7 @@
     color: $textBlue;
     border-radius: 3px;
     background: #ebecf0;
+    margin-right: 10px;
   }
   .add-list-inner-btn {
     font-family: $font-semi;
@@ -69,31 +66,28 @@
   }
 
   .add-list-inner-btn:hover {
-    background-color: lighten( $pGreen, 10)
+    background-color: lighten($pGreen, 10);
   }
-
 
   // Specific changes
   .fade-enter-active {
-    transition: opacity .3s;
+    transition: opacity 0.3s;
   }
   .fade-enter {
     opacity: 0;
   }
 
-.fade-leave-active {
+  .fade-leave-active {
     display: none;
   }
-.fade-leave-to {
+  .fade-leave-to {
     opacity: unset;
   }
 
   .plus-icon {
     margin-right: rem(5px);
+  }
 }
-
-}
-
 
 //Scroll bar
 .lists-container::-webkit-scrollbar {
