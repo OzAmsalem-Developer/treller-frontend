@@ -4,14 +4,12 @@
       <div
         class="btn color-picker-btn center-flex"
         @click="openColorPicker"
-        :style="{'backgroundImage': bgColorImg()}"
       >
         <h3 class="txt-btn">Colors</h3>
       </div>
       <div
         class="btn img-picker-btn center-flex"
         @click="openImgPicker"
-        :style="{'backgroundImage': bgImg()}"
       >
         <h3 class="txt-btn">Images</h3>
       </div>
@@ -47,12 +45,6 @@ export default {
     };
   },
   methods: {
-    bgColorImg() {
-      return "url(" + require("@/assets/img/board-menu/bg-color.jpg") + ")";
-    },
-    bgImg() {
-      return "url(" + require("@/assets/img/board-menu/bg-img.jpg") + ")";
-    },
     openColorPicker() {
       this.isMenuOpen.main = false;
       this.isMenuOpen.colorPicker = true;

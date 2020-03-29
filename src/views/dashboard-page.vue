@@ -7,7 +7,7 @@
       </span>
       <h2 class="title">My Boards</h2>
       <div class="user-profile-container">
-        <button class="hello center-flex" @click="toggleUserProfile">Hello {{loggedinUser.username}}</button>
+        <button class="hello center-flex" @click="toggleUserProfile">Hello, {{loggedinUser.username}}</button>
       </div>
     </header>
     <section class="boards">
