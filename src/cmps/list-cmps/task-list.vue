@@ -145,9 +145,6 @@ export default {
         taskId: this.newTask.id,
         operation: "added task " + `"${this.newTask.name}"` + " to " + this.taskList.name + " list"
       })
-
-     
-      // this.newTask = null;
       this.getEmptyTask();
       setTimeout(() => {
         this.$refs.tasks.scrollTo(0, this.$refs.tasks.scrollHeight);
@@ -166,6 +163,8 @@ export default {
       }
     },
     onDrop(dropResult) {
+      console.log(dropResult);
+      // For each result, Update the list copy and emit ('save-list-order')
       this.listCopy.tasks = utilService.applyDrag(
         this.taskList.tasks,
         dropResult

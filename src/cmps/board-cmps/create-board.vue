@@ -56,9 +56,9 @@ export default {
       style() {
         return {
           backgroundImage: this.newBoard.style.background,
+          background: this.newBoard.style.background,
           backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          height: '100%',
+          backgroundRepeat: "no-repeat"
       } 
     }
   },

@@ -3,7 +3,7 @@
     <div class="from-operation">
       <user-avatar :user="activity.from" />
       
-      <div class="operation"> <span class="user-name">{{activity.from.username}}</span> 
+      <div class="operation"> <span class="user-name">{{userName}}</span> 
       {{activity.operation}}</div>
     </div>
     <router-link class="task-link"
@@ -21,6 +21,9 @@ export default {
   computed: {
     currBoardId() {
       return this.$store.getters.currBoard._id;
+    },
+    userName() {
+      return this.activity.from.username || 'Guest1121'
     }
   },
   props: {
