@@ -8,10 +8,6 @@ export default {
   mounted() {
     this.renderChart(this.chartData, this.options);
   },
-  created() {
-      console.log('label-cmp',this.chartData, this.options);
-      
-  },
   props: {
     options:{
       type: Object,
