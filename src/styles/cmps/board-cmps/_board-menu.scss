@@ -23,7 +23,7 @@
 
     .menu {
         .menu-btn-container{
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             .menu-btn{
                 display: block;
                 font-size: 1rem;
@@ -35,6 +35,7 @@
                 outline: 0;
                 width: 100%;
                 text-align: left;
+                transition: .25s;
                 .btn-txt{
                     padding-left: 10px;
                 }
@@ -45,6 +46,9 @@
             }
             .menu-btn:hover {
                 background-color: rgba(9,30,66,.08);
+            }
+            .menu-btn.remove:hover {
+                background-color: $pRed;
             }
         }
         .activities{

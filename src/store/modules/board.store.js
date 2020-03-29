@@ -59,6 +59,12 @@ export const boardStore = ({
         },
         toggleMiniLabals(state) {
             state.isLabelsMini = !state.isLabelsMini
+        },
+        removeCurrBoard(state) {
+            state.currBoard = null
+            state.currTask = null
+            state.filterBy = null
+            state.isLabelsMini = true
         }
     },
 
@@ -122,6 +128,19 @@ export const boardStore = ({
             } catch {
                 context.commit({ type: 'setCurrBoard', prevBoard })
                 console.log('Err: Board saving failed')
+                return Promise.reject(prevBoard)
+            }
+        },
+        async removeBoard(context, { boardId }) {
+            const prevBoard = JSON.parse(JSON.stringify(context.state.currBoard))
+            // context.commit({ type: 'removeCurrBoard', boardId })
+            await boardService.remove(boardId)
+            try {
+                console.log('Board Deleted')
+                return boardId
+            } catch {
+                context.commit({ type: 'setCurrBoard', prevBoard })
+                console.log('Err: Board removind failed')
                 return Promise.reject(prevBoard)
             }
         },

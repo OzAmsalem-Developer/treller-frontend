@@ -333,7 +333,7 @@ export default {
       ev.target.blur();
       this.updateTask();
     },
-    async removeTask() {
+    async removeTask() { 
       eventBus.$emit(EV_addActivity, {
         from: this.loggedinUser,
         createdAt: Date.now(),

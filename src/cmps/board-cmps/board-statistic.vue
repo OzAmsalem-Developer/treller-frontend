@@ -86,7 +86,8 @@ export default {
               data: this.labelsBoardCount,
               backgroundColor: this.labelsChartColors.fill,
               borderColor: this.labelsChartColors.border,
-              borderWidth: 1
+              borderWidth: 1,
+              barPercentage: 0.9
             }
           ]
         },
@@ -110,7 +111,7 @@ export default {
           scales: {
             xAxes: [
               {
-                barPercentage: 0.9,
+                
                 ticks: {
                   beginAtZero: true
                 }
@@ -187,9 +188,6 @@ export default {
   created() {
     this.setListsChartColors();
     this.setLabelsChartColors();
-    console.log(this.labelsChartColors);
-    console.log(this.labelsBoardCount);
-    console.log(this.labelsName);
   },
   components: {
     listChart,
