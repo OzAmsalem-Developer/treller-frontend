@@ -1,33 +1,34 @@
 <template>
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
     <section v-if="task" class="task-details" ref="task">
+      <main-loading v-if="isLoading" />
       <transition name="fade">
-      <label-picker
-        class="move-label-menu"
-        v-if="isLabelOpen"
-        @set-labels="setLabels"
-        :boardLabels="boardLabels"
-        :taskLabels="task.labels"
-        @close-picker="toggleLabelMenu"
-      />
+        <label-picker
+          class="move-label-menu"
+          v-if="isLabelOpen"
+          @set-labels="setLabels"
+          :boardLabels="boardLabels"
+          :taskLabels="task.labels"
+          @close-picker="toggleLabelMenu"
+        />
       </transition>
       <transition name="fade">
-      <move-picker
-        class="move-picker-menu"
-        v-if="isMoveOpen"
-        v-model="moveToList"
-        :optionalLists="optionalLists"
-        @input="moveTask"
-        @close-picker="toggleMoveMenu"
-      />
+        <move-picker
+          class="move-picker-menu"
+          v-if="isMoveOpen"
+          v-model="moveToList"
+          :optionalLists="optionalLists"
+          @input="moveTask"
+          @close-picker="toggleMoveMenu"
+        />
       </transition>
       <transition name="fade">
-      <add-member
-        :task="task"
-        v-if="isAddMember"
-        @add-task-member="addMember"
-        @closed="isAddMember = false"
-      />
+        <add-member
+          :task="task"
+          v-if="isAddMember"
+          @add-task-member="addMember"
+          @closed="isAddMember = false"
+        />
       </transition>
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
@@ -72,11 +73,9 @@
               </div>
             </section>
             <section v-if="task.dueDate.isCompleted !== null" class="details-due-date">
-              <!-- <div class="dueDate-container"> -->
               <div class="title-container">
                 <span class="title">Due Date:</span>
               </div>
-              <!-- <div class="details-due-list"> -->
               <div class="details-due-check-main">
                 <input
                   class="details-due-check"
@@ -85,7 +84,6 @@
                   @change="updateTask"
                 />
               </div>
-              <!-- <div class="block"> -->
               <el-date-picker
                 @change="updateTask"
                 v-model="editedTask.dueDate.time"
@@ -97,14 +95,11 @@
                 size="mini"
                 ref="calendar"
               ></el-date-picker>
-              <!-- </div> -->
               <due-date-preview
                 v-if="task.dueDate.time"
                 class="due-date-preview"
                 :dueDate="task.dueDate"
               />
-              <!-- </div> -->
-              <!-- </div> -->
             </section>
           </div>
 
@@ -173,7 +168,7 @@
                 </button>
               </div>
               <input
-               ref="checklistTodo"
+                ref="checklistTodo"
                 class="checklist-add-todo"
                 v-model="currTodo.txt"
                 type="text"
@@ -189,7 +184,6 @@
             </span>
             <div class="details-disc-header">
               <span class="details-titles">Discussion:</span>
-              <!-- <span class="action-link">hide activity feed</span> -->
             </div>
             <input
               class="discussion-add-item details-grid-last"
@@ -253,6 +247,7 @@ import { utilService } from "@/services/util.service.js";
 import { eventBus, EV_addActivity } from "@/services/eventBus.service.js";
 import { socketService } from "@/services/socket.service.js";
 import { cloudinaryService } from "@/services/cloudinary.service.js";
+import mainLoading from "@/cmps/main-cmps/main-loading.vue";
 import userAvatar from "@/cmps/main-cmps/user-avatar";
 import labelPreview from "@/cmps/task-cmps/previews/label-preview.vue";
 import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
@@ -270,6 +265,7 @@ export default {
       isLabelOpen: false,
       isMoveOpen: false,
       isAddMember: false,
+      isLoading: false,
       listId: null,
       currTodo: {
         txt: ""
@@ -281,16 +277,22 @@ export default {
   },
   methods: {
     async uploadImg(ev) {
+      this.isLoading = true;
       const imgUrl = await cloudinaryService.uploadImg(ev);
-
-      this.editedTask.attachments.unshift(imgUrl);
-      eventBus.$emit(EV_addActivity, {
-        from: this.loggedinUser,
-        createdAt: Date.now(),
-        taskId: this.task.id,
-        operation: "added image to task " + `"${this.task.name}"`
-      });
-      this.updateTask();
+      try {
+        this.editedTask.attachments.unshift(imgUrl);
+        eventBus.$emit(EV_addActivity, {
+          from: this.loggedinUser,
+          createdAt: Date.now(),
+          taskId: this.task.id,
+          operation: "added image to task " + `"${this.task.name}"`
+        });
+        this.isLoading = false;
+        this.updateTask();
+      } catch (err) {
+        console.log("err, failed to upload image", err);
+        this.isLoading = false;
+      }
     },
     getListId() {
       const idx = this.$store.getters.taskLists.findIndex(taskList => {
@@ -327,8 +329,8 @@ export default {
     async updateTask() {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
       try {
-          this.editedTask = JSON.parse(JSON.stringify(this.task));
-          return this.task
+        this.editedTask = JSON.parse(JSON.stringify(this.task));
+        return this.task;
       } catch (prevTask) {
         this.editedTask = JSON.parse(JSON.stringify(prevTask));
         console.log("Err, failed to save task");
@@ -337,13 +339,13 @@ export default {
     },
     async updateAndBlur(ev) {
       ev.target.blur();
-      console.log(ev)
+      console.log(ev);
       await this.updateTask();
       setTimeout(() => {
-        this.$refs.checklistTodo.focus()
-      },220)
+        this.$refs.checklistTodo.focus();
+      }, 220);
     },
-    async removeTask() { 
+    async removeTask() {
       eventBus.$emit(EV_addActivity, {
         from: this.loggedinUser,
         createdAt: Date.now(),
@@ -583,7 +585,8 @@ export default {
     commentPreview,
     labelPicker,
     movePicker,
-    addMember
+    addMember,
+    mainLoading
   }
 };
 </script>
