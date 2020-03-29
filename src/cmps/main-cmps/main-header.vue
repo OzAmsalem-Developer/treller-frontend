@@ -13,11 +13,11 @@
         <button @click="$emit('login-signup')" class="login">Login</button>
         <button @click="$emit('login-signup', true)" class="signup">Signup</button>
       </div>
+        <router-link  v-if="loggedinUser" class="dashboard-nav-btn" :to="'/user/' + loggedinUser._id">Dashboard</router-link>
       <div class="user" v-if="loggedinUser">
-        <router-link class="username" :to="'/user/' + loggedinUser._id">Dashboard</router-link>
         <button @click="logout" class="logout" v-if="!isGuest">Logout</button>
       </div>
-        <!-- <user-avatar :user="loggedinUser" v-if="loggedinUser" /> -->
+        <user-avatar :user="loggedinUser" v-if="loggedinUser" />
     </div>
     </nav>
   </section>

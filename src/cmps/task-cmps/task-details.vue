@@ -1,6 +1,7 @@
 <template>
   <div class="window-overlay" ref="window" @mousedown="closeDetailsOverlay">
     <section v-if="task" class="task-details" ref="task">
+      <transition name="fade">
       <label-picker
         class="move-label-menu"
         v-if="isLabelOpen"
@@ -9,6 +10,8 @@
         :taskLabels="task.labels"
         @close-picker="toggleLabelMenu"
       />
+      </transition>
+      <transition name="fade">
       <move-picker
         class="move-picker-menu"
         v-if="isMoveOpen"
@@ -17,12 +20,15 @@
         @input="moveTask"
         @close-picker="toggleMoveMenu"
       />
+      </transition>
+      <transition name="fade">
       <add-member
         :task="task"
         v-if="isAddMember"
         @add-task-member="addMember"
         @closed="isAddMember = false"
       />
+      </transition>
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>

@@ -1,7 +1,7 @@
 <template>
   <section>
     <div @click="$emit('closed')" class="div-screen"></div>
-    <section class="create-board" :style="{background: newBoard.style.background}" ref="createCmp">
+    <section class="create-board" :style="style" ref="createCmp">
         <form  @submit.prevent="createBoard">
           <input ref="newBoardInput" v-model="newBoard.name" placeholder="Board title.." type="text" />
           <button class="save-btn">Create board</button>
@@ -37,8 +37,9 @@ export default {
     setBg(background) {
       console.log(background);
 
-      this.newBoard.style.background = background;
+      this.newBoard.style.background = background
       this.$refs.createCmp.style["background"] = background;
+      this.$refs.createCmp.style["background-size"] = 'cover';
     },
     async createBoard() {
       if (!this.newBoard.name.length) return
@@ -49,6 +50,14 @@ export default {
       });
       this.$emit("board-created", board);
       this.newBoard = boardService.getEmptyBoard();
+    }
+  },
+  computed: {
+      style() {
+        return {
+          background: this.newBoard.style.background,
+          backgroundSize: 'cover'
+      } 
     }
   },
   mounted() {

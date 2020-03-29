@@ -5,6 +5,10 @@
   padding-top: rem(40px);
   overflow-x: hidden;
 
+  .board-name {
+    font-family: $font-semi;
+  }
+
   .lists-container {
     flex: 1;
     min-width: 200px;
