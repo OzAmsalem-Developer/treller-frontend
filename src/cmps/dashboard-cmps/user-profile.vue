@@ -2,6 +2,7 @@
   <section v-if="editedUser">
     <div @click="$emit('closed')" class="div-screen"></div>
     <section class="user-profile">
+      <mainLoading v-if="isLoading" />
       <button @click="$emit('closed')" class="close-btn">
         <i class="fas fa-times"></i>
       </button>
@@ -48,18 +49,27 @@
 
 <script>
 import { cloudinaryService } from "@/services/cloudinary.service.js";
+import mainLoading from "@/cmps/main-cmps/main-loading.vue";
 export default {
   data() {
     return {
       editedUser: null,
-      isEditName: false
+      isEditName: false,
+      isLoading: false
     };
   },
   methods: {
     async uploadAvatarImg(ev) {
+      this.isLoading = true;
       const imgUrl = await cloudinaryService.uploadImg(ev);
-      this.editedUser.imgUrl = imgUrl;
-      this.updateUser();
+      try {
+        this.editedUser.imgUrl = imgUrl;
+        this.isLoading = false;
+        this.updateUser();
+      } catch (err) {
+        console.log("err, failed to upload image", err);
+        this.isLoading = false;
+      }
     },
     async updateUsername() {
       await this.updateUser();
@@ -95,6 +105,9 @@ export default {
   },
   created() {
     this.editedUser = JSON.parse(JSON.stringify(this.loggedInUser));
+  },
+  components: {
+    mainLoading
   }
 };
 </script>
