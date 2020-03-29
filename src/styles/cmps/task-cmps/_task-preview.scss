@@ -27,6 +27,7 @@
   .preview-img {
     max-width: 230px;
     object-fit: cover;
+    user-select: none;
   }
   .preview-title {
     margin-bottom: 4px;
