@@ -1,5 +1,5 @@
 <template>
-  <section v-if="userCopy">
+  <section v-if="editedUser">
     <div @click="$emit('closed')" class="div-screen"></div>
     <section class="user-profile">
       <button @click="$emit('closed')" class="close-btn">
@@ -12,12 +12,12 @@
       <hr />
       <section class="user-profile-container">
         <div class="profile-view">
-          <img v-if="this.userCopy.imgUrl" :src="this.userCopy.imgUrl" alt />
-          <div class="text-avatar" v-else :style="{backgroundColor: this.userCopy.avatarColor}">
+          <img v-if="this.editedUser.imgUrl" :src="this.editedUser.imgUrl" alt />
+          <div class="text-avatar" v-else :style="{backgroundColor: this.editedUser.avatarColor}">
             <span>{{avatarTxt}}</span>
           </div>
           <div class="profile-name">
-            <span>{{this.userCopy.username}}</span>
+            <span>{{this.editedUser.username}}</span>
           </div>
         </div>
         <div class="profile-edit">
@@ -34,7 +34,7 @@
               type="txt"
               name="profile-user-name"
               class="profile-name-input"
-              v-model="userCopy.username"
+              v-model="editedUser.username"
             />
             <button class="profile-save-btn" @click="updateUsername">Save</button>
             <button class="profile-cancel-btn" @click="toggleEditName">Cancel</button>
@@ -50,15 +50,14 @@ import { cloudinaryService } from "@/services/cloudinary.service.js";
 export default {
   data() {
     return {
-      userCopy: null,
+      editedUser: null,
       isEditName: false
     };
   },
   methods: {
     async uploadAvatarImg(ev) {
       const imgUrl = await cloudinaryService.uploadImg(ev);
-      // this.userCopy = JSON.parse(JSON.stringify(this.user));
-      this.userCopy.imgUrl = imgUrl;
+      this.editedUser.imgUrl = imgUrl;
       this.updateUser();
     },
     async updateUsername() {
@@ -68,31 +67,29 @@ export default {
     async updateUser() {
       const user = await this.$store.dispatch({
         type: "updateUser",
-        user: this.userCopy
+        user: this.editedUser
       });
 
       this.$store.commit({
         type: "setLoggedinUser",
         user
       });
+      this.editedUser = JSON.parse(JSON.stringify(this.loggedInUser));
     },
     toggleEditName() {
       this.isEditName = !this.isEditName;
     }
   },
-  created() {
-    this.userCopy = JSON.parse(JSON.stringify(this.user));
-    console.log("this.userCopy", this.userCopy);
-  },
   computed: {
+    loggedInUser() {
+      return this.$store.getters.loggedinUser;
+    },
     avatarTxt() {
-      return this.userCopy.username.slice(0, 1).toUpperCase();
+      return this.editedUser.username.slice(0, 1).toUpperCase();
     }
   },
-  props: {
-    user: {
-      type: Object
-    }
+  created() {
+    this.editedUser = JSON.parse(JSON.stringify(this.loggedInUser));
   }
 };
 </script>
