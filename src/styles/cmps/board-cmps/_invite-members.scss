@@ -57,6 +57,17 @@
     outline: 0;
   }
 
+  .toggle {
+    margin-left: 15px;
+
+    span {
+      font-family: $font-semi;
+      font-size: rem(12px);
+      margin-left: rem(3px);
+      color: #5e6c84;
+    }
+  }
+
   .members-container {
     height: 300px;
     overflow-y: auto;

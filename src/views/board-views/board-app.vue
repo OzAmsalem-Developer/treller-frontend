@@ -108,8 +108,15 @@ export default {
         }
         this.isTaskLoad = false;
       } catch {
+        const user = JSON.parse(JSON.stringify(this.loggedinUser))
+        const idx = user.boards.findIndex(board => board._id === this.board._id)
+        if (idx !== -1) {
+          user.boards.splice(idx, 1)
+          let updatedUser = await this.$store.dispatch({type: 'updateUser', user})
+          this.$store.commit({type: 'setLoggedinUser', user: updatedUser})
+          this.$router.push("/user/" + updatedUser._id);
+        }
         console.log("Err msg to user here");
-        this.$router.push("/user/dashboard");
       }
     },
     async saveBoard() {
@@ -362,8 +369,7 @@ export default {
   },
   created() {
     const boardId = this.$route.params.boardId;
-
-    (async () => {
+        (async () => {
       await this.loadBoardAndTask(boardId); // Render the task details when taskId is passed as param
       // Socket updates
       socketService.setup();

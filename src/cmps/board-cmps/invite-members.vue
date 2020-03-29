@@ -4,7 +4,12 @@
         <div class="title"><i class="fas fa-user-plus"></i> Invite members</div>
         <div class="close-btn" @click="$emit('closed')"><i class="fas fa-times"></i></div>
       </header>
-   
+
+  <div class="toggle">
+     <toggle-button :width="35" :height="18" @change="searchUsers"
+       v-model="isRegisteredOnly"/>
+     <span>Only registered</span>
+  </div>
 
   <div class="search-input-wrapper">
       <input
@@ -36,7 +41,8 @@ export default {
   data() {
     return {
       searchStr: "",
-      searchRes: ""
+      searchRes: "",
+      isRegisteredOnly: false
     };
   },
   methods: {
@@ -51,6 +57,10 @@ export default {
         );
         return currBoard ? false : true;
       });
+      if (this.isRegisteredOnly) {
+        this.searchRes = searchRes.filter(user => !user.isGuest)
+        return
+      }
       this.searchRes = searchRes;
     },
     addMember(member) {

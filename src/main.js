@@ -5,6 +5,9 @@ import router from './router'
 import store from './store'
 import './filters'
 
+import toggleButton from 'vue-js-toggle-button'
+Vue.use(toggleButton)
+
 // Element
 import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/en'
