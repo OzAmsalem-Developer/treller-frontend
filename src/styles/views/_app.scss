@@ -3,6 +3,9 @@
     height: 100vh;
     flex-direction: column;
     
+    .board.view {
+        background-size: cover;
+    }
 
     .view {
         flex: 1;

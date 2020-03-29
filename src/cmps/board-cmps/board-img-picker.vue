@@ -19,7 +19,7 @@ export default {
       this.$emit("closed");
     },
     getImgUrl(idx) {
-      return require(`../../assets/img/background/${idx}.jpg`)
+      return require(`../../../public/img/background/${idx}.jpg`)
     },
     setBoardImage(idx){
       const imgUrl =  'url(' + this.getImgUrl(idx) + ')'
