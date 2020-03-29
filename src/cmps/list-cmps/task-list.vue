@@ -1,5 +1,5 @@
 <template>
-  <section v-if="taskList" class="task-list">
+  <section v-if="taskList" class="task-list" @touchend="onDragEnd">
     <section class="edit-list-name" v-if="isEditName">
       <input
       @click="isEditName = true"
@@ -247,7 +247,7 @@ export default {
       return this.$store.getters.loggedinUser
     },
     delayDrag() {
-      return screen.width > 900 ? 0 : 500
+      return screen.width > 900 ? 0 : 400
     }
   },
   props: {
