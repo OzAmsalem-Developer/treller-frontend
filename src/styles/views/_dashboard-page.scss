@@ -26,10 +26,13 @@
       color: $textBlue;
       font-size: rem(16px);
       border-radius: 3px;
-      border: 0.5px solid lightgrey;
-      padding: 5px 10px;
+      padding: rem(5px) rem(10px);
       background-color: #ffe600;
       box-shadow: $shadow;
+      transition: all .3s;
+    }
+    .hello:hover {
+      background-color: lighten(#ffe600, 15);
     }
   }
   .boards {
@@ -39,22 +42,21 @@
       margin-right: 10px;
     }
   }
-  @media(max-width:550px) {
+  @media (max-width: 550px) {
     .boards {
       justify-content: center;
     }
-  
+
     .board-preview {
       width: 100%;
       height: 230px;
     }
-  
+
     .dasboard-page .new-board-btn {
       width: 100%;
       height: 230px;
     }
   }
-
 
   .new-board-btn {
     width: 225px;
@@ -73,7 +75,7 @@
   }
 }
 
-@media(max-width:550px) {
+@media (max-width: 550px) {
   .dasboard-page .new-board-btn {
     width: 100%;
     height: 230px;
