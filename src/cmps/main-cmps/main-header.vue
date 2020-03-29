@@ -15,6 +15,7 @@
       </div>
       <div class="user" v-if="loggedinUser">
         <router-link class="username" :to="'/user/' + loggedinUser._id">Dashboard</router-link>
+        <user-avatar :user="loggedinUser" />
         <button @click="logout" class="logout" v-if="!isGuest">Logout</button>
       </div>
     </div>
@@ -23,6 +24,8 @@
 </template>
 
 <script>
+import userAvatar from '@/cmps/main-cmps/user-avatar'
+
 export default {
   computed: {
     loggedinUser() {
@@ -39,6 +42,9 @@ export default {
       this.$router.push('/')
       this.$store.dispatch({ type: "getLoggedinUser" });
     }
+  },
+  components: {
+    userAvatar
   }
 };
 </script>
