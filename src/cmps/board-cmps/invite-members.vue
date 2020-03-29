@@ -5,6 +5,8 @@
         <div class="close-btn" @click="$emit('closed')"><i class="fas fa-times"></i></div>
       </header>
    
+
+  <div class="search-input-wrapper">
       <input
         placeholder="User name or email"
         v-model="searchStr"
@@ -12,6 +14,11 @@
         type="text"
         class="search"
       />
+      <div class="icon">
+        <i class="fa fa-search"></i>
+      </div>
+  </div>
+
     <div class="members-container">
       <div class="member" v-for="member in searchRes" @click="addMember(member)">
         <user-avatar :user="member" />

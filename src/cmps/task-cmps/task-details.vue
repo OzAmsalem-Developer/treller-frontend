@@ -167,6 +167,7 @@
                 </button>
               </div>
               <input
+               ref="checklistTodo"
                 class="checklist-add-todo"
                 v-model="currTodo.txt"
                 type="text"
@@ -320,18 +321,21 @@ export default {
     async updateTask() {
       await this.$store.dispatch({ type: "updateTask", task: this.editedTask });
       try {
-        setTimeout(() => {
           this.editedTask = JSON.parse(JSON.stringify(this.task));
-        }, 2);
+          return this.task
       } catch (prevTask) {
         this.editedTask = JSON.parse(JSON.stringify(prevTask));
         console.log("Err, failed to save task");
       }
       socketService.emit("board boardChanged", this.currBoard);
     },
-    updateAndBlur(ev) {
+    async updateAndBlur(ev) {
       ev.target.blur();
-      this.updateTask();
+      console.log(ev)
+      await this.updateTask();
+      setTimeout(() => {
+        this.$refs.checklistTodo.focus()
+      },220)
     },
     async removeTask() { 
       eventBus.$emit(EV_addActivity, {

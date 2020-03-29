@@ -54,7 +54,16 @@ export default {
       user.boards.splice(idx, 1)
       this.$store.dispatch({type: 'updateUser', user})
         eventBus.$emit(EV_removeMember, userId)
+    },
+    closeInvite() {
+      this.isInvite = false
     }
+  },
+  mounted() {
+    document.querySelector('.lists-container').addEventListener('click', this.closeInvite)
+  },
+  destroyed() {
+    document.querySelector('.lists-container').removeEventListener('click', this.closeInvite)
   },
   components: {
     boardMenu,

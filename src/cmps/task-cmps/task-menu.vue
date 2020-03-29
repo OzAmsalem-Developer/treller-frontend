@@ -41,9 +41,11 @@
         </button>
 
         <div ref="pickersContainer" class="pickers-container">
-
+          <transition name="fade">
           <add-member :task="task" v-if="isMenuOpen.members"  
           @add-task-member="addMember" @closed="isMenuOpen.members = false" />
+          </transition>
+           <transition name="fade">
                 <labelPicker
         class="label-picker"
         v-if="isMenuOpen.label"
@@ -51,6 +53,8 @@
         @set-labels="setLabels"
         @close-picker="isMenuOpen.label = false"
       />
+      </transition>
+         <transition name="fade">
       <move-picker
         class="move-picker"
         v-if="isMenuOpen.move"
@@ -59,6 +63,7 @@
         @close-picker="isMenuOpen.move = false"
         @input="moveTask"
       />
+       </transition>
       <div class="block">
         <el-date-picker
           v-show="isMenuOpen.dueDate"
