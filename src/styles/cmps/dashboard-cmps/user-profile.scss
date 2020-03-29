@@ -54,13 +54,21 @@
       display: flex;
       justify-content: flex-start;
       margin-bottom: 30px;
-      img {
+      img, .text-avatar {
         height: 120px;
         width: 120px;
         object-fit: cover;
         border-radius: 50%;
         border: solid 1px darken(#f8f8f8, 40);
         margin-inline-end: 20px;
+      }
+
+      .text-avatar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(252, 252, 252);
+        font-size: rem(80px);
       }
 
       .profile-name {

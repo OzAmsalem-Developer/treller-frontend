@@ -13,7 +13,7 @@
       <section class="user-profile-container">
         <div class="profile-view">
           <img v-if="this.userCopy.imgUrl" :src="this.userCopy.imgUrl" alt />
-          <div v-else :style="{backgroundColor: this.userCopy.avatarColor}">
+          <div class="text-avatar" v-else :style="{backgroundColor: this.userCopy.avatarColor}">
             <span>{{avatarTxt}}</span>
           </div>
           <div class="profile-name">
