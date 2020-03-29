@@ -18,13 +18,13 @@
         <button class="save-name-btn" @click.stop="setName">Save</button>
       </div>
       <menu class="editor-buttons" :class="btnsClass">
-        <button class="task-menu-item" @click.stop="isMenuOpen.label = !isMenuOpen.label">
-          <i class="fas fa-tag"></i>
-          <span class="menu-btn-txt">Labels</span>
-        </button>
         <button class="task-menu-item" @click.stop="isMenuOpen.move = !isMenuOpen.move">
           <i class="fas fa-long-arrow-alt-right"></i>
           <span class="menu-btn-txt">Move</span>
+        </button>
+        <button class="task-menu-item" @click.stop="isMenuOpen.label = !isMenuOpen.label">
+          <i class="fas fa-tag"></i>
+          <span class="menu-btn-txt">Labels</span>
         </button>
           <button class="task-menu-item" @click.stop="isMenuOpen.members = !isMenuOpen.members">
           <i class="fas fa-user-plus" aria-hidden="true"></i>
