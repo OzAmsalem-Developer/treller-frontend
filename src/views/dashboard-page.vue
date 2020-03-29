@@ -1,13 +1,15 @@
 <template>
   <section v-if="loggedinUser" class="dasboard-page">
-    <user-profile @closed="toggleUserProfile" v-if="isUserProfile"/>
+    <user-profile @closed="toggleUserProfile" v-if="isUserProfile" />
     <header>
       <span class="icon">
         <i class="far fa-star"></i>
       </span>
       <h2 class="title">My Boards</h2>
       <div class="user-profile-container">
-        <button class="hello center-flex" @click="toggleUserProfile">Hello, {{loggedinUser.username}}</button>
+        <button class="hello" @click="toggleUserProfile">
+          <span class="hello-text">Hello, {{loggedinUser.username}}</span>
+        </button>
       </div>
     </header>
     <section class="boards">
@@ -48,7 +50,7 @@ export default {
       this.isCreate = false;
     },
     toggleUserProfile() {
-      this.isUserProfile = !this.isUserProfile
+      this.isUserProfile = !this.isUserProfile;
     }
   },
   computed: {

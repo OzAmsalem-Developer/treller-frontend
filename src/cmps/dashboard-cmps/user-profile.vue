@@ -34,6 +34,7 @@
               type="txt"
               name="profile-user-name"
               class="profile-name-input"
+              ref="editname"
               v-model="editedUser.username"
             />
             <button class="profile-save-btn" @click="updateUsername">Save</button>
@@ -78,6 +79,10 @@ export default {
     },
     toggleEditName() {
       this.isEditName = !this.isEditName;
+
+      if (this.isEditName) {
+        setTimeout(() => this.$refs.editname.focus(), 100);
+      }
     }
   },
   computed: {
