@@ -7,6 +7,14 @@
   display: flex;
   justify-content: center;
   border-radius: 3px;
+
+  .vs__search,
+  .vs__selected-options,
+  .vs__actions,
+  .vs--searchable .vs__dropdown-toggle {
+    cursor: pointer;
+  }
+
   .close {
     min-width: rem(20px);
     min-height: rem(20px);
@@ -43,11 +51,11 @@
       cursor: pointer;
       font-family: $font-light;
     }
-    .vs__clear{
+    .vs__clear {
       padding: 4px 8px;
       background-color: $pRed;
       border-radius: 3px;
-      transition: all .3s;
+      transition: all 0.3s;
     }
     .vs__clear:hover {
       background-color: darken($color: $pRed, $amount: 8%);

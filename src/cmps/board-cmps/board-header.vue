@@ -63,6 +63,7 @@ export default {
     document.querySelector('.lists-container').addEventListener('click', this.closeInvite)
   },
   destroyed() {
+    if (document.querySelector('.lists-container'))
     document.querySelector('.lists-container').removeEventListener('click', this.closeInvite)
   },
   components: {

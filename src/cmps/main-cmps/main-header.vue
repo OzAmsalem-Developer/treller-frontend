@@ -15,9 +15,9 @@
       </div>
       <div class="user" v-if="loggedinUser">
         <router-link class="username" :to="'/user/' + loggedinUser._id">Dashboard</router-link>
-        <user-avatar :user="loggedinUser" />
         <button @click="logout" class="logout" v-if="!isGuest">Logout</button>
       </div>
+        <!-- <user-avatar :user="loggedinUser" v-if="loggedinUser" /> -->
     </div>
     </nav>
   </section>
