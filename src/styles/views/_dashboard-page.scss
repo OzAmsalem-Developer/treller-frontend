@@ -29,6 +29,7 @@
       border: 0.5px solid lightgrey;
       padding: 5px 10px;
       background-color: #ffe600;
+      box-shadow: $shadow;
     }
   }
   .boards {
@@ -64,6 +65,7 @@
     font-family: $font-semi;
     color: $textBlue;
     transition: 0.2s;
+    box-shadow: $shadow;
   }
 
   .new-board-btn:hover {
@@ -85,6 +87,7 @@
   padding: 10px;
   cursor: pointer;
   margin-bottom: 20px;
+  box-shadow: $shadow;
 
   .name {
     font-family: $font-bold;
