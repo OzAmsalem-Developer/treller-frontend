@@ -101,7 +101,7 @@
 
 .details-actions {
   display: grid;
-  grid-template-columns: 120px ;
+  grid-template-columns: 120px;
   grid-template-rows: repeat(10, 30px);
   row-gap: 6px;
 
@@ -217,37 +217,45 @@ i {
 }
 
 .details-due-date {
-  .dueDate-container {
-    display: flex;
-    flex-direction: column;
-
-    .title {
-      margin-bottom: rem(5px);
-    }
-
-    // .date-picker-cell {
-    //   // background-color: red;
-    // }
-
-    .el-date-editor .el-input__inner {
-      font-family: $font-regular;
-      font-size: rem(14px);
-    }
+  display: grid;
+  grid-template-columns: 20px 20px 1fr 90px;
+  grid-template-rows: 1fr;
+  gap: rem(5px);
+  .title-container {
+    grid-column: 2 / -1;
+    grid-row: 1 / 2;
   }
-  .details-due-list {
+  .details-due-check-main {
     display: flex;
+    justify-content: center;
     align-items: center;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+  }
+  .el-date-picker {
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
 
-    :first-child {
-      margin-inline-end: rem(5px);
+    .el-input__icon {
+      color: $textBlue;
     }
   }
 
+  .due-date-preview {
+    grid-row: 2 / 3;
+    grid-column: -2 / -1;
+  }
+
+  .el-date-editor .el-input__inner {
+    font-family: $font-regular;
+    font-size: rem(14px);
+  }
   input[type="checkbox"] {
     cursor: pointer;
     min-width: 20px;
     min-height: 20px;
   }
+  // .date-picker-cell
 }
 
 .details-description {
@@ -451,19 +459,31 @@ i {
   }
 }
 
-
-
 @media (max-width: $break-narrow) {
   .task-details {
     padding: 15px 15px;
   }
-
-  // .details-due-list {
-  //   display: flex;
-  //   flex-direction: column;
-
-  //   .block{
-  //     order: -1;
-  //   }
-  // }
+  .details-due-date {
+    grid-template-columns: 20px 20px 1fr;
+    grid-template-rows: 30px 1fr 30px;
+    gap: rem(5px);
+    .title-container {
+      grid-column: 2 / -1;
+      grid-row: 1 / 2;
+    }
+    .details-due-check-main {
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+    }
+    .el-date-picker {
+      grid-column: 3 / 4;
+      grid-row: 2 / 3;
+    }
+    .due-date-preview {
+      grid-column: -2 / -1;
+      grid-row: -2 / -1;
+      max-width: 100px;
+      margin: 0;
+    }
+  }
 }

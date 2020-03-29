@@ -17,7 +17,12 @@
         @input="moveTask"
         @close-picker="toggleMoveMenu"
       />
-      <add-member :task="task" v-if="isAddMember" @add-task-member="addMember" @closed="isAddMember = false"/>
+      <add-member
+        :task="task"
+        v-if="isAddMember"
+        @add-task-member="addMember"
+        @closed="isAddMember = false"
+      />
       <div class="task-details-header details-grid-title">
         <span class="details-icons">
           <i class="fas fa-layer-group"></i>
@@ -48,44 +53,52 @@
                   <span class="title">Members:</span>
                 </div>
                 <div class="members">
-                      <user-avatar @member-removed="removeMember"
-                       v-for="member in task.members" :user="member" :key="member._id" />
-                  <button class="member-add-btn member-card" @click="isAddMember = !isAddMember"><i class="fas fa-plus"></i></button>
+                  <user-avatar
+                    @member-removed="removeMember"
+                    v-for="member in task.members"
+                    :user="member"
+                    :key="member._id"
+                  />
+                  <button class="member-add-btn member-card" @click="isAddMember = !isAddMember">
+                    <i class="fas fa-plus"></i>
+                  </button>
                 </div>
-
               </div>
             </section>
-            <section
-              v-if="task.dueDate.isCompleted !== null"
-              class="details-due-date details-grid-title"
-            >
-              <div class="dueDate-container details-grid-last">
-                <div class="title-container">
-                  <span class="title">Due Date:</span>
-                </div>
-                <div class="details-due-list">
-                  <input
-                    class="details-due-check"
-                    type="checkbox"
-                    v-model="editedTask.dueDate.isCompleted"
-                    @change="updateTask"
-                  />
-                  <div class="block">
-                    <el-date-picker
-                      @change="updateTask"
-                      v-model="editedTask.dueDate.time"
-                      type="datetime"
-                      format="MMM dd hh:mm A"
-                      value-format="timestamp"
-                      placeholder="Select date and time"
-                      class="el-date-picker"
-                      size="mini"
-                      ref="calendar"
-                    ></el-date-picker>
-                  </div>
-                  <due-date-preview v-if="task.dueDate.time" :dueDate="task.dueDate" />
-                </div>
+            <section v-if="task.dueDate.isCompleted !== null" class="details-due-date">
+              <!-- <div class="dueDate-container"> -->
+              <div class="title-container">
+                <span class="title">Due Date:</span>
               </div>
+              <!-- <div class="details-due-list"> -->
+              <div class="details-due-check-main">
+                <input
+                  class="details-due-check"
+                  type="checkbox"
+                  v-model="editedTask.dueDate.isCompleted"
+                  @change="updateTask"
+                />
+              </div>
+              <!-- <div class="block"> -->
+              <el-date-picker
+                @change="updateTask"
+                v-model="editedTask.dueDate.time"
+                type="datetime"
+                format="MMM dd hh:mm A"
+                value-format="timestamp"
+                placeholder="Select date and time"
+                class="el-date-picker"
+                size="mini"
+                ref="calendar"
+              ></el-date-picker>
+              <!-- </div> -->
+              <due-date-preview
+                v-if="task.dueDate.time"
+                class="due-date-preview"
+                :dueDate="task.dueDate"
+              />
+              <!-- </div> -->
+              <!-- </div> -->
             </section>
           </div>
 
@@ -239,7 +252,7 @@ import dueDatePreview from "@/cmps/task-cmps/previews/due-date-preview.vue";
 import commentPreview from "@/cmps/task-cmps/previews/comment-preview.vue";
 import movePicker from "@/cmps/task-cmps/pickers/move-picker.vue";
 import labelPicker from "@/cmps/task-cmps/pickers/label-picker.vue";
-import addMember from '@/cmps/task-cmps/add-member'
+import addMember from "@/cmps/task-cmps/add-member";
 
 export default {
   data() {
@@ -263,13 +276,13 @@ export default {
     async uploadImg(ev) {
       const imgUrl = await cloudinaryService.uploadImg(ev);
 
-    this.editedTask.attachments.unshift(imgUrl);
+      this.editedTask.attachments.unshift(imgUrl);
       eventBus.$emit(EV_addActivity, {
         from: this.loggedinUser,
         createdAt: Date.now(),
         taskId: this.task.id,
         operation: "added image to task " + `"${this.task.name}"`
-      })
+      });
       this.updateTask();
     },
     getListId() {
@@ -288,7 +301,7 @@ export default {
         createdAt: Date.now(),
         taskId: this.task.id,
         operation: "updated task labels for " + `"${this.task.name}"`
-      })
+      });
       this.updateTask();
     },
     toggleMoveMenu() {
@@ -326,7 +339,7 @@ export default {
         createdAt: Date.now(),
         taskId: null,
         operation: "removed task " + `"${this.task.name}"`
-      })
+      });
 
       await this.$store.dispatch({
         type: "removeTask",
@@ -344,12 +357,12 @@ export default {
       if (this.editedTask.dueDate.isCompleted === null) {
         this.editedTask.dueDate.isCompleted = false;
 
-      eventBus.$emit(EV_addActivity, {
-        from: this.loggedinUser,
-        createdAt: Date.now(),
-        taskId: this.task.id,
-        operation: "set due date to" + `"${this.task.name}"`
-      })
+        eventBus.$emit(EV_addActivity, {
+          from: this.loggedinUser,
+          createdAt: Date.now(),
+          taskId: this.task.id,
+          operation: "set due date to" + `"${this.task.name}"`
+        });
 
         await this.updateTask();
         try {
@@ -370,8 +383,12 @@ export default {
         from: this.loggedinUser,
         createdAt: Date.now(),
         taskId: this.task.id,
-        operation: "added todo item " + `"${this.currTodo.txt}"` + " to task " +  `"${this.task.name}"`
-      })
+        operation:
+          "added todo item " +
+          `"${this.currTodo.txt}"` +
+          " to task " +
+          `"${this.task.name}"`
+      });
 
       await this.updateTask();
       try {
@@ -401,8 +418,12 @@ export default {
         from: this.loggedinUser,
         createdAt: Date.now(),
         taskId: this.task.id,
-        operation: "leave a comment " +  `"${this.currComment.txt}"` + ' in ' + `"${this.task.name}"`
-      })
+        operation:
+          "leave a comment " +
+          `"${this.currComment.txt}"` +
+          " in " +
+          `"${this.task.name}"`
+      });
 
       await this.updateTask();
       try {
@@ -426,13 +447,12 @@ export default {
       if (this.editedTask.checklist) {
         this.$refs.checklist.select();
       } else {
-
-      eventBus.$emit(EV_addActivity, {
-        from: this.loggedinUser,
-        createdAt: Date.now(),
-        taskId: this.task.id,
-        operation: "added checklist to" + `"${this.task.name}"`
-      })
+        eventBus.$emit(EV_addActivity, {
+          from: this.loggedinUser,
+          createdAt: Date.now(),
+          taskId: this.task.id,
+          operation: "added checklist to" + `"${this.task.name}"`
+        });
 
         let emptyChecklist = utilService.getEmptyChecklist();
         this.editedTask.checklist = emptyChecklist;
@@ -445,31 +465,31 @@ export default {
       }
     },
     addMember(member) {
-        this.editedTask.members.push(member)
+      this.editedTask.members.push(member);
 
       eventBus.$emit(EV_addActivity, {
         from: this.loggedinUser,
         createdAt: Date.now(),
         taskId: this.task.id,
-        operation: "added " + member.username + ' to ' + `"${this.task.name}"`
-      })
+        operation: "added " + member.username + " to " + `"${this.task.name}"`
+      });
 
-        this.updateTask()
+      this.updateTask();
     },
     removeMember(userId) {
-       const idx = this.editedTask.members.findIndex(m => m._id === userId)
-       if (idx === -1) return
-       const userName = this.editedTask.members[idx].username
-       this.editedTask.members.splice(idx, 1)
+      const idx = this.editedTask.members.findIndex(m => m._id === userId);
+      if (idx === -1) return;
+      const userName = this.editedTask.members[idx].username;
+      this.editedTask.members.splice(idx, 1);
 
-      eventBus.$emit(EV_addActivity, {  
+      eventBus.$emit(EV_addActivity, {
         from: this.loggedinUser,
         createdAt: Date.now(),
         taskId: this.task.id,
-        operation: "remove " + userName + ' from ' + `"${this.task.name}"`
-      })
- 
-       this.updateTask()
+        operation: "remove " + userName + " from " + `"${this.task.name}"`
+      });
+
+      this.updateTask();
     },
     updateDescription() {
       this.$refs.description.select();
