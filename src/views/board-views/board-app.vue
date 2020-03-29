@@ -1,5 +1,5 @@
 <template>
-  <main class="board-app" v-if="board" :style="{background: storeBoard.style.background, backgroundSize: 'cover' }">
+  <main class="board-app" v-if="board" :style="{background: storeBoard.style.background, 'background-size': 'cover' }">
     <board-header @update-style="updateStyle"></board-header>
     <div ref="lists" class="lists-container">
       <Container
@@ -262,6 +262,7 @@ export default {
       
       this.$store.commit({type: 'setLoggedinUser', user: savedUser})
       this.board.style.background = background;
+      this.board.style.backgroundSize = 'cover';
 
       this.board.activities.unshift({
         from: this.loggedinUser,
