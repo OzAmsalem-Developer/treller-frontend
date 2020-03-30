@@ -357,14 +357,23 @@ export default {
     loggedinUser() {
       return this.$store.getters.loggedinUser;
     },
-    backgroundStyle() {
+    backgroundColor() {
       return {
-        background: this.board.style.background,
+        background: this.storeBoard.style.background,
+      }
+    },
+    backgroundImage() {
+      return {
         backgroundImage: this.board.style.background,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        height: "100vh"
-      };
+        opacity: 0.9
+    }
+    },
+    backgroundStyle() {
+      return (this.storeBoard.style.background.charAt(0) === '#')?  //if hex color
+      this.backgroundColor :
+      this.backgroundImage 
     }
   },
   watch: {

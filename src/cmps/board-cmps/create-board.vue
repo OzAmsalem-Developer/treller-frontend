@@ -58,7 +58,7 @@ export default {
           backgroundImage: this.newBoard.style.background,
           background: this.newBoard.style.background,
           backgroundSize: "cover",
-          backgroundRepeat: "no-repeat"
+          backgroundRepeat: "no-repeat",
       } 
     }
   },
