@@ -384,9 +384,6 @@ export default {
     }
   },
   created() {
-
-
-
     const boardId = this.$route.params.boardId;
         (async () => {
       await this.loadBoardAndTask(boardId); // Render the task details when taskId is passed as param

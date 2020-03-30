@@ -13,7 +13,7 @@
           <i class="fas fa-chart-line btn-icon"></i>
           <span class="btn-txt">Show board stats</span>
         </button>
-        <button class="menu-btn remove" @click="alertDisplay()">
+        <button class="menu-btn remove" @click="alertDisplay">
           <i class="far fa-trash-alt btn-icon"></i>
           <span class="btn-txt">Remove board</span>
         </button>
@@ -82,7 +82,7 @@ export default {
       });
     },
     alertDisplay() {
-      if (this.currBoardId === '5e7f569207836732d8037f5a'){
+      if (this.currBoardId === '5e80aa10ca357df65afec6f8'){
         return this.$swal("You are not allowed to remove this board", "This is a public board", "warning");
       }
       this.$swal({

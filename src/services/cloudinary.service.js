@@ -3,7 +3,7 @@ export const cloudinaryService = {
 }
 function uploadImg(ev) {
     const CLOUD_NAME = "ramus"
-    const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
+    const UPLOAD_URL = `//api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
     const formData = new FormData();
     formData.append('file', ev.target.files[0])
     formData.append('upload_preset', 'nhn1typb'); // second parameter is the upload preset
