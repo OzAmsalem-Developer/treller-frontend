@@ -8,9 +8,12 @@
     </div>
     <div class="board-nav">
       <button @click="isInvite = !isInvite" class="nav-menu-btn"><i class="fas fa-user-plus"></i></button>
-      <button @click="toggleMenu" class="nav-menu-btn"><i class="fas fa-bars"></i></button>
+      <button @click="isStatsOpen = !isStatsOpen" class="nav-menu-btn"><i class="fas fa-chart-area"></i></button>
+      <button @click="toggleMenu" class="nav-menu-btn last"><i class="fas fa-bars"></i></button>
     </div>
 
+
+    <board-charts v-if="isStatsOpen" @closed="isStatsOpen = false" />
       <transition name="fade">
     <invite-members @closed="isInvite = false" v-if="isInvite" />
     </transition>
@@ -23,12 +26,14 @@ import boardMenu from "./board-menu.vue";
 import inviteMembers from "./invite-members";
 import userAvatar from "@/cmps/main-cmps/user-avatar";
 import {eventBus,EV_removeMember} from "@/services/eventBus.service";
+import boardCharts from "@/cmps/board-cmps/board-charts";
 
 export default {
   data() {
     return {
       isMenuOpen: false,
-      isInvite: false
+      isInvite: false,
+      isStatsOpen: false
     };
   },
   computed: {
@@ -69,7 +74,8 @@ export default {
   components: {
     boardMenu,
     inviteMembers,
-    userAvatar
+    userAvatar,
+    boardCharts
   }
 };
 </script>

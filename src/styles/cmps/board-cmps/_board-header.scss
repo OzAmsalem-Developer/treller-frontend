@@ -29,11 +29,6 @@
     display: flex;
     align-items: center;
 
-    > :first-child {
-      background-color: red;
-      margin: 0 5px;
-    }
-
     .board-data-container {
       .board-name {
         font-family: $font-semi;
@@ -47,6 +42,7 @@
       min-width: 50px;
       padding: 8px 14px;
       outline: 0;
+      margin: 0 5px;
       border-radius: 3px;
       font-family: $font-semi;
       transition: all 0.1s ease;
@@ -57,6 +53,10 @@
         text-align: center;
         font-size: rem(14px);
       }
+    }
+
+    .nav-menu-btn.last {
+      margin-right: 0;
     }
     .nav-menu-btn:hover {
       background-color: rgba(0, 0, 0, 0.7);
