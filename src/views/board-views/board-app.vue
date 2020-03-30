@@ -123,7 +123,6 @@ export default {
       await this.$store.dispatch({ type: "saveBoard", board: this.board });
       try {
         this.board = JSON.parse(JSON.stringify(this.storeBoard));
-        console.log("CMP: Board Saved Succesfully");
         socketService.emit("board boardChanged", this.board);
         return this.board;
       } catch (prevBoard) {
@@ -208,13 +207,13 @@ export default {
       this.saveBoard();
     },
     saveListsOrder(taskList) {
-      
-      console.log(taskList);
-      // onDrop is called for each list. So save to DB only when last list is updated.
+      // Updating the board copy
       const idx = this.board.taskLists.findIndex(tl => tl.id === taskList.id);
       if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList);
+
+      // called for each list. So save to DB only when the last list is updated.
       if (idx === this.board.taskLists.length - 1) {
-        // console.log(idx);
+        console.log('Saving to DataBase');
         this.saveBoard();
       } 
     },

@@ -123,7 +123,6 @@ export const boardStore = ({
             context.commit({ type: 'setCurrBoard', board })
             const savedBoard = await boardService.save(board)
             try {
-                console.log('Board Saved!')
                 return savedBoard
             } catch {
                 context.commit({ type: 'setCurrBoard', prevBoard })

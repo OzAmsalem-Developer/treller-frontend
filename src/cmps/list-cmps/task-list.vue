@@ -44,9 +44,9 @@
         @drop="onDrop"
         @drag-end="onDragEnd"
         :drag-begin-delay="delayDrag"
+        :get-child-payload="getTaskPayload(taskList.id)"
         group-name="tasks"
         drag-handle-selector=".task-preview"
-        :get-child-payload="getTaskPayload(taskList.id)"
         drag-class="task-dragging"
         drop-class="task-dropping"
       >
@@ -159,7 +159,7 @@ export default {
       const idx = this.listCopy.tasks.findIndex(t => t.id === task.id);
       if (idx !== -1) {
         this.listCopy.tasks.splice(idx, 1, task);
-        this.saveList("save-list");
+        this.saveList("save-list"); 
       }
     },
     onDrop(dropResult) {
@@ -169,9 +169,9 @@ export default {
         this.taskList.tasks,
         dropResult
       );
-      this.saveList("save-lists-order");
+      this.saveList("save-lists-order"); //This func emit events to board app
     },
-    onDragEnd() {
+    onDragEnd(res) {
       // Unlocking the drag for mobile on end (Should contribute this to the package creator)
       document.querySelector('body').classList.remove('smooth-dnd-no-user-select', 'smooth-dnd-disable-touch-action')
     },
