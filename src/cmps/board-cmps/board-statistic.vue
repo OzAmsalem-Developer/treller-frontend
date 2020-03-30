@@ -10,6 +10,11 @@
       :chartData="taskLabelsChart.chartData"
       :options="taskLabelsChart.options"
     />
+    <userChart
+      class="user-chart"
+      :chartData="userActivityChart.chartData"
+      :options="userActivityChart.options"
+    />
     <button class="close-btn" @click="goBack">
       <i class="fas fa-arrow-left"></i>
     </button>
@@ -19,6 +24,7 @@
 <script>
 import listChart from "./list-chart";
 import labelChart from "./label-chart";
+import userChart from "./user-chart";
 import hexToRgba from "hex-to-rgba";
 import { utilService } from "../../services/util.service.js";
 export default {
@@ -31,6 +37,24 @@ export default {
       labelsChartColors: {
         fill: null,
         border: null
+      },
+      userActivityChart: {
+        chartData: {
+          labels: [
+            "Editind",
+            "Adding",
+            "Removing",
+            "Commenting",
+            "Tasks moved"
+          ],
+          datasets: []
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Team activities"
+          }
+        }
       }
     };
   },
@@ -59,7 +83,7 @@ export default {
             fontSize: 18
           },
           tooltips: {
-             titleFontSize: 15,
+            titleFontSize: 15,
             bodyFontSize: 13,
             callbacks: {
               label: function(tooltipItem, data, datasetIndex) {
@@ -95,7 +119,7 @@ export default {
           title: {
             display: true,
             text: "Labels Distribution",
-            fontSize: 27,
+            fontSize: 27
           },
           tooltips: {
             titleFontSize: 20,
@@ -111,7 +135,6 @@ export default {
           scales: {
             xAxes: [
               {
-                
                 ticks: {
                   beginAtZero: true
                 }
@@ -128,6 +151,26 @@ export default {
         }
       };
     },
+    // userActivityChart() {
+    //   return {
+    //     chartData: {
+    //       labels: [
+    //         "Editind",
+    //         "Adding",
+    //         "Removing",
+    //         "Commenting",
+    //         "Tasks moved"
+    //       ],
+    //       datasets: []
+    //     },
+    //     options: {
+    //       title: {
+    //         display: true,
+    //         text: "Team activities"
+    //       }
+    //     }
+    //   };
+    // },
     currBoard() {
       return this.$store.getters.currBoard;
     },
@@ -183,15 +226,47 @@ export default {
       this.labelsChartColors.fill = labelColors.map(hexColor =>
         hexToRgba(hexColor, 0.7)
       );
+    },
+    setUsersChartData() {
+      const boardUsers = this.currBoard.members;
+      boardUsers.forEach(user => {
+        const color = utilService.getRandomChartColor();
+        const userData = {
+          data: this.getUserActivities(user._id),
+          backgroundColor: color.fill,
+          borderColor: color.border,
+          borderWidth: 1
+        };
+        this.userActivityChart.chartData.datasets.push(userData);
+      });
+    },
+    getUserActivities(userId) {
+      const data = [0, 0, 0, 0, 0];
+      this.currBoard.activities.forEach(act => {
+        if (act.from._id === userId) {
+          let actTxt = act.operation;
+          if (actTxt.includes("added task")) data[0]++;
+          if (actTxt.includes("leave a comment")) data[1]++;
+          if (actTxt.includes("moved a task")) data[2]++;
+          if (actTxt.includes("done todo")) data[3]++;
+          if (actTxt.includes("to done")) data[4]++;
+        }
+      });
+      return data;
     }
   },
+
   created() {
     this.setListsChartColors();
     this.setLabelsChartColors();
+    // this.setUsersChartData();
+
+    console.log(this.currBoard.members);
   },
   components: {
     listChart,
-    labelChart
+    labelChart,
+    userChart
   }
 };
 </script>

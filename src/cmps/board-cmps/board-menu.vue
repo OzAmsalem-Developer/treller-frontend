@@ -36,7 +36,6 @@
     <boardStatistic
       v-if="isMenuOpen.statistic"
       @closed="closeMenu('statistic')"
-      @update-style="updateStyle"
     />
     <button class="close-btn" v-if="isMenuOpen.main" @click="goBack">
       <i class="fas fa-times"></i>
