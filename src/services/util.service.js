@@ -110,7 +110,7 @@ function getRandomChartColors() {
         fill: [],
         border: []
     }
-    for (let i=0; i<30 ; i++){
+    for (let i = 0; i < 30; i++) {
         var hexColor = getRandomColor()
         var borderColor = hexToRgba(hexColor)
         var fillColor = hexToRgba(hexColor, 0.4)
@@ -118,6 +118,18 @@ function getRandomChartColors() {
         colors.border.push(borderColor)
     }
     return colors
+}
+
+function getRandomChartColor() {
+    const color = {
+        fill: null,
+        border: null
+    }
+    var hexColor = getRandomColor()
+    var borderColor = hexToRgba(hexColor)
+    var fillColor = hexToRgba(hexColor, 0.4)
+    color.fill = fillColor
+    color.border= borderColor
 }
 
 

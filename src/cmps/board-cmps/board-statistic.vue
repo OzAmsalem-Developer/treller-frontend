@@ -10,6 +10,11 @@
       :chartData="taskLabelsChart.chartData"
       :options="taskLabelsChart.options"
     />
+    <userChart
+      class="user-chart"
+      :chartData="userActivityChart.chartData"
+      :options="userActivityChart.options"
+    />
     <button class="close-btn" @click="goBack">
       <i class="fas fa-arrow-left"></i>
     </button>
@@ -19,6 +24,7 @@
 <script>
 import listChart from "./list-chart";
 import labelChart from "./label-chart";
+import userChart from "./user-chart";
 import hexToRgba from "hex-to-rgba";
 import { utilService } from "../../services/util.service.js";
 export default {
@@ -59,7 +65,7 @@ export default {
             fontSize: 18
           },
           tooltips: {
-             titleFontSize: 15,
+            titleFontSize: 15,
             bodyFontSize: 13,
             callbacks: {
               label: function(tooltipItem, data, datasetIndex) {
@@ -95,7 +101,7 @@ export default {
           title: {
             display: true,
             text: "Labels Distribution",
-            fontSize: 27,
+            fontSize: 27
           },
           tooltips: {
             titleFontSize: 20,
@@ -111,7 +117,6 @@ export default {
           scales: {
             xAxes: [
               {
-                
                 ticks: {
                   beginAtZero: true
                 }
@@ -124,6 +129,46 @@ export default {
                 }
               }
             ]
+          }
+        }
+      };
+    },
+    userActivityChart() {
+      return {
+        chartData: {
+          labels: ["Editind", "Adding", "Removing", "Commenting",  "Tasks moved"],
+          datasets: [
+            {
+
+              data: [10, 30, 12, 9, 5],
+              // data: [45, 50, 32, 60, 40],
+              // backgroundColor: this.listsChartColors.fill,
+              // borderColor: this.listsChartColors.border,
+              borderWidth: 1
+            },
+            {
+              data: [18, 6, 14, 8, 3],
+              // data: [80, 15, 30, 80, 100],
+              backgroundColor: this.labelsChartColors.fill,
+              borderColor: this.labelsChartColors.border,
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Team activities",
+            fontSize: 27
+          },
+          tooltips: {
+            titleFontSize: 20,
+            bodyFontSize: 20
+            // callbacks: {
+            //   label: function(tooltipItem, data, datasetIndex) {
+            //     var indice = tooltipItem.index;
+            //     return data.datasets[0].data[indice] + " Apparitions";
+            //   }
           }
         }
       };
@@ -183,7 +228,8 @@ export default {
       this.labelsChartColors.fill = labelColors.map(hexColor =>
         hexToRgba(hexColor, 0.7)
       );
-    }
+    },
+
   },
   created() {
     this.setListsChartColors();
@@ -191,7 +237,8 @@ export default {
   },
   components: {
     listChart,
-    labelChart
+    labelChart,
+    userChart
   }
 };
 </script>
