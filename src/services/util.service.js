@@ -13,7 +13,8 @@ export const utilService = {
     getEmptyComment,
     applyDrag,
     expandTextArea,
-    getRandomChartColors
+    getRandomChartColors,
+    getRandomChartColor
 }
 
 
@@ -130,6 +131,7 @@ function getRandomChartColor() {
     var fillColor = hexToRgba(hexColor, 0.4)
     color.fill = fillColor
     color.border= borderColor
+    return color
 }
 
 

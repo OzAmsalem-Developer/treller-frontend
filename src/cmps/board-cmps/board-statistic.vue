@@ -37,6 +37,24 @@ export default {
       labelsChartColors: {
         fill: null,
         border: null
+      },
+      userActivityChart: {
+        chartData: {
+          labels: [
+            "Editind",
+            "Adding",
+            "Removing",
+            "Commenting",
+            "Tasks moved"
+          ],
+          datasets: []
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Team activities"
+          }
+        }
       }
     };
   },
@@ -133,46 +151,26 @@ export default {
         }
       };
     },
-    userActivityChart() {
-      return {
-        chartData: {
-          labels: ["Editind", "Adding", "Removing", "Commenting",  "Tasks moved"],
-          datasets: [
-            {
-
-              data: [10, 30, 12, 9, 5],
-              // data: [45, 50, 32, 60, 40],
-              // backgroundColor: this.listsChartColors.fill,
-              // borderColor: this.listsChartColors.border,
-              borderWidth: 1
-            },
-            {
-              data: [18, 6, 14, 8, 3],
-              // data: [80, 15, 30, 80, 100],
-              backgroundColor: this.labelsChartColors.fill,
-              borderColor: this.labelsChartColors.border,
-              borderWidth: 1
-            }
-          ]
-        },
-        options: {
-          title: {
-            display: true,
-            text: "Team activities",
-            fontSize: 27
-          },
-          tooltips: {
-            titleFontSize: 20,
-            bodyFontSize: 20
-            // callbacks: {
-            //   label: function(tooltipItem, data, datasetIndex) {
-            //     var indice = tooltipItem.index;
-            //     return data.datasets[0].data[indice] + " Apparitions";
-            //   }
-          }
-        }
-      };
-    },
+    // userActivityChart() {
+    //   return {
+    //     chartData: {
+    //       labels: [
+    //         "Editind",
+    //         "Adding",
+    //         "Removing",
+    //         "Commenting",
+    //         "Tasks moved"
+    //       ],
+    //       datasets: []
+    //     },
+    //     options: {
+    //       title: {
+    //         display: true,
+    //         text: "Team activities"
+    //       }
+    //     }
+    //   };
+    // },
     currBoard() {
       return this.$store.getters.currBoard;
     },
@@ -210,20 +208,6 @@ export default {
     },
     listsTasksCount() {
       return this.currBoard.taskLists.map(list => list.tasks.length);
-    },
-    getUserActivities(userId) {
-      const data = [0,0,0,0,0]
-      this.currBoard.activities.forEach(act => {
-        if (act.from._id === userId) {
-          let actTxt = act.operation
-          if (actTxt.includes('added task')) data[0]++
-          if (actTxt.includes('leave a comment')) data[1]++
-          if (actTxt.includes('moved a task')) data[2]++
-          if (actTxt.includes('done todo')) data[3]++
-          if (actTxt.includes('to done')) data[4]++
-        }
-      })
-      return data
     }
   },
   methods: {
@@ -243,11 +227,41 @@ export default {
         hexToRgba(hexColor, 0.7)
       );
     },
-
+    setUsersChartData() {
+      const boardUsers = this.currBoard.members;
+      boardUsers.forEach(user => {
+        const color = utilService.getRandomChartColor();
+        const userData = {
+          data: this.getUserActivities(user._id),
+          backgroundColor: color.fill,
+          borderColor: color.border,
+          borderWidth: 1
+        };
+        this.userActivityChart.chartData.datasets.push(userData);
+      });
+    },
+    getUserActivities(userId) {
+      const data = [0, 0, 0, 0, 0];
+      this.currBoard.activities.forEach(act => {
+        if (act.from._id === userId) {
+          let actTxt = act.operation;
+          if (actTxt.includes("added task")) data[0]++;
+          if (actTxt.includes("leave a comment")) data[1]++;
+          if (actTxt.includes("moved a task")) data[2]++;
+          if (actTxt.includes("done todo")) data[3]++;
+          if (actTxt.includes("to done")) data[4]++;
+        }
+      });
+      return data;
+    }
   },
+
   created() {
     this.setListsChartColors();
     this.setLabelsChartColors();
+    // this.setUsersChartData();
+
+    console.log(this.currBoard.members);
   },
   components: {
     listChart,
