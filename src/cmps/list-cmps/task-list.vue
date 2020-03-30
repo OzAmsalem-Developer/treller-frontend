@@ -163,7 +163,7 @@ export default {
       }
     },
     onDrop(dropResult) {
-      // console.log(dropResult);
+      console.log('Updated list:', dropResult);
       // For each result, Update the list copy and emit ('save-list-order')
       this.listCopy.tasks = utilService.applyDrag(
         this.taskList.tasks,
