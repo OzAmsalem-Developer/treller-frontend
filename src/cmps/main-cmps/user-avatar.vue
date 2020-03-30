@@ -1,7 +1,7 @@
 <template>
   <div class="avatar">
-    <img v-if="user.imgUrl" class="user-avatar img-avatar" :src="user.imgUrl" />
-    <div v-else class="user-avatar txt-avatar" :style="{backgroundColor: user.avatarColor}">
+    <img v-if="user && user.imgUrl" class="user-avatar img-avatar" :src="user.imgUrl" />
+    <div v-else class="user-avatar txt-avatar" :style="{backgroundColor: background}">
       <span>{{avatarTxt}}</span>
     </div>
     <div>
@@ -16,9 +16,10 @@ import { utilService } from "@/services/util.service";
 export default {
   computed: {
     avatarTxt() {
-      return this.user.username.slice(0, 1).toUpperCase();
+      return this.user? this.user.username.slice(0, 1).toUpperCase() : 'G'
     },
     background() {
+      if (!this.user) return '#1ba2a1'
       return this.user.imgUrl
         ? `url("${this.user.imgUrl}")`
         : this.user.avatarColor

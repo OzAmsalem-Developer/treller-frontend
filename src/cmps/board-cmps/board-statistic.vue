@@ -210,6 +210,20 @@ export default {
     },
     listsTasksCount() {
       return this.currBoard.taskLists.map(list => list.tasks.length);
+    },
+    getUserActivities(userId) {
+      const data = [0,0,0,0,0]
+      this.currBoard.activities.forEach(act => {
+        if (act.from._id === userId) {
+          let actTxt = act.operation
+          if (actTxt.includes('added task')) data[0]++
+          if (actTxt.includes('leave a comment')) data[1]++
+          if (actTxt.includes('moved a task')) data[2]++
+          if (actTxt.includes('done todo')) data[3]++
+          if (actTxt.includes('to done')) data[4]++
+        }
+      })
+      return data
     }
   },
   methods: {

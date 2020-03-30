@@ -1,5 +1,5 @@
 <template>
-  <section v-if="taskList" class="task-list" @touchend="onDragEnd">
+  <section v-if="taskList" class="task-list" @touchend="enableTouch">
     <section class="edit-list-name" v-if="isEditName">
       <input
       @click="isEditName = true"
@@ -42,11 +42,10 @@
     <main class="tasks" ref="tasks" :id="taskList.id">
       <Container
         @drop="onDrop"
-        @drag-end="onDragEnd"
         :drag-begin-delay="delayDrag"
+        :get-child-payload="getTaskPayload(taskList.id)"
         group-name="tasks"
         drag-handle-selector=".task-preview"
-        :get-child-payload="getTaskPayload(taskList.id)"
         drag-class="task-dragging"
         drop-class="task-dropping"
       >
@@ -105,7 +104,12 @@ export default {
       isTaskSaved: false,
       isMenuOpen: false,
       listCopy: null,
-      isEditName: false
+      isEditName: false,
+      taskMove: {
+        fromList: null,
+        toList: null,
+        movedTask: null
+      }
     };
   },
   methods: {
@@ -145,9 +149,6 @@ export default {
         taskId: this.newTask.id,
         operation: "added task " + `"${this.newTask.name}"` + " to " + this.taskList.name + " list"
       })
-
-     
-      // this.newTask = null;
       this.getEmptyTask();
       setTimeout(() => {
         this.$refs.tasks.scrollTo(0, this.$refs.tasks.scrollHeight);
@@ -162,19 +163,31 @@ export default {
       const idx = this.listCopy.tasks.findIndex(t => t.id === task.id);
       if (idx !== -1) {
         this.listCopy.tasks.splice(idx, 1, task);
-        this.saveList("save-list");
+        this.saveList("save-list"); 
       }
     },
-    onDrop(dropResult) {
-      this.listCopy.tasks = utilService.applyDrag(
-        this.taskList.tasks,
-        dropResult
-      );
-      this.saveList("save-lists-order");
+    async onDrop(dropResult) {
+      console.log('Updated list:', dropResult);
+      // For each result, Update the list copy and emit ('save-list-order')
+      this.listCopy.tasks = utilService.applyDrag(this.taskList.tasks,dropResult);
+
+      if (dropResult.addedIndex !== null) {
+        eventBus.$emit(EV_addActivity, {
+          from: this.loggedinUser,
+          createdAt: Date.now(),
+          taskId: null,
+          operation: "moved a task to " + `"${this.listCopy.name}"`
+        })
+      }
+
+      this.saveList("save-lists-order"); //This func emit events to board app
     },
-    onDragEnd() {
-      // Unlocking the drag for mobile on end (Should contribute this to the package creator)
-      document.querySelector('body').classList.remove('smooth-dnd-no-user-select', 'smooth-dnd-disable-touch-action')
+    enableTouch(res) {
+      // Unlocking the drag for mobile on end
+      document.querySelector('body').classList.remove(
+        'smooth-dnd-no-user-select', 
+        'smooth-dnd-disable-touch-action'
+      )
     },
     getTaskPayload(listId) {
       return index => {

@@ -123,14 +123,13 @@ export default {
       await this.$store.dispatch({ type: "saveBoard", board: this.board });
       try {
         this.board = JSON.parse(JSON.stringify(this.storeBoard));
-        console.log("CMP: Board Saved Succesfully");
+        socketService.emit("board boardChanged", this.board);
         return this.board;
       } catch (prevBoard) {
         this.board = JSON.parse(JSON.stringify(board));
         console.log("Err, board didnt saved");
         throw new Error("Saving failed");
       }
-      socketService.emit("board boardChanged", this.board);
     },
     addList(ev) {
       if (!this.newTaskList) return;
@@ -208,9 +207,15 @@ export default {
       this.saveBoard();
     },
     saveListsOrder(taskList) {
+      // Updating the board copy
       const idx = this.board.taskLists.findIndex(tl => tl.id === taskList.id);
       if (idx !== -1) this.board.taskLists.splice(idx, 1, taskList);
-      if (idx === this.board.taskLists.length - 1) this.saveBoard();
+
+      // called for each list. So save to DB only when the last list is updated.
+      if (idx === this.board.taskLists.length - 1) {
+        console.log('Saving to DataBase');
+        this.saveBoard();
+      } 
     },
     moveTask({ toListId, taskId }) {
       var fromListId;
@@ -358,10 +363,10 @@ export default {
     },
     backgroundImage() {
       return {
-        // background: this.board.style.background,
         backgroundImage: this.board.style.background,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
+        opacity: 0.9
     }
     },
     backgroundStyle() {
@@ -381,6 +386,7 @@ export default {
     const boardId = this.$route.params.boardId;
         (async () => {
       await this.loadBoardAndTask(boardId); // Render the task details when taskId is passed as param
+      
       // Socket updates
       socketService.setup();
       socketService.emit("board topic", this.board._id);

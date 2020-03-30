@@ -81,7 +81,7 @@
                   class="details-due-check"
                   type="checkbox"
                   v-model="editedTask.dueDate.isCompleted"
-                  @change="updateTask"
+                  @change="toggleTaskDone"
                 />
               </div>
               <el-date-picker
@@ -155,7 +155,7 @@
                 v-for="item in editedTask.checklist.todos"
                 :key="item.id"
               >
-                <input type="checkbox" v-model="item.isDone" @change="updateTask" />
+                <input type="checkbox" v-model="item.isDone" @change="doneTodo" />
                 <input
                   type="text"
                   :class="item.isDone? 'todo-done' : ''"
@@ -499,6 +499,26 @@ export default {
         createdAt: Date.now(),
         taskId: this.task.id,
         operation: "remove " + userName + " from " + `"${this.task.name}"`
+      });
+
+      this.updateTask();
+    },
+    doneTodo() {
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "done todo in " + `"${this.task.name}"`
+      });
+
+      this.updateTask();
+    },
+    toggleTaskDone() {
+      eventBus.$emit(EV_addActivity, {
+        from: this.loggedinUser,
+        createdAt: Date.now(),
+        taskId: this.task.id,
+        operation: "set " + `"${this.task.name}"` + " to done"
       });
 
       this.updateTask();
