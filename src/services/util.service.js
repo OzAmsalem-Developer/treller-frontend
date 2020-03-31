@@ -14,7 +14,8 @@ export const utilService = {
     applyDrag,
     expandTextArea,
     getRandomChartColors,
-    getRandomChartColor
+    getRandomChartColor,
+    getRandomHexColor
 }
 
 
@@ -224,4 +225,11 @@ function scrollTo(element, scrollPixels, duration) {
         //Call requestAnimationFrame on scroll function first time
         window.requestAnimationFrame(scroll);
     }
+}
+
+function getRandomHexColor() {
+    return  [  '#98d38d', '#f4e25c' , '#fcc06c', '#5ba7d4', '#d6a6e9',
+,'#5bd5e9', '#0d1826' , '4d4c7d' , 'ffb6b6', '527318' , 'ffe75e', '5f6caf', '42dee1', 'a35638']
+
+
 }

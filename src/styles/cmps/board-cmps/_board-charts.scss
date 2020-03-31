@@ -4,17 +4,30 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, 0);
+    margin-bottom: 40px;
     
     
     .board-statistic {
         background-color: lighten($clr5, 3);
         height: unset;
         display: flex;
+        flex-direction: column;
+        align-items: center;
         padding: 17px;
         border-radius: 3px;
         .close-btn { 
             display: none;
         }
+    }
+
+    .label-chart #bar-chart{
+        padding-top: 0;
+        border: 0;
+    }
+
+    .first-charts {
+        display: flex;
+
     }
 
     .close-btn {
@@ -37,4 +50,8 @@
         padding: 0;
     }
     
+}
+
+#radar-chart {
+    margin-bottom: 20px;
 }

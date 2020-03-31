@@ -1,19 +1,17 @@
 <template>
   <div class="board-statistic">
-    <listChart
-      class="task-list-chart"
-      :chartData="taskListsChart.chartData"
-      :options="taskListsChart.options"
-    />
+    <section class="first-charts">
+      <listChart
+        class="task-list-chart"
+        :chartData="taskListsChart.chartData"
+        :options="taskListsChart.options"
+      />
+      <userChart class="user-chart" :chartData="chartData" :options="chartDataOpts" />
+    </section>
     <labelChart
       class="label-chart"
       :chartData="taskLabelsChart.chartData"
       :options="taskLabelsChart.options"
-    />
-    <userChart
-      class="user-chart"
-      :chartData="userActivityChart.chartData"
-      :options="userActivityChart.options"
     />
     <button class="close-btn" @click="goBack">
       <i class="fas fa-arrow-left"></i>
@@ -30,6 +28,7 @@ import { utilService } from "../../services/util.service.js";
 export default {
   data() {
     return {
+      colors: [],
       listsChartColors: {
         fill: null,
         border: null
@@ -38,23 +37,28 @@ export default {
         fill: null,
         border: null
       },
-      userActivityChart: {
-        chartData: {
-          labels: [
-            "Editind",
-            "Adding",
-            "Removing",
-            "Commenting",
-            "Tasks moved"
-          ],
-          datasets: []
-        },
-        options: {
-          title: {
-            display: true,
-            text: "Team activities"
-          }
+      userChartOpts: {
+        title: {
+          display: true,
+          text: "Team activities"
         }
+      },
+      chartData: null,
+      chartDataOpts: {
+        legend: {
+          position: "top",
+          align: "start"
+        },
+        title: {
+          display: true,
+          text: "Members Indication",
+          fontSize: 18
+        },
+        tooltips: {
+          titleFontSize: 15,
+          bodyFontSize: 13
+        },
+
       }
     };
   },
@@ -118,18 +122,8 @@ export default {
         options: {
           title: {
             display: true,
-            text: "Labels Distribution",
-            fontSize: 27
-          },
-          tooltips: {
-            titleFontSize: 20,
-            bodyFontSize: 20,
-            callbacks: {
-              label: function(tooltipItem, data, datasetIndex) {
-                var indice = tooltipItem.index;
-                return data.datasets[0].data[indice] + " Apparitions";
-              }
-            }
+            text: "Labels usage",
+            fontSize: 18
           },
           responsive: false,
           scales: {
@@ -151,26 +145,6 @@ export default {
         }
       };
     },
-    // userActivityChart() {
-    //   return {
-    //     chartData: {
-    //       labels: [
-    //         "Editind",
-    //         "Adding",
-    //         "Removing",
-    //         "Commenting",
-    //         "Tasks moved"
-    //       ],
-    //       datasets: []
-    //     },
-    //     options: {
-    //       title: {
-    //         display: true,
-    //         text: "Team activities"
-    //       }
-    //     }
-    //   };
-    // },
     currBoard() {
       return this.$store.getters.currBoard;
     },
@@ -253,15 +227,41 @@ export default {
         }
       });
       return data;
+    },
+    getDatasets() {
+      return this.currBoard.members.map((member, idx) => {
+        return {
+          label: member.username,
+          backgroundColor:
+            utilService.getRandomHexColor()[idx] ||
+            utilService.getRandomColor(),
+          data: this.getUserActivities(member._id)
+        };
+      });
+    },
+    fillChartData() {
+      this.chartData = {
+        labels: [
+          "Tasks added",
+          "Comments",
+          "Tasks moved",
+          "Checklist item done",
+          "Tasks done"
+        ],
+        datasets: this.getDatasets()
+      };
     }
   },
-
   created() {
     this.setListsChartColors();
     this.setLabelsChartColors();
     // this.setUsersChartData();
-
-    console.log(this.currBoard.members);
+    this.currBoard.members.forEach(() => {
+      var color = utilService.getRandomHexColor();
+    });
+  },
+  mounted() {
+    this.fillChartData();
   },
   components: {
     listChart,

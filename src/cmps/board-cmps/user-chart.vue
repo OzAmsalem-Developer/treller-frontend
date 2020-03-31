@@ -12,7 +12,8 @@ export default {
     options:{
       type: Object,
       default: null
-    } 
+    },
+    chartData: Object
   }
 };
 </script>
