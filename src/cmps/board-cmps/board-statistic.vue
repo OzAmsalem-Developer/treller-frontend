@@ -6,13 +6,13 @@
         :chartData="taskListsChart.chartData"
         :options="taskListsChart.options"
       />
-      <userChart class="user-chart" :chartData="chartData" :options="chartDataOpts" />
-    </section>
     <labelChart
       class="label-chart"
       :chartData="taskLabelsChart.chartData"
       :options="taskLabelsChart.options"
     />
+    </section>
+      <userChart class="user-chart" :chartData="chartData" :options="chartDataOpts" />
     <button class="close-btn" @click="goBack">
       <i class="fas fa-arrow-left"></i>
     </button>
