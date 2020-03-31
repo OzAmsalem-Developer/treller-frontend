@@ -10,7 +10,6 @@
       </router-link>
       <div class="menu-container">
         <div class="nav-links" :class="menuState">
-          <!-- <router-link to="/about">About</router-link>-->
           <div class="login-btns" v-if="isGuest">
             <button @click="emitLoginSignup(false)" class="login mobile-nav">Login</button>
             <button @click="emitLoginSignup(true)" class="signup mobile-nav">Signup</button>
@@ -21,8 +20,8 @@
             class="dashboard-nav-btn mobile-nav"
             :to="'/user/' + loggedinUser._id"
           >Dashboard</router-link>
-          <div class="user" v-if="loggedinUser">
-            <button @click="logout" class="logout" v-if="!isGuest">Logout</button>
+          <div class="user logout-container" v-if="loggedinUser">
+            <button @click="logout" class="logout mobile-nav" v-if="!isGuest">Logout</button>
           </div>
         </div>
         <button class="menu-btn" ref="menubtn" @click="toggleMenu">
@@ -60,17 +59,17 @@ export default {
       await this.$store.dispatch({ type: "logout" });
       this.$router.push("/");
       this.$store.dispatch({ type: "getLoggedinUser" });
-      this.closeMenu()
+      this.closeMenu();
     },
     emitLoginSignup(val) {
-      this.$emit('login-signup', val)
-      this.closeMenu()
+      this.$emit("login-signup", val);
+      this.closeMenu();
     },
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
     },
     closeMenu() {
-      this.isMenuOpen = false
+      this.isMenuOpen = false;
     }
   },
   components: {
