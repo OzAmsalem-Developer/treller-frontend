@@ -339,7 +339,6 @@ export default {
     },
     async updateAndBlur(ev) {
       ev.target.blur();
-      console.log(ev);
       await this.updateTask();
       setTimeout(() => {
         this.$refs.checklistTodo.focus();
@@ -588,7 +587,6 @@ export default {
   },
   created() {
     this.editedTask = JSON.parse(JSON.stringify(this.task));
-    console.log("// Details Task:", this.task);
     document.addEventListener("keyup", this.closeDetailsOnEsc);
     this.getListId();
   },
