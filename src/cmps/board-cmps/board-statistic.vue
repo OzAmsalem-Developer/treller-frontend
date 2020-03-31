@@ -233,6 +233,7 @@ export default {
         return {
           label: member.username,
           backgroundColor:
+            !member.imgUrl ? member.avatarColor :
             utilService.getRandomHexColor()[idx] ||
             utilService.getRandomColor(),
           data: this.getUserActivities(member._id)
@@ -250,6 +251,11 @@ export default {
         ],
         datasets: this.getDatasets()
       };
+    }
+  },
+  watch: {
+    'currBoard'() {
+       this.fillChartData();
     }
   },
   created() {
