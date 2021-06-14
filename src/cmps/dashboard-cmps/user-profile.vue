@@ -13,24 +13,39 @@
       <hr />
       <section class="user-profile-container">
         <div class="profile-view">
-          <img v-if="this.editedUser.imgUrl" :src="this.editedUser.imgUrl" alt />
-          <div class="text-avatar" v-else :style="{backgroundColor: this.editedUser.avatarColor}">
-            <span>{{avatarTxt}}</span>
+          <img
+            v-if="this.editedUser.imgUrl"
+            :src="this.editedUser.imgUrl"
+            alt
+          />
+          <div
+            class="text-avatar"
+            v-else
+            :style="{ backgroundColor: this.editedUser.avatarColor }"
+          >
+            <span>{{ avatarTxt }}</span>
           </div>
           <div class="profile-name">
-            <span>{{this.editedUser.username}}</span>
+            <span>{{ this.editedUser.username }}</span>
           </div>
         </div>
         <div class="profile-edit">
-          <label class="profile-menu-btn" for="profile-user-avatar">Edit profile image</label>
+          <label class="profile-menu-btn" for="profile-user-avatar"
+            >Edit profile image</label
+          >
           <input
             type="file"
             id="profile-user-avatar"
             class="profile-img-input"
             @change="uploadAvatarImg"
           />
-          <button class="profile-menu-btn profile-name-btn" @click="toggleEditName">Edit username</button>
-          <div class="profile-name-container" v-if="isEditName">
+          <button
+            class="profile-menu-btn profile-name-btn"
+            @click="toggleEditName"
+          >
+            Edit username
+          </button>
+          <div class="profile-name-container" v-show="isEditName">
             <input
               type="txt"
               name="profile-user-name"
@@ -38,8 +53,12 @@
               ref="editname"
               v-model="editedUser.username"
             />
-            <button class="profile-save-btn" @click="updateUsername">Save</button>
-            <button class="profile-cancel-btn" @click="toggleEditName">Cancel</button>
+            <button class="profile-save-btn" @click="updateUsername">
+              Save
+            </button>
+            <button class="profile-cancel-btn" @click="toggleEditName">
+              Cancel
+            </button>
           </div>
         </div>
       </section>
@@ -55,7 +74,7 @@ export default {
     return {
       editedUser: null,
       isEditName: false,
-      isLoading: false
+      isLoading: false,
     };
   },
   methods: {
@@ -78,22 +97,19 @@ export default {
     async updateUser() {
       const user = await this.$store.dispatch({
         type: "updateUser",
-        user: this.editedUser
+        user: this.editedUser,
       });
 
       this.$store.commit({
         type: "setLoggedinUser",
-        user
+        user,
       });
       this.editedUser = JSON.parse(JSON.stringify(this.loggedInUser));
     },
     toggleEditName() {
       this.isEditName = !this.isEditName;
-
-      if (this.isEditName) {
-        setTimeout(() => this.$refs.editname.focus(), 100);
-      }
-    }
+      if (this.isEditName) this.$refs.editname.focus();
+    },
   },
   computed: {
     loggedInUser() {
@@ -101,13 +117,13 @@ export default {
     },
     avatarTxt() {
       return this.editedUser.username.slice(0, 1).toUpperCase();
-    }
+    },
   },
   created() {
     this.editedUser = JSON.parse(JSON.stringify(this.loggedInUser));
   },
   components: {
-    mainLoading
-  }
+    mainLoading,
+  },
 };
 </script>
